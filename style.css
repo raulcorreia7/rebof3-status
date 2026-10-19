@@ -20,4 +20,13 @@ code{font:.88em ui-monospace,SFMono-Regular,Menlo,monospace}
 .legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;background:var(--c)}
 svg.map{width:100%;height:auto;display:block;margin-top:8px;background:var(--bg)}
 svg.map rect:hover{stroke:#fff;stroke-width:1}
+.chip{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;background:var(--c)}
+.scroll{overflow:auto;max-height:70vh;border:1px solid var(--line);border-radius:6px;background:var(--card);margin-top:8px}
+table{border-collapse:collapse;width:100%;font-size:.86rem;font-variant-numeric:tabular-nums}
+th,td{padding:5px 12px;text-align:left;white-space:nowrap}
+th{font-weight:600;color:var(--mute);font-size:.78rem;border-bottom:1px solid var(--line);background:var(--card);position:sticky;top:0}
+td.r,th.r{text-align:right}
+tbody tr+tr td{border-top:1px solid var(--line)}
+details{margin-top:1.6rem;font-size:.9rem}summary{cursor:pointer;color:var(--mute)}
+input[type=search]{font:inherit;padding:6px 10px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--ink);width:100%;max-width:320px;margin-top:8px}
 @media (max-width:640px){h1{font-size:1.3rem}}

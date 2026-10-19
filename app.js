@@ -246,7 +246,7 @@ function cards(data, y) {
     [`${percent(sdk.done_functions, sdk.functions, 1)}%`, "PsyQ SDK as object or C", `${number(sdk.done_functions)} of ${number(sdk.functions)} functions`, STATUS.object[1]],
     bytes
       ? [`${percent(bytes.typed, bytes.bytes, 2)}%`, "Data typed in C", `${number(bytes.typed)} of ${number(bytes.bytes)} B`, STATUS.asm[1]]
-      : ["n/a", "Data typed in C", "not measured", MUTED],
+      : ["from next run", "Data typed in C", "measured by bin/progress", MUTED],
   ];
   const width = (WIDTH - 2 * MARGIN - 3 * GAP) / 4;
   let svg = "";
@@ -330,7 +330,7 @@ function libraryPanel(data, x, y, width, titled = true) {
     svg += bar(x + nameWidth, top + 1, length, 14, ORDER.map((key) => [count[key], STATUS[key][1]]), lib.functions.length);
     svg += text(x + width, top, `${number(done)} / ${number(lib.functions.length)}`, 13, MUTED, { anchor: "end" });
     const versions = Object.entries(lib.versions).map(([version, units]) => `${version} ×${units}`).join(" · ");
-    svg += text(x + nameWidth, top + 18, versions ? `objects from PsyQ ${versions}` : "no object units", 11, MUTED);
+    svg += text(x + nameWidth, top + 18, versions ? `objects from PsyQ ${versions}` : "linked from original assembly", 11, MUTED);
   });
   const key = `${number(sdk.statuses.object[0])} objects · ${number(sdk.statuses.assembly[0])} assembly · ${number(sdk.statuses.pure[0] + sdk.statuses.aided[0])} C`;
   svg += text(x, y + head + libs.length * 36, key, 13, MUTED);
@@ -362,10 +362,10 @@ function qualityRow(data, y) {
 
 // One line chart of a history series; points are [date, value].
 function chart(title, points, x, y, width, height, color, format) {
-  let svg = text(x, y, `${title}: ${points.length ? format(points[points.length - 1][1]) : "no data yet"}`, 16, INK);
+  let svg = text(x, y, points.length ? `${title}: ${format(points[points.length - 1][1])}` : title, 16, INK);
   const plot = [x + 4, y + 30, x + width - 6, y + height - 22];
   svg += rect(plot[0], plot[1], plot[2] - plot[0], plot[3] - plot[1], "#161b22");
-  if (!points.length) return svg;
+  if (!points.length) return svg + text(plot[0] + 12, plot[1] + 12, "starts with the next published run", 13, MUTED);
   const days = points.map(([date]) => Date.parse(date) / 864e5);
   const span = Math.max(days[days.length - 1] - days[0], 1);
   const high = Math.max(...points.map(([, value]) => value)) || 1;
@@ -534,8 +534,36 @@ export function page(data) {
     ` ${number(q.local_externs)} local externs, ${number(q.sym_conflicts)} symbol conflicts, ${number(q.hand_asm)} hand assembly files.</p>` +
     `<h2>Trend</h2>` +
     fragment(trendDraw.svg, trendDraw.bottom, "Trend") +
+    `<details><summary>Function table</summary>` +
+    `<input type="search" id="q" placeholder="Filter functions" aria-label="Filter functions">` +
+    `<div class="scroll"><table><thead><tr><th>function</th><th>status</th><th class="r">bytes</th></tr></thead><tbody id="rows"></tbody></table></div></details>` +
     `<p class="small mute">Machine output: <a href="progress.json">progress.json</a>. This page is generated from it; do not edit by hand.</p>`
   );
+}
+
+// Every function with its status, as rows of the filterable table.
+function functionRows(data) {
+  const rows = [];
+  for (const target of data.targets) for (const fn of target.functions) rows.push([target.id, fn]);
+  for (const lib of data.libraries) for (const fn of lib.functions) rows.push([fn.target, fn]);
+  return rows.map(([target, fn]) => ({
+    key: `${target}@${fn.addr} ${fn.name} ${STATUS[fn.status][0]}`.toLowerCase(),
+    html: `<tr><td>${escape(target)}@${fn.addr} ${escape(fn.name)}</td><td><i class="chip" style="--c:${STATUS[fn.status][1]}"></i>${escape(STATUS[fn.status][0])}</td><td class="r">${number(fn.bytes)}</td></tr>`,
+  }));
+}
+
+// Fill the table when it is first opened and refilter on each keystroke; the first matches show.
+function wireTable(data) {
+  const body = document.getElementById("rows");
+  const query = document.getElementById("q");
+  const all = functionRows(data);
+  const limit = 400;
+  const show = () => {
+    const words = query.value.toLowerCase().split(/\s+/).filter(Boolean);
+    body.innerHTML = all.filter((row) => words.every((word) => row.key.includes(word))).slice(0, limit).map((row) => row.html).join("");
+  };
+  query.addEventListener("input", show);
+  document.querySelector("details").addEventListener("toggle", show, { once: true });
 }
 
 // In a page: fetch progress.json and draw it.
@@ -545,6 +573,7 @@ if (typeof document !== "undefined") {
     .then((response) => response.json())
     .then((data) => {
       host.innerHTML = page(data);
+      wireTable(data);
     })
     .catch((error) => {
       host.textContent = `progress.json did not load: ${error.message}`;
