@@ -6,6 +6,8 @@
 
 Status of the Breath of Fire III decompilation: matched game code, the PsyQ SDK, typed data, code quality and the daily trend. Everything here is generated from the decompilation; do not edit `progress.json` by hand. Live page: <https://raulcorreia7.github.io/rebof3-status/>.
 
+The address map is an ordered treemap: a target's area is its bytes, its map rows fill it in address order, and rectangles that neighbour on screen neighbour in memory.
+
 This repository holds only status data and its renderer. It has no source code, assembly, headers or game data.
 
 ## Where things live
@@ -16,7 +18,8 @@ The decompilation measures itself: `bin/progress` in rebof3 writes `progress.jso
 | --- | --- |
 | `progress.json` | The data. `scripts/publish-progress` copies it here. Schema 2 is described below. |
 | `index.html`, `style.css`, `app.js` | The page. `app.js` draws `progress.json`; the build reuses it for the picture. |
-| `layout.js`, `layout.test.mjs` | Places each map row of a target on its strip (`node --test layout.test.mjs`). |
+| `layout.js`, `layout.test.mjs` | Places every target and map row as a rectangle of the address treemap (area = bytes, address order) with `d3-hierarchy`'s `treemapBinary` (`node --test layout.test.mjs`). |
+| `vendor/d3-hierarchy.js` | Vendored `d3-hierarchy` 3.1.2 treemap code (ISC licence in the file), so the page and the renderer need no network fetch. |
 | `render/` | Renders `progress.png`, `progress.svg` and `badge.svg` from `progress.json` with resvg. |
 | `.github/workflows/pages.yml` | On each push to `main`, builds and deploys GitHub Pages. |
 
