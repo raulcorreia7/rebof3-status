@@ -29,4 +29,6 @@ td.r,th.r{text-align:right}
 tbody tr+tr td{border-top:1px solid var(--line)}
 details{margin-top:1.6rem;font-size:.9rem}summary{cursor:pointer;color:var(--mute)}
 input[type=search]{font:inherit;padding:6px 10px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--ink);width:100%;max-width:320px;margin-top:8px}
+.pill{display:inline-block;padding:0 8px;border-radius:3px;background:var(--c);color:#fff;font-size:.78rem;font-weight:600}
+details.lib{margin-top:.8rem}details.lib summary b{color:var(--ink)}
 @media (max-width:640px){h1{font-size:1.3rem}}
