@@ -16,11 +16,10 @@ The decompilation measures itself: `bin/progress` in rebof3 writes `progress.jso
 | --- | --- |
 | `progress.json` | The data. `scripts/publish-progress` copies it here. Schema 2 is described below. |
 | `index.html`, `style.css`, `app.js` | The page. `app.js` draws `progress.json`; the build reuses it for the picture. |
-| `layout.js`, `layout.test.mjs` | Places each map row of a target on its strip, packs hidden rows and fits labels to their room (`node --test layout.test.mjs`). |
 | `render/` | Renders `progress.png`, `progress.svg` and `badge.svg` from `progress.json` with resvg. |
 | `.github/workflows/pages.yml` | On each push to `main`, builds and deploys GitHub Pages. |
 
-The strips hide reserved load space by default: the executable's load slots, the loader tail and the Splat map's pad and gap rows. The page's "show reserved space" switch draws those spans as muted hatched blocks. `progress.json` carries no reserved class, so the page infers them from row names.
+The map has two tile panels: game functions grouped by target and PsyQ library functions grouped by library. Block area is code bytes, with an 80-byte floor per function so a stub stays visible; one square is one function, coloured by status. `app.js` derives the game function records from the schema-2 `units` rows (`kind` `f`) before drawing, so the page needs no second data file.
 
 ## `progress.json` schema 2
 
