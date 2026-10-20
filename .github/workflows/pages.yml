@@ -25,6 +25,7 @@ jobs:
           cache-dependency-path: render/package-lock.json
       - run: sudo apt-get install -y fonts-dejavu-core
       - run: npm ci --prefix render
+      - run: node --test layout.test.mjs
       - run: node render/build.mjs site
       - uses: actions/upload-pages-artifact@v3
         with:
