@@ -1,49 +1,35 @@
 // Status board for the Breath of Fire III decompilation.
 //
-// render(data) turns progress.json into one SVG string: the same string becomes progress.svg and
-// progress.png (build.mjs). page(data) returns the web page. badge(data) returns the README badge.
-// The file has no dependencies and runs in a browser and in Node. layout.js places the map rows.
-
-import { fitText, pack, pickScale, place, stripRows } from "./layout.js";
+// render(data) draws the picture (progress.svg and progress.png through build.mjs), page(data)
+// returns the web page, and badge(data) returns the README badge. The file has no dependencies
+// and runs in a browser and in Node.
 
 const WIDTH = 1600;
 const MARGIN = 24;
 const GAP = 20;
-const MAP_WIDTH = 1020;
-const SIDE_WIDTH = WIDTH - 2 * MARGIN - MAP_WIDTH - GAP;
-const PAGE_WIDTH = 1020;
+const GAME_WIDTH = 1020;
+const SIDE_WIDTH = WIDTH - 2 * MARGIN - GAME_WIDTH - GAP;
 const FONT = "'DejaVu Sans', Verdana, Arial, sans-serif";
 
-// Address map: one strip per target.
-const STRIP_GUTTER = 84; // room for the row start addresses
-const STRIP_ROW = 11; // pixels per strip row
-const STRIP_ROW_GAP = 1;
-const STRIP_MAX_ROWS = 14; // the finest scale that fits this many rows is used
-const STRIP_HEAD = 38;
-const STRIP_SPACE = 16;
-
-// Rows that hold reserved load space rather than code or data: the executable's load slots and
-// the tail a loader leaves for overlays, plus the Splat map's pad and gap rows. progress.json
-// carries no class for them, so their names name them; a row of another kind is never reserved.
-const RESERVED_ROW = /^(psx_exe_header|entry_header|post_emi_loader_tail|post_emi_gap|pad_|.*_pad$|.*_gap$|arena|.*_arena$)/;
+// Pixels of panel area per code byte; sets how large the tiles are.
+const AREA_PER_BYTE = 0.85;
+// A function counts for at least this many bytes, so a stub still gets a visible tile.
+const MIN_BYTES = 80;
+// A block smaller than this many pixels joins the "other" block, which names its members.
+const MERGE_AREA = 2300;
+// The SDK panel is drawn at this multiple of the game tile scale so its libraries stay readable.
+const SDK_SCALE = 2;
+const INSET = 2;
+const TILE_GAP = 1;
+const LABEL_SIZE = 15;
 
 const BACKGROUND = "#0d1117";
 const OUTLINE = "#30363d";
 const INK = "#c9d1d9";
 const MUTED = "#8b949e";
 const TRACK = "#21262d";
-const CARD = "#161b22";
 
-// The muted, hatched fill of a reserved span. The pattern is inline so the picture carries it too.
-const RESERVED_FILL = "#21262d";
-const RESERVED_STRIPE = "#3b434d";
-const RESERVED_HATCH =
-  `<defs><pattern id="reserved-space" width="8" height="8" patternUnits="userSpaceOnUse">` +
-  `<rect width="8" height="8" fill="${RESERVED_FILL}"/>` +
-  `<path d="M-2 2L2 -2M0 8L8 0M6 10L10 6" stroke="${RESERVED_STRIPE}" stroke-width="2"/>` +
-  `</pattern></defs>`;
-
-// Function status -> [legend text, colour], finished work first.
+// Status key -> [legend text, tile colour], in tile order: finished work first.
 const STATUS = {
   pure: ["matched C", "#2ea043"],
   aided: ["matched C with aids", "#7ee787"],
@@ -53,27 +39,7 @@ const STATUS = {
   nonmatching: ["in progress (C, not yet exact)", "#d29922"],
   open: ["assembly", "#4b535d"],
 };
-// Map rows that are not functions.
-const DATA_STATUS = {
-  typed: ["data typed in C", "#a371f7"],
-  raw: ["data and raw bytes", "#30363d"],
-  header: ["file header", "#6e7681"],
-};
-const LABEL = { ...STATUS, ...DATA_STATUS };
 const ORDER = Object.keys(STATUS);
-const DONE = ["pure", "aided", "asm"];
-
-// PsyQ match tier -> [legend text, colour], best first (the order of libraries[].tiers).
-const TIER = {
-  c: ["exact C", STATUS.pure[1]],
-  object: ["exact object", STATUS.object[1]],
-  partial: ["partial match", "#e3b341"],
-  assembly: ["assembly only", STATUS.assembly[1]],
-  unmatched: ["unmatched", STATUS.open[1]],
-};
-const TIER_ORDER = Object.keys(TIER);
-
-const LINK_COLOR = { EXACT: STATUS.pure[1], DIFFERS: "#f85149", ERROR: "#f85149" };
 
 const number = (value) => value.toLocaleString("en-US");
 const share = (done, total) => (total ? (100 * done) / total : 0);
@@ -82,6 +48,19 @@ const round = (value) => Math.round(value * 100) / 100;
 const hex = (value) => `0x${value.toString(16).toUpperCase().padStart(8, "0")}`;
 const escape = (text) =>
   String(text).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+
+// progress.json schema 2 lists map rows as `units`; this page maps game functions, so derive
+// them once from the `f` rows. Schema 1 carried the same records as targets[].functions.
+function addGameFunctions(data) {
+  for (const target of data.targets) {
+    if (target.functions) continue;
+    const base = parseInt(target.base, 16);
+    target.functions = target.units
+      .filter(([, , kind]) => kind === "f")
+      .map(([offset, size, , status, name]) => ({ addr: hex(base + offset), name, bytes: size, status }));
+  }
+  return data;
+}
 
 // Text width in pixels, estimated from DejaVu Sans widths so the browser and Node agree.
 function textWidth(text, size) {
@@ -96,11 +75,20 @@ function textWidth(text, size) {
   return em * size;
 }
 
+// `content` cut with an ellipsis so it measures at most `room` pixels.
+function shorten(content, size, room) {
+  if (textWidth(content, size) <= room) return content;
+  let cut = content;
+  while (cut && textWidth(cut + "…", size) > room) cut = cut.slice(0, -1);
+  return cut ? cut + "…" : "";
+}
+
 // Text whose top edge is y; anchor is "start", "middle" or "end".
-function text(x, y, content, size, fill, { anchor = "start", weight = "normal" } = {}) {
+function text(x, y, content, size, fill, { anchor = "start", weight = "normal", outline = false } = {}) {
+  const halo = outline ? ` stroke="${BACKGROUND}" stroke-width="3" stroke-linejoin="round" paint-order="stroke"` : "";
   return (
     `<text x="${round(x)}" y="${round(y + size * 0.8)}" font-size="${size}" fill="${fill}"` +
-    ` text-anchor="${anchor}" font-weight="${weight}" pointer-events="none">${escape(content)}</text>`
+    ` text-anchor="${anchor}" font-weight="${weight}"${halo} pointer-events="none">${escape(content)}</text>`
   );
 }
 
@@ -110,123 +98,166 @@ const rect = (x, y, w, h, fill, inner = "", className = "") => {
 };
 
 const frame = (x, y, w, h, color) =>
-  `<rect x="${round(x)}" y="${round(y)}" width="${round(w)}" height="${round(h)}" fill="none" stroke="${color}"/>`;
+  `<rect x="${round(x)}" y="${round(y)}" width="${round(w)}" height="${round(h)}" fill="none" stroke="${color}" pointer-events="none"/>`;
 
-const heading = (x, y, title) => text(x, y, title, 24, INK);
-
-// Address map ----------------------------------------------------------------------------
-
-const targetBytes = (target) => parseInt(target.end, 16) - parseInt(target.base, 16);
-
-// Executables first, then the overlays in id order.
-const mapOrder = (data) =>
-  [...data.targets].sort((a, b) => Number(b.id.startsWith("exe/")) - Number(a.id.startsWith("exe/")) || a.id.localeCompare(b.id));
-
-function unitTip(target, base, [offset, size, kind, status, name]) {
-  const id = kind === "d" ? `${target.id}+${hex(base + offset)}` : `${target.id}@${hex(base + offset)}`;
-  const note = kind === "s" ? " · PsyQ" : "";
-  return `${id} ${name} · ${LABEL[status][0]}${note} · ${number(size)} B`;
+// Squarified treemap (Bruls, Huizing and van Wijk, 2000): one [x, y, w, h] per weight.
+function worst(row, side) {
+  const total = row.reduce((a, b) => a + b, 0);
+  return Math.max(...row.map((item) => Math.max((side * side * item) / (total * total), (total * total) / (side * side * item))));
 }
 
-function reservedTip(target, base, [offset, size, , , name]) {
-  return `${target.id}+${hex(base + offset)} ${name} · reserved space · ${number(size)} B`;
-}
-
-const isReserved = (unit) => unit[2] === "d" && RESERVED_ROW.test(unit[4] || "");
-
-// The rows to draw. With reserved space hidden, `pack` closes its gaps so the remaining bytes
-// fill every strip row; with it shown, rows keep their address offsets and spare area is hatched.
-function mapEntries(target, showReserved) {
-  const units = [...target.units].sort((a, b) => a[0] - b[0]);
-  if (!showReserved) {
-    const { rows, size } = pack(units, (unit) => !isReserved(unit));
-    return { entries: rows.map(({ unit, at }) => ({ unit, offset: at, reserved: false })), size };
+function squarify(weights, x, y, w, h) {
+  const order = weights.map((_, index) => index).sort((a, b) => weights[b] - weights[a]);
+  const total = weights.reduce((a, b) => a + b, 0);
+  const out = weights.map(() => [x, y, 0, 0]);
+  if (total <= 0 || w <= 0 || h <= 0) return out;
+  const areas = order.map((index) => (weights[index] * w * h) / total);
+  let start = 0;
+  while (start < areas.length) {
+    const side = Math.min(w, h);
+    let end = start + 1;
+    while (end < areas.length && worst(areas.slice(start, end + 1), side) <= worst(areas.slice(start, end), side)) end++;
+    const row = areas.slice(start, end);
+    const thickness = row.reduce((a, b) => a + b, 0) / side;
+    let offset = 0;
+    row.forEach((area, k) => {
+      const length = area / thickness;
+      out[order[start + k]] = w >= h ? [x, y + offset, thickness, length] : [x + offset, y, length, thickness];
+      offset += length;
+    });
+    if (w >= h) [x, w] = [x + thickness, w - thickness];
+    else [y, h] = [y + thickness, h - thickness];
+    start = end;
   }
+  return out;
+}
+
+// The largest square pitch and column count that fit count tiles in a box.
+function grid(count, width, height) {
+  let best = [0, 1];
+  for (let cols = 1; cols <= count; cols++) {
+    const pitch = Math.min(width / cols, height / Math.ceil(count / cols));
+    if (pitch > best[0]) best = [pitch, cols];
+  }
+  return best;
+}
+
+// A block label in the box's top-left corner, shortened until it fits; null when none fits.
+function label(name, w, h) {
+  const short = name.replace(".EMI", "");
+  const [head, slot] = short.split(" slot ");
+  const two = slot === undefined ? null : [head, `slot ${slot}`];
+  const [stem, ext] = short.split(".");
+  const halves = ext !== undefined ? [stem, ext] : short.includes(" ") ? null : [short.slice(0, short.length >> 1), short.slice(short.length >> 1)];
+  const [lead, rest] = short.split(": ");
+  const listed = rest === undefined ? null : [`${lead}:`, ...rest.split(", ")];
+  const tries = [
+    [[name], LABEL_SIZE], [[short], LABEL_SIZE], [[short], LABEL_SIZE - 3], [two, LABEL_SIZE - 3],
+    [[short], LABEL_SIZE - 5], [two, LABEL_SIZE - 5], [listed, LABEL_SIZE - 3], [listed, LABEL_SIZE - 5],
+    [halves, LABEL_SIZE - 5], [halves, LABEL_SIZE - 7],
+  ];
+  for (const [lines, size] of tries) {
+    if (!lines) continue;
+    const tall = lines.length * (size + 2) + 3;
+    if (tall <= h && Math.max(...lines.map((line) => textWidth(line, size))) <= w - 8) return { lines, size };
+  }
+  return null;
+}
+
+const weightOf = (rows) => rows.reduce((sum, row) => sum + Math.max(row.bytes, MIN_BYTES), 0);
+
+// One block: a dense grid of square tiles and its label. Returns the SVG and whether the label fit.
+function block(rows, name, box) {
+  const x = box[0] + INSET;
+  const y = box[1] + INSET;
+  const w = box[2] - 2 * INSET;
+  const h = box[3] - 2 * INSET;
+  if (w < 2 || h < 2) return { svg: "", fitted: false };
+  const [pitch, cols] = grid(rows.length, w, h);
+  const edge = pitch - (pitch >= 4 ? TILE_GAP : 0);
+  let svg = "";
+  rows.forEach((row, index) => {
+    const [line, col] = [Math.floor(index / cols), index % cols];
+    svg += rect(x + col * pitch, y + line * pitch, edge, edge, STATUS[row.status][1], `<title>${escape(row.tip)}</title>`, "tile");
+  });
+  const fit = label(name, w, h);
+  if (fit) {
+    fit.lines.forEach((line, n) => {
+      svg += text(x + 4, y + 2 + n * (fit.size + 2), line, fit.size, "#ffffff", { outline: true });
+    });
+  }
+  return { svg, fitted: fit !== null };
+}
+
+// Rows in tile order: by status, then address.
+function sorted(rows) {
+  return [...rows].sort(
+    (a, b) => ORDER.indexOf(a.status) - ORDER.indexOf(b.status) || a.target.localeCompare(b.target) || a.address - b.address,
+  );
+}
+
+function tile(target, fn) {
   return {
-    entries: units.map((unit) => ({ unit, offset: unit[0], reserved: isReserved(unit) })),
-    size: targetBytes(target),
+    status: fn.status,
+    bytes: fn.bytes,
+    target,
+    address: parseInt(fn.addr, 16),
+    tip: `${target}@${fn.addr} ${fn.name} · ${STATUS[fn.status][0]} · ${number(fn.bytes)} B`,
   };
 }
 
-// The address at a byte position of the drawn rows, from the row that covers it.
-function addressAt(entries, position, fallback) {
-  for (const { unit, offset } of entries) {
-    if (position < offset + unit[1]) return unit[0] + Math.max(position - offset, 0);
-  }
-  const last = entries[entries.length - 1];
-  return last ? last.unit[0] + last.unit[1] : fallback;
+// Blocks under MERGE_AREA join one "other" block that names them.
+function mergeSmall(blocks, scale) {
+  const small = blocks.filter((b) => weightOf(b.rows) * AREA_PER_BYTE * scale < MERGE_AREA);
+  if (small.length < 2) return blocks;
+  const kept = blocks.filter((b) => !small.includes(b));
+  return [...kept, { name: `other: ${small.map((b) => b.name).join(", ")}`, rows: sorted(small.flatMap((b) => b.rows)) }];
 }
 
-const linkLabel = (target) => (target.link ? `image ${target.link.status}` : "image not linked");
-
-function linkPill(target, x, y) {
-  const label = linkLabel(target);
-  const w = textWidth(label, 11) + 14;
-  const color = target.link ? LINK_COLOR[target.link.status] : TRACK;
-  return rect(x - w, y, w, 16, color) + text(x - w / 2, y + 2, label, 11, "#fff", { anchor: "middle" });
-}
-
-// One strip: the target's address range wrapped into rows of equal byte length.
-function strip(target, x, y, width, showReserved) {
-  const mapX = x + STRIP_GUTTER;
-  const mapWidth = width - STRIP_GUTTER;
-  const base = parseInt(target.base, 16);
-  const { entries, size } = mapEntries(target, showReserved);
-  const scale = pickScale(size, mapWidth, STRIP_MAX_ROWS);
-  const rows = stripRows(size, scale, mapWidth);
-  const rowBytes = scale * mapWidth;
-  const top = y + STRIP_HEAD;
-  const pitch = STRIP_ROW + STRIP_ROW_GAP;
-  const counts = target.counts;
-  const matched = target.units.filter((u) => u[2] === "f" && DONE.includes(u[3])).length;
-  const game = target.units.filter((u) => u[2] === "f").length;
-  const headRoom = width - textWidth(linkLabel(target), 11) - 14 - 10;
-  const name = fitText(target.name, 15, headRoom, textWidth);
-  let svg = name ? text(x, y, name, 15, INK, { weight: "bold" }) : "";
-  const detail =
-    `${target.id} · ${hex(base)}-${hex(base + targetBytes(target))} · ${number(targetBytes(target))} B · ${number(counts.total)} functions` +
-    (game ? ` · ${percent(matched, game, 1)}% of game code matched` : "") +
-    ` · 1 px = ${scale} B`;
-  const detailText = fitText(detail, 12, headRoom, textWidth);
-  if (detailText) svg += text(x, y + 19, detailText, 12, MUTED);
-  svg += linkPill(target, x + width, y + 1);
-  for (let row = 0; row < rows; row++) {
-    const rowTop = top + row * pitch;
-    svg += rect(mapX, rowTop, mapWidth, STRIP_ROW, TRACK, "", "track");
-    const address = showReserved ? hex(base + row * rowBytes) : hex(addressAt(entries, row * rowBytes, base));
-    const label = fitText(address, 9, STRIP_GUTTER - 10, textWidth);
-    if (label) svg += text(x + STRIP_GUTTER - 6, rowTop + 1, label, 9, MUTED, { anchor: "end" });
-  }
-  const labelled = new Set();
-  for (const [index, row, px, w] of place(entries.map(({ offset, unit }) => [offset, unit[1]]), scale, mapWidth)) {
-    const { unit, reserved } = entries[index];
-    const fill = reserved ? "url(#reserved-space)" : LABEL[unit[3]][1];
-    const tip = reserved ? reservedTip(target, base, unit) : unitTip(target, base, unit);
-    svg += rect(mapX + px, top + row * pitch, w, STRIP_ROW, fill, `<title>${escape(tip)}</title>`, reserved ? "block reserved" : "block");
-    const label = reserved && !labelled.has(index) ? fitText("reserved", 10, w - 6, textWidth) : "";
-    if (label) {
-      labelled.add(index);
-      svg += text(mapX + px + 3, top + row * pitch + 1, label, 10, INK);
-    }
-  }
-  return { svg, bottom: top + rows * pitch };
-}
-
-// Every target's strip, one under the other. Reserved space is hidden unless asked for, so the
-// strips scale their code and data to fill the width.
-function addressMap(data, x, y, width, { showReserved = false } = {}) {
-  const hatch = showReserved && data.targets.some((target) => target.units.some(isReserved)) ? RESERVED_HATCH : "";
-  let svg = hatch;
-  let at = y;
-  for (const target of mapOrder(data)) {
-    const drawn = strip(target, x, at, width, showReserved);
+// A panel: heading, blocks by code bytes. Returns the SVG and the y below it.
+function panel(title, blocks, x, y, width, scale) {
+  const head = title === null ? 0 : 40;
+  const merged = mergeSmall(blocks, scale);
+  const area = merged.reduce((sum, b) => sum + weightOf(b.rows), 0) * AREA_PER_BYTE * scale;
+  const height = area / width;
+  const top = y + head;
+  const boxes = squarify(merged.map((b) => weightOf(b.rows)), x, top, width, height);
+  let svg = title === null ? "" : text(x, y, shorten(title, 24, width), 24, INK);
+  const leaders = [];
+  merged.forEach((b, index) => {
+    const drawn = block(b.rows, b.name, boxes[index]);
     svg += drawn.svg;
-    at = drawn.bottom + STRIP_SPACE;
+    if (!drawn.fitted) leaders.push([b, boxes[index]]);
+  });
+  svg += frame(x - 1, top - 1, width + 2, height + 2, OUTLINE);
+  let bottom = top + height;
+  for (const [b, box] of leaders) {
+    const cx = box[0] + box[2] / 2;
+    svg += `<path d="M${round(cx)} ${round(box[1] + box[3] / 2)}V${round(bottom + 8)}" stroke="${MUTED}" fill="none"/>`;
+    svg += text(x + width, bottom + 10, shorten(b.name, 14, width), 14, INK, { anchor: "end" });
+    bottom += 20;
   }
-  return { svg, bottom: at - STRIP_SPACE };
+  return { svg, bottom: bottom + (leaders.length ? 8 : 0) };
 }
 
-// Cards, legend, bars ----------------------------------------------------------------------
+function gamePanel(data) {
+  const blocks = data.targets
+    .filter((target) => target.functions.length)
+    .map((target) => ({ name: target.name, rows: sorted(target.functions.map((fn) => tile(target.id, fn))) }));
+  const game = data.summary.game;
+  const title = `Game code: ${percent(game.done_functions, game.functions)}% matched (${number(game.done_functions)} / ${number(game.functions)})`;
+  return { title, blocks };
+}
+
+function sdkPanel(data) {
+  const blocks = data.libraries.map((lib) => ({
+    name: lib.name,
+    rows: sorted(lib.functions.map((fn) => tile(fn.target, fn))),
+  }));
+  const sdk = data.summary.sdk;
+  const title = `PsyQ SDK: ${percent(sdk.done_functions, sdk.functions)}% object or C (${number(sdk.done_functions)} / ${number(sdk.functions)})`;
+  return { title, blocks };
+}
 
 // Four headline cards: big share, then what it counts.
 function cards(data, y) {
@@ -236,14 +267,14 @@ function cards(data, y) {
     [`${percent(game.done_bytes, game.bytes, 1)}%`, "Game code bytes matched", `${number(game.done_bytes)} of ${number(game.bytes)} B`, STATUS.pure[1]],
     [`${percent(sdk.done_functions, sdk.functions, 1)}%`, "PsyQ SDK as object or C", `${number(sdk.done_functions)} of ${number(sdk.functions)} functions`, STATUS.object[1]],
     bytes
-      ? [`${percent(bytes.typed, bytes.bytes, 2)}%`, "Data typed in C", `${number(bytes.typed)} of ${number(bytes.bytes)} B`, DATA_STATUS.typed[1]]
+      ? [`${percent(bytes.typed, bytes.bytes, 2)}%`, "Data typed in C", `${number(bytes.typed)} of ${number(bytes.bytes)} B`, STATUS.asm[1]]
       : ["from next run", "Data typed in C", "measured by bin/progress", MUTED],
   ];
   const width = (WIDTH - 2 * MARGIN - 3 * GAP) / 4;
   let svg = "";
   items.forEach(([big, title, sub, color], index) => {
     const x = MARGIN + index * (width + GAP);
-    svg += rect(x, y, width, 92, CARD) + frame(x + 0.5, y + 0.5, width - 1, 91, OUTLINE);
+    svg += rect(x, y, width, 92, "#161b22") + frame(x + 0.5, y + 0.5, width - 1, 91, OUTLINE);
     svg += text(x + 16, y + 9, title, 15, INK);
     svg += text(x + 16, y + 34, big, 44, color, { weight: "bold" });
     svg += text(x + 16 + textWidth(big, 44) * 1.18 + 14, y + 56, sub, 14, MUTED);
@@ -252,9 +283,9 @@ function cards(data, y) {
 }
 
 // The status legend, one row per status with its function count and code share.
-function legend(data, x, y) {
+function legend(data, x, y, width) {
   const totals = data.summary.code;
-  let svg = heading(x, y, "Status of every function");
+  let svg = text(x, y, "Status of every function", 24, INK);
   ORDER.forEach((key, index) => {
     const [functions, bytes] = totals.statuses[key];
     const top = y + 40 + index * 38;
@@ -262,12 +293,7 @@ function legend(data, x, y) {
     svg += text(x + 30, top - 2, STATUS[key][0], 16, INK);
     svg += text(x + 30, top + 17, `${number(functions)} functions · ${percent(bytes, totals.bytes, 1)}% of code bytes`, 12, MUTED);
   });
-  let at = y + 40 + ORDER.length * 38;
-  for (const [, [name, color]] of Object.entries(DATA_STATUS)) {
-    svg += rect(x, at + 2, 20, 20, color) + text(x + 30, at + 2, name, 16, INK);
-    at += 30;
-  }
-  return { svg, bottom: at };
+  return { svg, bottom: y + 40 + ORDER.length * 38 };
 }
 
 // A horizontal bar of parts [value, colour] against a total.
@@ -282,87 +308,56 @@ function bar(x, y, width, height, parts, total) {
   return svg;
 }
 
+// Data panel: per target, the share of data bytes typed in C.
 function dataTitle(data) {
   const total = data.summary.data;
   return total ? `Data: ${percent(total.typed, total.bytes)}% typed in C (${number(total.typed)} / ${number(total.bytes)} B)` : "Data";
 }
 
-// Data panel: per target, the share of data bytes typed in C. Compact drops the byte counts.
-function dataPanel(data, x, y, width, { titled = true, compact = false } = {}) {
+function dataPanel(data, x, y, width, titled = true) {
   const rows = data.targets.filter((t) => t.data && t.data.bytes).sort((a, b) => b.data.bytes - a.data.bytes);
   const head = titled ? 40 : 0;
-  let svg = titled ? heading(x, y, compact ? "Data typed in C" : dataTitle(data)) : "";
-  const nameWidth = compact ? 150 : 180;
-  const valueWidth = compact ? 52 : 250;
+  let svg = titled ? text(x, y, dataTitle(data), 24, INK) : "";
+  const nameWidth = 180;
+  const valueWidth = 250;
   const barWidth = width - nameWidth - valueWidth - 16;
   rows.forEach((t, index) => {
     const top = y + head + index * 22;
-    const value = compact ? `${percent(t.data.typed, t.data.bytes, 1)}%` : `${percent(t.data.typed, t.data.bytes, 1)}% · ${number(t.data.typed)} / ${number(t.data.bytes)} B`;
+    // The full bar is the target's data bytes; the green part is the share typed in C.
     svg += text(x, top, t.name, 13, INK);
-    svg += bar(x + nameWidth, top + 1, barWidth, 14, [[t.data.typed, DATA_STATUS.typed[1]]], t.data.bytes);
-    svg += text(x + width, top, value, 13, MUTED, { anchor: "end" });
+    svg += bar(x + nameWidth, top + 1, barWidth, 14, [[t.data.typed, STATUS.pure[1]]], t.data.bytes);
+    svg += text(x + width, top, `${percent(t.data.typed, t.data.bytes, 1)}% · ${number(t.data.typed)} / ${number(t.data.bytes)} B`, 13, MUTED, { anchor: "end" });
   });
   return { svg, bottom: y + head + rows.length * 22 };
 }
 
-// PsyQ libraries --------------------------------------------------------------------------
-
-const LIBRARY_TITLE = "PsyQ libraries, best match first";
-const LIBRARY_ROW = 40;
-
-const libraryDone = (lib) => lib.tiers.c + lib.tiers.object;
-
-// The PsyQ versions the library's exact objects link from, as "4.0 x198 · 4.7 x177".
-const versionText = (lib) =>
-  Object.entries(lib.versions)
-    .map(([version, units]) => `${version} ×${units}`)
-    .join(" · ");
-
-function libraryNote(lib) {
-  const parts = [];
-  const versions = versionText(lib);
-  if (versions) parts.push(`objects from PsyQ ${versions}`);
-  if (lib.tiers.partial) parts.push(`${lib.tiers.partial} partial`);
-  if (lib.tiers.assembly) parts.push(`${lib.tiers.assembly} assembly only`);
-  if (lib.tiers.unmatched) parts.push(`${lib.tiers.unmatched} unmatched`);
-  return parts.join(" · ") || "no match";
-}
-
-function tierLegend(x, y) {
-  let svg = "";
-  let at = x;
-  for (const key of TIER_ORDER) {
-    svg += rect(at, y + 2, 10, 10, TIER[key][1]) + text(at + 15, y, TIER[key][0], 12, MUTED);
-    at += 15 + textWidth(TIER[key][0], 12) + 14;
-  }
-  return svg;
-}
+// Library panel: per PsyQ library, its functions by status and the versions it links from.
+const LIBRARY_TITLE = "PsyQ libraries and versions";
 
 function libraryPanel(data, x, y, width, titled = true) {
-  const head = titled ? 40 : 0;
-  let svg = titled ? heading(x, y, LIBRARY_TITLE) : "";
-  svg += tierLegend(x, y + head);
-  const libs = data.libraries;
-  const peak = Math.max(...libs.map((lib) => lib.functions.length), 1);
-  const nameWidth = 78;
-  const countWidth = 70;
-  const barWidth = width - nameWidth - countWidth;
-  const top0 = y + head + 24;
-  libs.forEach((lib, index) => {
-    const top = top0 + index * LIBRARY_ROW;
-    const length = Math.max((lib.functions.length / peak) * barWidth, 2);
-    svg += text(x, top, lib.name, 14, INK);
-    svg += bar(x + nameWidth, top + 1, length, 14, TIER_ORDER.map((key) => [lib.tiers[key], TIER[key][1]]), lib.functions.length);
-    svg += text(x + width, top, `${number(libraryDone(lib))} / ${number(lib.functions.length)}`, 13, MUTED, { anchor: "end" });
-    svg += text(x + nameWidth, top + 19, libraryNote(lib), 11, MUTED);
-  });
   const sdk = data.summary.sdk;
-  const key = `${number(sdk.statuses.object[0])} objects · ${number(sdk.statuses.assembly[0])} assembly · ${number(sdk.statuses.pure[0] + sdk.statuses.aided[0])} C · done = exact C or exact object`;
-  svg += text(x, top0 + libs.length * LIBRARY_ROW, key, 12, MUTED);
-  return { svg, bottom: top0 + libs.length * LIBRARY_ROW + 22 };
+  const head = titled ? 40 : 0;
+  let svg = titled ? text(x, y, LIBRARY_TITLE, 24, INK) : "";
+  const libs = data.libraries.filter((lib) => lib.functions.length > 2);
+  const peak = Math.max(...libs.map((lib) => weightOf(lib.functions)), 1);
+  const nameWidth = 70;
+  const barWidth = width - nameWidth - 96;
+  libs.forEach((lib, index) => {
+    const top = y + head + index * 36;
+    const count = Object.fromEntries(ORDER.map((key) => [key, 0]));
+    for (const fn of lib.functions) count[fn.status] += 1;
+    const done = count.pure + count.aided + count.object;
+    const length = Math.max((weightOf(lib.functions) / peak) * barWidth, 2);
+    svg += text(x, top, lib.name, 14, INK);
+    svg += bar(x + nameWidth, top + 1, length, 14, ORDER.map((key) => [count[key], STATUS[key][1]]), lib.functions.length);
+    svg += text(x + width, top, `${number(done)} / ${number(lib.functions.length)}`, 13, MUTED, { anchor: "end" });
+    const versions = Object.entries(lib.versions).map(([version, units]) => `${version} ×${units}`).join(" · ");
+    svg += text(x + nameWidth, top + 18, versions ? `objects from PsyQ ${versions}` : "linked from original assembly", 11, MUTED);
+  });
+  const key = `${number(sdk.statuses.object[0])} objects · ${number(sdk.statuses.assembly[0])} assembly · ${number(sdk.statuses.pure[0] + sdk.statuses.aided[0])} C`;
+  svg += text(x, y + head + libs.length * 36, key, 13, MUTED);
+  return { svg, bottom: y + head + libs.length * 36 + 22 };
 }
-
-// Quality and trend -------------------------------------------------------------------------
 
 // Quality row: the counters of bin/status.
 function qualityRow(data, y) {
@@ -375,11 +370,11 @@ function qualityRow(data, y) {
     ["Hand assembly", number(q.hand_asm), "files in the hand folders"],
   ];
   const width = (WIDTH - 2 * MARGIN - 4 * GAP) / 5;
-  let svg = heading(MARGIN, y, "Code quality");
+  let svg = text(MARGIN, y, "Code quality", 24, INK);
   items.forEach(([name, value, sub], index) => {
     const x = MARGIN + index * (width + GAP);
     const top = y + 40;
-    svg += rect(x, top, width, 70, CARD) + frame(x + 0.5, top + 0.5, width - 1, 69, OUTLINE);
+    svg += rect(x, top, width, 70, "#161b22") + frame(x + 0.5, top + 0.5, width - 1, 69, OUTLINE);
     svg += text(x + 14, top + 8, value, 30, INK, { weight: "bold" });
     svg += text(x + 14 + textWidth(value, 30) * 1.18 + 12, top + 10, name, 15, INK);
     svg += text(x + 14, top + 46, sub, 12, MUTED);
@@ -391,7 +386,7 @@ function qualityRow(data, y) {
 function chart(title, points, x, y, width, height, color, format) {
   let svg = text(x, y, points.length ? `${title}: ${format(points[points.length - 1][1])}` : title, 16, INK);
   const plot = [x + 4, y + 30, x + width - 6, y + height - 22];
-  svg += rect(plot[0], plot[1], plot[2] - plot[0], plot[3] - plot[1], CARD);
+  svg += rect(plot[0], plot[1], plot[2] - plot[0], plot[3] - plot[1], "#161b22");
   if (!points.length) return svg + text(plot[0] + 12, plot[1] + 12, "starts with the next published run", 13, MUTED);
   const days = points.map(([date]) => Date.parse(date) / 864e5);
   const span = Math.max(days[days.length - 1] - days[0], 1);
@@ -421,21 +416,22 @@ function trends(data, y, { x = MARGIN, width: total = WIDTH - 2 * MARGIN, cols =
   const count = (key) => (row) => row[key];
   const share1 = (value) => `${value.toFixed(1)}%`;
   const share2 = (value) => `${value.toFixed(2)}%`;
+  const whole = (value) => number(value);
   const charts = [
     ["Matched functions over time", series(h, ratio("game_matched", "game_functions"), { trimZero: true }), STATUS.pure[1], share1],
     ["Matched code bytes over time", series(h, ratio("game_matched_bytes", "game_bytes"), { trimZero: true }), STATUS.pure[1], share1],
     ["PsyQ SDK as object or C over time", series(h, ratio("sdk_done", "sdk_functions")), STATUS.object[1], share1],
-    ["Data typed in C over time", series(h, ratio("data_typed", "data_bytes")), DATA_STATUS.typed[1], share2],
-    ["Aids in use over time", series(h, count("aids")), MUTED, number],
-    ["Harmful aids over time", series(h, count("harmful_aids")), STATUS.nonmatching[1], number],
-    ["FIELD uses over time", series(h, count("field_ref")), MUTED, number],
-    ["Local externs over time", series(h, count("local_externs")), MUTED, number],
+    ["Data typed in C over time", series(h, ratio("data_typed", "data_bytes")), STATUS.asm[1], share2],
+    ["Aids in use over time", series(h, count("aids")), MUTED, whole],
+    ["Harmful aids over time", series(h, count("harmful_aids")), STATUS.nonmatching[1], whole],
+    ["FIELD uses over time", series(h, count("field_ref")), MUTED, whole],
+    ["Local externs over time", series(h, count("local_externs")), MUTED, whole],
   ];
   const width = (total - (cols - 1) * GAP) / cols;
   const height = 170;
   const head = titled ? 40 : 0;
   const rows = Math.ceil(charts.length / cols);
-  let svg = titled ? heading(x, y, "Trend") : "";
+  let svg = titled ? text(x, y, "Trend", 24, INK) : "";
   charts.forEach(([title, points, color, format], index) => {
     const [row, col] = [Math.floor(index / cols), index % cols];
     svg += chart(title, points, x + col * (width + GAP), y + head + row * (height + 16), width, height, color, format);
@@ -443,30 +439,31 @@ function trends(data, y, { x = MARGIN, width: total = WIDTH - 2 * MARGIN, cols =
   return { svg, bottom: y + head + rows * (height + 16) - 16 };
 }
 
-// Picture and badge -------------------------------------------------------------------------
-
-const MAP_TITLE = "Game and PsyQ code at its address";
-
 export function render(data) {
+  addGameFunctions(data);
   let svg = "";
   const date = data.generated_at.slice(0, 10);
   svg += text(MARGIN, MARGIN - 4, "Breath of Fire III decompilation status", 34, INK, { weight: "bold" });
-  svg += text(MARGIN, MARGIN + 38, `rebof3 ${data.commit.slice(0, 7)} · ${date} · every function and data row at its address, coloured by status`, 15, MUTED);
+  svg += text(MARGIN, MARGIN + 38, `rebof3 ${data.commit.slice(0, 7)} · ${date} · block area is code bytes, one square per function`, 15, MUTED);
   const top = cards(data, MARGIN + 70);
   svg += top.svg;
 
-  const start = top.bottom + GAP + 6;
-  svg += heading(MARGIN, start, MAP_TITLE);
-  const map = addressMap(data, MARGIN, start + 44, MAP_WIDTH);
-  svg += map.svg;
+  const game = gamePanel(data);
+  const left = panel(game.title, game.blocks, MARGIN, top.bottom + GAP + 6, GAME_WIDTH, 1);
+  const right = MARGIN + GAME_WIDTH + GAP;
+  const sdk = sdkPanel(data);
+  const side = panel(sdk.title, sdk.blocks, right, top.bottom + GAP + 6, SIDE_WIDTH, SDK_SCALE);
+  svg += left.svg + side.svg;
+  svg += legend(data, right, side.bottom + GAP, SIDE_WIDTH).svg;
+  const legendBottom = side.bottom + GAP + 40 + ORDER.length * 38;
 
-  const right = MARGIN + MAP_WIDTH + GAP;
-  const key = legend(data, right, start);
-  const libs = libraryPanel(data, right, key.bottom + GAP, SIDE_WIDTH);
-  const bytes = dataPanel(data, right, libs.bottom + GAP, SIDE_WIDTH, { compact: true });
-  svg += key.svg + libs.svg + bytes.svg;
+  const rowTop = Math.max(left.bottom, legendBottom) + 2 * GAP;
+  const dataBox = dataPanel(data, MARGIN, rowTop, GAME_WIDTH);
+  const libBox = libraryPanel(data, right, rowTop, SIDE_WIDTH);
+  svg += dataBox.svg + libBox.svg;
 
-  const quality = qualityRow(data, Math.max(map.bottom, bytes.bottom) + 2 * GAP);
+  const qualityTop = Math.max(dataBox.bottom, libBox.bottom) + 2 * GAP;
+  const quality = qualityRow(data, qualityTop);
   svg += quality.svg;
   const trend = trends(data, quality.bottom + 2 * GAP);
   svg += trend.svg;
@@ -494,21 +491,24 @@ export function badge(data) {
   );
 }
 
-// Page ---------------------------------------------------------------------------------------
+// Page ---------------------------------------------------------------------------------
+
+const PAGE_WIDTH = 1020;
+const FRAGMENT_PAD = 4; // room for the first label's ascent
 
 const fragment = (svg, height, label) =>
-  `<svg class="map" viewBox="0 0 ${PAGE_WIDTH} ${Math.ceil(height)}" role="img" aria-label="${escape(label)}">${svg}</svg>`;
+  `<svg class="map" viewBox="0 0 ${PAGE_WIDTH} ${Math.ceil(height) + FRAGMENT_PAD}" role="img" aria-label="${escape(label)}">` +
+  `<g transform="translate(0 ${FRAGMENT_PAD})">${svg}</g></svg>`;
 
 // Matched share of game code per area: the executables, then each EMI family.
 function areas(data) {
   const found = new Map();
   for (const target of data.targets) {
-    const game = target.units.filter((u) => u[2] === "f");
-    if (!game.length) continue;
+    if (!target.functions.length) continue;
     const key = target.id === "exe/logo" ? "logo" : target.id.startsWith("exe/") ? "EXE" : target.id.split("/").slice(0, 2).join("/");
     const entry = found.get(key) ?? [0, 0];
-    entry[1] += game.length;
-    entry[0] += game.filter((u) => DONE.includes(u[3])).length;
+    entry[1] += target.functions.length;
+    entry[0] += target.functions.filter((fn) => ["pure", "aided", "asm"].includes(fn.status)).length;
     found.set(key, entry);
   }
   return [...found].map(([label, [done, total]]) => [label, share(done, total)]);
@@ -517,108 +517,26 @@ function areas(data) {
 const badgeHtml = (label, value, kind) => `<span class="badge"><b>${escape(label)}</b><i class="${kind}">${escape(value)}</i></span>`;
 const level = (value) => (value >= 66 ? "" : value >= 33 ? "mid" : "low");
 
-function linkBadge(links) {
-  if (!links) return "";
-  return badgeHtml("image links", `${links.exact}/${links.targets} exact`, links.exact === links.targets ? "" : "low");
-}
-
-// The verification section: image links and the audit of the units against the Splat maps.
-function verification(data) {
-  const { links, layout } = data.summary;
-  const differing = data.targets.filter((t) => t.link && t.link.status !== "EXACT");
-  const lines = [];
-  if (links) {
-    const names = differing.map((t) => `${t.id}${t.link.first_mismatch === null || t.link.first_mismatch === undefined ? "" : ` (first difference at ${hex(parseInt(t.base, 16) + t.link.first_mismatch)})`}`);
-    lines.push(
-      `<b>Image links:</b> ${links.exact} of ${links.targets} targets link byte-identical to the retail binary` +
-        (names.length ? `; ${escape(names.join(", "))} ${names.length > 1 ? "differ" : "differs"}.` : "."),
-    );
-  } else {
-    lines.push("<b>Image links:</b> not measured in this run.");
-  }
-  lines.push(
-    `<b>Address map:</b> ${number(layout.rows)} map rows; ${layout.gaps} gaps and ${layout.overlaps} overlaps between rows;` +
-      ` ${layout.problems} differences that touch code.` +
-      (layout.relocated || layout.unmodelled || layout.resized
-        ? ` Against these rows, the units behind bin/status place ${layout.relocated} raw rows of the executables at another address, lack ${layout.unmodelled} rows of top-level segments and size ${layout.resized} data rows too large. None of them is a function.`
-        : ""),
-  );
-  return lines.map((line) => `<p class="small">${line}</p>`).join("");
-}
-
-function targetRow(target) {
-  const game = target.units.filter((u) => u[2] === "f");
-  const matched = game.filter((u) => DONE.includes(u[3])).length;
-  const verdict = target.link ? target.link.status : null;
-  const pill = verdict ? `<span class="pill" style="--c:${LINK_COLOR[verdict]}">${verdict}</span>` : `<span class="mute">not linked</span>`;
-  const audit = target.layout;
-  const notes = [audit.gaps.length && `${audit.gaps.length} gaps`, audit.overlaps.length && `${audit.overlaps.length} overlaps`, audit.problems.length && `${audit.problems.length} problems`].filter(Boolean);
-  return (
-    `<tr><td>${escape(target.name)}<br><code class="mute">${escape(target.id)}</code></td>` +
-    `<td><code>${target.base}-${target.end}</code></td><td class="r">${number(targetBytes(target))}</td>` +
-    `<td class="r">${game.length ? `${number(matched)} / ${number(game.length)}` : "-"}</td><td>${pill}</td>` +
-    `<td>${notes.length ? escape(notes.join(", ")) : "clean"}</td></tr>`
-  );
-}
-
-function targetTable(data) {
-  return (
-    `<div class="scroll"><table><thead><tr><th>target</th><th>address range</th><th class="r">bytes</th>` +
-    `<th class="r">game matched</th><th>image link</th><th>map audit</th></tr></thead><tbody>` +
-    mapOrder(data).map(targetRow).join("") +
-    `</tbody></table></div>`
-  );
-}
-
-// One <details> per library; wireLibraries fills its table when it is first opened.
-function libraryDetails(data) {
-  return data.libraries
-    .map((lib, index) => {
-      const versions = versionText(lib);
-      const note = `${number(libraryDone(lib))} of ${number(lib.functions.length)} done${versions ? `, objects from PsyQ ${versions}` : ""}`;
-      return `<details class="lib" data-lib="${index}"><summary><b>${escape(lib.name)}</b> <span class="mute">${escape(note)}</span></summary><div class="scroll"></div></details>`;
-    })
-    .join("");
-}
-
-function libraryTable(lib) {
-  const rows = lib.functions
-    .map((fn) => {
-      const [name, color] = TIER[fn.tier];
-      const score = fn.score === null ? "" : `${fn.score}%`;
-      return (
-        `<tr><td><i class="chip" style="--c:${color}"></i>${escape(name)}</td><td>${escape(fn.name)}</td>` +
-        `<td><code>${escape(fn.target)}@${fn.addr}</code></td><td class="r">${number(fn.bytes)}</td>` +
-        `<td>${fn.version ? `PsyQ ${escape(fn.version)}` : ""}</td><td class="r">${score}</td></tr>`
-      );
-    })
-    .join("");
-  return `<table><thead><tr><th>match</th><th>function</th><th>address</th><th class="r">bytes</th><th>version</th><th class="r">score</th></tr></thead><tbody>${rows}</tbody></table>`;
-}
-
-function mapLegend() {
-  const labels = Object.values(LABEL)
-    .map(([name, color]) => `<span style="--c:${color}">${escape(name)}</span>`)
-    .join("");
-  return labels + `<span class="reserved" style="--c:${RESERVED_STRIPE}">reserved space</span>`;
-}
-
 export function page(data) {
-  const { game, sdk, data: bytes, quality, links } = data.summary;
+  addGameFunctions(data);
+  const { game, sdk, data: bytes, quality } = data.summary;
   const gameShare = share(game.done_functions, game.functions);
   const badges = [
     badgeHtml("game code*", `${gameShare.toFixed(2)}%`, level(gameShare)),
     ...areas(data).map(([label, value]) => badgeHtml(label, `${value.toFixed(2)}%`, level(value))),
     badgeHtml("PsyQ SDK", `${percent(sdk.done_functions, sdk.functions)}%`, "lib"),
     bytes ? badgeHtml("data typed", `${percent(bytes.typed, bytes.bytes)}%`, level(share(bytes.typed, bytes.bytes))) : "",
-    linkBadge(links),
     badgeHtml("aids", number(quality.aids), "lib"),
     badgeHtml("FIELD uses", number(quality.field_ref), "lib"),
     badgeHtml("local externs", number(quality.local_externs), "lib"),
     badgeHtml("symbol conflicts", number(quality.sym_conflicts), "lib"),
   ].join("");
-  const map = addressMap(data, 0, 4, PAGE_WIDTH);
-  const dataDraw = dataPanel(data, 0, 0, PAGE_WIDTH, { titled: false });
+  const legendHtml = ORDER.map((key) => `<span style="--c:${STATUS[key][1]}">${escape(STATUS[key][0])}</span>`).join("");
+  const gameBox = gamePanel(data);
+  const gameDraw = panel(null, gameBox.blocks, 0, 0, PAGE_WIDTH, 1);
+  const sdkBox = sdkPanel(data);
+  const sdkDraw = panel(null, sdkBox.blocks, 0, 0, PAGE_WIDTH, SDK_SCALE);
+  const dataDraw = dataPanel(data, 0, 0, PAGE_WIDTH, false);
   const libDraw = libraryPanel(data, 0, 0, PAGE_WIDTH, false);
   const trendDraw = trends(data, 0, { x: 0, width: PAGE_WIDTH, cols: 2, titled: false });
   const q = quality;
@@ -629,18 +547,15 @@ export function page(data) {
     `<div class="badges">${badges}</div>` +
     `<p class="mute small">* Game code is every function outside the PsyQ SDK. Matched means byte-exact: matched C, matched C with aids and original assembly.` +
     ` The SDK counts a unit as done when it links from an original object or is exact C.</p>` +
-    `<h2>${MAP_TITLE}</h2>` +
-    `<p class="mute small">Each target is drawn over its address range, in address order and proportional to bytes. A strip is read like text: left to right, then the next row, with the row start address on the left. Hover a block for its name, <code>TARGET@0xADDRESS</code>, size and status.</p>` +
-    `<div class="legend">${mapLegend()}</div>` +
-    `<div class="map-tools"><label class="toggle"><input type="checkbox" id="show-reserved"> show reserved space</label>` +
-    `<span class="mute small">Reserved load space is hidden so code fills each strip; when shown it is the muted hatched block.</span></div>` +
-    `<div id="address-map">${fragment(map.svg, map.bottom, MAP_TITLE)}</div>` +
-    `<h2>Targets and verification</h2>${verification(data)}${targetTable(data)}` +
-    `<h2>${LIBRARY_TITLE}</h2><p class="mute small">One bar per library, split by how well the retail code matches PsyQ: exact C, exact object (the PsyQ version it links from), partial match, assembly only, unmatched. Open a library for its functions, best match first.</p>` +
-    fragment(libDraw.svg, libDraw.bottom, LIBRARY_TITLE) +
-    libraryDetails(data) +
-    `<h2>${escape(dataTitle(data))}</h2><p class="mute small">Each bar is a target's data bytes; purple is typed in C.</p>` +
+    `<div class="legend">${legendHtml}</div>` +
+    `<h2>${escape(gameBox.title)}</h2><p class="mute small">Block area is code bytes; one square per function. Hover a square for its function.</p>` +
+    fragment(gameDraw.svg, gameDraw.bottom, gameBox.title) +
+    `<h2>${escape(sdkBox.title)}</h2><p class="mute small">One block per PsyQ library, linked from original objects (teal) or assembly (orange), or written as C (green).</p>` +
+    fragment(sdkDraw.svg, sdkDraw.bottom, sdkBox.title) +
+    `<h2>${escape(dataTitle(data))}</h2><p class="mute small">Each bar is a target's data bytes; green is typed in C.</p>` +
     fragment(dataDraw.svg, dataDraw.bottom, "Data typed in C per target") +
+    `<h2>${LIBRARY_TITLE}</h2><p class="mute small">Functions by status per library; the versions are the PsyQ releases the object units link from.</p>` +
+    fragment(libDraw.svg, libDraw.bottom, LIBRARY_TITLE) +
     `<h2>Code quality</h2><p class="mute small">${number(q.aids)} aids in use (${number(q.benign_aids)} benign, ${number(q.harmful_aids)} harmful), ${number(q.field_ref)} FIELD uses (raw offset accesses),` +
     ` ${number(q.local_externs)} local externs, ${number(q.sym_conflicts)} symbol conflicts, ${number(q.hand_asm)} hand assembly files.</p>` +
     `<h2>Trend</h2>` +
@@ -655,15 +570,11 @@ export function page(data) {
 // Every function with its status, as rows of the filterable table.
 function functionRows(data) {
   const rows = [];
-  for (const target of data.targets) {
-    const base = parseInt(target.base, 16);
-    for (const [offset, size, kind, status, name] of target.units) {
-      if (kind !== "d") rows.push({ target: target.id, addr: hex(base + offset), name, status, size });
-    }
-  }
-  return rows.map((row) => ({
-    key: `${row.target}@${row.addr} ${row.name} ${LABEL[row.status][0]}`.toLowerCase(),
-    html: `<tr><td>${escape(row.target)}@${row.addr} ${escape(row.name)}</td><td><i class="chip" style="--c:${LABEL[row.status][1]}"></i>${escape(LABEL[row.status][0])}</td><td class="r">${number(row.size)}</td></tr>`,
+  for (const target of data.targets) for (const fn of target.functions) rows.push([target.id, fn]);
+  for (const lib of data.libraries) for (const fn of lib.functions) rows.push([fn.target, fn]);
+  return rows.map(([target, fn]) => ({
+    key: `${target}@${fn.addr} ${fn.name} ${STATUS[fn.status][0]}`.toLowerCase(),
+    html: `<tr><td>${escape(target)}@${fn.addr} ${escape(fn.name)}</td><td><i class="chip" style="--c:${STATUS[fn.status][1]}"></i>${escape(STATUS[fn.status][0])}</td><td class="r">${number(fn.bytes)}</td></tr>`,
   }));
 }
 
@@ -678,29 +589,7 @@ function wireTable(data) {
     body.innerHTML = all.filter((row) => words.every((word) => row.key.includes(word))).slice(0, limit).map((row) => row.html).join("");
   };
   query.addEventListener("input", show);
-  query.closest("details").addEventListener("toggle", show, { once: true });
-}
-
-// Redraw the map when the reserved-space toggle changes; the first view is already drawn.
-function wireMap(data) {
-  const host = document.getElementById("address-map");
-  const box = document.getElementById("show-reserved");
-  box.addEventListener("change", () => {
-    const map = addressMap(data, 0, 4, PAGE_WIDTH, { showReserved: box.checked });
-    host.innerHTML = fragment(map.svg, map.bottom, MAP_TITLE);
-  });
-}
-
-function wireLibraries(data) {
-  document.querySelectorAll("details.lib").forEach((node) => {
-    node.addEventListener(
-      "toggle",
-      () => {
-        node.querySelector(".scroll").innerHTML = libraryTable(data.libraries[Number(node.dataset.lib)]);
-      },
-      { once: true },
-    );
-  });
+  document.querySelector("details").addEventListener("toggle", show, { once: true });
 }
 
 // In a page: fetch progress.json and draw it.
@@ -710,9 +599,7 @@ if (typeof document !== "undefined") {
     .then((response) => response.json())
     .then((data) => {
       host.innerHTML = page(data);
-      wireMap(data);
       wireTable(data);
-      wireLibraries(data);
     })
     .catch((error) => {
       host.textContent = `progress.json did not load: ${error.message}`;
