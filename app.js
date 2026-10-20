@@ -2,10 +2,9 @@
 //
 // render(data) turns progress.json into one SVG string: the same string becomes progress.svg and
 // progress.png (build.mjs). page(data) returns the web page. badge(data) returns the README badge.
-// It runs in a browser and in Node; layout.js places the map rectangles with the vendored
-// d3-hierarchy treemap.
+// The file has no dependencies and runs in a browser and in Node. layout.js places the map rows.
 
-import { treemapLayout } from "./layout.js";
+import { fitText, pack, pickScale, place, stripRows } from "./layout.js";
 
 const WIDTH = 1600;
 const MARGIN = 24;
@@ -15,12 +14,18 @@ const SIDE_WIDTH = WIDTH - 2 * MARGIN - MAP_WIDTH - GAP;
 const PAGE_WIDTH = 1020;
 const FONT = "'DejaVu Sans', Verdana, Arial, sans-serif";
 
-// Address map: one treemap of every target, area in proportion to bytes.
-const MAP_HEIGHT = 640; // smallest picture map; render() grows it to the height of the side column
-const TARGET_LABEL_LINE = 14; // pixels per line of a target label
-const TARGET_LABEL_BAR = 16; // label background covering one line
-const UNIT_LABEL_W = 90; // a unit shows its name when its rectangle is at least this wide
-const UNIT_LABEL_H = 16; // and this tall
+// Address map: one strip per target.
+const STRIP_GUTTER = 84; // room for the row start addresses
+const STRIP_ROW = 11; // pixels per strip row
+const STRIP_ROW_GAP = 1;
+const STRIP_MAX_ROWS = 14; // the finest scale that fits this many rows is used
+const STRIP_HEAD = 38;
+const STRIP_SPACE = 16;
+
+// Rows that hold reserved load space rather than code or data: the executable's load slots and
+// the tail a loader leaves for overlays, plus the Splat map's pad and gap rows. progress.json
+// carries no class for them, so their names name them; a row of another kind is never reserved.
+const RESERVED_ROW = /^(psx_exe_header|entry_header|post_emi_loader_tail|post_emi_gap|pad_|.*_pad$|.*_gap$|arena|.*_arena$)/;
 
 const BACKGROUND = "#0d1117";
 const OUTLINE = "#30363d";
@@ -28,6 +33,15 @@ const INK = "#c9d1d9";
 const MUTED = "#8b949e";
 const TRACK = "#21262d";
 const CARD = "#161b22";
+
+// The muted, hatched fill of a reserved span. The pattern is inline so the picture carries it too.
+const RESERVED_FILL = "#21262d";
+const RESERVED_STRIPE = "#3b434d";
+const RESERVED_HATCH =
+  `<defs><pattern id="reserved-space" width="8" height="8" patternUnits="userSpaceOnUse">` +
+  `<rect width="8" height="8" fill="${RESERVED_FILL}"/>` +
+  `<path d="M-2 2L2 -2M0 8L8 0M6 10L10 6" stroke="${RESERVED_STRIPE}" stroke-width="2"/>` +
+  `</pattern></defs>`;
 
 // Function status -> [legend text, colour], finished work first.
 const STATUS = {
@@ -86,12 +100,12 @@ function textWidth(text, size) {
 function text(x, y, content, size, fill, { anchor = "start", weight = "normal" } = {}) {
   return (
     `<text x="${round(x)}" y="${round(y + size * 0.8)}" font-size="${size}" fill="${fill}"` +
-    ` text-anchor="${anchor}" font-weight="${weight}">${escape(content)}</text>`
+    ` text-anchor="${anchor}" font-weight="${weight}" pointer-events="none">${escape(content)}</text>`
   );
 }
 
-const rect = (x, y, w, h, fill, inner = "") => {
-  const box = `<rect x="${round(x)}" y="${round(y)}" width="${round(w)}" height="${round(h)}" fill="${fill}"`;
+const rect = (x, y, w, h, fill, inner = "", className = "") => {
+  const box = `<rect x="${round(x)}" y="${round(y)}" width="${round(w)}" height="${round(h)}" fill="${fill}"${className ? ` class="${className}"` : ""}`;
   return inner ? `${box}>${inner}</rect>` : `${box}/>`;
 };
 
@@ -114,58 +128,102 @@ function unitTip(target, base, [offset, size, kind, status, name]) {
   return `${id} ${name} · ${LABEL[status][0]}${note} · ${number(size)} B`;
 }
 
-// A target's label, drawn over a dark bar so it stays readable on any status colour. It fits
-// when its name fits; the address line is added only when the rectangle has room for both.
-function targetLabel({ x, y, w, h }, target) {
+function reservedTip(target, base, [offset, size, , , name]) {
+  return `${target.id}+${hex(base + offset)} ${name} · reserved space · ${number(size)} B`;
+}
+
+const isReserved = (unit) => unit[2] === "d" && RESERVED_ROW.test(unit[4] || "");
+
+// The rows to draw. With reserved space hidden, `pack` closes its gaps so the remaining bytes
+// fill every strip row; with it shown, rows keep their address offsets and spare area is hatched.
+function mapEntries(target, showReserved) {
+  const units = [...target.units].sort((a, b) => a[0] - b[0]);
+  if (!showReserved) {
+    const { rows, size } = pack(units, (unit) => !isReserved(unit));
+    return { entries: rows.map(({ unit, at }) => ({ unit, offset: at, reserved: false })), size };
+  }
+  return {
+    entries: units.map((unit) => ({ unit, offset: unit[0], reserved: isReserved(unit) })),
+    size: targetBytes(target),
+  };
+}
+
+// The address at a byte position of the drawn rows, from the row that covers it.
+function addressAt(entries, position, fallback) {
+  for (const { unit, offset } of entries) {
+    if (position < offset + unit[1]) return unit[0] + Math.max(position - offset, 0);
+  }
+  const last = entries[entries.length - 1];
+  return last ? last.unit[0] + last.unit[1] : fallback;
+}
+
+const linkLabel = (target) => (target.link ? `image ${target.link.status}` : "image not linked");
+
+function linkPill(target, x, y) {
+  const label = linkLabel(target);
+  const w = textWidth(label, 11) + 14;
+  const color = target.link ? LINK_COLOR[target.link.status] : TRACK;
+  return rect(x - w, y, w, 16, color) + text(x - w / 2, y + 2, label, 11, "#fff", { anchor: "middle" });
+}
+
+// One strip: the target's address range wrapped into rows of equal byte length.
+function strip(target, x, y, width, showReserved) {
+  const mapX = x + STRIP_GUTTER;
+  const mapWidth = width - STRIP_GUTTER;
   const base = parseInt(target.base, 16);
-  const name = target.name;
-  const detail = `${target.id} · ${hex(base)} · ${number(targetBytes(target))} B`;
-  const nameWidth = textWidth(name, 12) + 10;
-  if (w < nameWidth || h < TARGET_LABEL_BAR) return "";
-  const wide = w >= textWidth(detail, 10) + 10 && h >= 2 * TARGET_LABEL_LINE;
-  const width = Math.min(w, wide ? Math.max(nameWidth, textWidth(detail, 10) + 10) : nameWidth);
-  const height = wide ? 2 * TARGET_LABEL_LINE : TARGET_LABEL_BAR;
-  return (
-    `<g pointer-events="none">` +
-    `<rect x="${round(x)}" y="${round(y)}" width="${round(width)}" height="${height}"` +
-    ` fill="${BACKGROUND}" fill-opacity="0.82"/>` +
-    text(x + 5, y + 1, name, 12, INK, { weight: "bold" }) +
-    (wide ? text(x + 5, y + TARGET_LABEL_LINE + 1, detail, 10, MUTED) : "") +
-    `</g>`
-  );
+  const { entries, size } = mapEntries(target, showReserved);
+  const scale = pickScale(size, mapWidth, STRIP_MAX_ROWS);
+  const rows = stripRows(size, scale, mapWidth);
+  const rowBytes = scale * mapWidth;
+  const top = y + STRIP_HEAD;
+  const pitch = STRIP_ROW + STRIP_ROW_GAP;
+  const counts = target.counts;
+  const matched = target.units.filter((u) => u[2] === "f" && DONE.includes(u[3])).length;
+  const game = target.units.filter((u) => u[2] === "f").length;
+  const headRoom = width - textWidth(linkLabel(target), 11) - 14 - 10;
+  const name = fitText(target.name, 15, headRoom, textWidth);
+  let svg = name ? text(x, y, name, 15, INK, { weight: "bold" }) : "";
+  const detail =
+    `${target.id} · ${hex(base)}-${hex(base + targetBytes(target))} · ${number(targetBytes(target))} B · ${number(counts.total)} functions` +
+    (game ? ` · ${percent(matched, game, 1)}% of game code matched` : "") +
+    ` · 1 px = ${scale} B`;
+  const detailText = fitText(detail, 12, headRoom, textWidth);
+  if (detailText) svg += text(x, y + 19, detailText, 12, MUTED);
+  svg += linkPill(target, x + width, y + 1);
+  for (let row = 0; row < rows; row++) {
+    const rowTop = top + row * pitch;
+    svg += rect(mapX, rowTop, mapWidth, STRIP_ROW, TRACK, "", "track");
+    const address = showReserved ? hex(base + row * rowBytes) : hex(addressAt(entries, row * rowBytes, base));
+    const label = fitText(address, 9, STRIP_GUTTER - 10, textWidth);
+    if (label) svg += text(x + STRIP_GUTTER - 6, rowTop + 1, label, 9, MUTED, { anchor: "end" });
+  }
+  const labelled = new Set();
+  for (const [index, row, px, w] of place(entries.map(({ offset, unit }) => [offset, unit[1]]), scale, mapWidth)) {
+    const { unit, reserved } = entries[index];
+    const fill = reserved ? "url(#reserved-space)" : LABEL[unit[3]][1];
+    const tip = reserved ? reservedTip(target, base, unit) : unitTip(target, base, unit);
+    svg += rect(mapX + px, top + row * pitch, w, STRIP_ROW, fill, `<title>${escape(tip)}</title>`, reserved ? "block reserved" : "block");
+    const label = reserved && !labelled.has(index) ? fitText("reserved", 10, w - 6, textWidth) : "";
+    if (label) {
+      labelled.add(index);
+      svg += text(mapX + px + 3, top + row * pitch + 1, label, 10, INK);
+    }
+  }
+  return { svg, bottom: top + rows * pitch };
 }
 
-// A unit's name, drawn when the rectangle is wide enough and tall enough to hold it, 4 px from
-// its top-left corner. The name is cut with an ellipsis so it never leaves the rectangle.
-function unitLabel({ x, y, w, h }, name) {
-  if (!name || w < UNIT_LABEL_W || h < UNIT_LABEL_H) return "";
-  const room = w - 8;
-  let label = name;
-  if (textWidth(label, 11) > room) {
-    while (label.length > 1 && textWidth(label + "…", 11) > room) label = label.slice(0, -1);
-    label += "…";
+// Every target's strip, one under the other. Reserved space is hidden unless asked for, so the
+// strips scale their code and data to fill the width.
+function addressMap(data, x, y, width, { showReserved = false } = {}) {
+  const hatch = showReserved && data.targets.some((target) => target.units.some(isReserved)) ? RESERVED_HATCH : "";
+  let svg = hatch;
+  let at = y;
+  for (const target of mapOrder(data)) {
+    const drawn = strip(target, x, at, width, showReserved);
+    svg += drawn.svg;
+    at = drawn.bottom + STRIP_SPACE;
   }
-  return (
-    `<text x="${round(x + 4)}" y="${round(y + 4 + 11 * 0.8)}" font-size="11" fill="${INK}"` +
-    ` pointer-events="none">${escape(label)}</text>`
-  );
-}
-
-// Every target as one rectangle of the treemap, its units inside. Area is bytes, so a target or
-// a row that is small in memory is small on screen, and address order runs through the map.
-function addressMap(data, x, y, width, height = MAP_HEIGHT) {
-  const map = treemapLayout(data.targets, width, height);
-  let svg = `<g transform="translate(${round(x)} ${round(y)})">`;
-  for (const { target, unit, x: left, y: top, w, h } of map.units) {
-    const base = parseInt(target.base, 16);
-    svg += rect(left, top, w, h, LABEL[unit[3]][1], `<title>${escape(unitTip(target, base, unit))}</title>`);
-    svg += unitLabel({ x: left, y: top, w, h }, unit[4]);
-  }
-  for (const frameRect of map.targets) {
-    svg += frame(frameRect.x, frameRect.y, frameRect.w, frameRect.h, BACKGROUND);
-    svg += targetLabel(frameRect, frameRect.target);
-  }
-  return { svg: `${svg}</g>`, bottom: y + height };
+  return { svg, bottom: at - STRIP_SPACE };
 }
 
 // Cards, legend, bars ----------------------------------------------------------------------
@@ -399,13 +457,14 @@ export function render(data) {
 
   const start = top.bottom + GAP + 6;
   svg += heading(MARGIN, start, MAP_TITLE);
+  const map = addressMap(data, MARGIN, start + 44, MAP_WIDTH);
+  svg += map.svg;
+
   const right = MARGIN + MAP_WIDTH + GAP;
   const key = legend(data, right, start);
   const libs = libraryPanel(data, right, key.bottom + GAP, SIDE_WIDTH);
   const bytes = dataPanel(data, right, libs.bottom + GAP, SIDE_WIDTH, { compact: true });
-  const mapTop = start + 44;
-  const map = addressMap(data, MARGIN, mapTop, MAP_WIDTH, Math.max(MAP_HEIGHT, bytes.bottom - mapTop));
-  svg += map.svg + key.svg + libs.svg + bytes.svg;
+  svg += key.svg + libs.svg + bytes.svg;
 
   const quality = qualityRow(data, Math.max(map.bottom, bytes.bottom) + 2 * GAP);
   svg += quality.svg;
@@ -538,9 +597,10 @@ function libraryTable(lib) {
 }
 
 function mapLegend() {
-  return Object.values(LABEL)
+  const labels = Object.values(LABEL)
     .map(([name, color]) => `<span style="--c:${color}">${escape(name)}</span>`)
     .join("");
+  return labels + `<span class="reserved" style="--c:${RESERVED_STRIPE}">reserved space</span>`;
 }
 
 export function page(data) {
@@ -557,7 +617,7 @@ export function page(data) {
     badgeHtml("local externs", number(quality.local_externs), "lib"),
     badgeHtml("symbol conflicts", number(quality.sym_conflicts), "lib"),
   ].join("");
-  const map = addressMap(data, 0, 0, PAGE_WIDTH);
+  const map = addressMap(data, 0, 4, PAGE_WIDTH);
   const dataDraw = dataPanel(data, 0, 0, PAGE_WIDTH, { titled: false });
   const libDraw = libraryPanel(data, 0, 0, PAGE_WIDTH, false);
   const trendDraw = trends(data, 0, { x: 0, width: PAGE_WIDTH, cols: 2, titled: false });
@@ -570,9 +630,11 @@ export function page(data) {
     `<p class="mute small">* Game code is every function outside the PsyQ SDK. Matched means byte-exact: matched C, matched C with aids and original assembly.` +
     ` The SDK counts a unit as done when it links from an original object or is exact C.</p>` +
     `<h2>${MAP_TITLE}</h2>` +
-    `<p class="mute small">Each target is one rectangle whose area is its bytes, with its map rows inside; targets run in address order, so rectangles that neighbour on screen neighbour in memory. A row that is small in memory is a thin sliver. Hover a block for its name, <code>TARGET@0xADDRESS</code>, size and status.</p>` +
+    `<p class="mute small">Each target is drawn over its address range, in address order and proportional to bytes. A strip is read like text: left to right, then the next row, with the row start address on the left. Hover a block for its name, <code>TARGET@0xADDRESS</code>, size and status.</p>` +
     `<div class="legend">${mapLegend()}</div>` +
-    fragment(map.svg, map.bottom, MAP_TITLE) +
+    `<div class="map-tools"><label class="toggle"><input type="checkbox" id="show-reserved"> show reserved space</label>` +
+    `<span class="mute small">Reserved load space is hidden so code fills each strip; when shown it is the muted hatched block.</span></div>` +
+    `<div id="address-map">${fragment(map.svg, map.bottom, MAP_TITLE)}</div>` +
     `<h2>Targets and verification</h2>${verification(data)}${targetTable(data)}` +
     `<h2>${LIBRARY_TITLE}</h2><p class="mute small">One bar per library, split by how well the retail code matches PsyQ: exact C, exact object (the PsyQ version it links from), partial match, assembly only, unmatched. Open a library for its functions, best match first.</p>` +
     fragment(libDraw.svg, libDraw.bottom, LIBRARY_TITLE) +
@@ -619,6 +681,16 @@ function wireTable(data) {
   query.closest("details").addEventListener("toggle", show, { once: true });
 }
 
+// Redraw the map when the reserved-space toggle changes; the first view is already drawn.
+function wireMap(data) {
+  const host = document.getElementById("address-map");
+  const box = document.getElementById("show-reserved");
+  box.addEventListener("change", () => {
+    const map = addressMap(data, 0, 4, PAGE_WIDTH, { showReserved: box.checked });
+    host.innerHTML = fragment(map.svg, map.bottom, MAP_TITLE);
+  });
+}
+
 function wireLibraries(data) {
   document.querySelectorAll("details.lib").forEach((node) => {
     node.addEventListener(
@@ -638,6 +710,7 @@ if (typeof document !== "undefined") {
     .then((response) => response.json())
     .then((data) => {
       host.innerHTML = page(data);
+      wireMap(data);
       wireTable(data);
       wireLibraries(data);
     })

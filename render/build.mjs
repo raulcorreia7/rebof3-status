@@ -12,8 +12,7 @@ const PNG_WIDTH = 2400;
 const data = JSON.parse(readFileSync(root("progress.json"), "utf8"));
 const svg = render(data);
 mkdirSync(OUT, { recursive: true });
-mkdirSync(`${OUT}/vendor`, { recursive: true });
-for (const file of ["index.html", "style.css", "app.js", "layout.js", "vendor/d3-hierarchy.js", "progress.json"]) copyFileSync(root(file), `${OUT}/${file}`);
+for (const file of ["index.html", "style.css", "app.js", "layout.js", "progress.json"]) copyFileSync(root(file), `${OUT}/${file}`);
 writeFileSync(`${OUT}/progress.svg`, svg);
 writeFileSync(`${OUT}/badge.svg`, badge(data));
 const png = new Resvg(svg, {
