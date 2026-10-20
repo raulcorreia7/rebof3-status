@@ -2,9 +2,10 @@
 //
 // render(data) turns progress.json into one SVG string: the same string becomes progress.svg and
 // progress.png (build.mjs). page(data) returns the web page. badge(data) returns the README badge.
-// The file has no dependencies and runs in a browser and in Node. layout.js places the map rows.
+// It runs in a browser and in Node; layout.js places the map rectangles with the vendored
+// d3-hierarchy treemap.
 
-import { pickScale, place, stripRows } from "./layout.js";
+import { treemapLayout } from "./layout.js";
 
 const WIDTH = 1600;
 const MARGIN = 24;
@@ -14,13 +15,10 @@ const SIDE_WIDTH = WIDTH - 2 * MARGIN - MAP_WIDTH - GAP;
 const PAGE_WIDTH = 1020;
 const FONT = "'DejaVu Sans', Verdana, Arial, sans-serif";
 
-// Address map: one strip per target.
-const STRIP_GUTTER = 84; // room for the row start addresses
-const STRIP_ROW = 11; // pixels per strip row
-const STRIP_ROW_GAP = 1;
-const STRIP_MAX_ROWS = 14; // the finest scale that fits this many rows is used
-const STRIP_HEAD = 38;
-const STRIP_SPACE = 16;
+// Address map: one treemap of every target, area in proportion to bytes.
+const MAP_HEIGHT = 640; // smallest picture map; render() grows it to the height of the side column
+const TARGET_LABEL_LINE = 14; // pixels per line of a target label
+const TARGET_LABEL_BAR = 16; // label background covering one line
 
 const BACKGROUND = "#0d1117";
 const OUTLINE = "#30363d";
@@ -114,55 +112,41 @@ function unitTip(target, base, [offset, size, kind, status, name]) {
   return `${id} ${name} · ${LABEL[status][0]}${note} · ${number(size)} B`;
 }
 
-function linkPill(target, x, y) {
-  const verdict = target.link ? target.link.status : null;
-  const label = verdict ? `image ${verdict}` : "image not linked";
-  const w = textWidth(label, 11) + 14;
-  return rect(x - w, y, w, 16, verdict ? LINK_COLOR[verdict] : TRACK) + text(x - w / 2, y + 2, label, 11, "#fff", { anchor: "middle" });
-}
-
-// One strip: the target's address range wrapped into rows of equal byte length.
-function strip(target, x, y, width) {
-  const mapX = x + STRIP_GUTTER;
-  const mapWidth = width - STRIP_GUTTER;
+// A target's label, drawn over a dark bar so it stays readable on any status colour. It fits
+// when its name fits; the address line is added only when the rectangle has room for both.
+function targetLabel({ x, y, w, h }, target) {
   const base = parseInt(target.base, 16);
-  const size = targetBytes(target);
-  const scale = pickScale(size, mapWidth, STRIP_MAX_ROWS);
-  const rows = stripRows(size, scale, mapWidth);
-  const top = y + STRIP_HEAD;
-  const pitch = STRIP_ROW + STRIP_ROW_GAP;
-  const counts = target.counts;
-  const matched = target.units.filter((u) => u[2] === "f" && DONE.includes(u[3])).length;
-  const game = target.units.filter((u) => u[2] === "f").length;
-  let svg = text(x, y, target.name, 15, INK, { weight: "bold" });
-  const detail =
-    `${target.id} · ${hex(base)}-${hex(base + size)} · ${number(size)} B · ${number(counts.total)} functions` +
-    (game ? ` · ${percent(matched, game, 1)}% of game code matched` : "") +
-    ` · 1 px = ${scale} B`;
-  svg += text(x, y + 19, detail, 12, MUTED);
-  svg += linkPill(target, x + width, y + 1);
-  for (let row = 0; row < rows; row++) {
-    const rowTop = top + row * pitch;
-    svg += rect(mapX, rowTop, mapWidth, STRIP_ROW, TRACK);
-    svg += text(x + STRIP_GUTTER - 6, rowTop + 1, hex(base + row * scale * mapWidth), 9, MUTED, { anchor: "end" });
-  }
-  for (const [index, row, px, w] of place(target.units, scale, mapWidth)) {
-    const unit = target.units[index];
-    svg += rect(mapX + px, top + row * pitch, w, STRIP_ROW, LABEL[unit[3]][1], `<title>${escape(unitTip(target, base, unit))}</title>`);
-  }
-  return { svg, bottom: top + rows * pitch };
+  const name = target.name;
+  const detail = `${target.id} · ${hex(base)} · ${number(targetBytes(target))} B`;
+  const nameWidth = textWidth(name, 12) + 10;
+  if (w < nameWidth || h < TARGET_LABEL_BAR) return "";
+  const wide = w >= textWidth(detail, 10) + 10 && h >= 2 * TARGET_LABEL_LINE;
+  const width = Math.min(w, wide ? Math.max(nameWidth, textWidth(detail, 10) + 10) : nameWidth);
+  const height = wide ? 2 * TARGET_LABEL_LINE : TARGET_LABEL_BAR;
+  return (
+    `<g pointer-events="none">` +
+    `<rect x="${round(x)}" y="${round(y)}" width="${round(width)}" height="${height}"` +
+    ` fill="${BACKGROUND}" fill-opacity="0.82"/>` +
+    text(x + 5, y + 1, name, 12, INK, { weight: "bold" }) +
+    (wide ? text(x + 5, y + TARGET_LABEL_LINE + 1, detail, 10, MUTED) : "") +
+    `</g>`
+  );
 }
 
-// Every target's strip, one under the other.
-function addressMap(data, x, y, width) {
-  let svg = "";
-  let at = y;
-  for (const target of mapOrder(data)) {
-    const drawn = strip(target, x, at, width);
-    svg += drawn.svg;
-    at = drawn.bottom + STRIP_SPACE;
+// Every target as one rectangle of the treemap, its units inside. Area is bytes, so a target or
+// a row that is small in memory is small on screen, and address order runs through the map.
+function addressMap(data, x, y, width, height = MAP_HEIGHT) {
+  const map = treemapLayout(data.targets, width, height);
+  let svg = `<g transform="translate(${round(x)} ${round(y)})">`;
+  for (const { target, unit, x: left, y: top, w, h } of map.units) {
+    const base = parseInt(target.base, 16);
+    svg += rect(left, top, w, h, LABEL[unit[3]][1], `<title>${escape(unitTip(target, base, unit))}</title>`);
   }
-  return { svg, bottom: at - STRIP_SPACE };
+  for (const frameRect of map.targets) {
+    svg += frame(frameRect.x, frameRect.y, frameRect.w, frameRect.h, BACKGROUND);
+    svg += targetLabel(frameRect, frameRect.target);
+  }
+  return { svg: `${svg}</g>`, bottom: y + height };
 }
 
 // Cards, legend, bars ----------------------------------------------------------------------
@@ -396,14 +380,13 @@ export function render(data) {
 
   const start = top.bottom + GAP + 6;
   svg += heading(MARGIN, start, MAP_TITLE);
-  const map = addressMap(data, MARGIN, start + 44, MAP_WIDTH);
-  svg += map.svg;
-
   const right = MARGIN + MAP_WIDTH + GAP;
   const key = legend(data, right, start);
   const libs = libraryPanel(data, right, key.bottom + GAP, SIDE_WIDTH);
   const bytes = dataPanel(data, right, libs.bottom + GAP, SIDE_WIDTH, { compact: true });
-  svg += key.svg + libs.svg + bytes.svg;
+  const mapTop = start + 44;
+  const map = addressMap(data, MARGIN, mapTop, MAP_WIDTH, Math.max(MAP_HEIGHT, bytes.bottom - mapTop));
+  svg += map.svg + key.svg + libs.svg + bytes.svg;
 
   const quality = qualityRow(data, Math.max(map.bottom, bytes.bottom) + 2 * GAP);
   svg += quality.svg;
@@ -568,7 +551,7 @@ export function page(data) {
     `<p class="mute small">* Game code is every function outside the PsyQ SDK. Matched means byte-exact: matched C, matched C with aids and original assembly.` +
     ` The SDK counts a unit as done when it links from an original object or is exact C.</p>` +
     `<h2>${MAP_TITLE}</h2>` +
-    `<p class="mute small">Each target is drawn over its address range, in address order and proportional to bytes. A strip is read like text: left to right, then the next row, with the row start address on the left. Hover a block for its name, <code>TARGET@0xADDRESS</code>, size and status.</p>` +
+    `<p class="mute small">Each target is one rectangle whose area is its bytes, with its map rows inside; targets run in address order, so rectangles that neighbour on screen neighbour in memory. A row that is small in memory is a thin sliver. Hover a block for its name, <code>TARGET@0xADDRESS</code>, size and status.</p>` +
     `<div class="legend">${mapLegend()}</div>` +
     fragment(map.svg, map.bottom, MAP_TITLE) +
     `<h2>Targets and verification</h2>${verification(data)}${targetTable(data)}` +

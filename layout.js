@@ -1,35 +1,39 @@
-// Address-true layout: where each map row of a target is drawn. Pure functions, no DOM.
+// Address-ordered treemap: every byte of every loaded target gets area, and addresses that sit
+// next to each other stay next to each other on the screen. Pure functions, no DOM.
 //
-// A target's rows are contiguous in address order (progress.json `units`: [offset, size, ...]).
-// The strip wraps like text: row r covers bytes [r * rowBytes, (r + 1) * rowBytes), so reading
-// left to right and top to bottom walks the address range. A row that crosses the end of a
-// strip row continues on the next one.
+// progress.json `targets[]` carry `units`: [offset, size, kind, status, name] rows in address
+// order. Targets are laid out by `base`, then `id`; units by `offset`. d3-hierarchy's
+// treemapBinary splits a parent rectangle at half its value, so children keep their input order
+// while every rectangle's area stays proportional to its bytes.
 
-// Bytes per pixel the strips may use, smallest first: 4 B shows a single instruction.
-export const SCALES = [4, 8, 16, 32, 64, 128, 256, 512, 1024];
+import { hierarchy, treemap, treemapBinary } from "./vendor/d3-hierarchy.js";
 
-// The smallest scale at which `size` bytes fit in `maxRows` strip rows of `width` pixels.
-export function pickScale(size, width, maxRows, scales = SCALES) {
-  return scales.find((scale) => Math.ceil(size / (scale * width)) <= maxRows) ?? scales[scales.length - 1];
+const address = (target) => parseInt(target.base, 16);
+
+// Targets in address order; the overlays that share a base fall back to their id.
+export function orderTargets(targets) {
+  return [...targets].sort((a, b) => address(a) - address(b) || a.id.localeCompare(b.id));
 }
 
-// Strip pieces for rows [offset, size, ...]: [index, stripRow, x, w], x and w in pixels.
-// A row never draws narrower than minWidth, so a one-instruction function stays visible.
-export function place(units, bytesPerPx, width, minWidth = 0.5) {
-  const rowBytes = bytesPerPx * width;
-  const pieces = [];
-  units.forEach(([offset, size], index) => {
-    let start = offset;
-    const end = offset + size;
-    while (start < end) {
-      const stripRow = Math.floor(start / rowBytes);
-      const stop = Math.min(end, (stripRow + 1) * rowBytes);
-      const x = (start - stripRow * rowBytes) / bytesPerPx;
-      pieces.push([index, stripRow, x, Math.min(Math.max((stop - start) / bytesPerPx, minWidth), width - x)]);
-      start = stop;
+// The map as rectangles. `units` holds one {target, unit, x, y, w, h} per map row in address
+// order; `targets` holds one {target, unit: null, x, y, w, h} per target for its frame and label.
+export function treemapLayout(targets, width, height) {
+  const root = hierarchy({
+    children: orderTargets(targets).map((target) => ({
+      target,
+      children: [...target.units].sort((a, b) => a[0] - b[0]).map((unit) => ({ target, unit })),
+    })),
+  }).sum((node) => (node.unit ? node.unit[1] : 0));
+
+  treemap().tile(treemapBinary).size([width, height])(root);
+
+  const box = (node) => ({ x: node.x0, y: node.y0, w: node.x1 - node.x0, h: node.y1 - node.y0 });
+  const units = [];
+  const frames = root.children.map((targetNode) => {
+    for (const unitNode of targetNode.children) {
+      units.push({ target: targetNode.data.target, unit: unitNode.data.unit, ...box(unitNode) });
     }
+    return { target: targetNode.data.target, unit: null, ...box(targetNode) };
   });
-  return pieces;
+  return { targets: frames, units };
 }
-
-export const stripRows = (size, bytesPerPx, width) => Math.max(Math.ceil(size / (bytesPerPx * width)), 1);
