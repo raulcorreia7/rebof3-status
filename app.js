@@ -19,6 +19,8 @@ const FONT = "'DejaVu Sans', Verdana, Arial, sans-serif";
 const MAP_HEIGHT = 640; // smallest picture map; render() grows it to the height of the side column
 const TARGET_LABEL_LINE = 14; // pixels per line of a target label
 const TARGET_LABEL_BAR = 16; // label background covering one line
+const UNIT_LABEL_W = 90; // a unit shows its name when its rectangle is at least this wide
+const UNIT_LABEL_H = 16; // and this tall
 
 const BACKGROUND = "#0d1117";
 const OUTLINE = "#30363d";
@@ -133,6 +135,22 @@ function targetLabel({ x, y, w, h }, target) {
   );
 }
 
+// A unit's name, drawn when the rectangle is wide enough and tall enough to hold it, 4 px from
+// its top-left corner. The name is cut with an ellipsis so it never leaves the rectangle.
+function unitLabel({ x, y, w, h }, name) {
+  if (!name || w < UNIT_LABEL_W || h < UNIT_LABEL_H) return "";
+  const room = w - 8;
+  let label = name;
+  if (textWidth(label, 11) > room) {
+    while (label.length > 1 && textWidth(label + "…", 11) > room) label = label.slice(0, -1);
+    label += "…";
+  }
+  return (
+    `<text x="${round(x + 4)}" y="${round(y + 4 + 11 * 0.8)}" font-size="11" fill="${INK}"` +
+    ` pointer-events="none">${escape(label)}</text>`
+  );
+}
+
 // Every target as one rectangle of the treemap, its units inside. Area is bytes, so a target or
 // a row that is small in memory is small on screen, and address order runs through the map.
 function addressMap(data, x, y, width, height = MAP_HEIGHT) {
@@ -141,6 +159,7 @@ function addressMap(data, x, y, width, height = MAP_HEIGHT) {
   for (const { target, unit, x: left, y: top, w, h } of map.units) {
     const base = parseInt(target.base, 16);
     svg += rect(left, top, w, h, LABEL[unit[3]][1], `<title>${escape(unitTip(target, base, unit))}</title>`);
+    svg += unitLabel({ x: left, y: top, w, h }, unit[4]);
   }
   for (const frameRect of map.targets) {
     svg += frame(frameRect.x, frameRect.y, frameRect.w, frameRect.h, BACKGROUND);
