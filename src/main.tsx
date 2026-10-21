@@ -12,6 +12,8 @@ const host = document.getElementById("page");
 
 async function start(): Promise<void> {
   if (!host) return;
+  // Fetch the chart chunk while progress.json downloads; the charts mount as soon as it is in.
+  void import("./charts/canvas.ts");
   try {
     const response = await fetch("progress.json");
     if (!response.ok) throw new Error(`${response.status} ${response.statusText}`.trim());

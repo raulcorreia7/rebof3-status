@@ -1,6 +1,6 @@
 // The simple views: cards, meters, text, legend, tabs, trend, filters and tables.
 
-import { createSignal, For, Show, type Accessor } from "solid-js";
+import { createSignal, For, onCleanup, Show, type Accessor } from "solid-js";
 import { BROWSER, SDK } from "../strings.ts";
 import { usePage } from "../state.ts";
 import type { SortKey } from "../model/route.ts";
@@ -8,6 +8,9 @@ import type { Status } from "../types.ts";
 import type { Views } from "../viewtypes.ts";
 import { Chart } from "./Chart.tsx";
 import { Chip, Jump, Meter, Parts } from "./ui.tsx";
+
+/** How long the search box waits after the last key before the table filters. */
+const SEARCH_PAUSE_MS = 150;
 
 type Props<K extends keyof Views> = { data: Accessor<Views[K]> };
 
@@ -196,6 +199,13 @@ export function Trend(props: Props<"trend">) {
 export function Filters(props: Props<"filters">) {
   const page = usePage();
   const current = (field: "part" | "target" | "lib" | "sort") => page.route[field] ?? "";
+  // The table follows the typing after a short pause, not at every key.
+  let pause = 0;
+  const search = (text: string) => {
+    window.clearTimeout(pause);
+    pause = window.setTimeout(() => page.go({ q: text }, true), SEARCH_PAUSE_MS);
+  };
+  onCleanup(() => window.clearTimeout(pause));
   return (
     <div class="filters">
       <input
@@ -204,7 +214,7 @@ export function Filters(props: Props<"filters">) {
         aria-label={props.data().search.label}
         autocomplete="off"
         value={page.route.q}
-        onInput={(event) => page.go({ q: event.currentTarget.value }, true)}
+        onInput={(event) => search(event.currentTarget.value)}
       />
       <For each={props.data().selects}>
         {(select) => {
