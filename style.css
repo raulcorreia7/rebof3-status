@@ -8,6 +8,8 @@ h2{font-size:1.2rem;margin:2rem 0 .1rem;font-weight:600}
 p{margin:.3rem 0}
 .mute{color:var(--mute)}.small{font-size:.85rem}
 a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+summary:hover{color:var(--ink)}
 code{font:.88em ui-monospace,SFMono-Regular,Menlo,monospace}
 .badges{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 6px}
 .badge{display:inline-flex;font:600 11px/20px Verdana,"DejaVu Sans",sans-serif;border-radius:3px;overflow:hidden;color:#fff;white-space:nowrap}
