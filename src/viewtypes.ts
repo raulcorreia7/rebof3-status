@@ -1,0 +1,142 @@
+// The data each kind of view draws. A selector (selectors.ts) turns the model and the route into
+// one of these; a view (views/) draws it. Nothing here knows about the framework.
+
+import type { ChartOption } from "./charts/register.ts";
+import type { MapNode } from "./charts/treemap.ts";
+import type { MapTab, Route, SortKey } from "./model/route.ts";
+import type { Phase } from "./model/status.ts";
+import type { Tokens } from "./theme/tokens.ts";
+import type { Model, Status, Target } from "./types.ts";
+
+/** What a selector reads. The page state satisfies it. */
+export interface Ctx {
+  model: Model;
+  route: Route;
+  tokens: Tokens;
+  /** How many rows of the function table are shown. */
+  limit: number;
+}
+
+/** A link to another view of the page; `scroll` is the section to scroll to after the jump. */
+export interface Link {
+  label: string;
+  to: Partial<Route>;
+  scroll?: string;
+}
+
+/** A piece of inline content. A part with `to` or `url` is a link. */
+export interface Part {
+  text: string;
+  to?: Partial<Route>;
+  scroll?: string;
+  url?: string;
+  code?: boolean;
+  mute?: boolean;
+  /** Draw as a muted line of its own. */
+  small?: boolean;
+  pill?: "ok" | "bad";
+  status?: Status;
+  /** Start on a new line. */
+  br?: boolean;
+}
+
+export interface MeterRow {
+  name?: Link;
+  aria: string;
+  /** Width of the whole bar as a percentage of the track. */
+  width?: number;
+  /** Segments in order; `width` is a percentage of the bar. */
+  parts: { width: string; color: string }[];
+  count?: string;
+  note?: string;
+}
+
+export interface Card {
+  id: string;
+  title: string;
+  big: string;
+  sub?: string;
+  color?: string;
+  /** A group card: note, status meter, summary line, target links and one action. */
+  panel?: { note: string; meter: MeterRow; line: string; links: (Link & { side: string })[]; action: Link };
+}
+
+export interface Views {
+  cards: { grid: string; small?: boolean; cards: Card[] };
+  meters: { key?: { label: string; color: string }[]; rows: MeterRow[] };
+  text: { paragraphs: { label?: string; text: string }[] };
+  legend: {
+    variant: "legend" | "chips";
+    label: string;
+    items: { key: Status; label: string; color: string; phase: Phase; sub?: string }[];
+    help?: { text: string; clear: string };
+  };
+  tabs: { label: string; tabs: { id: MapTab; label: string }[] };
+  treemap: { tree: MapNode; scope: "game" | "sdk"; focus: string | null; crumbs: Link[]; label: string };
+  strips: { targets: Target[] };
+  chart: { option: ChartOption; height: number; label: string } | null;
+  trend: { charts: { id: string; title: string; value: string | null; option: ChartOption | null }[]; empty: string };
+  filters: {
+    search: { label: string; placeholder: string };
+    selects: {
+      label: string;
+      field: "part" | "target" | "lib" | "sort";
+      options: { value: string; label: string; group?: string }[];
+      /** The value of the first option means "no filter" (null in the route). */
+      any: boolean;
+      /** Route changes that go with a new value. */
+      also?: Partial<Route>;
+    }[];
+  };
+  table: {
+    columns: { label: string; align?: "r"; sort?: SortKey }[];
+    rows: { id: string; cells: Part[][] }[];
+    /** Text for the line above the table. */
+    message?: string;
+    /** Show the clear-filters and copy-link actions. */
+    actions?: { canReset: boolean };
+    /** More rows can be shown. */
+    more?: string;
+    /** Wrap the table in a closed disclosure with this summary. */
+    disclosure?: string;
+  };
+  inspector: {
+    view: string;
+    kind: string;
+    title: string;
+    note?: string;
+    meter?: MeterRow;
+    statuses?: { status: Status; count: string }[];
+    fields: { label: string; value: Part[] }[];
+    lists: { heading: string; items: (Link & { side: string })[] }[];
+    buttons: Link[];
+    message?: string;
+  } | null;
+}
+
+export type ViewKind = keyof Views;
+export type Copy = string | ((c: Ctx) => string);
+
+/** One block of a section: a view, the selector that feeds it, and the text around it. */
+export type Block = {
+  [K in ViewKind]: {
+    view: K;
+    select: (c: Ctx) => Views[K];
+    /** Small heading, help text before the view, and a muted note after it. */
+    heading?: Copy;
+    help?: Copy;
+    note?: Copy;
+    /** The block is skipped when this returns false. */
+    when?: (c: Ctx) => boolean;
+  };
+}[ViewKind];
+
+export interface Section {
+  id: string;
+  /** Label in the page's navigation; sections without one stay out of it. */
+  nav?: string;
+  title: Copy;
+  /** `aside` sections sit beside the page instead of in it. */
+  where?: "main" | "aside";
+  blocks: Block[];
+}

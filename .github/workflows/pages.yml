@@ -27,7 +27,7 @@ jobs:
       - run: npm ci
       - run: npx tsc -p .
       - run: npm test
-      - run: node render/build.mjs site
+      - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site

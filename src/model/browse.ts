@@ -4,6 +4,9 @@ import type { Fn, Model } from "../types.ts";
 import type { Route } from "./route.ts";
 import { STATUSES } from "./status.ts";
 
+/** Rows the function table adds each time it is asked for more. */
+export const PAGE_STEP = 200;
+
 const words = (query: string): string[] => query.toLowerCase().split(/\s+/).filter(Boolean);
 
 /** Every function that passes the route's filters, in the route's order. */
