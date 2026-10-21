@@ -234,7 +234,7 @@ export const auditTable = ({ model }: Ctx): Views["table"] => ({
     cells: [
       [{ text: t.name, to: { view: { kind: "target", id: t.id } } }, { text: t.id, code: true, mute: true, br: true }],
       [{ text: `${hex(t.base)}-${hex(t.end)}`, code: true }],
-      [{ text: t.size.toLocaleString("en-US") }],
+      [{ text: number(t.size) }],
       linkPill(t, "not linked"),
       [{ text: audit(t) }],
     ],

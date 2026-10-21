@@ -3,7 +3,6 @@
 
 import type { ECharts } from "echarts/core";
 import { createEffect, onCleanup, onMount } from "solid-js";
-import { echarts } from "../charts/canvas.ts";
 import type { ChartOption } from "../charts/register.ts";
 
 export interface ChartClick {
@@ -23,10 +22,16 @@ interface Props {
 export function Chart(props: Props) {
   let host!: HTMLDivElement;
   let chart: ECharts | null = null;
+  let gone = false;
 
   onMount(() => {
-    const create = () => {
-      if (chart) return;
+    let starting = false;
+    // ECharts loads as its own chunk, so the page text paints before the chart code is parsed.
+    const create = async () => {
+      if (chart || starting) return;
+      starting = true;
+      const { echarts } = await import("../charts/canvas.ts");
+      if (gone) return;
       chart = echarts.init(host, null, { renderer: "canvas" });
       chart.on("click", (params) => props.onClick?.(params as ChartClick));
       props.onChart?.(chart);
@@ -34,9 +39,16 @@ export function Chart(props: Props) {
     };
     const watcher = new IntersectionObserver((entries) => entries.some((entry) => entry.isIntersecting) && create(), { rootMargin: "300px" });
     watcher.observe(host);
-    const resizer = new ResizeObserver(() => chart?.resize());
+    // Resize on the next frame, once per frame, so a drag of the window does not redraw per event.
+    let frame = 0;
+    const resizer = new ResizeObserver(() => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => chart?.resize());
+    });
     resizer.observe(host);
     onCleanup(() => {
+      gone = true;
+      cancelAnimationFrame(frame);
       watcher.disconnect();
       resizer.disconnect();
       chart?.dispose();
