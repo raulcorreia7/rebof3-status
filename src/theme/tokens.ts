@@ -1,6 +1,7 @@
 // Colour tokens for the dark and the light theme. The page writes them to CSS custom properties
 // (theme/apply.ts), the charts read them from here, and the picture uses the dark set.
 
+import { statusProp } from "../model/status.ts";
 import type { DataStatus, Status, Tier } from "../types.ts";
 
 export interface Tokens {
@@ -80,7 +81,7 @@ export function cssVars(tokens: Tokens): Record<string, string> {
   for (const [key, value] of Object.entries(tokens)) {
     if (typeof value === "string") vars[`--${key.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`)}`] = value;
   }
-  for (const [key, value] of Object.entries(tokens.status)) vars[`--st-${key.replace("_", "-")}`] = value;
+  for (const [key, value] of Object.entries(tokens.status)) vars[statusProp(key)] = value;
   for (const [key, value] of Object.entries(tokens.tier)) vars[`--tier-${key}`] = value;
   return vars;
 }

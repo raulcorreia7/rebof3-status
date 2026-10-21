@@ -4,7 +4,7 @@
 import { useMemo } from "preact/hooks";
 import { DATA_LABEL, MAP, STATUS_LABEL } from "../strings.ts";
 import { hex, number, percent } from "../model/format.ts";
-import { GAME_DONE } from "../model/status.ts";
+import { isDone } from "../model/status.ts";
 import { fitText, pickScale, place, stripEntries, stripRows } from "../model/strips.ts";
 import { textWidth } from "../model/text.ts";
 import { usePage } from "../state.tsx";
@@ -39,7 +39,7 @@ function Strip({ target, showReserved, lit }: { target: Target; showReserved: bo
   const pill = verdict ? MAP.imageLinked(verdict) : MAP.imageNotLinked;
   const pillWidth = textWidth(pill, 11) + 14;
   const game = target.functions.filter((fn) => fn.kind === "game");
-  const matched = game.filter((fn) => GAME_DONE.includes(fn.status)).length;
+  const matched = game.filter(isDone).length;
   const detail =
     `${target.id} · ${hex(target.base)}-${hex(target.end)} · ${number(target.size)} B · ${number(target.functions.length)} functions` +
     (game.length ? ` · ${MAP.gamePercent(percent(matched, game.length, 1))}` : "") +

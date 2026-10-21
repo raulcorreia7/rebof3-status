@@ -1,7 +1,8 @@
 // The function map: a treemap of groups > targets > functions (or libraries > functions), sized
 // by code bytes and coloured by status. Pure option builders; components/TreemapChart.tsx draws them.
 
-import { STATUS_LABEL, TIER_LABEL } from "../strings.ts";
+import { TIER_LABEL } from "../strings.ts";
+import { STATUS } from "../model/status.ts";
 import type { Fn, Model, Status } from "../types.ts";
 import { escapeText, number, percent } from "../model/format.ts";
 import type { Tokens } from "../theme/tokens.ts";
@@ -33,7 +34,7 @@ export interface MapStyle {
 
 const fnTip = (fn: Fn): string => {
   const tier = fn.tier ? ` · ${escapeText(TIER_LABEL[fn.tier])}${fn.version ? ` (PsyQ ${escapeText(fn.version)})` : ""}` : "";
-  return `<b>${escapeText(fn.name)}</b><br>${escapeText(fn.id)}<br>${escapeText(STATUS_LABEL[fn.status])}${tier} · ${number(fn.bytes)} B`;
+  return `<b>${escapeText(fn.name)}</b><br>${escapeText(fn.id)}<br>${escapeText(STATUS[fn.status].label)}${tier} · ${number(fn.bytes)} B`;
 };
 
 function fnNode(fn: Fn, { tokens, statuses }: MapStyle): MapNode {

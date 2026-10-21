@@ -1,12 +1,12 @@
 // The data model: progress.json in, everything the page and the picture need out.
 // Pure functions only, so node:test covers them (test/model.test.mts).
 
-import { SITE, STATUS_LABEL } from "../strings.ts";
+import { SITE } from "../strings.ts";
 import type { Fn, Group, Library, Model, ProgressData, RawTarget, Tally, Target } from "../types.ts";
 import { hex, share } from "./format.ts";
 import { compareGroups, describeGroup, groupKey } from "./groups.ts";
 import { byDay, snapshotRow } from "./history.ts";
-import { HAS_C_FILE, STATUSES, isDone } from "./status.ts";
+import { STATUS, STATUSES, isDone } from "./status.ts";
 
 const KIND = { f: "game", s: "sdk" } as const;
 
@@ -36,7 +36,7 @@ export function tally(functions: Fn[]): Tally {
  * (`src/<target id>/<function name>.c`), or null when the function has no C file.
  */
 export function sourcePath(fn: Pick<Fn, "target" | "name" | "status">): string | null {
-  return HAS_C_FILE.includes(fn.status) ? `src/${fn.target}/${fn.name}.c` : null;
+  return STATUS[fn.status].hasC ? `src/${fn.target}/${fn.name}.c` : null;
 }
 
 export const sourceUrl = (commit: string, path: string): string => `${SITE.repoUrl}/blob/${commit}/${path}`;
@@ -50,7 +50,7 @@ function buildTarget(raw: RawTarget): Target {
     if (kind === "d") continue;
     const address = base + offset;
     const fn = { id: `${raw.id}@${hex(address)}`, target: raw.id, addr: hex(address), address, name, bytes: size, status, kind: KIND[kind], key: "" } as Fn;
-    fn.key = `${fn.id} ${name} ${status} ${STATUS_LABEL[fn.status]} ${raw.name} ${fn.kind === "sdk" ? "psyq sdk" : "game"}`.toLowerCase();
+    fn.key = `${fn.id} ${name} ${status} ${STATUS[fn.status].label} ${raw.name} ${fn.kind === "sdk" ? "psyq sdk" : "game"}`.toLowerCase();
     functions.push(fn);
   }
   const empty = tally([]);
