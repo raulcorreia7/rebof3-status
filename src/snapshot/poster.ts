@@ -1,4 +1,4 @@
-// progress.svg: the whole status board as one picture. build.mjs turns it into progress.png.
+// progress.svg: the whole status board as one picture. render/snapshot.ts turns it into progress.png.
 //
 // The tiles, cards and bars are drawn here as SVG strings. The trend charts are the ECharts
 // options the page uses, rendered on the server and nested into the picture.
