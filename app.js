@@ -33,15 +33,16 @@ const TRACK = "#21262d";
 const STATUS = {
   pure: ["matched C", "#2ea043"],
   fake_match: ["matched C with fake-match tricks", "#7ee787"],
-  asm: ["original assembly (exact)", "#79c0ff"],
-  object: ["library object", "#26a69a"],
-  assembly: ["library assembly", "#db6d28"],
-  nonmatching: ["in progress (C, not yet exact)", "#d29922"],
-  open: ["assembly", "#4b535d"],
+  asm: ["original assembly, exact", "#79c0ff"],
+  object: ["PsyQ library object", "#26a69a"],
+  assembly: ["PsyQ library assembly", "#db6d28"],
+  nonmatching: ["C in progress, not exact yet", "#d29922"],
+  open: ["not started (assembly)", "#4b535d"],
 };
 const ORDER = Object.keys(STATUS);
 
 const number = (value) => value.toLocaleString("en-US");
+const plural = (count, one, many = `${one}s`) => `${number(count)} ${count === 1 ? one : many}`;
 const share = (done, total) => (total ? (100 * done) / total : 0);
 const percent = (done, total, digits = 2) => share(done, total).toFixed(digits);
 const round = (value) => Math.round(value * 100) / 100;
@@ -268,7 +269,7 @@ function cards(data, y) {
     [`${percent(sdk.done_functions, sdk.functions, 1)}%`, "PsyQ SDK as object or C", `${number(sdk.done_functions)} of ${number(sdk.functions)} functions`, STATUS.object[1]],
     bytes
       ? [`${percent(bytes.typed, bytes.bytes, 2)}%`, "Data typed in C", `${number(bytes.typed)} of ${number(bytes.bytes)} B`, STATUS.asm[1]]
-      : ["from next run", "Data typed in C", "measured by bin/progress", MUTED],
+      : ["from next run", "Data typed in C", "available after the next run", MUTED],
   ];
   const width = (WIDTH - 2 * MARGIN - 3 * GAP) / 4;
   let svg = "";
@@ -363,11 +364,11 @@ function libraryPanel(data, x, y, width, titled = true) {
 function qualityRow(data, y) {
   const q = data.summary.quality;
   const items = [
-    ["Fake matches in use", number(q.fakes), `${number(q.benign_fakes)} benign · ${number(q.harmful_fakes)} harmful`],
-    ["FIELD uses", number(q.field_ref), "raw offset accesses"],
-    ["Local externs", number(q.local_externs), "extern declarations in C files"],
-    ["Symbol conflicts", number(q.sym_conflicts), "symbol registry disagreements"],
-    ["Hand assembly", number(q.hand_asm), "files in the hand folders"],
+    ["Fake matches in use", number(q.fakes), `${number(q.benign_fakes)} harmless · ${number(q.harmful_fakes)} harmful`],
+    ["FIELD uses", number(q.field_ref), "raw offset accesses in C"],
+    ["Local externs", number(q.local_externs), "extern declarations inside C files"],
+    ["Symbol conflicts", number(q.sym_conflicts), "places where the symbol list disagrees"],
+    ["Hand-written assembly", number(q.hand_asm), "files kept as assembly by hand"],
   ];
   const width = (WIDTH - 2 * MARGIN - 4 * GAP) / 5;
   let svg = text(MARGIN, y, "Code quality", 24, INK);
@@ -444,7 +445,7 @@ export function render(data) {
   let svg = "";
   const date = data.generated_at.slice(0, 10);
   svg += text(MARGIN, MARGIN - 4, "Breath of Fire III decompilation status", 34, INK, { weight: "bold" });
-  svg += text(MARGIN, MARGIN + 38, `rebof3 ${data.commit.slice(0, 7)} · ${date} · block area is code bytes, one square per function`, 15, MUTED);
+  svg += text(MARGIN, MARGIN + 38, `rebof3 ${data.commit.slice(0, 7)} · ${date} · one square per function, sized by its code bytes`, 15, MUTED);
   const top = cards(data, MARGIN + 70);
   svg += top.svg;
 
@@ -542,28 +543,28 @@ export function page(data) {
   const q = quality;
   return (
     `<h1>Breath of Fire III (US): decompilation status</h1>` +
-    `<p class="mute">Generated ${escape(data.generated_at.slice(0, 10))} at <code>${escape(data.commit.slice(0, 12))}</code>.` +
-    ` <a href="progress.json">progress.json</a> · <a href="progress.png">progress.png</a></p>` +
+    `<p class="mute">Updated ${escape(data.generated_at.slice(0, 10))} from rebof3 <code>${escape(data.commit.slice(0, 12))}</code>.` +
+    ` Get the <a href="progress.json">data</a> or the <a href="progress.png">full picture</a>.</p>` +
     `<div class="badges">${badges}</div>` +
-    `<p class="mute small">* Game code is every function outside the PsyQ SDK. Matched means byte-exact: matched C, matched C with fake-match tricks and original assembly.` +
-    ` The SDK counts a unit as done when it links from an original object or is exact C.</p>` +
+    `<p class="mute small">* Game code means every function outside the PsyQ SDK. A function counts as matched when it builds to the exact original bytes, whether that is clean C, C with fake-match tricks or the original assembly.` +
+    ` An SDK function counts as done when it links from an original PsyQ object or is exact C.</p>` +
     `<div class="legend">${legendHtml}</div>` +
-    `<h2>${escape(gameBox.title)}</h2><p class="mute small">Block area is code bytes; one square per function. Hover a square for its function.</p>` +
+    `<h2>${escape(gameBox.title)}</h2><p class="mute small">Each square is one function and bigger code takes more room. Hover a square to see which function it is.</p>` +
     fragment(gameDraw.svg, gameDraw.bottom, gameBox.title) +
-    `<h2>${escape(sdkBox.title)}</h2><p class="mute small">One block per PsyQ library, linked from original objects (teal) or assembly (orange), or written as C (green).</p>` +
+    `<h2>${escape(sdkBox.title)}</h2><p class="mute small">One block per PsyQ library. Teal links from original objects, orange from original assembly, and green has been rewritten as C.</p>` +
     fragment(sdkDraw.svg, sdkDraw.bottom, sdkBox.title) +
-    `<h2>${escape(dataTitle(data))}</h2><p class="mute small">Each bar is a target's data bytes; green is typed in C.</p>` +
+    `<h2>${escape(dataTitle(data))}</h2><p class="mute small">Each bar is one target's data. The green part is already typed in C.</p>` +
     fragment(dataDraw.svg, dataDraw.bottom, "Data typed in C per target") +
-    `<h2>${LIBRARY_TITLE}</h2><p class="mute small">Functions by status per library; the versions are the PsyQ releases the object units link from.</p>` +
+    `<h2>${LIBRARY_TITLE}</h2><p class="mute small">How far along each library is, function by function, and which PsyQ releases its objects come from.</p>` +
     fragment(libDraw.svg, libDraw.bottom, LIBRARY_TITLE) +
-    `<h2>Code quality</h2><p class="mute small">${number(q.fakes)} fake matches in use (${number(q.benign_fakes)} benign, ${number(q.harmful_fakes)} harmful), ${number(q.field_ref)} FIELD uses (raw offset accesses),` +
-    ` ${number(q.local_externs)} local externs, ${number(q.sym_conflicts)} symbol conflicts, ${number(q.hand_asm)} hand assembly files.</p>` +
-    `<h2>Trend</h2>` +
+    `<h2>Code quality</h2><p class="mute small">${plural(q.fakes, "fake match", "fake matches")} in use: ${number(q.benign_fakes)} harmless and ${number(q.harmful_fakes)} harmful.` +
+    ` The C still has ${plural(q.field_ref, "raw offset access", "raw offset accesses")} (FIELD uses), ${plural(q.local_externs, "local extern")}, ${plural(q.sym_conflicts, "symbol conflict")} and ${plural(q.hand_asm, "hand-written assembly file")}.</p>` +
+    `<h2>Progress over time</h2><p class="mute small">One point per day. The number in each title is the latest value.</p>` +
     fragment(trendDraw.svg, trendDraw.bottom, "Trend") +
-    `<details><summary>Function table</summary>` +
-    `<input type="search" id="q" placeholder="Filter functions" aria-label="Filter functions">` +
-    `<div class="scroll"><table><thead><tr><th>function</th><th>status</th><th class="r">bytes</th></tr></thead><tbody id="rows"></tbody></table></div></details>` +
-    `<p class="small mute">Machine output: <a href="progress.json">progress.json</a>. This page is generated from it; do not edit by hand.</p>`
+    `<details><summary>Browse every function</summary>` +
+    `<input type="search" id="q" placeholder="Search by name, address or status" aria-label="Search functions" autocomplete="off"><p class="mute small" id="count" aria-live="polite"></p>` +
+    `<div class="scroll"><table><thead><tr><th>Function</th><th>Status</th><th class="r">Bytes</th></tr></thead><tbody id="rows"></tbody></table></div></details>` +
+    `<p class="small mute">Everything here is generated from <a href="progress.json">progress.json</a>, so please do not edit it by hand.</p>`
   );
 }
 
@@ -582,11 +583,18 @@ function functionRows(data) {
 function wireTable(data) {
   const body = document.getElementById("rows");
   const query = document.getElementById("q");
+  const count = document.getElementById("count");
   const all = functionRows(data);
   const limit = 400;
   const show = () => {
     const words = query.value.toLowerCase().split(/\s+/).filter(Boolean);
-    body.innerHTML = all.filter((row) => words.every((word) => row.key.includes(word))).slice(0, limit).map((row) => row.html).join("");
+    const found = all.filter((row) => words.every((word) => row.key.includes(word)));
+    body.innerHTML = found.slice(0, limit).map((row) => row.html).join("");
+    count.textContent = !found.length
+      ? "No function matches. Try a shorter search."
+      : found.length > limit
+        ? `Showing the first ${number(limit)} of ${number(found.length)} functions. Type more to narrow it down.`
+        : `${plural(found.length, "function")} shown.`;
   };
   query.addEventListener("input", show);
   document.querySelector("details").addEventListener("toggle", show, { once: true });
@@ -602,6 +610,6 @@ if (typeof document !== "undefined") {
       wireTable(data);
     })
     .catch((error) => {
-      host.textContent = `progress.json did not load: ${error.message}`;
+      host.innerHTML = `<p>The status data could not be loaded (${escape(error.message)}).</p><p><a href="">Reload the page</a> or open <a href="progress.json">progress.json</a> directly.</p>`;
     });
 }
