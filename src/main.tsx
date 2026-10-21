@@ -1,12 +1,12 @@
 // Entry point: fetch progress.json, build the model and draw the page.
 
-import { render } from "preact";
-import { App } from "./components/App.tsx";
+import { render } from "solid-js/web";
 import { buildModel } from "./model/index.ts";
 import { SITE } from "./strings.ts";
 import "./styles/theme.css";
 import "./styles/components.css";
 import type { ProgressData } from "./types.ts";
+import { App } from "./views/App.tsx";
 
 const host = document.getElementById("page");
 
@@ -17,7 +17,7 @@ async function start(): Promise<void> {
     if (!response.ok) throw new Error(`${response.status} ${response.statusText}`.trim());
     const model = buildModel((await response.json()) as ProgressData);
     host.replaceChildren();
-    render(<App model={model} />, host);
+    render(() => <App model={model} />, host);
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     host.innerHTML = "";

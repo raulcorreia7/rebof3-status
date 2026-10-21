@@ -1,5 +1,5 @@
 // The function map: a treemap of groups > targets > functions (or libraries > functions), sized
-// by code bytes and coloured by status. Pure option builders; components/TreemapChart.tsx draws them.
+// by code bytes and coloured by status. Pure option builders; views/Treemap.tsx draws them.
 
 import { TIER_LABEL } from "../strings.ts";
 import { STATUS } from "../model/status.ts";
