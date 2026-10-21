@@ -1,0 +1,22 @@
+{
+  "name": "rebof3-status",
+  "private": true,
+  "type": "module",
+  "description": "Status page and picture renderer for the Breath of Fire III decompilation.",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "node render/build.mjs site",
+    "dev": "node render/build.mjs site --watch",
+    "test": "node --test \"test/*.test.ts\""
+  },
+  "devDependencies": {
+    "@resvg/resvg-js": "2.6.2",
+    "@types/node": "22.20.5",
+    "echarts": "6.1.0",
+    "esbuild": "0.28.2",
+    "preact": "10.29.8",
+    "typescript": "5.9.3"
+  }
+}
