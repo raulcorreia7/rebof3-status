@@ -1,0 +1,40 @@
+/* Base: reset, type and spacing. Colours are custom properties that theme/apply.ts writes from
+   theme/tokens.ts (--bg, --ink, --st-pure, ...). The dark values here only cover the moment before
+   the script runs. */
+:root {
+  color-scheme: dark light;
+  --bg: #0d1117;
+  --card: #161b22;
+  --line: #30363d;
+  --ink: #c9d1d9;
+  --mute: #8b949e;
+  --accent: #58a6ff;
+  --track: #21262d;
+  --radius: 6px;
+  --gap: 16px;
+  --font: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+* { box-sizing: border-box; }
+html { scroll-padding-top: 12px; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 15px/1.5 var(--font);
+  -webkit-text-size-adjust: 100%;
+}
+h1 { font-size: 1.6rem; line-height: 1.2; margin: 0.1rem 0 0.3rem; }
+h2 { font-size: 1.25rem; margin: 0 0 0.2rem; font-weight: 600; }
+h3 { font-size: 1rem; margin: 1.2rem 0 0.2rem; font-weight: 600; }
+p { margin: 0.3rem 0; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+code { font: 0.88em var(--mono); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.mute { color: var(--mute); }
+.small { font-size: 0.85rem; }
+[hidden] { display: none !important; }
+@media (max-width: 640px) { h1 { font-size: 1.3rem; } }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
