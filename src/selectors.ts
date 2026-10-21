@@ -170,7 +170,7 @@ export function sdkLibraries({ model }: Ctx): Views["meters"] {
 
 export const sdkKeyLine = ({ model }: Ctx): string => {
   const { statuses } = model.sdk;
-  return SDK.keyLine(statuses.object.functions, statuses.assembly.functions, statuses.pure.functions + statuses.fake_match.functions);
+  return SDK.keyLine(statuses.object.functions, statuses.assembly.functions, statuses.pure.functions + statuses.match_with_helpers.functions);
 };
 
 // Data and quality -------------------------------------------------------------------------
@@ -205,10 +205,10 @@ export const qualityCards = ({ model }: Ctx): Views["cards"] => ({
 });
 
 export function fakesChart({ model, tokens }: Ctx): Views["chart"] {
-  const rows = model.targets.filter((t) => t.all.statuses.fake_match.functions).sort((a, b) => b.all.statuses.fake_match.functions - a.all.statuses.fake_match.functions);
+  const rows = model.targets.filter((t) => t.all.statuses.match_with_helpers.functions).sort((a, b) => b.all.statuses.match_with_helpers.functions - a.all.statuses.match_with_helpers.functions);
   if (!rows.length) return null;
   const option = barOption(
-    { categories: rows.map((t) => t.name), unit: "functions", series: [{ name: "fake-match functions", color: tokens.status.fake_match, values: rows.map((t) => t.all.statuses.fake_match.functions) }] },
+    { categories: rows.map((t) => t.name), unit: "functions", series: [{ name: "matched C with helpers", color: tokens.status.match_with_helpers, values: rows.map((t) => t.all.statuses.match_with_helpers.functions) }] },
     tokens,
   );
   return { option, height: rows.length * BAR_HEIGHT + 30, label: QUALITY.perTargetHeading };

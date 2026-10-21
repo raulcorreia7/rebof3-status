@@ -22,8 +22,8 @@ export interface StatusRow {
   hasC: boolean;
 }
 
-/** The CSS custom property of a function or map-row status (`fake_match` -> `--st-fake-match`). */
-export const statusProp = (key: string): string => `--st-${key.replace("_", "-")}`;
+/** The CSS custom property of a function or map-row status (`match_with_helpers` -> `--st-match-with-helpers`). */
+export const statusProp = (key: string): string => `--st-${key.replaceAll("_", "-")}`;
 export const statusVar = (key: string): string => `var(${statusProp(key)})`;
 
 const row = (key: Status, phase: Phase, doneIn: readonly Fn["kind"][], hasC: boolean): StatusRow => ({
@@ -38,7 +38,7 @@ const row = (key: Status, phase: Phase, doneIn: readonly Fn["kind"][], hasC: boo
 /** All statuses in tile order: finished work first. */
 export const STATUS_TABLE: readonly StatusRow[] = [
   row("pure", "done", ["game", "sdk"], true),
-  row("fake_match", "done", ["game"], true),
+  row("match_with_helpers", "done", ["game"], true),
   row("asm", "done", ["game"], true),
   row("object", "done", ["sdk"], false),
   row("assembly", "open", [], false),

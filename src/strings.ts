@@ -6,7 +6,7 @@ import { number, plural } from "./model/format.ts";
 // Status key -> legend text. The order of the keys is the order of the legend.
 export const STATUS_LABEL: Record<Status, string> = {
   pure: "matched C",
-  fake_match: "matched C with fake-match tricks",
+  match_with_helpers: "matched C with helpers",
   asm: "original assembly, exact",
   object: "PsyQ library object",
   assembly: "PsyQ library assembly",
@@ -83,7 +83,7 @@ export const SUMMARY = {
   of: (done: number, total: number) => `${number(done)} of ${number(total)} functions`,
   ofBytes: (done: number, total: number) => `${number(done)} of ${number(total)} B`,
   footnote:
-    "* Game code means every function outside the PsyQ SDK. A function counts as matched when it builds to the exact original bytes, whether that is clean C, C with fake-match tricks or the original assembly." +
+    "* Game code means every function outside the PsyQ SDK. A function counts as matched when it builds to the exact original bytes, whether that is clean C, C with helpers or the original assembly." +
     " An SDK function counts as done when it links from an original PsyQ object or is exact C.",
   statusHeading: "Status of every function",
   statusLine: (functions: number, share: string) => `${number(functions)} functions · ${share}% of code bytes`,
@@ -153,9 +153,9 @@ export const QUALITY = {
   sentence: (q: Quality) =>
     `${plural(q.fakes, "fake match", "fake matches")} in use: ${number(q.benign_fakes)} harmless and ${number(q.harmful_fakes)} harmful.` +
     ` The C still has ${plural(q.field_ref, "raw offset access", "raw offset accesses")} (FIELD uses), ${plural(q.local_externs, "local extern")}, ${plural(q.sym_conflicts, "symbol conflict")} and ${plural(q.hand_asm, "hand-written assembly file")}.`,
-  perTargetHeading: "Fake-match functions by target",
+  perTargetHeading: "Matched C with helpers by target",
   perTargetHelp:
-    "The project records the quality counters above as totals only. The one per-target figure is how many functions rely on a fake-match trick, shown here.",
+    "The project records the quality counters above as totals only. The one per-target figure is how many functions are matched C with helpers, shown here.",
   verifyHeading: "Verification",
   imageLinks: (exact: number, total: number) => `${exact} of ${total} targets link byte-identical to the retail binary`,
   imageLinksUnknown: "not measured in this run.",

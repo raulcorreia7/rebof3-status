@@ -105,7 +105,7 @@ function libraryPanel(model: Model, x: number, y: number, width: number): Drawn 
     svg += text(x + nameWidth, top + 18, versions ? SDK.versions(versions) : POSTER.libraryLinked, 11, C.mute);
   });
   const s = model.sdk.statuses;
-  svg += text(x, y + 40 + libs.length * 36, POSTER.libraryKey(s.object.functions, s.assembly.functions, s.pure.functions + s.fake_match.functions), 13, C.mute);
+  svg += text(x, y + 40 + libs.length * 36, POSTER.libraryKey(s.object.functions, s.assembly.functions, s.pure.functions + s.match_with_helpers.functions), 13, C.mute);
   return { svg, bottom: y + 40 + libs.length * 36 + 22 };
 }
 
