@@ -1,36 +1,36 @@
 {
  "schema": 2,
- "generated_at": "2026-10-21T16:14:00Z",
- "commit": "6b57bcd9834fc5bdb47080e48abde1db4efd08e6",
+ "generated_at": "2026-10-21T16:46:31Z",
+ "commit": "5243c993c301f57f83eeb6aff8ccd811349a153f",
  "dirty": false,
  "summary": {
   "code": {
    "functions": 4180,
    "bytes": 1059496,
-   "done_functions": 3809,
-   "done_bytes": 721244,
+   "done_functions": 3814,
+   "done_bytes": 725356,
    "statuses": {
-    "pure": [2844, 509216],
-    "match_with_helpers": [239, 82120],
+    "pure": [2848, 512452],
+    "match_with_helpers": [240, 82996],
     "asm": [4, 1888],
     "object": [722, 128020],
     "assembly": [4, 384],
-    "nonmatching": [276, 218732],
+    "nonmatching": [271, 214620],
     "open": [91, 119136]
    }
   },
   "game": {
    "functions": 3453,
    "bytes": 931084,
-   "done_functions": 3086,
-   "done_bytes": 593216,
+   "done_functions": 3091,
+   "done_bytes": 597328,
    "statuses": {
-    "pure": [2843, 509208],
-    "match_with_helpers": [239, 82120],
+    "pure": [2847, 512444],
+    "match_with_helpers": [240, 82996],
     "asm": [4, 1888],
     "object": [0, 0],
     "assembly": [0, 0],
-    "nonmatching": [276, 218732],
+    "nonmatching": [271, 214620],
     "open": [91, 119136]
    }
   },
@@ -50,7 +50,7 @@
    }
   },
   "data": {"bytes": 527425, "typed": 58233},
-  "quality": {"fakes": 539, "harmful_fakes": 294, "benign_fakes": 245, "field_ref": 2097, "local_externs": 2188, "sym_conflicts": 0, "hand_asm": 5},
+  "quality": {"fakes": 542, "harmful_fakes": 294, "benign_fakes": 248, "field_ref": 2077, "local_externs": 2182, "sym_conflicts": 0, "hand_asm": 5},
   "links": {"targets": 25, "exact": 25, "differs": 0, "error": 0},
   "layout": {"rows": 4489, "gaps": 0, "overlaps": 0, "relocated": 0, "unmodelled": 0, "resized": 0, "problems": 0}
  },
@@ -71,8 +71,8 @@
    "name": "BATTLE.EMI slot 3",
    "base": "0x801D0C00",
    "end": "0x801ED9D0",
-   "counts": {"exact": 386, "non_matching": 33, "untagged": 0, "unlifted": 12, "library": 0, "sdk": 0, "total": 431},
-   "link": {"status": "EXACT", "payload": 118224, "linked": 118224, "from_c": 386, "from_assembly": 45, "first_mismatch": null},
+   "counts": {"exact": 388, "non_matching": 31, "untagged": 0, "unlifted": 12, "library": 0, "sdk": 0, "total": 431},
+   "link": {"status": "EXACT", "payload": 118224, "linked": 118224, "from_c": 388, "from_assembly": 43, "first_mismatch": null},
    "layout": {"gaps": [], "overlaps": [], "relocated": 0, "unmodelled": 0, "resized": 0, "problems": []},
    "data": {"bytes": 12844, "typed": 100},
    "units": [
@@ -174,7 +174,7 @@
     [26448, 388, "f", "pure", "func_801D7350"],
     [26836, 56, "f", "pure", "func_801D74D4"],
     [26892, 1332, "f", "open", "func_801D750C"],
-    [28224, 720, "f", "nonmatching", "func_801D7A40"],
+    [28224, 720, "f", "pure", "func_801D7A40"],
     [28944, 416, "f", "pure", "func_801D7D10"],
     [29360, 480, "f", "pure", "func_801D7EB0"],
     [29840, 480, "f", "pure", "func_801D8090"],
@@ -287,7 +287,7 @@
     [58340, 872, "f", "nonmatching", "func_801DEFE4"],
     [59212, 108, "f", "pure", "func_801DF34C"],
     [59320, 64, "f", "pure", "func_801DF3B8"],
-    [59384, 880, "f", "nonmatching", "func_801DF3F8"],
+    [59384, 880, "f", "pure", "func_801DF3F8"],
     [60264, 132, "f", "pure", "func_801DF768"],
     [60396, 192, "f", "pure", "func_801DF7EC"],
     [60588, 104, "f", "pure", "func_801DF8AC"],
@@ -1135,8 +1135,8 @@
    "name": "GAME.EMI slot 0",
    "base": "0x80195800",
    "end": "0x801CD958",
-   "counts": {"exact": 623, "non_matching": 45, "untagged": 0, "unlifted": 13, "library": 0, "sdk": 0, "total": 681},
-   "link": {"status": "EXACT", "payload": 229720, "linked": 229720, "from_c": 624, "from_assembly": 58, "first_mismatch": null},
+   "counts": {"exact": 624, "non_matching": 44, "untagged": 0, "unlifted": 13, "library": 0, "sdk": 0, "total": 681},
+   "link": {"status": "EXACT", "payload": 229720, "linked": 229720, "from_c": 625, "from_assembly": 57, "first_mismatch": null},
    "layout": {"gaps": [], "overlaps": [], "relocated": 0, "unmodelled": 0, "resized": 0, "problems": []},
    "data": {"bytes": 26292, "typed": 25932},
    "units": [
@@ -1456,7 +1456,7 @@
     [62336, 64, "f", "pure", "func_801A4B80"],
     [62400, 56, "f", "pure", "func_801A4BC0"],
     [62456, 348, "f", "pure", "func_801A4BF8"],
-    [62804, 876, "f", "nonmatching", "func_801A4D54"],
+    [62804, 876, "f", "match_with_helpers", "func_801A4D54"],
     [63680, 832, "f", "match_with_helpers", "func_801A50C0"],
     [64512, 1008, "f", "match_with_helpers", "func_801A5400"],
     [65520, 904, "f", "match_with_helpers", "func_801A57F0"],
@@ -1911,8 +1911,8 @@
    "name": "SHOP.EMI",
    "base": "0x801D0C00",
    "end": "0x801E626C",
-   "counts": {"exact": 213, "non_matching": 36, "untagged": 0, "unlifted": 13, "library": 0, "sdk": 0, "total": 262},
-   "link": {"status": "EXACT", "payload": 87660, "linked": 87660, "from_c": 213, "from_assembly": 56, "first_mismatch": null},
+   "counts": {"exact": 215, "non_matching": 34, "untagged": 0, "unlifted": 13, "library": 0, "sdk": 0, "total": 262},
+   "link": {"status": "EXACT", "payload": 87660, "linked": 87660, "from_c": 215, "from_assembly": 54, "first_mismatch": null},
    "layout": {"gaps": [], "overlaps": [], "relocated": 0, "unmodelled": 0, "resized": 0, "problems": []},
    "data": {"bytes": 5064, "typed": 136},
    "units": [
@@ -2059,7 +2059,7 @@
     [44344, 184, "f", "pure", "func_801DB938"],
     [44528, 820, "f", "nonmatching", "func_801DB9F0"],
     [45348, 500, "f", "match_with_helpers", "func_801DBD24"],
-    [45848, 732, "f", "nonmatching", "func_801DBF18"],
+    [45848, 732, "f", "pure", "func_801DBF18"],
     [46580, 1288, "f", "open", "func_801DC1F4"],
     [47868, 1888, "f", "open", "func_801DC6FC"],
     [49756, 1268, "f", "open", "func_801DCE5C"],
@@ -2153,7 +2153,7 @@
     [76576, 84, "f", "pure", "func_801E3720"],
     [76660, 64, "f", "pure", "func_801E3774"],
     [76724, 64, "f", "pure", "func_801E37B4"],
-    [76788, 904, "f", "nonmatching", "func_801E37F4"],
+    [76788, 904, "f", "pure", "func_801E37F4"],
     [77692, 40, "f", "pure", "func_801E3B7C"],
     [77732, 84, "f", "pure", "func_801E3BA4"],
     [77816, 64, "f", "pure", "func_801E3BF8"],
@@ -5698,6 +5698,6 @@
   {"date": "2026-10-18", "revision": "367f590e654343f1f1c3118ae20e817aecda458b", "source": "git", "game_functions": 3464, "game_matched": 2680, "game_bytes": 931916, "game_matched_bytes": 431772, "sdk_functions": 716, "sdk_done": null, "data_bytes": null, "data_typed": null, "fakes": 384, "harmful_fakes": 189, "field_ref": 2085, "local_externs": 4052, "sym_conflicts": null},
   {"date": "2026-10-19", "revision": "115784dd958f1e3d965e54541f07c81203dfdc3c", "source": "run", "game_functions": 3458, "game_matched": 2846, "game_bytes": 931540, "game_matched_bytes": 474812, "sdk_functions": 722, "sdk_done": 434, "data_bytes": 1423613, "data_typed": 4104, "fakes": 336, "harmful_fakes": 196, "field_ref": 482, "local_externs": 1714, "sym_conflicts": 0},
   {"date": "2026-10-20", "revision": "ccf67e8eccf30c4dc691a24257963c0c0d9cdbb2", "source": "run", "game_functions": 3453, "game_matched": 3057, "game_bytes": 931084, "game_matched_bytes": 573860, "sdk_functions": 727, "sdk_done": 723, "data_bytes": 527425, "data_typed": 58169, "fakes": 520, "harmful_fakes": 284, "field_ref": 2112, "local_externs": 2102, "sym_conflicts": 0},
-  {"date": "2026-10-21", "revision": "6b57bcd9834fc5bdb47080e48abde1db4efd08e6", "source": "run", "game_functions": 3453, "game_matched": 3086, "game_bytes": 931084, "game_matched_bytes": 593216, "sdk_functions": 727, "sdk_done": 723, "data_bytes": 527425, "data_typed": 58233, "fakes": 539, "harmful_fakes": 294, "field_ref": 2097, "local_externs": 2188, "sym_conflicts": 0}
+  {"date": "2026-10-21", "revision": "5243c993c301f57f83eeb6aff8ccd811349a153f", "source": "run", "game_functions": 3453, "game_matched": 3091, "game_bytes": 931084, "game_matched_bytes": 597328, "sdk_functions": 727, "sdk_done": 723, "data_bytes": 527425, "data_typed": 58233, "fakes": 542, "harmful_fakes": 294, "field_ref": 2077, "local_externs": 2182, "sym_conflicts": 0}
  ]
 }
