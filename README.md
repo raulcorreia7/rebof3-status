@@ -10,7 +10,7 @@ This repository holds only status data and its renderer. It has no source code, 
 
 ## Where things live
 
-The decompilation measures itself: `bin/progress` in rebof3 writes `progress.json`, because only rebof3 can read its Splat maps, link its targets and count its functions. This repository holds the page, the picture renderer and the published data, and no measuring code, so the page can change without touching the decompilation. The monorepo holds both as submodules, so its `scripts/publish-progress` is the one command that measures, copies `progress.json` here, commits and pushes; rebof3's post-merge hook runs it after each merge into `main`. The workflow here then draws the page and the picture from `progress.json`.
+The decompilation measures itself: `bin/progress` in rebof3 writes `progress.json`, because only rebof3 can read its Splat maps, link its targets and count its functions. This repository holds the page, the picture renderer and the published data, and no measuring code, so the page can change without touching the decompilation. The monorepo holds both as submodules, so its `scripts/publish-progress` is the one command that measures, copies `progress.json` here and commits it locally (the owner pushes); rebof3's post-merge hook runs it after each merge into `main`. The workflow here then draws the page and the picture from `progress.json`.
 
 ## Stack
 
