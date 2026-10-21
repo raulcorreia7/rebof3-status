@@ -1,7 +1,7 @@
 {
  "schema": 2,
- "generated_at": "2026-10-21T16:03:07Z",
- "commit": "bcb2d7c7f072f3bb3de0534c3ec8f816f2a40637",
+ "generated_at": "2026-10-21T16:12:25Z",
+ "commit": "6c0727680f3cf2eb9848a02ae3ff2c72eaeab5a6",
  "dirty": false,
  "summary": {
   "code": {
@@ -50,7 +50,7 @@
    }
   },
   "data": {"bytes": 527425, "typed": 58233},
-  "quality": {"fakes": 539, "harmful_fakes": 294, "benign_fakes": 245, "field_ref": 2200, "local_externs": 2192, "sym_conflicts": 0, "hand_asm": 5},
+  "quality": {"fakes": 539, "harmful_fakes": 294, "benign_fakes": 245, "field_ref": 2097, "local_externs": 2188, "sym_conflicts": 0, "hand_asm": 5},
   "links": {"targets": 25, "exact": 25, "differs": 0, "error": 0},
   "layout": {"rows": 4489, "gaps": 0, "overlaps": 0, "relocated": 0, "unmodelled": 0, "resized": 0, "problems": 0}
  },
@@ -5698,6 +5698,6 @@
   {"date": "2026-10-18", "revision": "367f590e654343f1f1c3118ae20e817aecda458b", "source": "git", "game_functions": 3464, "game_matched": 2680, "game_bytes": 931916, "game_matched_bytes": 431772, "sdk_functions": 716, "sdk_done": null, "data_bytes": null, "data_typed": null, "fakes": 384, "harmful_fakes": 189, "field_ref": 2085, "local_externs": 4052, "sym_conflicts": null},
   {"date": "2026-10-19", "revision": "115784dd958f1e3d965e54541f07c81203dfdc3c", "source": "run", "game_functions": 3458, "game_matched": 2846, "game_bytes": 931540, "game_matched_bytes": 474812, "sdk_functions": 722, "sdk_done": 434, "data_bytes": 1423613, "data_typed": 4104, "fakes": 336, "harmful_fakes": 196, "field_ref": 482, "local_externs": 1714, "sym_conflicts": 0},
   {"date": "2026-10-20", "revision": "ccf67e8eccf30c4dc691a24257963c0c0d9cdbb2", "source": "run", "game_functions": 3453, "game_matched": 3057, "game_bytes": 931084, "game_matched_bytes": 573860, "sdk_functions": 727, "sdk_done": 723, "data_bytes": 527425, "data_typed": 58169, "fakes": 520, "harmful_fakes": 284, "field_ref": 2112, "local_externs": 2102, "sym_conflicts": 0},
-  {"date": "2026-10-21", "revision": "bcb2d7c7f072f3bb3de0534c3ec8f816f2a40637", "source": "run", "game_functions": 3453, "game_matched": 3086, "game_bytes": 931084, "game_matched_bytes": 593216, "sdk_functions": 727, "sdk_done": 723, "data_bytes": 527425, "data_typed": 58233, "fakes": 539, "harmful_fakes": 294, "field_ref": 2200, "local_externs": 2192, "sym_conflicts": 0}
+  {"date": "2026-10-21", "revision": "6c0727680f3cf2eb9848a02ae3ff2c72eaeab5a6", "source": "run", "game_functions": 3453, "game_matched": 3086, "game_bytes": 931084, "game_matched_bytes": 593216, "sdk_functions": 727, "sdk_done": 723, "data_bytes": 527425, "data_typed": 58233, "fakes": 539, "harmful_fakes": 294, "field_ref": 2097, "local_externs": 2188, "sym_conflicts": 0}
  ]
 }
