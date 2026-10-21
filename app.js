@@ -32,7 +32,7 @@ const TRACK = "#21262d";
 // Status key -> [legend text, tile colour], in tile order: finished work first.
 const STATUS = {
   pure: ["matched C", "#2ea043"],
-  aided: ["matched C with aids", "#7ee787"],
+  fake_match: ["matched C with fake-match tricks", "#7ee787"],
   asm: ["original assembly (exact)", "#79c0ff"],
   object: ["library object", "#26a69a"],
   assembly: ["library assembly", "#db6d28"],
@@ -346,7 +346,7 @@ function libraryPanel(data, x, y, width, titled = true) {
     const top = y + head + index * 36;
     const count = Object.fromEntries(ORDER.map((key) => [key, 0]));
     for (const fn of lib.functions) count[fn.status] += 1;
-    const done = count.pure + count.aided + count.object;
+    const done = count.pure + count.fake_match + count.object;
     const length = Math.max((weightOf(lib.functions) / peak) * barWidth, 2);
     svg += text(x, top, lib.name, 14, INK);
     svg += bar(x + nameWidth, top + 1, length, 14, ORDER.map((key) => [count[key], STATUS[key][1]]), lib.functions.length);
@@ -354,7 +354,7 @@ function libraryPanel(data, x, y, width, titled = true) {
     const versions = Object.entries(lib.versions).map(([version, units]) => `${version} ×${units}`).join(" · ");
     svg += text(x + nameWidth, top + 18, versions ? `objects from PsyQ ${versions}` : "linked from original assembly", 11, MUTED);
   });
-  const key = `${number(sdk.statuses.object[0])} objects · ${number(sdk.statuses.assembly[0])} assembly · ${number(sdk.statuses.pure[0] + sdk.statuses.aided[0])} C`;
+  const key = `${number(sdk.statuses.object[0])} objects · ${number(sdk.statuses.assembly[0])} assembly · ${number(sdk.statuses.pure[0] + sdk.statuses.fake_match[0])} C`;
   svg += text(x, y + head + libs.length * 36, key, 13, MUTED);
   return { svg, bottom: y + head + libs.length * 36 + 22 };
 }
@@ -363,7 +363,7 @@ function libraryPanel(data, x, y, width, titled = true) {
 function qualityRow(data, y) {
   const q = data.summary.quality;
   const items = [
-    ["Aids in use", number(q.aids), `${number(q.benign_aids)} benign · ${number(q.harmful_aids)} harmful`],
+    ["Fake matches in use", number(q.fakes), `${number(q.benign_fakes)} benign · ${number(q.harmful_fakes)} harmful`],
     ["FIELD uses", number(q.field_ref), "raw offset accesses"],
     ["Local externs", number(q.local_externs), "extern declarations in C files"],
     ["Symbol conflicts", number(q.sym_conflicts), "symbol registry disagreements"],
@@ -422,8 +422,8 @@ function trends(data, y, { x = MARGIN, width: total = WIDTH - 2 * MARGIN, cols =
     ["Matched code bytes over time", series(h, ratio("game_matched_bytes", "game_bytes"), { trimZero: true }), STATUS.pure[1], share1],
     ["PsyQ SDK as object or C over time", series(h, ratio("sdk_done", "sdk_functions")), STATUS.object[1], share1],
     ["Data typed in C over time", series(h, ratio("data_typed", "data_bytes")), STATUS.asm[1], share2],
-    ["Aids in use over time", series(h, count("aids")), MUTED, whole],
-    ["Harmful aids over time", series(h, count("harmful_aids")), STATUS.nonmatching[1], whole],
+    ["Fake matches in use over time", series(h, count("fakes")), MUTED, whole],
+    ["Harmful fake matches over time", series(h, count("harmful_fakes")), STATUS.nonmatching[1], whole],
     ["FIELD uses over time", series(h, count("field_ref")), MUTED, whole],
     ["Local externs over time", series(h, count("local_externs")), MUTED, whole],
   ];
@@ -508,7 +508,7 @@ function areas(data) {
     const key = target.id === "exe/logo" ? "logo" : target.id.startsWith("exe/") ? "EXE" : target.id.split("/").slice(0, 2).join("/");
     const entry = found.get(key) ?? [0, 0];
     entry[1] += target.functions.length;
-    entry[0] += target.functions.filter((fn) => ["pure", "aided", "asm"].includes(fn.status)).length;
+    entry[0] += target.functions.filter((fn) => ["pure", "fake_match", "asm"].includes(fn.status)).length;
     found.set(key, entry);
   }
   return [...found].map(([label, [done, total]]) => [label, share(done, total)]);
@@ -526,7 +526,7 @@ export function page(data) {
     ...areas(data).map(([label, value]) => badgeHtml(label, `${value.toFixed(2)}%`, level(value))),
     badgeHtml("PsyQ SDK", `${percent(sdk.done_functions, sdk.functions)}%`, "lib"),
     bytes ? badgeHtml("data typed", `${percent(bytes.typed, bytes.bytes)}%`, level(share(bytes.typed, bytes.bytes))) : "",
-    badgeHtml("aids", number(quality.aids), "lib"),
+    badgeHtml("fake matches", number(quality.fakes), "lib"),
     badgeHtml("FIELD uses", number(quality.field_ref), "lib"),
     badgeHtml("local externs", number(quality.local_externs), "lib"),
     badgeHtml("symbol conflicts", number(quality.sym_conflicts), "lib"),
@@ -545,7 +545,7 @@ export function page(data) {
     `<p class="mute">Generated ${escape(data.generated_at.slice(0, 10))} at <code>${escape(data.commit.slice(0, 12))}</code>.` +
     ` <a href="progress.json">progress.json</a> · <a href="progress.png">progress.png</a></p>` +
     `<div class="badges">${badges}</div>` +
-    `<p class="mute small">* Game code is every function outside the PsyQ SDK. Matched means byte-exact: matched C, matched C with aids and original assembly.` +
+    `<p class="mute small">* Game code is every function outside the PsyQ SDK. Matched means byte-exact: matched C, matched C with fake-match tricks and original assembly.` +
     ` The SDK counts a unit as done when it links from an original object or is exact C.</p>` +
     `<div class="legend">${legendHtml}</div>` +
     `<h2>${escape(gameBox.title)}</h2><p class="mute small">Block area is code bytes; one square per function. Hover a square for its function.</p>` +
@@ -556,7 +556,7 @@ export function page(data) {
     fragment(dataDraw.svg, dataDraw.bottom, "Data typed in C per target") +
     `<h2>${LIBRARY_TITLE}</h2><p class="mute small">Functions by status per library; the versions are the PsyQ releases the object units link from.</p>` +
     fragment(libDraw.svg, libDraw.bottom, LIBRARY_TITLE) +
-    `<h2>Code quality</h2><p class="mute small">${number(q.aids)} aids in use (${number(q.benign_aids)} benign, ${number(q.harmful_aids)} harmful), ${number(q.field_ref)} FIELD uses (raw offset accesses),` +
+    `<h2>Code quality</h2><p class="mute small">${number(q.fakes)} fake matches in use (${number(q.benign_fakes)} benign, ${number(q.harmful_fakes)} harmful), ${number(q.field_ref)} FIELD uses (raw offset accesses),` +
     ` ${number(q.local_externs)} local externs, ${number(q.sym_conflicts)} symbol conflicts, ${number(q.hand_asm)} hand assembly files.</p>` +
     `<h2>Trend</h2>` +
     fragment(trendDraw.svg, trendDraw.bottom, "Trend") +
