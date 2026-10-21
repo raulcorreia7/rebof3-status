@@ -25,13 +25,13 @@ The map has two tile panels: game functions grouped by target and PsyQ library f
 
 - `schema`, `generated_at`, `commit` (the decompilation commit), `dirty`.
 - `summary.code`, `summary.game`, `summary.sdk`: `functions`, `bytes`, `done_functions`, `done_bytes`, `statuses` (`status: [functions, bytes]`). `code` covers every function, `game` and `sdk` split it.
-- `summary.data`: `bytes` outside code and `typed` in C. `summary.quality`: `aids`, `harmful_aids`, `benign_aids`, `field_ref`, `local_externs`, `sym_conflicts`, `hand_asm`.
+- `summary.data`: `bytes` outside code and `typed` in C. `summary.quality`: `fakes`, `harmful_fakes`, `benign_fakes`, `field_ref`, `local_externs`, `sym_conflicts`, `hand_asm`.
 - `summary.links`: targets by image link verdict. `summary.layout`: the audit of the units against the Splat maps (`rows`, `gaps`, `overlaps`, `relocated`, `unmodelled`, `resized`, `problems`).
 - `targets[]`: `id`, `name`, `base` and `end` (the retail load range), `counts` (as `bin/status`), `link` (`status` `EXACT`, `DIFFERS` or `ERROR`, `payload`, `linked`, `first_mismatch` as a payload offset), `layout` (audit), `data`, and `units`: one `[offset, size, kind, status, name]` per Splat map row in address order. A row sits at `base + offset`. `kind` is `f` (game function), `s` (PsyQ function) or `d` (data or raw bytes).
 - `libraries[]`: `name`, `versions` (PsyQ version to exact objects), `tiers` and `functions` (`target`, `addr`, `name`, `bytes`, `status`, `tier`, `version`, `score`), best match first. `tier` is `c`, `object`, `partial`, `assembly` or `unmatched`.
 - `history[]`: one row per day with the numerator and denominator of each headline.
 
-Function statuses: `pure` (matched C), `aided` (matched C with aids), `asm` (original assembly, exact), `object` (library object), `assembly` (library assembly), `nonmatching` (C in progress), `open` (assembly). Other map rows are `typed` (compiled from C), `raw` or `header`.
+Function statuses: `pure` (matched C), `fake_match` (matched C with fake-match tricks), `asm` (original assembly, exact), `object` (library object), `assembly` (library assembly), `nonmatching` (C in progress), `open` (assembly). Other map rows are `typed` (compiled from C), `raw` or `header`.
 
 ## Preview
 
