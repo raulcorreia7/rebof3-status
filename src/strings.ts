@@ -6,7 +6,7 @@ import { number, plural } from "./model/format.ts";
 // Status key -> legend text. The order of the keys is the order of the legend.
 export const STATUS_LABEL: Record<Status, string> = {
   pure: "matched C",
-  match_with_helpers: "matched C with helpers",
+  match_with_helpers: "matched with helper macros",
   asm: "original assembly, exact",
   object: "PsyQ library object",
   assembly: "PsyQ library assembly",
@@ -83,7 +83,7 @@ export const SUMMARY = {
   of: (done: number, total: number) => `${number(done)} of ${number(total)} functions`,
   ofBytes: (done: number, total: number) => `${number(done)} of ${number(total)} B`,
   footnote:
-    "* Game code means every function outside the PsyQ SDK. A function counts as matched when it builds to the exact original bytes, whether that is clean C, C with helpers or the original assembly." +
+    "* Game code means every function outside the PsyQ SDK. A function counts as matched when it builds to the exact original bytes, whether that is clean C, C with helper macros or the original assembly." +
     " An SDK function counts as done when it links from an original PsyQ object or is exact C.",
   statusHeading: "Status of every function",
   statusLine: (functions: number, share: string) => `${number(functions)} functions · ${share}% of code bytes`,
@@ -144,18 +144,18 @@ export const DATA = {
 export const QUALITY = {
   heading: "Code quality",
   cards: (q: Quality): [string, string, string][] => [
-    ["Fake matches in use", number(q.fakes), `${number(q.benign_fakes)} harmless · ${number(q.harmful_fakes)} harmful`],
+    ["Helper macros in use", number(q.fakes), `${number(q.benign_fakes)} benign · ${number(q.harmful_fakes)} harmful`],
     ["FIELD uses", number(q.field_ref), "raw offset accesses in C"],
     ["Local externs", number(q.local_externs), "extern declarations inside C files"],
     ["Symbol conflicts", number(q.sym_conflicts), "places where the symbol list disagrees"],
     ["Hand-written assembly", number(q.hand_asm), "files kept as assembly by hand"],
   ],
   sentence: (q: Quality) =>
-    `${plural(q.fakes, "fake match", "fake matches")} in use: ${number(q.benign_fakes)} harmless and ${number(q.harmful_fakes)} harmful.` +
+    `${plural(q.fakes, "helper macro", "helper macros")} in use: ${number(q.benign_fakes)} benign and ${number(q.harmful_fakes)} harmful.` +
     ` The C still has ${plural(q.field_ref, "raw offset access", "raw offset accesses")} (FIELD uses), ${plural(q.local_externs, "local extern")}, ${plural(q.sym_conflicts, "symbol conflict")} and ${plural(q.hand_asm, "hand-written assembly file")}.`,
-  perTargetHeading: "Matched C with helpers by target",
+  perTargetHeading: "Matched with helper macros by target",
   perTargetHelp:
-    "The project records the quality counters above as totals only. The one per-target figure is how many functions are matched C with helpers, shown here.",
+    "The project records the quality counters above as totals only. The one per-target figure is how many functions are matched with helper macros, shown here.",
   verifyHeading: "Verification",
   imageLinks: (exact: number, total: number) => `${exact} of ${total} targets link byte-identical to the retail binary`,
   imageLinksUnknown: "not measured in this run.",
@@ -176,8 +176,8 @@ export const TREND = {
     gameBytes: "Matched code bytes over time",
     sdk: "PsyQ SDK as object or C over time",
     data: "Data typed in C over time",
-    fakes: "Fake matches in use over time",
-    harmful: "Harmful fake matches over time",
+    benign: "Benign helper macros over time",
+    harmful: "Harmful helper macros over time",
     fieldRef: "FIELD uses over time",
     localExterns: "Local externs over time",
   },

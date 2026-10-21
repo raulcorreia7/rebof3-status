@@ -208,7 +208,7 @@ export function fakesChart({ model, tokens }: Ctx): Views["chart"] {
   const rows = model.targets.filter((t) => t.all.statuses.match_with_helpers.functions).sort((a, b) => b.all.statuses.match_with_helpers.functions - a.all.statuses.match_with_helpers.functions);
   if (!rows.length) return null;
   const option = barOption(
-    { categories: rows.map((t) => t.name), unit: "functions", series: [{ name: "matched C with helpers", color: tokens.status.match_with_helpers, values: rows.map((t) => t.all.statuses.match_with_helpers.functions) }] },
+    { categories: rows.map((t) => t.name), unit: "functions", series: [{ name: "matched with helper macros", color: tokens.status.match_with_helpers, values: rows.map((t) => t.all.statuses.match_with_helpers.functions) }] },
     tokens,
   );
   return { option, height: rows.length * BAR_HEIGHT + 30, label: QUALITY.perTargetHeading };

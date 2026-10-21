@@ -79,4 +79,4 @@ The map has three views: tiles (one square per function, coloured by status), Ps
 - `libraries[]`: `name`, `versions` (PsyQ version to exact objects), `tiers` and `functions` (`target`, `addr`, `name`, `bytes`, `status`, `tier`, `version`, `score`), best match first. `tier` is `c`, `object`, `partial`, `assembly` or `unmatched`.
 - `history[]`: one row per day with the numerator and denominator of each headline.
 
-Function statuses: `pure` (matched C), `match_with_helpers` (matched C with helpers), `asm` (original assembly, exact), `object` (library object), `assembly` (library assembly), `nonmatching` (C in progress), `open` (assembly). Other map rows are `typed` (compiled from C), `raw` or `header`.
+Function statuses: `pure` (matched C), `match_with_helpers` (matched with helper macros), `asm` (original assembly, exact), `object` (library object), `assembly` (library assembly), `nonmatching` (C in progress), `open` (assembly). Other map rows are `typed` (compiled from C), `raw` or `header`.

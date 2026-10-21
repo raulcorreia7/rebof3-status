@@ -52,6 +52,14 @@ const count =
   (row) =>
     num(row[key]);
 
+/** `whole` minus `part`, e.g. the benign helper macros: all of them minus the harmful ones. */
+const remainder =
+  (whole: string, part: string): Measure =>
+  (row) => {
+    const [a, b] = [num(row[whole]), num(row[part])];
+    return a === null || b === null ? null : a - b;
+  };
+
 export interface TrendChart {
   id: string;
   title: string;
@@ -74,7 +82,7 @@ export const TREND_CHARTS: TrendChart[] = [
   chart("gameBytes", TREND.charts.gameBytes, ratio("game_matched_bytes", "game_bytes"), "pure", "%", 1, true),
   chart("sdk", TREND.charts.sdk, ratio("sdk_done", "sdk_functions"), "object", "%", 1),
   chart("data", TREND.charts.data, ratio("data_typed", "data_bytes"), "asm", "%", 2),
-  chart("fakes", TREND.charts.fakes, count("fakes"), "mute", "", 0),
+  chart("benign", TREND.charts.benign, remainder("fakes", "harmful_fakes"), "mute", "", 0),
   chart("harmful", TREND.charts.harmful, count("harmful_fakes"), "nonmatching", "", 0),
   chart("fieldRef", TREND.charts.fieldRef, count("field_ref"), "mute", "", 0),
   chart("localExterns", TREND.charts.localExterns, count("local_externs"), "mute", "", 0),
