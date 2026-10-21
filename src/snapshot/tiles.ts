@@ -1,8 +1,7 @@
 // One square per function, packed into blocks and squarified into a panel (the picture's map).
 
-import { STATUS_LABEL } from "../strings.ts";
 import { escapeText, number, round } from "../model/format.ts";
-import { STATUSES } from "../model/status.ts";
+import { STATUS, STATUSES } from "../model/status.ts";
 import { shorten, textWidth } from "../model/text.ts";
 import type { Fn } from "../types.ts";
 import { C, frame, rect, text } from "./svg.ts";
@@ -91,7 +90,7 @@ const weightOf = (rows: Fn[]): number => rows.reduce((sum, row) => sum + Math.ma
 export const sorted = (rows: Fn[]): Fn[] =>
   [...rows].sort((a, b) => STATUSES.indexOf(a.status) - STATUSES.indexOf(b.status) || a.target.localeCompare(b.target) || a.address - b.address);
 
-const tip = (fn: Fn): string => `${fn.id} ${fn.name} · ${STATUS_LABEL[fn.status]} · ${number(fn.bytes)} B`;
+const tip = (fn: Fn): string => `${fn.id} ${fn.name} · ${STATUS[fn.status].label} · ${number(fn.bytes)} B`;
 
 function block(rows: Fn[], name: string, box: number[]): { svg: string; fitted: boolean } {
   const x = box[0] + INSET;
