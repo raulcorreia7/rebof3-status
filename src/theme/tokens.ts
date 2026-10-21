@@ -33,7 +33,7 @@ export const DARK: Tokens = {
   danger: "#f85149",
   status: {
     pure: "#2ea043",
-    fake_match: "#7ee787",
+    match_with_helpers: "#7ee787",
     asm: "#79c0ff",
     object: "#26a69a",
     assembly: "#db6d28",
@@ -59,7 +59,7 @@ export const LIGHT: Tokens = {
   danger: "#cf222e",
   status: {
     pure: "#1a7f37",
-    fake_match: "#4ac26b",
+    match_with_helpers: "#4ac26b",
     asm: "#218bff",
     object: "#0e8a80",
     assembly: "#bc4c00",

@@ -1,7 +1,7 @@
 // The shape of progress.json (schema 2, written by tools/bof3/progress/document.py in rebof3)
 // and of the model built from it (model/index.ts).
 
-export type Status = "pure" | "fake_match" | "asm" | "object" | "assembly" | "nonmatching" | "open";
+export type Status = "pure" | "match_with_helpers" | "asm" | "object" | "assembly" | "nonmatching" | "open";
 export type DataStatus = "typed" | "raw" | "header";
 export type Tier = "c" | "object" | "partial" | "assembly" | "unmatched";
 export type UnitKind = "f" | "s" | "d";
