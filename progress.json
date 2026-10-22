@@ -1,36 +1,36 @@
 {
  "schema": 2,
- "generated_at": "2026-10-22T05:11:59Z",
- "commit": "3314ee6830900ad265cbb8eabeab96e88e538f28",
+ "generated_at": "2026-10-22T05:46:18Z",
+ "commit": "6879b3ae4a6b8b5106eed9a21f52cefd1d972b99",
  "dirty": false,
  "summary": {
   "code": {
    "functions": 4180,
    "bytes": 1059496,
-   "done_functions": 3826,
-   "done_bytes": 731660,
+   "done_functions": 3829,
+   "done_bytes": 732860,
    "statuses": {
-    "pure": [2858, 517552],
+    "pure": [2861, 518752],
     "match_with_helpers": [242, 84200],
     "asm": [4, 1888],
     "object": [722, 128020],
     "assembly": [4, 384],
-    "nonmatching": [259, 208316],
+    "nonmatching": [256, 207116],
     "open": [91, 119136]
    }
   },
   "game": {
    "functions": 3453,
    "bytes": 931084,
-   "done_functions": 3103,
-   "done_bytes": 603632,
+   "done_functions": 3106,
+   "done_bytes": 604832,
    "statuses": {
-    "pure": [2857, 517544],
+    "pure": [2860, 518744],
     "match_with_helpers": [242, 84200],
     "asm": [4, 1888],
     "object": [0, 0],
     "assembly": [0, 0],
-    "nonmatching": [259, 208316],
+    "nonmatching": [256, 207116],
     "open": [91, 119136]
    }
   },
@@ -50,7 +50,7 @@
    }
   },
   "data": {"bytes": 527425, "typed": 58233},
-  "quality": {"fakes": 545, "harmful_fakes": 294, "benign_fakes": 251, "field_ref": 2012, "local_externs": 2181, "sym_conflicts": 0, "hand_asm": 5},
+  "quality": {"fakes": 545, "harmful_fakes": 294, "benign_fakes": 251, "field_ref": 2001, "local_externs": 2181, "sym_conflicts": 0, "hand_asm": 5},
   "links": {"targets": 25, "exact": 25, "differs": 0, "error": 0},
   "layout": {"rows": 4489, "gaps": 0, "overlaps": 0, "relocated": 0, "unmodelled": 0, "resized": 0, "problems": 0}
  },
@@ -71,8 +71,8 @@
    "name": "BATTLE.EMI slot 3",
    "base": "0x801D0C00",
    "end": "0x801ED9D0",
-   "counts": {"exact": 390, "non_matching": 29, "untagged": 0, "unlifted": 12, "library": 0, "sdk": 0, "total": 431},
-   "link": {"status": "EXACT", "payload": 118224, "linked": 118224, "from_c": 390, "from_assembly": 41, "first_mismatch": null},
+   "counts": {"exact": 391, "non_matching": 28, "untagged": 0, "unlifted": 12, "library": 0, "sdk": 0, "total": 431},
+   "link": {"status": "EXACT", "payload": 118224, "linked": 118224, "from_c": 391, "from_assembly": 40, "first_mismatch": null},
    "layout": {"gaps": [], "overlaps": [], "relocated": 0, "unmodelled": 0, "resized": 0, "problems": []},
    "data": {"bytes": 12844, "typed": 100},
    "units": [
@@ -152,7 +152,7 @@
     [20940, 1292, "f", "open", "func_801D5DCC"],
     [22232, 492, "f", "nonmatching", "func_801D62D8"],
     [22724, 168, "f", "pure", "func_801D64C4"],
-    [22892, 520, "f", "nonmatching", "func_801D656C"],
+    [22892, 520, "f", "pure", "func_801D656C"],
     [23412, 60, "f", "pure", "func_801D6774"],
     [23472, 60, "f", "pure", "func_801D67B0"],
     [23532, 44, "f", "pure", "func_801D67EC"],
@@ -3086,8 +3086,8 @@
    "name": "AREA030.EMI slot 4",
    "base": "0x801D0C00",
    "end": "0x801E3215",
-   "counts": {"exact": 209, "non_matching": 23, "untagged": 0, "unlifted": 5, "library": 0, "sdk": 0, "total": 237},
-   "link": {"status": "EXACT", "payload": 75285, "linked": 75285, "from_c": 209, "from_assembly": 29, "first_mismatch": null},
+   "counts": {"exact": 211, "non_matching": 21, "untagged": 0, "unlifted": 5, "library": 0, "sdk": 0, "total": 237},
+   "link": {"status": "EXACT", "payload": 75285, "linked": 75285, "from_c": 211, "from_assembly": 27, "first_mismatch": null},
    "layout": {"gaps": [], "overlaps": [], "relocated": 0, "unmodelled": 0, "resized": 0, "problems": []},
    "data": {"bytes": 5585, "typed": 0},
    "units": [
@@ -3157,7 +3157,7 @@
     [14704, 136, "f", "pure", "func_801D4570"],
     [14840, 136, "f", "pure", "func_801D45F8"],
     [14976, 516, "f", "pure", "func_801D4680"],
-    [15492, 256, "f", "nonmatching", "func_801D4884"],
+    [15492, 256, "f", "pure", "func_801D4884"],
     [15748, 476, "f", "pure", "func_801D4984"],
     [16224, 292, "f", "pure", "func_801D4B60"],
     [16516, 492, "f", "pure", "func_801D4C84"],
@@ -3216,7 +3216,7 @@
     [37108, 68, "f", "pure", "func_801D9CF4"],
     [37176, 208, "f", "pure", "func_801D9D38"],
     [37384, 56, "f", "pure", "func_801D9E08"],
-    [37440, 424, "f", "nonmatching", "func_801D9E40"],
+    [37440, 424, "f", "pure", "func_801D9E40"],
     [37864, 112, "f", "pure", "func_801D9FE8"],
     [37976, 272, "f", "pure", "func_801DA058"],
     [38248, 312, "f", "pure", "func_801DA168"],
@@ -5699,6 +5699,6 @@
   {"date": "2026-10-19", "revision": "115784dd958f1e3d965e54541f07c81203dfdc3c", "source": "run", "game_functions": 3458, "game_matched": 2846, "game_bytes": 931540, "game_matched_bytes": 474812, "sdk_functions": 722, "sdk_done": 434, "data_bytes": 1423613, "data_typed": 4104, "fakes": 336, "harmful_fakes": 196, "field_ref": 482, "local_externs": 1714, "sym_conflicts": 0},
   {"date": "2026-10-20", "revision": "ccf67e8eccf30c4dc691a24257963c0c0d9cdbb2", "source": "run", "game_functions": 3453, "game_matched": 3057, "game_bytes": 931084, "game_matched_bytes": 573860, "sdk_functions": 727, "sdk_done": 723, "data_bytes": 527425, "data_typed": 58169, "fakes": 520, "harmful_fakes": 284, "field_ref": 2112, "local_externs": 2102, "sym_conflicts": 0},
   {"date": "2026-10-21", "revision": "b92f42d8b90d6fcf6c5f3f35a99629486370f364", "source": "run", "game_functions": 3453, "game_matched": 3095, "game_bytes": 931084, "game_matched_bytes": 600636, "sdk_functions": 727, "sdk_done": 723, "data_bytes": 527425, "data_typed": 58233, "fakes": 545, "harmful_fakes": 294, "field_ref": 2052, "local_externs": 2182, "sym_conflicts": 0},
-  {"date": "2026-10-22", "revision": "3314ee6830900ad265cbb8eabeab96e88e538f28", "source": "run", "game_functions": 3453, "game_matched": 3103, "game_bytes": 931084, "game_matched_bytes": 603632, "sdk_functions": 727, "sdk_done": 723, "data_bytes": 527425, "data_typed": 58233, "fakes": 545, "harmful_fakes": 294, "field_ref": 2012, "local_externs": 2181, "sym_conflicts": 0}
+  {"date": "2026-10-22", "revision": "6879b3ae4a6b8b5106eed9a21f52cefd1d972b99", "source": "run", "game_functions": 3453, "game_matched": 3106, "game_bytes": 931084, "game_matched_bytes": 604832, "sdk_functions": 727, "sdk_done": 723, "data_bytes": 527425, "data_typed": 58233, "fakes": 545, "harmful_fakes": 294, "field_ref": 2001, "local_externs": 2181, "sym_conflicts": 0}
  ]
 }
