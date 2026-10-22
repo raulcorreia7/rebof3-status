@@ -13,7 +13,7 @@ help:
 	@echo "Targets:"
 	@echo "  help       List these targets (default)."
 	@echo "  build      Build the page into site/ and render the picture (npm run build)."
-	@echo "  test       Run the model and build smoke tests (npm test)."
+	@echo "  test       Build, then check the model and the built site (npm test)."
 	@echo "  format     No formatter is configured; nothing to do. CHECK=1 is accepted."
 	@echo "  lint       Type check (npm run lint)."
 	@echo "  check      format CHECK=1, lint and test: the pre-commit gate."
@@ -23,7 +23,7 @@ help:
 build:
 	npm run build
 
-test:
+test: build
 	npm test
 
 format:
