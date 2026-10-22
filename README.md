@@ -10,7 +10,7 @@ This repository holds only status data and its renderer. It has no source code, 
 
 ## Where things live
 
-The decompilation measures itself: `bin/progress` in rebof3 writes `progress.json`, because only rebof3 can read its Splat maps, link its targets and count its functions. This repository holds the page, the picture renderer and the published data, and no measuring code, so the page can change without touching the decompilation. The monorepo holds both as submodules, so its `scripts/publish-progress` is the one command that measures, copies `progress.json` here and commits it locally (the owner pushes); rebof3's post-merge hook runs it after each merge into `main`. The workflow here then draws the page and the picture from `progress.json`.
+The decompilation measures itself: `bin/progress` in rebof3 writes `progress.json`, because only rebof3 can read its Splat maps, link its targets and count its functions. This repository holds the page, the picture renderer and the published data, and no measuring code, so the page can change without touching the decompilation. The monorepo holds both as submodules, so its `scripts/publish-progress` is the one command that measures, copies `progress.json` here and commits it locally (the owner pushes); rebof3's post-merge hook runs it after each merge into `main`. The same command builds `site/` here and force-pushes it, as one commit, to `gh-pages`, which Pages serves without building anything.
 
 ## Stack
 
@@ -28,8 +28,9 @@ npx tsc -p .     # type check
 
 The picture needs the DejaVu Sans font (`fonts-dejavu-core`).
 
-The Pages workflow runs the type check only when the push changes code: a push that only
-rewrites `progress.json` builds and tests the new data, since data cannot break the types.
+`verify.yml` checks the sources on each push to `main` that changes code; a push that only
+rewrites `progress.json` does not trigger it. `deploy.yml` only publishes `gh-pages`, so a
+publish is one static upload and no build.
 
 ## How the page is built
 
@@ -68,7 +69,8 @@ Links look like `#fn/exe/0x8015AD00`, `#target/game00`, `#group/emi/battle`, wit
 | `src/theme/`, `src/styles/` | Color tokens and CSS. |
 | `render/snapshot.ts` | Writes `progress.json`, `progress.svg`, `progress.png` and `badge.svg` into `site/`. |
 | `test/` | `node:test`: model totals, and the files the build wrote into `site/`. |
-| `.github/workflows/pages.yml` | On each push to `main`: type-check when the push changes code, always build and test, then deploy GitHub Pages. |
+| `.github/workflows/verify.yml` | On each push to `main` that changes code: type-check, build and test. It does not deploy. |
+| `.github/workflows/deploy.yml` | On each push to `gh-pages`: upload the built files and deploy GitHub Pages. |
 
 The map has three views: tiles (one square per function, coloured by status), PsyQ SDK tiles, and address-true strips. The treemap drills target, then overlay or area, then function; the legend filters by status. Block area is code bytes, with an 64-byte floor per function so a stub stays visible. The page derives the game function records from the schema-2 `units` rows (`kind` `f`), so it needs no second data file.
 
