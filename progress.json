@@ -1,36 +1,36 @@
 {
  "schema": 2,
- "generated_at": "2026-10-22T17:03:27Z",
- "commit": "a1a0cbdf25123ab1e78b3f522205bb35c862fa3e",
+ "generated_at": "2026-10-22T19:52:10Z",
+ "commit": "203ecd3160c9d8836b29d2a2c73ab50a6161aaeb",
  "dirty": false,
  "summary": {
   "code": {
    "functions": 4180,
    "bytes": 1059496,
-   "done_functions": 3852,
-   "done_bytes": 747168,
+   "done_functions": 3853,
+   "done_bytes": 747368,
    "statuses": {
-    "pure": [2878, 528784],
+    "pure": [2879, 528984],
     "match_with_helpers": [248, 88476],
     "asm": [4, 1888],
     "object": [722, 128020],
     "assembly": [4, 384],
-    "nonmatching": [239, 198056],
+    "nonmatching": [238, 197856],
     "open": [85, 113888]
    }
   },
   "game": {
    "functions": 3453,
    "bytes": 931084,
-   "done_functions": 3129,
-   "done_bytes": 619140,
+   "done_functions": 3130,
+   "done_bytes": 619340,
    "statuses": {
-    "pure": [2877, 528776],
+    "pure": [2878, 528976],
     "match_with_helpers": [248, 88476],
     "asm": [4, 1888],
     "object": [0, 0],
     "assembly": [0, 0],
-    "nonmatching": [239, 198056],
+    "nonmatching": [238, 197856],
     "open": [85, 113888]
    }
   },
@@ -529,8 +529,8 @@
    "name": "BATTLE.EMI slot 15",
    "base": "0x80096800",
    "end": "0x800B70C4",
-   "counts": {"exact": 446, "non_matching": 35, "untagged": 0, "unlifted": 13, "library": 0, "sdk": 0, "total": 494},
-   "link": {"status": "EXACT", "payload": 133316, "linked": 133316, "from_c": 451, "from_assembly": 48, "first_mismatch": null},
+   "counts": {"exact": 447, "non_matching": 34, "untagged": 0, "unlifted": 13, "library": 0, "sdk": 0, "total": 494},
+   "link": {"status": "EXACT", "payload": 133316, "linked": 133316, "from_c": 452, "from_assembly": 47, "first_mismatch": null},
    "layout": {"gaps": [], "overlaps": [], "relocated": 0, "unmodelled": 0, "resized": 0, "problems": []},
    "data": {"bytes": 12160, "typed": 12020},
    "units": [
@@ -645,7 +645,7 @@
     [29804, 92, "f", "pure", "func_8009DC6C"],
     [29896, 88, "f", "pure", "func_8009DCC8"],
     [29984, 48, "f", "pure", "func_8009DD20"],
-    [30032, 200, "f", "nonmatching", "func_8009DD50"],
+    [30032, 200, "f", "pure", "func_8009DD50"],
     [30232, 56, "f", "pure", "func_8009DE18"],
     [30288, 20, "f", "pure", "func_8009DE50"],
     [30308, 20, "f", "pure", "func_8009DE64"],
@@ -5712,6 +5712,6 @@
   {"date": "2026-10-19", "revision": "115784dd958f1e3d965e54541f07c81203dfdc3c", "source": "run", "game_functions": 3458, "game_matched": 2846, "game_bytes": 931540, "game_matched_bytes": 474812, "sdk_functions": 722, "sdk_done": 434, "data_bytes": 1423613, "data_typed": 4104, "fakes": 336, "harmful_fakes": 196, "field_ref": 482, "local_externs": 1714, "sym_conflicts": 0},
   {"date": "2026-10-20", "revision": "ccf67e8eccf30c4dc691a24257963c0c0d9cdbb2", "source": "run", "game_functions": 3453, "game_matched": 3057, "game_bytes": 931084, "game_matched_bytes": 573860, "sdk_functions": 727, "sdk_done": 723, "data_bytes": 527425, "data_typed": 58169, "fakes": 520, "harmful_fakes": 284, "field_ref": 2112, "local_externs": 2102, "sym_conflicts": 0},
   {"date": "2026-10-21", "revision": "b92f42d8b90d6fcf6c5f3f35a99629486370f364", "source": "run", "game_functions": 3453, "game_matched": 3095, "game_bytes": 931084, "game_matched_bytes": 600636, "sdk_functions": 727, "sdk_done": 723, "data_bytes": 527425, "data_typed": 58233, "fakes": 545, "harmful_fakes": 294, "field_ref": 2052, "local_externs": 2182, "sym_conflicts": 0},
-  {"date": "2026-10-22", "revision": "a1a0cbdf25123ab1e78b3f522205bb35c862fa3e", "source": "run", "game_functions": 3453, "game_matched": 3129, "game_bytes": 931084, "game_matched_bytes": 619140, "sdk_functions": 727, "sdk_done": 723, "data_bytes": 527425, "data_typed": 105936, "fakes": 563, "harmful_fakes": 305, "field_ref": 2011, "local_externs": 2099, "sym_conflicts": 0}
+  {"date": "2026-10-22", "revision": "203ecd3160c9d8836b29d2a2c73ab50a6161aaeb", "source": "run", "game_functions": 3453, "game_matched": 3130, "game_bytes": 931084, "game_matched_bytes": 619340, "sdk_functions": 727, "sdk_done": 723, "data_bytes": 527425, "data_typed": 105936, "fakes": 563, "harmful_fakes": 305, "field_ref": 2011, "local_externs": 2099, "sym_conflicts": 0}
  ]
 }
