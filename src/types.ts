@@ -4,12 +4,12 @@
 export type Status = "pure" | "match_with_helpers" | "asm" | "object" | "assembly" | "nonmatching" | "open";
 export type DataStatus = "typed" | "raw" | "header";
 export type Tier = "c" | "object" | "partial" | "assembly" | "unmatched";
-export type UnitKind = "f" | "s" | "d";
+type UnitKind = "f" | "s" | "d";
 
 /** One Splat map row: [offset from the target base, size, kind, status, name]. */
 export type Unit = [offset: number, size: number, kind: UnitKind, status: Status | DataStatus, name: string];
 
-export interface StatusScope {
+interface StatusScope {
   functions: number;
   bytes: number;
   done_functions: number;
@@ -27,12 +27,12 @@ export interface Quality {
   hand_asm: number;
 }
 
-export interface DataBytes {
+interface DataBytes {
   bytes: number;
   typed: number;
 }
 
-export interface LinkSummary {
+interface LinkSummary {
   targets: number;
   exact: number;
   differs: number;
@@ -49,7 +49,7 @@ export interface LayoutSummary {
   problems: number;
 }
 
-export interface TargetLink {
+interface TargetLink {
   status: "EXACT" | "DIFFERS" | "ERROR";
   payload: number;
   linked: number;
@@ -58,7 +58,7 @@ export interface TargetLink {
   first_mismatch: number | null;
 }
 
-export interface TargetLayout {
+interface TargetLayout {
   gaps: unknown[];
   overlaps: unknown[];
   relocated: number;
@@ -79,7 +79,7 @@ export interface RawTarget {
   units: Unit[];
 }
 
-export interface RawLibrary {
+interface RawLibrary {
   name: string;
   versions: Record<string, number>;
   tiers: Record<Tier, number>;

@@ -1,7 +1,7 @@
 // The inspector's selector: everything progress.json knows about the function, target or group
 // the route names.
 
-import { hex, number, percent } from "./model/format.ts";
+import { bytes, hex, number, percent } from "./model/format.ts";
 import { findFunction, neighbours, sourcePath, sourceUrl } from "./model/index.ts";
 import { STATUS_TABLE } from "./model/status.ts";
 import { statusMeter } from "./selectors.ts";
@@ -25,7 +25,7 @@ function functionBody(model: Model, fn: Fn): Pick<Inspector, "fields" | "buttons
   const fields = [
     field(F.address, text(fn.addr, { code: true })),
     field(F.ends, text(hex(fn.address + fn.bytes), { code: true })),
-    field(F.size, text(`${number(fn.bytes)} B`)),
+    field(F.size, text(`${bytes(fn.bytes)}`)),
     field(F.status, text("", { status: fn.status })),
     field(F.part, text(INSPECT.parts[fn.kind])),
     field(F.target, text(target.name, { to: { view: { kind: "target", id: target.id } } }), text(` ${target.id}`, { code: true, mute: true })),
@@ -53,7 +53,7 @@ function targetBody(model: Model, target: Target): Pick<Inspector, "fields" | "b
     ? [
         text(link.status, { pill: link.status === "EXACT" ? "ok" : "bad" }),
         text(
-          `${F.payload} ${number(link.payload)} B · ${F.linked} ${number(link.linked)} B · ${F.fromC} ${number(link.from_c)} · ${F.fromAssembly} ${number(link.from_assembly)}` +
+          `${F.payload} ${bytes(link.payload)} · ${F.linked} ${bytes(link.linked)} · ${F.fromC} ${number(link.from_c)} · ${F.fromAssembly} ${number(link.from_assembly)}` +
             (link.first_mismatch !== null ? ` · ${F.mismatch} ${hex(target.base + link.first_mismatch)}` : ""),
           { small: true },
         ),
@@ -66,7 +66,7 @@ function targetBody(model: Model, target: Target): Pick<Inspector, "fields" | "b
     fields: [
       field(F.target, text(target.id, { code: true })),
       field(F.group, text(target.groupLabel)),
-      field(F.range, text(`${hex(target.base)}-${hex(target.end)}`, { code: true }), text(` · ${number(target.size)} B`)),
+      field(F.range, text(`${hex(target.base)}-${hex(target.end)}`, { code: true }), text(` · ${bytes(target.size)}`)),
       field(
         F.functions,
         text(
@@ -74,7 +74,7 @@ function targetBody(model: Model, target: Target): Pick<Inspector, "fields" | "b
             (all.count > game.count ? ` · ${number(all.count - game.count)} PsyQ` : ""),
         ),
       ),
-      field(F.bytes, text(`${number(game.bytes)} B`)),
+      field(F.bytes, text(`${bytes(game.bytes)}`)),
       field(F.data, text(target.data ? `${percent(target.data.typed, target.data.bytes, 1)}% · ${SUMMARY.ofBytes(target.data.typed, target.data.bytes)}` : "-")),
       { label: F.link, value: link_ },
       field(F.audit, text(notes.length ? notes.join(", ") : INSPECT.clean)),

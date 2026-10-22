@@ -5,7 +5,7 @@ import { BAR_HEIGHT, barOption } from "./charts/bars.ts";
 import { latest, trendOption } from "./charts/trend.ts";
 import { treemapTree } from "./charts/treemap.ts";
 import { browse, PAGE_STEP } from "./model/browse.ts";
-import { hex, number, percent } from "./model/format.ts";
+import { bytes, hex, number, percent } from "./model/format.ts";
 import { TREND_CHARTS } from "./model/history.ts";
 import { HOME } from "./model/route.ts";
 import { STATUS, STATUS_TABLE, TIERS } from "./model/status.ts";
@@ -60,7 +60,7 @@ export function groupCards({ model }: Ctx): Views["cards"] {
       panel: {
         note: group.note,
         meter: statusMeter(group, `${group.label}: ${matched}`),
-        line: `${matched} · ${GROUPS.targets(group.targets.length)} · ${number(group.bytes)} B`,
+        line: `${matched} · ${GROUPS.targets(group.targets.length)} · ${bytes(group.bytes)}`,
         links: group.targets.map((target) => ({
           label: target.name,
           to: { view: { kind: "target", id: target.id } },
@@ -88,7 +88,7 @@ export const mapTabs = (): Views["tabs"] => ({
 export const mapHeading = ({ model, route }: Ctx): string => {
   const { game, sdk } = model;
   if (route.map === "strips") return MAP.tabs.strips;
-  return route.map === "sdk" ? MAP.sdkTitle(percent(sdk.done, sdk.count), sdk.done, sdk.count) : MAP.gameTitle(percent(game.done, game.count), game.done, game.count);
+  return route.map === "sdk" ? MAP.sdkTitle(percent(sdk.done, sdk.count, 2), sdk.done, sdk.count) : MAP.gameTitle(percent(game.done, game.count, 2), game.done, game.count);
 };
 
 export const mapHelp = ({ route }: Ctx): string => (route.map === "tiles" ? MAP.tilesHelp : route.map === "sdk" ? MAP.sdkHelp : MAP.stripsHelp);
@@ -125,7 +125,7 @@ export function mapTreemap({ model, route, tokens }: Ctx): Views["treemap"] {
   } else if (route.lib) crumbs.push({ label: route.lib, to: { lib: route.lib } });
 
   const tree = treemapTree(model, sdk ? "sdk" : "game", { tokens, statuses: route.st });
-  const label = sdk ? MAP.sdkTitle(model.sdk.percent.toFixed(2), model.sdk.done, model.sdk.count) : MAP.gameTitle(model.game.percent.toFixed(2), model.game.done, model.game.count);
+  const label = sdk ? MAP.sdkTitle(percent(model.sdk.done, model.sdk.count, 2), model.sdk.done, model.sdk.count) : MAP.gameTitle(percent(model.game.done, model.game.count, 2), model.game.done, model.game.count);
   return { tree, scope: sdk ? "sdk" : "game", focus, crumbs, label };
 }
 
@@ -191,7 +191,7 @@ export function dataChart({ model, tokens }: Ctx): Views["chart"] {
         { name: DATA.typed, color: tokens.status.pure, values: rows.map((t) => (100 * t.data!.typed) / t.data!.bytes) },
         { name: DATA.untyped, color: tokens.track, values: rows.map((t) => (100 * (t.data!.bytes - t.data!.typed)) / t.data!.bytes) },
       ],
-      describe: (i) => `<b>${rows[i].name}</b><br>${percent(rows[i].data!.typed, rows[i].data!.bytes, 1)}% · ${number(rows[i].data!.typed)} / ${number(rows[i].data!.bytes)} B`,
+      describe: (i) => `<b>${rows[i].name}</b><br>${percent(rows[i].data!.typed, rows[i].data!.bytes, 1)}% · ${number(rows[i].data!.typed)} / ${bytes(rows[i].data!.bytes)}`,
     },
     tokens,
   );
@@ -208,7 +208,7 @@ export function fakesChart({ model, tokens }: Ctx): Views["chart"] {
   const rows = model.targets.filter((t) => t.all.statuses.match_with_helpers.functions).sort((a, b) => b.all.statuses.match_with_helpers.functions - a.all.statuses.match_with_helpers.functions);
   if (!rows.length) return null;
   const option = barOption(
-    { categories: rows.map((t) => t.name), unit: "functions", series: [{ name: "matched with helper macros", color: tokens.status.match_with_helpers, values: rows.map((t) => t.all.statuses.match_with_helpers.functions) }] },
+    { categories: rows.map((t) => t.name), unit: "functions", series: [{ name: "rebuilt with helper macros", color: tokens.status.match_with_helpers, values: rows.map((t) => t.all.statuses.match_with_helpers.functions) }] },
     tokens,
   );
   return { option, height: rows.length * BAR_HEIGHT + 30, label: QUALITY.perTargetHeading };

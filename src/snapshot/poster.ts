@@ -6,7 +6,7 @@
 import { renderSvg } from "../charts/ssr.ts";
 import { trendOption } from "../charts/trend.ts";
 import { TREND_CHARTS } from "../model/history.ts";
-import { escapeText, number, percent, round } from "../model/format.ts";
+import { bytes, escapeText, number, percent, round } from "../model/format.ts";
 import { STATUS, STATUSES } from "../model/status.ts";
 import { textWidth } from "../model/text.ts";
 import { DATA, MAP, POSTER, QUALITY, SDK, SUMMARY, TREND } from "../strings.ts";
@@ -83,7 +83,7 @@ function dataPanel(model: Model, x: number, y: number, width: number): Drawn {
     const data = t.data!;
     svg += text(x, top, t.name, 13, C.ink);
     svg += bar(x + nameWidth, top + 1, barWidth, 14, [[data.typed, C.status.pure]], data.bytes);
-    svg += text(x + width, top, `${percent(data.typed, data.bytes, 1)}% · ${number(data.typed)} / ${number(data.bytes)} B`, 13, C.mute, { anchor: "end" });
+    svg += text(x + width, top, `${percent(data.typed, data.bytes, 1)}% · ${number(data.typed)} / ${bytes(data.bytes)}`, 13, C.mute, { anchor: "end" });
   });
   return { svg, bottom: y + 40 + rows.length * 22 };
 }

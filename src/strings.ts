@@ -1,17 +1,17 @@
 // Every sentence and label the page and the picture show. Change wording here and nowhere else.
 
 import type { DataStatus, Quality, LayoutSummary, Status, Tier } from "./types.ts";
-import { number, plural } from "./model/format.ts";
+import { bytes, number, plural } from "./model/format.ts";
 
 // Status key -> legend text. The order of the keys is the order of the legend.
 export const STATUS_LABEL: Record<Status, string> = {
-  pure: "matched C",
-  match_with_helpers: "matched with helper macros",
-  asm: "original assembly, exact",
+  pure: "rebuilt in C",
+  match_with_helpers: "rebuilt in C with helpers",
+  asm: "original assembly",
   object: "PsyQ library object",
   assembly: "PsyQ library assembly",
-  nonmatching: "C in progress, not exact yet",
-  open: "not started (assembly)",
+  nonmatching: "being rebuilt",
+  open: "not started",
 };
 
 // Map rows that are not functions (strips only).
@@ -64,7 +64,7 @@ export const SITE = {
 };
 
 export const HEAD = {
-  title: "Breath of Fire III (US): decompilation status",
+  title: "Game code rebuilt in C",
   updated: "Updated",
   from: "from rebof3",
   getThe: "Get the",
@@ -75,13 +75,13 @@ export const HEAD = {
 };
 
 export const SUMMARY = {
-  gameFunctions: "Game code matched",
+  gameFunctions: "Game code rebuilt in C",
   gameBytes: "Game code bytes matched",
   sdk: "PsyQ SDK as object or C",
   data: "Data typed in C",
   dataPending: ["from next run", "available after the next run"],
   of: (done: number, total: number) => `${number(done)} of ${number(total)} functions`,
-  ofBytes: (done: number, total: number) => `${number(done)} of ${number(total)} B`,
+  ofBytes: (done: number, total: number) => `${number(done)} of ${bytes(total)}`,
   footnote:
     "* Game code means every function outside the PsyQ SDK. A function counts as matched when it builds to the exact original bytes, whether that is clean C, C with helper macros or the original assembly." +
     " An SDK function counts as done when it links from an original PsyQ object or is exact C.",
@@ -111,6 +111,7 @@ export const MAP = {
   stripsHelp:
     "Each target's address range wraps into rows like text, from the first byte to the last. Hover a block to see what it is and click it to inspect it.",
   showReserved: "show reserved space",
+  reservedLabel: "reserved",
   reservedHelp:
     "Reserved space is the executable's load slots, the loader tail and the Splat map's pad and gap rows. They are hidden by default so the real bytes fill the strip.",
   scale: (bytes: number) => `1 px = ${bytes} B`,
@@ -134,7 +135,7 @@ export const SDK = {
 };
 
 export const DATA = {
-  heading: (percent: string, typed: number, bytes: number) => `Data: ${percent}% typed in C (${number(typed)} / ${number(bytes)} B)`,
+  heading: (percent: string, typed: number, total: number) => `Data: ${percent}% typed in C (${number(typed)} / ${bytes(total)})`,
   headingNone: "Data",
   help: "Each bar is one target's data. The green part is already typed in C.",
   typed: "typed in C",
@@ -145,15 +146,15 @@ export const QUALITY = {
   heading: "Code quality",
   cards: (q: Quality): [string, string, string][] => [
     ["Helper macros in use", number(q.fakes), `${number(q.benign_fakes)} benign · ${number(q.harmful_fakes)} harmful`],
-    ["FIELD uses", number(q.field_ref), "raw offset accesses in C"],
-    ["Local externs", number(q.local_externs), "extern declarations inside C files"],
-    ["Symbol conflicts", number(q.sym_conflicts), "places where the symbol list disagrees"],
-    ["Hand-written assembly", number(q.hand_asm), "files kept as assembly by hand"],
+    ["Raw offset accesses", number(q.field_ref), "raw offset accesses in C"],
+    ["Shared declarations", number(q.local_externs), "extern declarations inside C files"],
+    ["Conflicting symbol names", number(q.sym_conflicts), "places where the symbol list disagrees"],
+    ["Code kept as assembly", number(q.hand_asm), "files kept as assembly by hand"],
   ],
   sentence: (q: Quality) =>
     `${plural(q.fakes, "helper macro", "helper macros")} in use: ${number(q.benign_fakes)} benign and ${number(q.harmful_fakes)} harmful.` +
     ` The C still has ${plural(q.field_ref, "raw offset access", "raw offset accesses")} (FIELD uses), ${plural(q.local_externs, "local extern")}, ${plural(q.sym_conflicts, "symbol conflict")} and ${plural(q.hand_asm, "hand-written assembly file")}.`,
-  perTargetHeading: "Matched with helper macros by target",
+  perTargetHeading: "Rebuilt with helper macros by target",
   perTargetHelp:
     "The project records the quality counters above as totals only. The one per-target figure is how many functions are matched with helper macros, shown here.",
   verifyHeading: "Verification",
@@ -172,14 +173,14 @@ export const TREND = {
   help: "One point per day. The number in each title is the latest value.",
   empty: "starts with the next published run",
   charts: {
-    gameFunctions: "Matched functions over time",
-    gameBytes: "Matched code bytes over time",
+    gameFunctions: "Game functions rebuilt in C over time",
+    gameBytes: "Game code bytes rebuilt in C over time",
     sdk: "PsyQ SDK as object or C over time",
     data: "Data typed in C over time",
     benign: "Benign helper macros over time",
     harmful: "Harmful helper macros over time",
-    fieldRef: "FIELD uses over time",
-    localExterns: "Local externs over time",
+    fieldRef: "Raw offset accesses over time",
+    localExterns: "Shared declarations over time",
   },
 };
 

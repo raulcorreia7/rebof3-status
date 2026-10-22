@@ -4,13 +4,13 @@ import type { Tokens } from "../theme/tokens.ts";
 import { number } from "../model/format.ts";
 import type { ChartOption } from "./register.ts";
 
-export interface BarSeries {
+interface BarSeries {
   name: string;
   color: string;
   values: number[];
 }
 
-export interface BarSpec {
+interface BarSpec {
   /** One category per bar, top to bottom. */
   categories: string[];
   series: BarSeries[];

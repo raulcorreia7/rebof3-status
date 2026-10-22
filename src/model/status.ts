@@ -8,7 +8,7 @@ import type { Fn, Status, Tier } from "../types.ts";
 
 export type Phase = "done" | "in-progress" | "open";
 
-export interface StatusRow {
+interface StatusRow {
   key: Status;
   /** Legend text, from strings.ts. */
   label: string;

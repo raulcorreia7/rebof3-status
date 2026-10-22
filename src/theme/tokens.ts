@@ -46,7 +46,7 @@ export const DARK: Tokens = {
   tier: { c: "#2ea043", object: "#26a69a", partial: "#e3b341", assembly: "#db6d28", unmatched: "#4b535d" },
 };
 
-export const LIGHT: Tokens = {
+const LIGHT: Tokens = {
   bg: "#ffffff",
   card: "#f6f8fa",
   line: "#d0d7de",

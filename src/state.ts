@@ -11,9 +11,9 @@ import type { Model } from "./types.ts";
 import type { Ctx } from "./viewtypes.ts";
 
 /** Change part of the route. `replace` edits the current history entry (typing, toggles). */
-export type Navigate = (patch: Partial<Route>, replace?: boolean) => void;
+type Navigate = (patch: Partial<Route>, replace?: boolean) => void;
 
-export interface Page extends Ctx {
+interface Page extends Ctx {
   go: Navigate;
   /** The hash of the current route with `patch` applied, for a link's href. */
   href: (patch: Partial<Route>) => string;
