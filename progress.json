@@ -1,36 +1,36 @@
 {
  "schema": 2,
- "generated_at": "2026-10-22T19:52:10Z",
- "commit": "203ecd3160c9d8836b29d2a2c73ab50a6161aaeb",
- "dirty": false,
+ "generated_at": "2026-10-22T20:17:33Z",
+ "commit": "c2dfc712e8133c429d2dcd04d167a77a3e0d062e",
+ "dirty": true,
  "summary": {
   "code": {
    "functions": 4180,
    "bytes": 1059496,
-   "done_functions": 3853,
-   "done_bytes": 747368,
+   "done_functions": 3854,
+   "done_bytes": 747904,
    "statuses": {
-    "pure": [2879, 528984],
+    "pure": [2880, 529520],
     "match_with_helpers": [248, 88476],
     "asm": [4, 1888],
     "object": [722, 128020],
     "assembly": [4, 384],
-    "nonmatching": [238, 197856],
+    "nonmatching": [237, 197320],
     "open": [85, 113888]
    }
   },
   "game": {
    "functions": 3453,
    "bytes": 931084,
-   "done_functions": 3130,
-   "done_bytes": 619340,
+   "done_functions": 3131,
+   "done_bytes": 619876,
    "statuses": {
-    "pure": [2878, 528976],
+    "pure": [2879, 529512],
     "match_with_helpers": [248, 88476],
     "asm": [4, 1888],
     "object": [0, 0],
     "assembly": [0, 0],
-    "nonmatching": [238, 197856],
+    "nonmatching": [237, 197320],
     "open": [85, 113888]
    }
   },
@@ -50,8 +50,8 @@
    }
   },
   "data": {"bytes": 527425, "typed": 105936},
-  "quality": {"fakes": 563, "harmful_fakes": 305, "benign_fakes": 258, "field_ref": 2011, "local_externs": 2099, "sym_conflicts": 0, "hand_asm": 5},
-  "links": {"targets": 25, "exact": 25, "differs": 0, "error": 0},
+  "quality": {"fakes": 563, "harmful_fakes": 305, "benign_fakes": 258, "field_ref": 2011, "local_externs": 2098, "sym_conflicts": 0, "hand_asm": 5},
+  "links": {"targets": 25, "exact": 23, "differs": 0, "error": 2},
   "layout": {"rows": 4502, "gaps": 0, "overlaps": 0, "relocated": 0, "unmodelled": 0, "resized": 0, "problems": 0}
  },
  "targets": [
@@ -1142,8 +1142,8 @@
    "name": "GAME.EMI slot 0",
    "base": "0x80195800",
    "end": "0x801CD958",
-   "counts": {"exact": 629, "non_matching": 41, "untagged": 0, "unlifted": 11, "library": 0, "sdk": 0, "total": 681},
-   "link": {"status": "EXACT", "payload": 229720, "linked": 229720, "from_c": 630, "from_assembly": 52, "first_mismatch": null},
+   "counts": {"exact": 630, "non_matching": 40, "untagged": 0, "unlifted": 11, "library": 0, "sdk": 0, "total": 681},
+   "link": {"status": "EXACT", "payload": 229720, "linked": 229720, "from_c": 631, "from_assembly": 51, "first_mismatch": null},
    "layout": {"gaps": [], "overlaps": [], "relocated": 0, "unmodelled": 0, "resized": 0, "problems": []},
    "data": {"bytes": 26292, "typed": 25932},
    "units": [
@@ -1861,7 +1861,7 @@
     [201160, 180, "f", "pure", "func_801C69C8"],
     [201340, 112, "f", "match_with_helpers", "func_801C6A7C"],
     [201452, 200, "f", "pure", "func_801C6AEC"],
-    [201652, 536, "f", "nonmatching", "func_801C6BB4"],
+    [201652, 536, "f", "pure", "func_801C6BB4"],
     [202188, 276, "f", "pure", "func_801C6DCC"],
     [202464, 244, "f", "pure", "func_801C6EE0"],
     [202708, 144, "f", "pure", "func_801C6FD4"],
@@ -2948,7 +2948,7 @@
    "base": "0x801F2C00",
    "end": "0x801F5B04",
    "counts": {"exact": 25, "non_matching": 0, "untagged": 0, "unlifted": 0, "library": 0, "sdk": 0, "total": 25},
-   "link": {"status": "EXACT", "payload": 12036, "linked": 12036, "from_c": 29, "from_assembly": 0, "first_mismatch": null},
+   "link": {"status": "ERROR", "reason": "build failed: [0/2] Re-checking globbed directories..."},
    "layout": {"gaps": [], "overlaps": [], "relocated": 0, "unmodelled": 0, "resized": 0, "problems": []},
    "data": {"bytes": 6424, "typed": 6424},
    "units": [
@@ -3031,7 +3031,7 @@
    "base": "0x801F2C00",
    "end": "0x801F4D64",
    "counts": {"exact": 21, "non_matching": 0, "untagged": 0, "unlifted": 0, "library": 0, "sdk": 0, "total": 21},
-   "link": {"status": "EXACT", "payload": 8548, "linked": 8548, "from_c": 25, "from_assembly": 0, "first_mismatch": null},
+   "link": {"status": "ERROR", "reason": "build failed: [0/2] Re-checking globbed directories..."},
    "layout": {"gaps": [], "overlaps": [], "relocated": 0, "unmodelled": 0, "resized": 0, "problems": []},
    "data": {"bytes": 4832, "typed": 4832},
    "units": [
