@@ -147,13 +147,13 @@ export const QUALITY = {
   cards: (q: Quality): [string, string, string][] => [
     ["Helper macros in use", number(q.fakes), `${number(q.benign_fakes)} benign · ${number(q.harmful_fakes)} harmful`],
     ["Raw offset accesses", number(q.field_ref), "raw offset accesses in C"],
-    ["Shared declarations", number(q.local_externs), "extern declarations inside C files"],
+    ["Declarations inside .c files", number(q.local_externs), "extern declarations inside C files"],
     ["Conflicting symbol names", number(q.sym_conflicts), "places where the symbol list disagrees"],
     ["Code kept as assembly", number(q.hand_asm), "files kept as assembly by hand"],
   ],
   sentence: (q: Quality) =>
     `${plural(q.fakes, "helper macro", "helper macros")} in use: ${number(q.benign_fakes)} benign and ${number(q.harmful_fakes)} harmful.` +
-    ` The C still has ${plural(q.field_ref, "raw offset access", "raw offset accesses")} (FIELD uses), ${plural(q.local_externs, "local extern")}, ${plural(q.sym_conflicts, "symbol conflict")} and ${plural(q.hand_asm, "hand-written assembly file")}.`,
+    ` The C still has ${plural(q.field_ref, "raw offset access", "raw offset accesses")} (FIELD uses), ${plural(q.local_externs, "declaration inside a .c file", "declarations inside .c files")}, ${plural(q.sym_conflicts, "symbol conflict")} and ${plural(q.hand_asm, "hand-written assembly file")}.`,
   perTargetHeading: "Rebuilt with helper macros by target",
   perTargetHelp:
     "The project records the quality counters above as totals only. The one per-target figure is how many functions are matched with helper macros, shown here.",
@@ -180,7 +180,7 @@ export const TREND = {
     benign: "Benign helper macros over time",
     harmful: "Harmful helper macros over time",
     fieldRef: "Raw offset accesses over time",
-    localExterns: "Shared declarations over time",
+    localExterns: "Declarations inside .c files over time",
   },
 };
 
