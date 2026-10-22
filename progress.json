@@ -1,36 +1,36 @@
 {
  "schema": 2,
- "generated_at": "2026-10-22T20:17:33Z",
- "commit": "c2dfc712e8133c429d2dcd04d167a77a3e0d062e",
+ "generated_at": "2026-10-22T20:21:24Z",
+ "commit": "23aa98301449ae3727b39e2a058665bea7659e2e",
  "dirty": true,
  "summary": {
   "code": {
    "functions": 4180,
    "bytes": 1059496,
-   "done_functions": 3854,
-   "done_bytes": 747904,
+   "done_functions": 3855,
+   "done_bytes": 748776,
    "statuses": {
-    "pure": [2880, 529520],
+    "pure": [2881, 530392],
     "match_with_helpers": [248, 88476],
     "asm": [4, 1888],
     "object": [722, 128020],
     "assembly": [4, 384],
-    "nonmatching": [237, 197320],
+    "nonmatching": [236, 196448],
     "open": [85, 113888]
    }
   },
   "game": {
    "functions": 3453,
    "bytes": 931084,
-   "done_functions": 3131,
-   "done_bytes": 619876,
+   "done_functions": 3132,
+   "done_bytes": 620748,
    "statuses": {
-    "pure": [2879, 529512],
+    "pure": [2880, 530384],
     "match_with_helpers": [248, 88476],
     "asm": [4, 1888],
     "object": [0, 0],
     "assembly": [0, 0],
-    "nonmatching": [237, 197320],
+    "nonmatching": [236, 196448],
     "open": [85, 113888]
    }
   },
@@ -51,7 +51,7 @@
   },
   "data": {"bytes": 527425, "typed": 105936},
   "quality": {"fakes": 563, "harmful_fakes": 305, "benign_fakes": 258, "field_ref": 2011, "local_externs": 2098, "sym_conflicts": 0, "hand_asm": 5},
-  "links": {"targets": 25, "exact": 23, "differs": 0, "error": 2},
+  "links": {"targets": 25, "exact": 25, "differs": 0, "error": 0},
   "layout": {"rows": 4502, "gaps": 0, "overlaps": 0, "relocated": 0, "unmodelled": 0, "resized": 0, "problems": 0}
  },
  "targets": [
@@ -71,8 +71,8 @@
    "name": "BATTLE.EMI slot 3",
    "base": "0x801D0C00",
    "end": "0x801ED9D0",
-   "counts": {"exact": 397, "non_matching": 22, "untagged": 0, "unlifted": 12, "library": 0, "sdk": 0, "total": 431},
-   "link": {"status": "EXACT", "payload": 118224, "linked": 118224, "from_c": 403, "from_assembly": 34, "first_mismatch": null},
+   "counts": {"exact": 398, "non_matching": 21, "untagged": 0, "unlifted": 12, "library": 0, "sdk": 0, "total": 431},
+   "link": {"status": "EXACT", "payload": 118224, "linked": 118224, "from_c": 404, "from_assembly": 33, "first_mismatch": null},
    "layout": {"gaps": [], "overlaps": [], "relocated": 0, "unmodelled": 0, "resized": 0, "problems": []},
    "data": {"bytes": 12844, "typed": 248},
    "units": [
@@ -284,7 +284,7 @@
     [58036, 88, "f", "pure", "func_801DEEB4"],
     [58124, 208, "f", "pure", "func_801DEF0C"],
     [58332, 8, "f", "pure", "func_801DEFDC"],
-    [58340, 872, "f", "nonmatching", "func_801DEFE4"],
+    [58340, 872, "f", "pure", "func_801DEFE4"],
     [59212, 108, "f", "pure", "func_801DF34C"],
     [59320, 64, "f", "pure", "func_801DF3B8"],
     [59384, 880, "f", "pure", "func_801DF3F8"],
@@ -2948,7 +2948,7 @@
    "base": "0x801F2C00",
    "end": "0x801F5B04",
    "counts": {"exact": 25, "non_matching": 0, "untagged": 0, "unlifted": 0, "library": 0, "sdk": 0, "total": 25},
-   "link": {"status": "ERROR", "reason": "build failed: [0/2] Re-checking globbed directories..."},
+   "link": {"status": "EXACT", "payload": 12036, "linked": 12036, "from_c": 29, "from_assembly": 0, "first_mismatch": null},
    "layout": {"gaps": [], "overlaps": [], "relocated": 0, "unmodelled": 0, "resized": 0, "problems": []},
    "data": {"bytes": 6424, "typed": 6424},
    "units": [
@@ -3031,7 +3031,7 @@
    "base": "0x801F2C00",
    "end": "0x801F4D64",
    "counts": {"exact": 21, "non_matching": 0, "untagged": 0, "unlifted": 0, "library": 0, "sdk": 0, "total": 21},
-   "link": {"status": "ERROR", "reason": "build failed: [0/2] Re-checking globbed directories..."},
+   "link": {"status": "EXACT", "payload": 8548, "linked": 8548, "from_c": 25, "from_assembly": 0, "first_mismatch": null},
    "layout": {"gaps": [], "overlaps": [], "relocated": 0, "unmodelled": 0, "resized": 0, "problems": []},
    "data": {"bytes": 4832, "typed": 4832},
    "units": [
