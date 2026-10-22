@@ -1,7 +1,7 @@
 {
  "schema": 2,
- "generated_at": "2026-10-22T03:43:00Z",
- "commit": "285612ff8628b9649b399ae1ea62c061ca811164",
+ "generated_at": "2026-10-22T03:58:04Z",
+ "commit": "6a8cbf81e31cb56b3165f5756b6b04864a08a670",
  "dirty": true,
  "summary": {
   "code": {
@@ -50,7 +50,7 @@
    }
   },
   "data": {"bytes": 527425, "typed": 58233},
-  "quality": {"fakes": 545, "harmful_fakes": 294, "benign_fakes": 251, "field_ref": 2037, "local_externs": 2181, "sym_conflicts": 0, "hand_asm": 5},
+  "quality": {"fakes": 545, "harmful_fakes": 294, "benign_fakes": 251, "field_ref": 2012, "local_externs": 2181, "sym_conflicts": 0, "hand_asm": 5},
   "links": {"targets": 25, "exact": 25, "differs": 0, "error": 0},
   "layout": {"rows": 4489, "gaps": 0, "overlaps": 0, "relocated": 0, "unmodelled": 0, "resized": 0, "problems": 0}
  },
