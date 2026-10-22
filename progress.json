@@ -1,7 +1,7 @@
 {
  "schema": 2,
- "generated_at": "2026-10-22T08:11:51Z",
- "commit": "5134d556fcf9afadc72744d3beb7e818474b2f5b",
+ "generated_at": "2026-10-22T08:45:03Z",
+ "commit": "d4fc8f72d4016a8317a09e126a895640c1f92154",
  "dirty": false,
  "summary": {
   "code": {
@@ -5699,6 +5699,6 @@
   {"date": "2026-10-19", "revision": "115784dd958f1e3d965e54541f07c81203dfdc3c", "source": "run", "game_functions": 3458, "game_matched": 2846, "game_bytes": 931540, "game_matched_bytes": 474812, "sdk_functions": 722, "sdk_done": 434, "data_bytes": 1423613, "data_typed": 4104, "fakes": 336, "harmful_fakes": 196, "field_ref": 482, "local_externs": 1714, "sym_conflicts": 0},
   {"date": "2026-10-20", "revision": "ccf67e8eccf30c4dc691a24257963c0c0d9cdbb2", "source": "run", "game_functions": 3453, "game_matched": 3057, "game_bytes": 931084, "game_matched_bytes": 573860, "sdk_functions": 727, "sdk_done": 723, "data_bytes": 527425, "data_typed": 58169, "fakes": 520, "harmful_fakes": 284, "field_ref": 2112, "local_externs": 2102, "sym_conflicts": 0},
   {"date": "2026-10-21", "revision": "b92f42d8b90d6fcf6c5f3f35a99629486370f364", "source": "run", "game_functions": 3453, "game_matched": 3095, "game_bytes": 931084, "game_matched_bytes": 600636, "sdk_functions": 727, "sdk_done": 723, "data_bytes": 527425, "data_typed": 58233, "fakes": 545, "harmful_fakes": 294, "field_ref": 2052, "local_externs": 2182, "sym_conflicts": 0},
-  {"date": "2026-10-22", "revision": "5134d556fcf9afadc72744d3beb7e818474b2f5b", "source": "run", "game_functions": 3453, "game_matched": 3109, "game_bytes": 931084, "game_matched_bytes": 606308, "sdk_functions": 727, "sdk_done": 723, "data_bytes": 527425, "data_typed": 58233, "fakes": 551, "harmful_fakes": 300, "field_ref": 1998, "local_externs": 2176, "sym_conflicts": 0}
+  {"date": "2026-10-22", "revision": "d4fc8f72d4016a8317a09e126a895640c1f92154", "source": "run", "game_functions": 3453, "game_matched": 3109, "game_bytes": 931084, "game_matched_bytes": 606308, "sdk_functions": 727, "sdk_done": 723, "data_bytes": 527425, "data_typed": 58233, "fakes": 551, "harmful_fakes": 300, "field_ref": 1998, "local_externs": 2176, "sym_conflicts": 0}
  ]
 }
