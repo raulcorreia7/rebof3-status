@@ -22,11 +22,14 @@ TypeScript with SolidJS for the page, Vite (with `vite-plugin-solid`) to bundle 
 npm ci
 npm run dev      # Vite dev server with hot reload; serves progress.json from the repo root
 npm run build    # vite build into site/, then render/snapshot.ts writes progress.json, progress.svg, progress.png and badge.svg
-npm test         # model totals and a build smoke test
+npm test         # model totals and the files in site/ (build first; `make test` does both)
 npx tsc -p .     # type check
 ```
 
 The picture needs the DejaVu Sans font (`fonts-dejavu-core`).
+
+The Pages workflow runs the type check only when the push changes code: a push that only
+rewrites `progress.json` builds and tests the new data, since data cannot break the types.
 
 ## How the page is built
 
@@ -64,8 +67,8 @@ Links look like `#fn/exe/0x8015AD00`, `#target/game00`, `#group/emi/battle`, wit
 | `src/snapshot/` | The picture: `progress.svg` poster, tile map and `badge.svg`. |
 | `src/theme/`, `src/styles/` | Color tokens and CSS. |
 | `render/snapshot.ts` | Writes `progress.json`, `progress.svg`, `progress.png` and `badge.svg` into `site/`. |
-| `test/` | `node:test`: model totals and the build smoke test. |
-| `.github/workflows/pages.yml` | On each push to `main`, type-checks, tests, builds and deploys GitHub Pages. |
+| `test/` | `node:test`: model totals, and the files the build wrote into `site/`. |
+| `.github/workflows/pages.yml` | On each push to `main`: type-check when the push changes code, always build and test, then deploy GitHub Pages. |
 
 The map has three views: tiles (one square per function, coloured by status), PsyQ SDK tiles, and address-true strips. The treemap drills target, then overlay or area, then function; the legend filters by status. Block area is code bytes, with an 64-byte floor per function so a stub stays visible. The page derives the game function records from the schema-2 `units` rows (`kind` `f`), so it needs no second data file.
 

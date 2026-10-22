@@ -1,14 +1,13 @@
+// Checks the files `npm run build` writes into site/. Run the build first; `make test` does.
+
 import assert from "node:assert/strict";
-import { spawnSync } from "node:child_process";
-import { readFileSync, statSync } from "node:fs";
+import { existsSync, readFileSync, statSync } from "node:fs";
 import { test } from "node:test";
 
-const root = new URL("../", import.meta.url);
-const site = new URL("site/", root);
+const site = new URL("../site/", import.meta.url);
 
-test("npm run build writes the page and the pictures, none of them empty or broken", () => {
-  const build = spawnSync("npm", ["run", "build"], { cwd: root, encoding: "utf8" });
-  assert.equal(build.status, 0, build.stderr);
+test("the built site holds the page and the pictures, none of them empty or broken", () => {
+  assert.ok(existsSync(site), "site/ is missing: run `npm run build` first");
   for (const name of ["index.html", "progress.json", "progress.svg", "progress.png", "badge.svg"]) {
     assert.ok(statSync(new URL(name, site)).size > 200, `${name} is not empty`);
   }
