@@ -25,7 +25,7 @@ export function saveMode(mode: Mode): void {
   }
 }
 
-export const schemeOf = (mode: Mode): Scheme => (mode === "auto" ? (dark().matches ? "dark" : "light") : mode);
+const schemeOf = (mode: Mode): Scheme => (mode === "auto" ? (dark().matches ? "dark" : "light") : mode);
 
 /** Write the tokens of the mode's scheme to the page and return them. */
 export function applyMode(mode: Mode): { scheme: Scheme; tokens: Tokens } {

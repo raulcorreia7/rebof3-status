@@ -6,5 +6,5 @@ import solid from "vite-plugin-solid";
 export default defineConfig({
   base: "./",
   plugins: [solid()],
-  build: { outDir: "site", emptyOutDir: true, target: "es2022", chunkSizeWarningLimit: 1200 },
+  build: { outDir: "site", emptyOutDir: true, target: "es2022" },
 });

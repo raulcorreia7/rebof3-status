@@ -6,7 +6,7 @@ import type { Tokens } from "../theme/tokens.ts";
 import type { HistoryRow } from "../types.ts";
 import type { ChartOption } from "./register.ts";
 
-export const lineColor = (tokens: Tokens, key: string): string => (key === "mute" ? tokens.mute : tokens.status[key as keyof Tokens["status"]]);
+const lineColor = (tokens: Tokens, key: string): string => (key === "mute" ? tokens.mute : tokens.status[key as keyof Tokens["status"]]);
 
 /** The latest value of a chart, formatted; null when it has no points. */
 export function latest(days: HistoryRow[], chart: TrendChart): string | null {
@@ -14,7 +14,7 @@ export function latest(days: HistoryRow[], chart: TrendChart): string | null {
   return points.length ? formatValue(points[points.length - 1][1], chart) : null;
 }
 
-export interface TrendOptions {
+interface TrendOptions {
   /** Draw the title and the date labels inside the chart, as the picture does. */
   titled?: boolean;
   fontFamily?: string;

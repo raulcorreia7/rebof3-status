@@ -8,7 +8,7 @@
 import type { Target, Unit } from "../types.ts";
 
 /** Bytes per pixel a strip may use, finest first: 4 B shows a single instruction. */
-export const SCALES = [4, 8, 16, 32, 64, 128, 256, 512, 1024];
+const SCALES = [4, 8, 16, 32, 64, 128, 256, 512, 1024];
 
 /** The finest scale at which `size` bytes fit in `maxRows` strip rows of `width` pixels. */
 export function pickScale(size: number, width: number, maxRows: number, scales = SCALES): number {
@@ -19,7 +19,7 @@ export const stripRows = (size: number, bytesPerPx: number, width: number): numb
   Math.max(Math.ceil(size / (bytesPerPx * width)), 1);
 
 /** A drawn piece of a unit: [unit index, strip row, x, width], x and width in pixels. */
-export type Piece = [index: number, row: number, x: number, width: number];
+type Piece = [index: number, row: number, x: number, width: number];
 
 /** Strip pieces for entries at `offset` with `size`. A piece is never narrower than `minWidth`. */
 export function place(entries: { offset: number; size: number }[], bytesPerPx: number, width: number, minWidth = 0.5): Piece[] {
@@ -45,9 +45,9 @@ export function place(entries: { offset: number; size: number }[], bytesPerPx: n
  * class for them, so their names name them; a row that is not data is never reserved.
  */
 const RESERVED_ROW = /^(psx_exe_header|entry_header|post_emi_loader_tail|post_emi_gap|pad_|.*_pad$|.*_gap$|arena|.*_arena$)/;
-export const isReserved = (unit: Unit): boolean => unit[2] === "d" && RESERVED_ROW.test(unit[4]);
+const isReserved = (unit: Unit): boolean => unit[2] === "d" && RESERVED_ROW.test(unit[4]);
 
-export interface StripEntry {
+interface StripEntry {
   unit: Unit;
   offset: number;
   size: number;

@@ -3,7 +3,7 @@
 
 import { createMemo, For, type Accessor } from "solid-js";
 import { DATA_LABEL, MAP } from "../strings.ts";
-import { hex, number, percent } from "../model/format.ts";
+import { bytes, hex, number, percent } from "../model/format.ts";
 import { STATUS, isDone, statusVar } from "../model/status.ts";
 import { fitText, pickScale, place, stripEntries, stripRows } from "../model/strips.ts";
 import { textWidth } from "../model/text.ts";
@@ -22,9 +22,9 @@ const unitFill = (unit: Unit, reserved: boolean) => (reserved ? "url(#reserved-s
 
 function unitTip(target: Target, [offset, size, kind, status, name]: Unit, reserved: boolean): string {
   const at = target.base + offset;
-  if (reserved) return `${target.id}+${hex(at)} ${name} · ${DATA_LABEL.reserved} · ${number(size)} B`;
+  if (reserved) return `${target.id}+${hex(at)} ${name} · ${DATA_LABEL.reserved} · ${bytes(size)}`;
   const label = kind === "d" ? DATA_LABEL[status as keyof typeof DATA_LABEL] : STATUS[status as Status].label;
-  return `${target.id}${kind === "d" ? "+" : "@"}${hex(at)} ${name} · ${label}${kind === "s" ? " · PsyQ" : ""} · ${number(size)} B`;
+  return `${target.id}${kind === "d" ? "+" : "@"}${hex(at)} ${name} · ${label}${kind === "s" ? " · PsyQ" : ""} · ${bytes(size)}`;
 }
 
 function Strip(props: { target: Target }) {
@@ -42,7 +42,7 @@ function Strip(props: { target: Target }) {
   const game = target.functions.filter((fn) => fn.kind === "game");
   const matched = game.filter(isDone).length;
   const detail = () =>
-    `${target.id} · ${hex(target.base)}-${hex(target.end)} · ${number(target.size)} B · ${number(target.functions.length)} functions` +
+    `${target.id} · ${hex(target.base)}-${hex(target.end)} · ${bytes(target.size)} · ${number(target.functions.length)} functions` +
     (game.length ? ` · ${MAP.gamePercent(percent(matched, game.length, 1))}` : "") +
     ` · ${MAP.scale(scale())}`;
   /** The first piece of each reserved unit that is wide enough gets a label. */
@@ -50,7 +50,7 @@ function Strip(props: { target: Target }) {
     const done = new Set<number>();
     return pieces().flatMap(([index, row, x, width]) => {
       if (!packed().entries[index].reserved || done.has(index)) return [];
-      const label = fitText("reserved", 10, width - 6, textWidth);
+      const label = fitText(MAP.reservedLabel, 10, width - 6, textWidth);
       if (!label) return [];
       done.add(index);
       return [{ label, x, row }];

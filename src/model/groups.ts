@@ -11,14 +11,14 @@
 
 import { GROUP_NOTE, groupLabel } from "../strings.ts";
 
-export const GROUP_RULES: readonly [pattern: RegExp, group: string][] = [
+const GROUP_RULES: readonly [pattern: RegExp, group: string][] = [
   [/^exe\/slus_004_22$/, "exe/main"],
   [/^exe\/logo$/, "exe/logo"],
   [/^exe\//, "exe/other"],
   [/^(emi\/[^/]+)\//, "$1"],
 ];
 /** The executables first, then the overlays; unlisted groups follow in alphabetical order. */
-export const GROUP_ORDER = ["exe/main", "exe/logo", "emi/etc", "emi/battle", "emi/scenario", "emi/world00"];
+const GROUP_ORDER = ["exe/main", "exe/logo", "emi/etc", "emi/battle", "emi/scenario", "emi/world00"];
 
 export function groupKey(targetId: string): string {
   for (const [pattern, group] of GROUP_RULES) {

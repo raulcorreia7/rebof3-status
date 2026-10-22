@@ -4,7 +4,7 @@
 import { TIER_LABEL } from "../strings.ts";
 import { STATUS } from "../model/status.ts";
 import type { Fn, Model, Status } from "../types.ts";
-import { escapeText, number, percent } from "../model/format.ts";
+import { bytes, escapeText, number, percent } from "../model/format.ts";
 import type { Tokens } from "../theme/tokens.ts";
 import type { ChartOption } from "./register.ts";
 
@@ -23,10 +23,10 @@ export interface MapNode {
   children?: MapNode[];
 }
 
-export const nodeId = ({ kind, id }: MapRef): string => `${kind[0]}:${id}`;
-export const ROOT_ID = "root";
+const nodeId = ({ kind, id }: MapRef): string => `${kind[0]}:${id}`;
+const ROOT_ID = "root";
 
-export interface MapStyle {
+interface MapStyle {
   tokens: Tokens;
   /** Statuses to light up; none means all. The rest are dimmed. */
   statuses: Status[];
@@ -34,7 +34,7 @@ export interface MapStyle {
 
 const fnTip = (fn: Fn): string => {
   const tier = fn.tier ? ` · ${escapeText(TIER_LABEL[fn.tier])}${fn.version ? ` (PsyQ ${escapeText(fn.version)})` : ""}` : "";
-  return `<b>${escapeText(fn.name)}</b><br>${escapeText(fn.id)}<br>${escapeText(STATUS[fn.status].label)}${tier} · ${number(fn.bytes)} B`;
+  return `<b>${escapeText(fn.name)}</b><br>${escapeText(fn.id)}<br>${escapeText(STATUS[fn.status].label)}${tier} · ${bytes(fn.bytes)}`;
 };
 
 function fnNode(fn: Fn, { tokens, statuses }: MapStyle): MapNode {
@@ -90,7 +90,7 @@ export function treemapTree(model: Model, scope: "game" | "sdk", style: MapStyle
 }
 
 /** Size of a drawn rectangle, so labels only appear where they fit. */
-export type LayoutOf = (dataIndex: number) => { width: number; height: number } | undefined;
+type LayoutOf = (dataIndex: number) => { width: number; height: number } | undefined;
 
 // Text width in pixels at `size`, a rough estimate that errs on the wide side.
 const textWidth = (text: string, size: number): number => text.length * size * 0.62;
