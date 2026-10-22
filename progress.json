@@ -1,36 +1,36 @@
 {
  "schema": 2,
- "generated_at": "2026-10-22T01:35:16Z",
- "commit": "9e71db7261197c0ee2b2a09af81a2b1afbe44785",
+ "generated_at": "2026-10-22T02:25:05Z",
+ "commit": "8edfc2e00b2753ed85772d8c010c4937ee919298",
  "dirty": false,
  "summary": {
   "code": {
    "functions": 4180,
    "bytes": 1059496,
-   "done_functions": 3820,
-   "done_bytes": 729612,
+   "done_functions": 3822,
+   "done_bytes": 730140,
    "statuses": {
-    "pure": [2853, 515808],
-    "match_with_helpers": [241, 83896],
+    "pure": [2854, 516032],
+    "match_with_helpers": [242, 84200],
     "asm": [4, 1888],
     "object": [722, 128020],
     "assembly": [4, 384],
-    "nonmatching": [265, 210364],
+    "nonmatching": [263, 209836],
     "open": [91, 119136]
    }
   },
   "game": {
    "functions": 3453,
    "bytes": 931084,
-   "done_functions": 3097,
-   "done_bytes": 601584,
+   "done_functions": 3099,
+   "done_bytes": 602112,
    "statuses": {
-    "pure": [2852, 515800],
-    "match_with_helpers": [241, 83896],
+    "pure": [2853, 516024],
+    "match_with_helpers": [242, 84200],
     "asm": [4, 1888],
     "object": [0, 0],
     "assembly": [0, 0],
-    "nonmatching": [265, 210364],
+    "nonmatching": [263, 209836],
     "open": [91, 119136]
    }
   },
@@ -50,7 +50,7 @@
    }
   },
   "data": {"bytes": 527425, "typed": 58233},
-  "quality": {"fakes": 545, "harmful_fakes": 294, "benign_fakes": 251, "field_ref": 2049, "local_externs": 2181, "sym_conflicts": 0, "hand_asm": 5},
+  "quality": {"fakes": 545, "harmful_fakes": 294, "benign_fakes": 251, "field_ref": 2039, "local_externs": 2181, "sym_conflicts": 0, "hand_asm": 5},
   "links": {"targets": 25, "exact": 25, "differs": 0, "error": 0},
   "layout": {"rows": 4489, "gaps": 0, "overlaps": 0, "relocated": 0, "unmodelled": 0, "resized": 0, "problems": 0}
  },
@@ -71,8 +71,8 @@
    "name": "BATTLE.EMI slot 3",
    "base": "0x801D0C00",
    "end": "0x801ED9D0",
-   "counts": {"exact": 389, "non_matching": 30, "untagged": 0, "unlifted": 12, "library": 0, "sdk": 0, "total": 431},
-   "link": {"status": "EXACT", "payload": 118224, "linked": 118224, "from_c": 389, "from_assembly": 42, "first_mismatch": null},
+   "counts": {"exact": 390, "non_matching": 29, "untagged": 0, "unlifted": 12, "library": 0, "sdk": 0, "total": 431},
+   "link": {"status": "EXACT", "payload": 118224, "linked": 118224, "from_c": 390, "from_assembly": 41, "first_mismatch": null},
    "layout": {"gaps": [], "overlaps": [], "relocated": 0, "unmodelled": 0, "resized": 0, "problems": []},
    "data": {"bytes": 12844, "typed": 100},
    "units": [
@@ -199,7 +199,7 @@
     [37532, 476, "f", "nonmatching", "func_801D9E9C"],
     [38008, 212, "f", "pure", "func_801DA078"],
     [38220, 476, "f", "match_with_helpers", "func_801DA14C"],
-    [38696, 224, "f", "nonmatching", "func_801DA328"],
+    [38696, 224, "f", "pure", "func_801DA328"],
     [38920, 172, "f", "pure", "func_801DA408"],
     [39092, 244, "f", "pure", "func_801DA4B4"],
     [39336, 244, "f", "pure", "func_801DA5A8"],
@@ -522,8 +522,8 @@
    "name": "BATTLE.EMI slot 15",
    "base": "0x80096800",
    "end": "0x800B70C4",
-   "counts": {"exact": 439, "non_matching": 40, "untagged": 0, "unlifted": 15, "library": 0, "sdk": 0, "total": 494},
-   "link": {"status": "EXACT", "payload": 133316, "linked": 133316, "from_c": 439, "from_assembly": 55, "first_mismatch": null},
+   "counts": {"exact": 440, "non_matching": 39, "untagged": 0, "unlifted": 15, "library": 0, "sdk": 0, "total": 494},
+   "link": {"status": "EXACT", "payload": 133316, "linked": 133316, "from_c": 440, "from_assembly": 54, "first_mismatch": null},
    "layout": {"gaps": [], "overlaps": [], "relocated": 0, "unmodelled": 0, "resized": 0, "problems": []},
    "data": {"bytes": 12160, "typed": 124},
    "units": [
@@ -923,7 +923,7 @@
     [94636, 32, "f", "pure", "func_800AD9AC"],
     [94668, 128, "f", "pure", "func_800AD9CC"],
     [94796, 296, "f", "match_with_helpers", "func_800ADA4C"],
-    [95092, 304, "f", "nonmatching", "func_800ADB74"],
+    [95092, 304, "f", "match_with_helpers", "func_800ADB74"],
     [95396, 32, "f", "pure", "func_800ADCA4"],
     [95428, 128, "f", "pure", "func_800ADCC4"],
     [95556, 296, "f", "match_with_helpers", "func_800ADD44"],
@@ -5699,6 +5699,6 @@
   {"date": "2026-10-19", "revision": "115784dd958f1e3d965e54541f07c81203dfdc3c", "source": "run", "game_functions": 3458, "game_matched": 2846, "game_bytes": 931540, "game_matched_bytes": 474812, "sdk_functions": 722, "sdk_done": 434, "data_bytes": 1423613, "data_typed": 4104, "fakes": 336, "harmful_fakes": 196, "field_ref": 482, "local_externs": 1714, "sym_conflicts": 0},
   {"date": "2026-10-20", "revision": "ccf67e8eccf30c4dc691a24257963c0c0d9cdbb2", "source": "run", "game_functions": 3453, "game_matched": 3057, "game_bytes": 931084, "game_matched_bytes": 573860, "sdk_functions": 727, "sdk_done": 723, "data_bytes": 527425, "data_typed": 58169, "fakes": 520, "harmful_fakes": 284, "field_ref": 2112, "local_externs": 2102, "sym_conflicts": 0},
   {"date": "2026-10-21", "revision": "b92f42d8b90d6fcf6c5f3f35a99629486370f364", "source": "run", "game_functions": 3453, "game_matched": 3095, "game_bytes": 931084, "game_matched_bytes": 600636, "sdk_functions": 727, "sdk_done": 723, "data_bytes": 527425, "data_typed": 58233, "fakes": 545, "harmful_fakes": 294, "field_ref": 2052, "local_externs": 2182, "sym_conflicts": 0},
-  {"date": "2026-10-22", "revision": "9e71db7261197c0ee2b2a09af81a2b1afbe44785", "source": "run", "game_functions": 3453, "game_matched": 3097, "game_bytes": 931084, "game_matched_bytes": 601584, "sdk_functions": 727, "sdk_done": 723, "data_bytes": 527425, "data_typed": 58233, "fakes": 545, "harmful_fakes": 294, "field_ref": 2049, "local_externs": 2181, "sym_conflicts": 0}
+  {"date": "2026-10-22", "revision": "8edfc2e00b2753ed85772d8c010c4937ee919298", "source": "run", "game_functions": 3453, "game_matched": 3099, "game_bytes": 931084, "game_matched_bytes": 602112, "sdk_functions": 727, "sdk_done": 723, "data_bytes": 527425, "data_typed": 58233, "fakes": 545, "harmful_fakes": 294, "field_ref": 2039, "local_externs": 2181, "sym_conflicts": 0}
  ]
 }
