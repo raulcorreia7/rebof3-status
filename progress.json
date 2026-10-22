@@ -1,36 +1,36 @@
 {
  "schema": 2,
- "generated_at": "2026-10-22T09:54:54Z",
- "commit": "c96c489eb727b74207133d7468fabdd27f96aee6",
+ "generated_at": "2026-10-22T10:26:15Z",
+ "commit": "9d2ab3dc3e303326ea985d5aa6a9ddca9f4fd2f0",
  "dirty": false,
  "summary": {
   "code": {
    "functions": 4180,
    "bytes": 1059496,
-   "done_functions": 3832,
-   "done_bytes": 734336,
+   "done_functions": 3834,
+   "done_bytes": 735148,
    "statuses": {
     "pure": [2863, 519432],
-    "match_with_helpers": [243, 84996],
+    "match_with_helpers": [245, 85808],
     "asm": [4, 1888],
     "object": [722, 128020],
     "assembly": [4, 384],
-    "nonmatching": [253, 205640],
+    "nonmatching": [251, 204828],
     "open": [91, 119136]
    }
   },
   "game": {
    "functions": 3453,
    "bytes": 931084,
-   "done_functions": 3109,
-   "done_bytes": 606308,
+   "done_functions": 3111,
+   "done_bytes": 607120,
    "statuses": {
     "pure": [2862, 519424],
-    "match_with_helpers": [243, 84996],
+    "match_with_helpers": [245, 85808],
     "asm": [4, 1888],
     "object": [0, 0],
     "assembly": [0, 0],
-    "nonmatching": [253, 205640],
+    "nonmatching": [251, 204828],
     "open": [91, 119136]
    }
   },
@@ -50,7 +50,7 @@
    }
   },
   "data": {"bytes": 527425, "typed": 58233},
-  "quality": {"fakes": 552, "harmful_fakes": 300, "benign_fakes": 252, "field_ref": 1998, "local_externs": 2176, "sym_conflicts": 0, "hand_asm": 5},
+  "quality": {"fakes": 557, "harmful_fakes": 305, "benign_fakes": 252, "field_ref": 1998, "local_externs": 2181, "sym_conflicts": 0, "hand_asm": 5},
   "links": {"targets": 25, "exact": 25, "differs": 0, "error": 0},
   "layout": {"rows": 4489, "gaps": 0, "overlaps": 0, "relocated": 0, "unmodelled": 0, "resized": 0, "problems": 0}
  },
@@ -1911,8 +1911,8 @@
    "name": "SHOP.EMI",
    "base": "0x801D0C00",
    "end": "0x801E626C",
-   "counts": {"exact": 216, "non_matching": 33, "untagged": 0, "unlifted": 13, "library": 0, "sdk": 0, "total": 262},
-   "link": {"status": "EXACT", "payload": 87660, "linked": 87660, "from_c": 216, "from_assembly": 53, "first_mismatch": null},
+   "counts": {"exact": 217, "non_matching": 32, "untagged": 0, "unlifted": 13, "library": 0, "sdk": 0, "total": 262},
+   "link": {"status": "EXACT", "payload": 87660, "linked": 87660, "from_c": 217, "from_assembly": 52, "first_mismatch": null},
    "layout": {"gaps": [], "overlaps": [], "relocated": 0, "unmodelled": 0, "resized": 0, "problems": []},
    "data": {"bytes": 5064, "typed": 136},
    "units": [
@@ -2069,7 +2069,7 @@
     [54192, 472, "f", "nonmatching", "func_801DDFB0"],
     [54664, 60, "f", "pure", "func_801DE188"],
     [54724, 60, "f", "pure", "func_801DE1C4"],
-    [54784, 456, "f", "nonmatching", "func_801DE200"],
+    [54784, 456, "f", "match_with_helpers", "func_801DE200"],
     [55240, 68, "f", "pure", "func_801DE3C8"],
     [55308, 80, "f", "pure", "func_801DE40C"],
     [55388, 108, "f", "pure", "func_801DE45C"],
@@ -2632,8 +2632,8 @@
    "name": "START.EMI slot 9",
    "base": "0x801EEC00",
    "end": "0x801F0094",
-   "counts": {"exact": 12, "non_matching": 2, "untagged": 0, "unlifted": 0, "library": 0, "sdk": 0, "total": 14},
-   "link": {"status": "EXACT", "payload": 5268, "linked": 5268, "from_c": 14, "from_assembly": 2, "first_mismatch": null},
+   "counts": {"exact": 13, "non_matching": 1, "untagged": 0, "unlifted": 0, "library": 0, "sdk": 0, "total": 14},
+   "link": {"status": "EXACT", "payload": 5268, "linked": 5268, "from_c": 15, "from_assembly": 1, "first_mismatch": null},
    "layout": {"gaps": [], "overlaps": [], "relocated": 0, "unmodelled": 0, "resized": 0, "problems": []},
    "data": {"bytes": 624, "typed": 624},
    "units": [
@@ -2650,7 +2650,7 @@
     [1536, 124, "f", "pure", "func_801EF200"],
     [1660, 1776, "f", "pure", "func_801EF27C"],
     [3436, 472, "f", "pure", "func_801EF96C"],
-    [3908, 356, "f", "nonmatching", "func_801EFB44"],
+    [3908, 356, "f", "match_with_helpers", "func_801EFB44"],
     [4264, 428, "f", "pure", "func_801EFCA8"],
     [4692, 576, "d", "typed", "D_801EFE54"]
    ]
@@ -5699,6 +5699,6 @@
   {"date": "2026-10-19", "revision": "115784dd958f1e3d965e54541f07c81203dfdc3c", "source": "run", "game_functions": 3458, "game_matched": 2846, "game_bytes": 931540, "game_matched_bytes": 474812, "sdk_functions": 722, "sdk_done": 434, "data_bytes": 1423613, "data_typed": 4104, "fakes": 336, "harmful_fakes": 196, "field_ref": 482, "local_externs": 1714, "sym_conflicts": 0},
   {"date": "2026-10-20", "revision": "ccf67e8eccf30c4dc691a24257963c0c0d9cdbb2", "source": "run", "game_functions": 3453, "game_matched": 3057, "game_bytes": 931084, "game_matched_bytes": 573860, "sdk_functions": 727, "sdk_done": 723, "data_bytes": 527425, "data_typed": 58169, "fakes": 520, "harmful_fakes": 284, "field_ref": 2112, "local_externs": 2102, "sym_conflicts": 0},
   {"date": "2026-10-21", "revision": "b92f42d8b90d6fcf6c5f3f35a99629486370f364", "source": "run", "game_functions": 3453, "game_matched": 3095, "game_bytes": 931084, "game_matched_bytes": 600636, "sdk_functions": 727, "sdk_done": 723, "data_bytes": 527425, "data_typed": 58233, "fakes": 545, "harmful_fakes": 294, "field_ref": 2052, "local_externs": 2182, "sym_conflicts": 0},
-  {"date": "2026-10-22", "revision": "c96c489eb727b74207133d7468fabdd27f96aee6", "source": "run", "game_functions": 3453, "game_matched": 3109, "game_bytes": 931084, "game_matched_bytes": 606308, "sdk_functions": 727, "sdk_done": 723, "data_bytes": 527425, "data_typed": 58233, "fakes": 552, "harmful_fakes": 300, "field_ref": 1998, "local_externs": 2176, "sym_conflicts": 0}
+  {"date": "2026-10-22", "revision": "9d2ab3dc3e303326ea985d5aa6a9ddca9f4fd2f0", "source": "run", "game_functions": 3453, "game_matched": 3111, "game_bytes": 931084, "game_matched_bytes": 607120, "sdk_functions": 727, "sdk_done": 723, "data_bytes": 527425, "data_typed": 58233, "fakes": 557, "harmful_fakes": 305, "field_ref": 1998, "local_externs": 2181, "sym_conflicts": 0}
  ]
 }
