@@ -1,36 +1,36 @@
 {
  "schema": 2,
- "generated_at": "2026-10-22T03:30:40Z",
- "commit": "deb42b063231c6271576123b42211bf049f2bed8",
- "dirty": false,
+ "generated_at": "2026-10-22T03:43:00Z",
+ "commit": "285612ff8628b9649b399ae1ea62c061ca811164",
+ "dirty": true,
  "summary": {
   "code": {
    "functions": 4180,
    "bytes": 1059496,
-   "done_functions": 3823,
-   "done_bytes": 730672,
+   "done_functions": 3825,
+   "done_bytes": 731404,
    "statuses": {
-    "pure": [2855, 516564],
+    "pure": [2857, 517296],
     "match_with_helpers": [242, 84200],
     "asm": [4, 1888],
     "object": [722, 128020],
     "assembly": [4, 384],
-    "nonmatching": [262, 209304],
+    "nonmatching": [260, 208572],
     "open": [91, 119136]
    }
   },
   "game": {
    "functions": 3453,
    "bytes": 931084,
-   "done_functions": 3100,
-   "done_bytes": 602644,
+   "done_functions": 3102,
+   "done_bytes": 603376,
    "statuses": {
-    "pure": [2854, 516556],
+    "pure": [2856, 517288],
     "match_with_helpers": [242, 84200],
     "asm": [4, 1888],
     "object": [0, 0],
     "assembly": [0, 0],
-    "nonmatching": [262, 209304],
+    "nonmatching": [260, 208572],
     "open": [91, 119136]
    }
   },
@@ -50,7 +50,7 @@
    }
   },
   "data": {"bytes": 527425, "typed": 58233},
-  "quality": {"fakes": 545, "harmful_fakes": 294, "benign_fakes": 251, "field_ref": 2038, "local_externs": 2181, "sym_conflicts": 0, "hand_asm": 5},
+  "quality": {"fakes": 545, "harmful_fakes": 294, "benign_fakes": 251, "field_ref": 2037, "local_externs": 2181, "sym_conflicts": 0, "hand_asm": 5},
   "links": {"targets": 25, "exact": 25, "differs": 0, "error": 0},
   "layout": {"rows": 4489, "gaps": 0, "overlaps": 0, "relocated": 0, "unmodelled": 0, "resized": 0, "problems": 0}
  },
@@ -522,8 +522,8 @@
    "name": "BATTLE.EMI slot 15",
    "base": "0x80096800",
    "end": "0x800B70C4",
-   "counts": {"exact": 441, "non_matching": 38, "untagged": 0, "unlifted": 15, "library": 0, "sdk": 0, "total": 494},
-   "link": {"status": "EXACT", "payload": 133316, "linked": 133316, "from_c": 441, "from_assembly": 53, "first_mismatch": null},
+   "counts": {"exact": 442, "non_matching": 37, "untagged": 0, "unlifted": 15, "library": 0, "sdk": 0, "total": 494},
+   "link": {"status": "EXACT", "payload": 133316, "linked": 133316, "from_c": 442, "from_assembly": 52, "first_mismatch": null},
    "layout": {"gaps": [], "overlaps": [], "relocated": 0, "unmodelled": 0, "resized": 0, "problems": []},
    "data": {"bytes": 12160, "typed": 124},
    "units": [
@@ -830,7 +830,7 @@
     [64956, 692, "f", "nonmatching", "func_800A65BC"],
     [65648, 52, "f", "pure", "func_800A6870"],
     [65700, 904, "f", "nonmatching", "func_800A68A4"],
-    [66604, 204, "f", "nonmatching", "func_800A6C2C"],
+    [66604, 204, "f", "pure", "func_800A6C2C"],
     [66808, 140, "f", "pure", "func_800A6CF8"],
     [66948, 144, "f", "pure", "func_800A6D84"],
     [67092, 2100, "f", "open", "func_800A6E14"],
@@ -3717,8 +3717,8 @@
    "name": "SLUS_004.22",
    "base": "0x80096000",
    "end": "0x801F7000",
-   "counts": {"exact": 460, "non_matching": 37, "untagged": 0, "unlifted": 10, "library": 488, "sdk": 480, "total": 995},
-   "link": {"status": "EXACT", "payload": 1445888, "linked": 1445888, "from_c": 479, "from_assembly": 552, "first_mismatch": null},
+   "counts": {"exact": 461, "non_matching": 36, "untagged": 0, "unlifted": 10, "library": 488, "sdk": 480, "total": 995},
+   "link": {"status": "EXACT", "payload": 1445888, "linked": 1445888, "from_c": 480, "from_assembly": 551, "first_mismatch": null},
    "layout": {"gaps": [], "overlaps": [], "relocated": 0, "unmodelled": 0, "resized": 0, "problems": []},
    "data": {"bytes": 338816, "typed": 25352},
    "units": [
@@ -4069,7 +4069,7 @@
     [811540, 80, "f", "pure", "func_8015C214"],
     [811620, 112, "f", "pure", "func_8015C264"],
     [811732, 620, "f", "pure", "func_8015C2D4"],
-    [812352, 528, "f", "nonmatching", "func_8015C540"],
+    [812352, 528, "f", "pure", "func_8015C540"],
     [812880, 496, "f", "nonmatching", "func_8015C750"],
     [813376, 140, "f", "pure", "func_8015C940"],
     [813516, 124, "f", "pure", "func_8015C9CC"],
