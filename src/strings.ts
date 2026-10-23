@@ -66,7 +66,7 @@ export const SUMMARY = {
   gameFunctions: "Game code rebuilt in C",
   gameBytes: "Game code matched by bytes",
   fuzzy: "Fuzzy match",
-  fuzzyNote: "average per function, weighted by code bytes",
+  fuzzyNote: "average weighted by code bytes",
   data: "Data typed and named",
   dataPending: ["from next run", "available after the next run"],
   of: (done: number, total: number) => `${number(done)} of ${number(total)} functions`,
@@ -75,7 +75,7 @@ export const SUMMARY = {
     "* Game code means every function outside the PsyQ SDK and the hand-written assembly. A function counts as rebuilt when it builds to the exact original bytes." +
     " The SDK and the hand-written assembly are shown apart and are not counted in these figures.",
   statusHeading: "Status of game code",
-  statusLine: (functions: number, share: string) => `${number(functions)} functions · ${share}% of code bytes`,
+  statusLine: (functions: number, share: string, denominator: string) => `${number(functions)} functions · ${share}% of ${denominator}`,
   apartLabel: "Shown apart",
   apart: (sdkDone: number, sdkCount: number, sdkAssembly: number, handDone: number, handCount: number) =>
     `PsyQ SDK: ${number(sdkDone)} of ${number(sdkCount)} units from original objects` +
@@ -96,7 +96,7 @@ export const MAP = {
   tabs: { tiles: "Function map", sdk: "PsyQ SDK" },
   scopes: { game: "Game code", sdk: "PsyQ SDK" },
   gameTitle: (percent: string, done: number, total: number) => `Game code: ${percent}% matched (${number(done)} / ${number(total)})`,
-  sdkTitle: (percent: string, done: number, total: number) => `PsyQ SDK: ${percent}% from original objects (${number(done)} / ${number(total)})`,
+  sdkTitle: (percent: string, done: number, total: number) => `PsyQ SDK: ${percent}% objects (${number(done)}/${number(total)})`,
   tilesHelp:
     "Each rectangle is one function and bigger code takes more room. Hover one to see which function it is, click a block to zoom in and click a function to inspect it.",
   sdkHelp: "One block per PsyQ library. Teal links from original objects and orange is kept as assembly.",
@@ -115,12 +115,13 @@ export const SDK = {
   browse: "Browse functions",
   done: (objects: number, total: number) => `${number(objects)} / ${number(total)}`,
   assemblyLibrary: "assembly only",
+  assemblyNote: "kept as assembly",
 };
 
 export const DATA = {
   heading: (percent: string, typed: number, total: number) => `Data: ${percent}% typed and named (${number(typed)} / ${bytes(total)})`,
   headingNone: "Data",
-  help: "Each bar is one target's data. The green part is already typed and named in C.",
+  help: "Each bar is one target's data. The green part is already typed and named in C. A target is capped at its data bytes, so no bar passes 100%.",
   typed: "typed and named",
   untyped: "not typed yet",
 };
@@ -128,11 +129,11 @@ export const DATA = {
 export const QUALITY = {
   heading: "Match quality",
   cards: (q: Quality): [string, string, string][] => [
-    ["Game functions matched", number(q.exact), "exact C, byte for byte"],
+    ["Functions matched", number(q.exact), "exact C, byte for byte"],
     ["Being rebuilt", number(q.inProgress), "functions with a draft that is not exact yet"],
     ["Not started", number(q.notStarted), "functions still the original assembly"],
     ["Fuzzy match", `${q.fuzzy.toFixed(1)}%`, "code bytes weighted average"],
-    ["Hand-written assembly", `${number(q.handDone)} / ${number(q.hand)}`, "exact, shown apart"],
+    ["Hand-written asm", `${number(q.handDone)} / ${number(q.hand)}`, "exact, shown apart"],
   ],
   sentence: (q: Quality) =>
     `${number(q.exact)} game functions build to the original bytes, ${number(q.inProgress)} are being rebuilt and ${number(q.notStarted)} are still the original assembly.` +

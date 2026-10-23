@@ -2,6 +2,9 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { test } from "node:test";
 import { buildModel, unitAddress } from "../src/model/report.ts";
+import { HOME } from "../src/model/route.ts";
+import { legend, sdkLibraries } from "../src/selectors.ts";
+import { DARK } from "../src/theme/tokens.ts";
 import { STATUSES } from "../src/model/status.ts";
 import type { History, Report, StatusData } from "../src/types.ts";
 
@@ -76,6 +79,32 @@ test("unit names give the address when they carry one", () => {
   assert.equal(unitAddress("exe/slus_004_22/func_8015AD00"), 0x8015ad00);
   assert.equal(unitAddress("exe/slus_004_22/PopMatrix@0x80178BB4"), 0x80178bb4);
   assert.equal(unitAddress("exe/slus_004_22/MSC01-tail/InvSquareRoot"), null);
+});
+
+test("a target never reports more typed bytes than its data payload", () => {
+  for (const target of model.targets) if (target.data) assert.ok(target.data.typed <= target.data.bytes, target.id);
+  assert.deepEqual(model.targetById.get("emi/etc/start/08")!.data, { bytes: 9978, typed: 9978 });
+  // The raw census is 20 bytes over: a draft's jump table is larger than the reviewed placement.
+  const raw = status.targets.find((entry) => entry.target === "emi/etc/start/08")!;
+  assert.equal(raw.typed - raw.data_payload, 20);
+});
+
+test("the map legend uses one denominator per scope", () => {
+  const ctx = { model, route: { ...HOME, map: "tiles" as const }, tokens: DARK, limit: 200 };
+  const game = legend(ctx);
+  assert.deepEqual(game.items.map((item) => item.key), ["pure", "nonmatching", "open"]);
+  assert.match(game.items.find((item) => item.key === "pure")!.sub!, /66\.6% of game code bytes/);
+  const sdk = legend({ ...ctx, route: { ...HOME, map: "sdk" as const } });
+  assert.deepEqual(sdk.items.map((item) => item.key), ["object", "assembly"]);
+  assert.ok(sdk.items.every((item) => item.sub!.includes("of SDK bytes")));
+});
+
+test("the assembly-only library row reads as kept assembly", () => {
+  const rows = sdkLibraries({ model, route: HOME, tokens: DARK, limit: 200 }).rows;
+  const assembly = rows.find((row) => row.name?.label === "assembly only")!;
+  assert.equal(assembly.count, "4");
+  assert.equal(assembly.note, "kept as assembly");
+  assert.doesNotMatch(String(assembly.aria), /0 \/ 4/);
 });
 
 test("the committed history ends at the report's own point", () => {

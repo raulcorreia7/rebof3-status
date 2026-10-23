@@ -32,3 +32,16 @@ test("the picture carries the new headline in reading order", () => {
   assert.match(svg, /90\.7%/);
   assert.match(svg, /20\.04%/);
 });
+
+test("the picture never shows a target above 100% data and nothing is cut off", () => {
+  const svg = text("progress.svg");
+  assert.doesNotMatch(svg, /100\.2%/);
+  assert.match(svg, /100\.0% · 9,978 \/ 9,978 B/);
+  assert.match(svg, /PsyQ SDK: 99\.45% objects \(728\/732\)/);
+  assert.match(svg, /average weighted by code bytes/);
+  assert.match(svg, /Functions matched/);
+  assert.match(svg, /Hand-written asm/);
+  assert.match(svg, /66\.6% of game code bytes/);
+  assert.doesNotMatch(svg, /58\.4%/);
+  assert.doesNotMatch(svg, /0 \/ 4/);
+});

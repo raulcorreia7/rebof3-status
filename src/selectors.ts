@@ -11,7 +11,7 @@ import { TREND_CHARTS } from "./model/history.ts";
 import { HOME } from "./model/route.ts";
 import { STATUS, STATUS_TABLE, TIERS } from "./model/status.ts";
 import { BROWSER, DATA, GROUPS, MAP, QUALITY, SDK, SUMMARY, TIER_LABEL, TREND } from "./strings.ts";
-import type { Library, Tally, Target } from "./types.ts";
+import type { Library, Status, Tally, Target } from "./types.ts";
 import type { Card, Ctx, Link, MeterRow, Part, Views } from "./viewtypes.ts";
 
 // Shared pieces ---------------------------------------------------------------------------
@@ -94,12 +94,15 @@ export const mapHeading = ({ model, route }: Ctx): string => {
 
 export const mapHelp = ({ route }: Ctx): string => (route.map === "sdk" ? MAP.sdkHelp : MAP.tilesHelp);
 
-/** The status legend; it doubles as the status filter of the map. */
-export function legend({ model }: Ctx): Views["legend"] {
-  const totals = model.all;
-  const items = STATUS_TABLE.map(({ key, label, color, phase }) => {
+/** The status legend of the map's current scope; it doubles as the status filter. */
+export function legend({ model, route }: Ctx): Views["legend"] {
+  const sdk = route.map === "sdk";
+  const totals = sdk ? model.sdk : model.game;
+  const denominator = sdk ? "SDK bytes" : "game code bytes";
+  const scope: readonly Status[] = sdk ? ["object", "assembly"] : ["pure", "nonmatching", "open"];
+  const items = STATUS_TABLE.filter(({ key }) => scope.includes(key)).map(({ key, label, color, phase }) => {
     const [functions, bytes] = [totals.statuses[key].functions, totals.statuses[key].bytes];
-    return { key, label, color, phase, sub: SUMMARY.statusLine(functions, percent(bytes, totals.bytes, 1)) };
+    return { key, label, color, phase, sub: SUMMARY.statusLine(functions, percent(bytes, totals.bytes, 1), denominator) };
   });
   return { variant: "legend", label: MAP.filterHelp, items, help: { text: MAP.filterHelp, clear: MAP.filterClear } };
 }
@@ -125,7 +128,9 @@ export function mapTreemap({ model, route, tokens }: Ctx): Views["treemap"] {
     if (target) crumbs.push({ label: target.name, to: { view: { kind: "target", id: target.id } } });
   } else if (route.lib) crumbs.push({ label: route.lib, to: { lib: route.lib } });
 
-  const tree = treemapTree(model, sdk ? "sdk" : "game", { tokens, statuses: route.st });
+  // A status of the other scope stays in the route but must not dim this map.
+  const scope: readonly Status[] = sdk ? ["object", "assembly"] : ["pure", "nonmatching", "open"];
+  const tree = treemapTree(model, sdk ? "sdk" : "game", { tokens, statuses: route.st.filter((key) => scope.includes(key)) });
   const label = sdk ? MAP.sdkTitle(percent(model.sdk.done, model.sdk.count, 2), model.sdk.done, model.sdk.count) : MAP.gameTitle(percent(model.game.done, model.game.count, 2), model.game.done, model.game.count);
   return { tree, scope: sdk ? "sdk" : "game", focus, crumbs, label };
 }
@@ -145,14 +150,15 @@ export function sdkLibraries({ model }: Ctx): Views["meters"] {
   return {
     key: TIERS.map((tier) => ({ label: TIER_LABEL[tier], color: `var(--tier-${tier})` })),
     rows: model.libraries.map((lib) => {
+      const assembly = lib.name === ASSEMBLY_LIBRARY;
       const done = SDK.done(lib.tiers.object, lib.count);
       return {
-        name: { label: lib.name === ASSEMBLY_LIBRARY ? SDK.assemblyLibrary : lib.name, to: { lib: lib.name, part: "sdk" }, scroll: "browse" },
-        aria: `${lib.name}: ${done}`,
+        name: { label: assembly ? SDK.assemblyLibrary : lib.name, to: { lib: lib.name, part: "sdk" }, scroll: "browse" },
+        aria: assembly ? `${SDK.assemblyLibrary}: ${SDK.assemblyNote}` : `${lib.name}: ${done}`,
         width: Math.max((lib.count / peak) * 100, 1),
         parts: TIERS.filter((tier) => lib.tiers[tier]).map((tier) => ({ width: percent(lib.tiers[tier], lib.count, 3), color: `var(--tier-${tier})` })),
-        count: done,
-        note: libNote(lib),
+        count: assembly ? number(lib.count) : done,
+        note: assembly ? SDK.assemblyNote : libNote(lib),
       };
     }),
   };

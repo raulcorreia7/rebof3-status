@@ -46,29 +46,31 @@ function cards(model: Model, y: number): Drawn {
       : [SUMMARY.dataPending[0], SUMMARY.data, SUMMARY.dataPending[1], C.mute],
   ];
   const width = (WIDTH - 2 * MARGIN - 3 * GAP) / 4;
+  const height = 100;
   let svg = "";
   items.forEach(([big, title, sub, color], index) => {
     const x = MARGIN + index * (width + GAP);
-    svg += rect(x, y, width, 92, C.card) + frame(x + 0.5, y + 0.5, width - 1, 91, C.line);
+    svg += rect(x, y, width, height, C.card) + frame(x + 0.5, y + 0.5, width - 1, height - 1, C.line);
     svg += text(x + 16, y + 9, title, 15, C.ink);
     svg += text(x + 16, y + 34, big, 44, color, { weight: "bold" });
-    svg += text(x + 16 + textWidth(big, 44) * 1.18 + 14, y + 56, sub, 14, C.mute);
+    svg += text(x + 16, y + 76, sub, 14, C.mute);
   });
-  return { svg, bottom: y + 92 };
+  return { svg, bottom: y + height };
 }
 
-// The status legend, one row per status with its function count and code share.
+// The game status legend, one row per status with its function count and its share of game code.
 function legend(model: Model, x: number, y: number): Drawn {
-  const totals = model.all;
+  const totals = model.game;
+  const keys = STATUSES.filter((key) => key === "pure" || key === "nonmatching" || key === "open");
   let svg = text(x, y, SUMMARY.statusHeading, 24, C.ink);
-  STATUSES.forEach((key, index) => {
+  keys.forEach((key, index) => {
     const [functions, bytes] = [totals.statuses[key].functions, totals.statuses[key].bytes];
     const top = y + 40 + index * 38;
     svg += rect(x, top + 2, 20, 20, C.status[key]);
     svg += text(x + 30, top - 2, STATUS[key].label, 16, C.ink);
-    svg += text(x + 30, top + 17, SUMMARY.statusLine(functions, percent(bytes, totals.bytes, 1)), 12, C.mute);
+    svg += text(x + 30, top + 17, SUMMARY.statusLine(functions, percent(bytes, totals.bytes, 1), "game code bytes"), 12, C.mute);
   });
-  return { svg, bottom: y + 40 + STATUSES.length * 38 };
+  return { svg, bottom: y + 40 + keys.length * 38 };
 }
 
 // Data panel: per target, the share of data bytes typed and named in C.
@@ -98,11 +100,12 @@ function libraryPanel(model: Model, x: number, y: number, width: number): Drawn 
   libs.forEach((lib, index) => {
     const top = y + 40 + index * 36;
     const length = Math.max((weightOf(lib.functions) / peak) * barWidth, 2);
-    svg += text(x, top, lib.name, 14, C.ink);
+    const assembly = lib.name === "assembly";
+    svg += text(x, top, assembly ? SDK.assemblyLibrary : lib.name, 14, C.ink);
     svg += bar(x + nameWidth, top + 1, length, 14, STATUSES.map((key) => [lib.statuses[key].functions, C.status[key]]), lib.count);
-    svg += text(x + width, top, SDK.done(lib.tiers.object, lib.count), 13, C.mute, { anchor: "end" });
+    svg += text(x + width, top, assembly ? SDK.assemblyOnly(lib.count) : SDK.done(lib.tiers.object, lib.count), 13, C.mute, { anchor: "end" });
     const versions = Object.entries(lib.versions).map(([version, units]) => `${version} ×${units}`).join(" · ");
-    svg += text(x + nameWidth, top + 18, versions ? SDK.versions(versions) : POSTER.libraryLinked, 11, C.mute);
+    svg += text(x + nameWidth, top + 18, assembly ? "" : versions ? SDK.versions(versions) : POSTER.libraryLinked, 11, C.mute);
   });
   const s = model.sdk.statuses;
   svg += text(x, y + 40 + libs.length * 36, POSTER.libraryKey(s.object.functions, s.assembly.functions), 13, C.mute);

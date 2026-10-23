@@ -167,17 +167,23 @@ export function buildModel(
     const archive = target.split("/")[2] ?? "";
     archives.set(archive, (archives.get(archive) ?? 0) + 1);
   }
-  const targets: Target[] = status.targets.map((row) => ({
-    id: row.target,
-    name: targetName(row.target, archives),
-    group: groupKey(row.target),
-    groupLabel: "",
-    size: row.payload,
-    data: row.data_payload ? { bytes: row.data_payload, typed: row.typed } : null,
-    functions: [],
-    game: tally([]),
-    all: tally([]),
-  }));
+  // The object census sums .rodata/.data from every compiled object; a draft can emit more than
+  // the reviewed map counts. start/08's func_801DEEE8.o carries a 44-byte jump table where the map
+  // has a 24-byte rodata placement. Cap at the payload so a target never reads above 100%.
+  const targets: Target[] = status.targets.map((row) => {
+    const typed = row.data_payload ? Math.min(row.typed, row.data_payload) : 0;
+    return {
+      id: row.target,
+      name: targetName(row.target, archives),
+      group: groupKey(row.target),
+      groupLabel: "",
+      size: row.payload,
+      data: row.data_payload ? { bytes: row.data_payload, typed } : null,
+      functions: [],
+      game: tally([]),
+      all: tally([]),
+    };
+  });
   const targetById = new Map(targets.map((target) => [target.id, target]));
   const ids = [...targetById.keys()].sort((a, b) => b.length - a.length);
 
@@ -212,7 +218,9 @@ export function buildModel(
   const hand = measured(functions.filter((fn) => fn.kind === "hand"), handSource);
   const generatedAt = history.generated_at ?? "";
   const commit = history.commit ?? "";
-  const data = status.totals.data_payload ? { bytes: status.totals.data_payload, typed: status.totals.typed } : null;
+  const data = status.totals.data_payload
+    ? { bytes: status.totals.data_payload, typed: Math.min(status.totals.typed, status.totals.data_payload) }
+    : null;
   const meta = { version: report.version ?? 0, generatedAt, date: generatedAt.slice(0, 10), commit, shortCommit: commit.slice(0, 12) };
   const rows: HistoryRow[] = [...(history.rows ?? [])];
   if (meta.date) {
