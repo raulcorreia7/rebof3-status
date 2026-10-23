@@ -1,34 +1,22 @@
 // Every sentence and label the page and the picture show. Change wording here and nowhere else.
 
-import type { DataStatus, Quality, LayoutSummary, Status, Tier } from "./types.ts";
+import type { Quality, Status, Tier } from "./types.ts";
 import { bytes, number, plural } from "./model/format.ts";
 
 // Status key -> legend text. The order of the keys is the order of the legend.
 export const STATUS_LABEL: Record<Status, string> = {
   pure: "rebuilt in C",
-  match_with_helpers: "rebuilt in C with helpers",
-  asm: "original assembly",
-  object: "PsyQ library object",
-  assembly: "PsyQ library assembly",
   nonmatching: "being rebuilt",
   open: "not started",
-};
-
-// Map rows that are not functions (strips only).
-export const DATA_LABEL: Record<DataStatus | "reserved", string> = {
-  typed: "data typed in C",
-  raw: "data and raw bytes",
-  header: "file header",
-  reserved: "reserved space",
-};
-
-// PsyQ match tier -> legend text, best first.
-export const TIER_LABEL: Record<Tier, string> = {
-  c: "exact C",
-  object: "exact object",
-  partial: "partial match",
+  object: "PsyQ library object",
+  asm: "hand-written assembly",
   assembly: "assembly only",
-  unmatched: "unmatched",
+};
+
+// PsyQ unit kind -> legend text, best first.
+export const TIER_LABEL: Record<Tier, string> = {
+  object: "exact object",
+  assembly: "assembly only",
 };
 
 // Group key -> heading. A key that is not listed gets a title-cased heading.
@@ -68,7 +56,7 @@ export const HEAD = {
   updated: "Updated",
   from: "from rebof3",
   getThe: "Get the",
-  data: "data",
+  data: "report",
   or: "or the",
   picture: "full picture",
   theme: { auto: "Theme: automatic", light: "Theme: light", dark: "Theme: dark" },
@@ -76,17 +64,23 @@ export const HEAD = {
 
 export const SUMMARY = {
   gameFunctions: "Game code rebuilt in C",
-  gameBytes: "Game code bytes matched",
-  sdk: "PsyQ SDK as object or C",
-  data: "Data typed in C",
+  gameBytes: "Game code matched by bytes",
+  fuzzy: "Fuzzy match",
+  fuzzyNote: "average per function, weighted by code bytes",
+  data: "Data typed and named",
   dataPending: ["from next run", "available after the next run"],
   of: (done: number, total: number) => `${number(done)} of ${number(total)} functions`,
   ofBytes: (done: number, total: number) => `${number(done)} of ${bytes(total)}`,
   footnote:
-    "* Game code means every function outside the PsyQ SDK. A function counts as matched when it builds to the exact original bytes, whether that is clean C, C with helper macros or the original assembly." +
-    " An SDK function counts as done when it links from an original PsyQ object or is exact C.",
-  statusHeading: "Status of every function",
+    "* Game code means every function outside the PsyQ SDK and the hand-written assembly. A function counts as rebuilt when it builds to the exact original bytes." +
+    " The SDK and the hand-written assembly are shown apart and are not counted in these figures.",
+  statusHeading: "Status of game code",
   statusLine: (functions: number, share: string) => `${number(functions)} functions · ${share}% of code bytes`,
+  apartLabel: "Shown apart",
+  apart: (sdkDone: number, sdkCount: number, sdkAssembly: number, handDone: number, handCount: number) =>
+    `PsyQ SDK: ${number(sdkDone)} of ${number(sdkCount)} units from original objects` +
+    (sdkAssembly ? `, ${number(sdkAssembly)} kept as assembly` : "") +
+    `. Hand-written assembly: ${number(handDone)} of ${number(handCount)} exact. Neither is counted above.`,
 };
 
 export const GROUPS = {
@@ -99,84 +93,70 @@ export const GROUPS = {
 
 export const MAP = {
   heading: "Map",
-  tabs: { tiles: "Function map", strips: "Address strips" },
+  tabs: { tiles: "Function map", sdk: "PsyQ SDK" },
   scopes: { game: "Game code", sdk: "PsyQ SDK" },
   gameTitle: (percent: string, done: number, total: number) => `Game code: ${percent}% matched (${number(done)} / ${number(total)})`,
-  sdkTitle: (percent: string, done: number, total: number) => `PsyQ SDK: ${percent}% object or C (${number(done)} / ${number(total)})`,
+  sdkTitle: (percent: string, done: number, total: number) => `PsyQ SDK: ${percent}% from original objects (${number(done)} / ${number(total)})`,
   tilesHelp:
     "Each rectangle is one function and bigger code takes more room. Hover one to see which function it is, click a block to zoom in and click a function to inspect it.",
-  sdkHelp: "One block per PsyQ library. Teal links from original objects, orange from original assembly, and green has been rewritten as C.",
+  sdkHelp: "One block per PsyQ library. Teal links from original objects and orange is kept as assembly.",
   filterHelp: "The legend is a filter: choose statuses to light them up and dim the rest.",
   filterClear: "Show every status",
-  stripsHelp:
-    "Each target's address range wraps into rows like text, from the first byte to the last. Hover a block to see what it is and click it to inspect it.",
-  showReserved: "show reserved space",
-  reservedLabel: "reserved",
-  reservedHelp:
-    "Reserved space is the executable's load slots, the loader tail and the Splat map's pad and gap rows. They are hidden by default so the real bytes fill the strip.",
-  scale: (bytes: number) => `1 px = ${bytes} B`,
-  imageLinked: (verdict: string) => `image ${verdict}`,
-  imageNotLinked: "image not linked",
-  gamePercent: (percent: string) => `${percent}% of game code matched`,
   textFallback: "The map is drawn on a canvas. The function browser below lists the same functions with the same filters.",
 };
 
 export const SDK = {
   heading: "PsyQ libraries, best match first",
-  help: "One bar per library, split by how well the retail code matches PsyQ: exact C, exact object (the PsyQ version it links from), partial match, assembly only, unmatched. Choose a library to browse its functions, best match first.",
-  keyLine: (objects: number, assembly: number, c: number) => `${number(objects)} objects · ${number(assembly)} assembly · ${number(c)} C · done = exact C or exact object`,
+  help: "One bar per library, split by whether the unit links from an original PsyQ object or is kept as assembly. Choose a library to browse its functions. The SDK is shown apart and is not counted in the game figures.",
+  keyLine: (objects: number, assembly: number) =>
+    `${number(objects)} objects · ${number(assembly)} assembly · shown apart, not counted`,
   versions: (text: string) => `objects from PsyQ ${text}`,
-  partial: (count: number) => `${count} partial`,
-  assemblyOnly: (count: number) => `${count} assembly only`,
-  unmatched: (count: number) => `${count} unmatched`,
-  noMatch: "no match",
+  assemblyOnly: (count: number) => `${number(count)} kept as assembly`,
   browse: "Browse functions",
-  done: (done: number, total: number) => `${number(done)} / ${number(total)}`,
+  done: (objects: number, total: number) => `${number(objects)} / ${number(total)}`,
+  assemblyLibrary: "assembly only",
 };
 
 export const DATA = {
-  heading: (percent: string, typed: number, total: number) => `Data: ${percent}% typed in C (${number(typed)} / ${bytes(total)})`,
+  heading: (percent: string, typed: number, total: number) => `Data: ${percent}% typed and named (${number(typed)} / ${bytes(total)})`,
   headingNone: "Data",
-  help: "Each bar is one target's data. The green part is already typed in C.",
-  typed: "typed in C",
+  help: "Each bar is one target's data. The green part is already typed and named in C.",
+  typed: "typed and named",
   untyped: "not typed yet",
 };
 
 export const QUALITY = {
-  heading: "Code quality",
+  heading: "Match quality",
   cards: (q: Quality): [string, string, string][] => [
-    ["Helper macros in use", number(q.fakes), `${number(q.benign_fakes)} benign · ${number(q.harmful_fakes)} harmful`],
-    ["Raw offset accesses", number(q.field_ref), "raw offset accesses in C"],
-    ["Declarations inside .c files", number(q.local_externs), "extern declarations inside C files"],
-    ["Conflicting symbol names", number(q.sym_conflicts), "places where the symbol list disagrees"],
-    ["Code kept as assembly", number(q.hand_asm), "files kept as assembly by hand"],
+    ["Game functions matched", number(q.exact), "exact C, byte for byte"],
+    ["Being rebuilt", number(q.inProgress), "functions with a draft that is not exact yet"],
+    ["Not started", number(q.notStarted), "functions still the original assembly"],
+    ["Fuzzy match", `${q.fuzzy.toFixed(1)}%`, "code bytes weighted average"],
+    ["Hand-written assembly", `${number(q.handDone)} / ${number(q.hand)}`, "exact, shown apart"],
   ],
   sentence: (q: Quality) =>
-    `${plural(q.fakes, "helper macro", "helper macros")} in use: ${number(q.benign_fakes)} benign and ${number(q.harmful_fakes)} harmful.` +
-    ` The C still has ${plural(q.field_ref, "raw offset access", "raw offset accesses")} (FIELD uses), ${plural(q.local_externs, "declaration inside a .c file", "declarations inside .c files")}, ${plural(q.sym_conflicts, "symbol conflict")} and ${plural(q.hand_asm, "hand-written assembly file")}.`,
-  perTargetHeading: "Rebuilt with helper macros by target",
-  perTargetHelp:
-    "The project records the quality counters above as totals only. The one per-target figure is how many functions are matched with helper macros, shown here.",
-  verifyHeading: "Verification",
-  imageLinks: (exact: number, total: number) => `${exact} of ${total} targets link byte-identical to the retail binary`,
-  imageLinksUnknown: "not measured in this run.",
-  differs: (names: string[]) => `; ${names.join(", ")} ${names.length > 1 ? "differ" : "differs"}.`,
-  firstDifference: (address: string) => `first difference at ${address}`,
-  addressMap: (layout: LayoutSummary) =>
-    `${number(layout.rows)} map rows; ${layout.gaps} gaps and ${layout.overlaps} overlaps between rows; ${layout.problems} differences that touch code.`,
-  addressMapNotes: (layout: LayoutSummary) =>
-    ` Against these rows, the units behind bin/status place ${layout.relocated} raw rows of the executables at another address, lack ${layout.unmodelled} rows of top-level segments and size ${layout.resized} data rows too large. None of them is a function.`,
+    `${number(q.exact)} game functions build to the original bytes, ${number(q.inProgress)} are being rebuilt and ${number(q.notStarted)} are still the original assembly.` +
+    ` The fuzzy match is ${q.fuzzy.toFixed(1)}%, and ${number(q.handDone)} of ${plural(q.hand, "hand-written assembly unit")} are exact.`,
+  perTargetHeading: "Functions being rebuilt by target",
+  perTargetHelp: "One bar per target: the game functions with a draft that does not build to the original bytes yet.",
+  verifyHeading: "How the numbers are counted",
+  gameScope: "Game code:",
+  gameScopeText: (done: number, total: number, doneBytes: number, totalBytes: number) =>
+    `${number(done)} of ${number(total)} functions match, ${number(doneBytes)} of ${bytes(totalBytes)}. The PsyQ SDK and the hand-written assembly are not counted.`,
+  dataScope: "Data:",
+  dataScopeText: (typed: number | null, totalBytes: number | null) =>
+    typed === null || totalBytes === null ? "not measured in this run." : `${number(typed)} of ${bytes(totalBytes)} of data are typed and named in C, from the data census.`,
 };
 
 export const TREND = {
   heading: "Progress over time",
-  help: "One point per day. The number in each title is the latest value.",
+  help: "One point per day. The number in each title is the latest value. The quality counters stop when the report became the source.",
   empty: "starts with the next published run",
   charts: {
     gameFunctions: "Game functions rebuilt in C over time",
     gameBytes: "Game code bytes rebuilt in C over time",
-    sdk: "PsyQ SDK as object or C over time",
-    data: "Data typed in C over time",
+    sdk: "PsyQ SDK from original objects over time",
+    data: "Data typed and named over time",
     benign: "Benign helper macros over time",
     harmful: "Harmful helper macros over time",
     fieldRef: "Raw offset accesses over time",
@@ -192,7 +172,7 @@ export const BROWSER = {
   targetLabel: "Target",
   allTargets: "Every target",
   scopeLabel: "Part",
-  scopes: { all: "Everything", game: "Game code", sdk: "PsyQ SDK" },
+  scopes: { all: "Everything", game: "Game code", sdk: "PsyQ SDK", hand: "Hand-written assembly" },
   libraryLabel: "Library",
   allLibraries: "Every library",
   sortLabel: "Sort by",
@@ -225,33 +205,25 @@ export const INSPECT = {
     group: "Group",
     source: "Source file",
     library: "Library",
-    tier: "Match",
+    tier: "Kind",
     version: "PsyQ version",
-    score: "Words reproduced",
+    score: "Fuzzy match",
     previous: "Previous function",
     next: "Next function",
-    range: "Address range",
     functions: "Functions",
     bytes: "Code bytes",
-    data: "Data typed in C",
-    link: "Image link",
+    data: "Data typed and named",
     payload: "Payload",
-    linked: "Linked",
-    fromC: "Bytes from C",
-    fromAssembly: "Bytes from assembly",
-    mismatch: "First difference",
-    audit: "Map audit",
-    counts: "Counts",
     targets: "Targets",
   },
-  parts: { game: "Game code", sdk: "PsyQ SDK" },
-  noSource: "No C file yet: this function is still the original assembly.",
+  parts: { game: "Game code", sdk: "PsyQ SDK", hand: "Hand-written assembly" },
+  noSource: "No C file: this function is still the original assembly.",
   sourceNote: "The file name follows the project's naming rule, and the link points at the commit this page was measured at.",
+  objectNote: "The unit was sliced from this PsyQ object; the SDK is shown apart.",
   noSourceSdk: "Linked from the original PsyQ library, so there is no C file.",
+  noSourceAssembly: "Kept as assembly: no PsyQ object reproduces it and there is no C file.",
   showOnMap: "Show on the map",
   browseTarget: "Browse its functions",
-  clean: "clean",
-  notLinked: "not linked",
   notFound: "That function is not in the data. It may have been renamed since this link was made.",
 };
 
@@ -265,8 +237,7 @@ export const POSTER = {
   title: "Breath of Fire III decompilation status",
   subtitle: (commit: string, date: string) => `rebof3 ${commit} · ${date} · one square per function, sized by its code bytes`,
   libraries: "PsyQ libraries and versions",
-  librariesHelp: "How far along each library is, function by function, and which PsyQ releases its objects come from.",
-  libraryKey: (objects: number, assembly: number, c: number) => `${number(objects)} objects · ${number(assembly)} assembly · ${number(c)} C`,
-  libraryLinked: "linked from original assembly",
+  libraryKey: (objects: number, assembly: number) => `${number(objects)} objects · ${number(assembly)} assembly`,
+  libraryLinked: "kept as assembly",
   badge: "C match",
 };

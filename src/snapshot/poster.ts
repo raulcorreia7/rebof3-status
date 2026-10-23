@@ -34,15 +34,15 @@ const gameBlocks = (model: Model): Block[] =>
 
 const sdkBlocks = (model: Model): Block[] => model.libraries.map((lib) => ({ name: lib.name, rows: sorted(lib.functions) }));
 
-// Four headline cards: big share, then what it counts.
+// The headline, in the order the numbers matter: bytes, fuzzy, functions, data.
 function cards(model: Model, y: number): Drawn {
-  const { game, sdk, data } = model.summary;
+  const { game, data } = model;
   const items: [string, string, string, string][] = [
-    [`${percent(game.done_functions, game.functions, 1)}%`, SUMMARY.gameFunctions, SUMMARY.of(game.done_functions, game.functions), C.status.pure],
-    [`${percent(game.done_bytes, game.bytes, 1)}%`, SUMMARY.gameBytes, SUMMARY.ofBytes(game.done_bytes, game.bytes), C.status.pure],
-    [`${percent(sdk.done_functions, sdk.functions, 1)}%`, SUMMARY.sdk, SUMMARY.of(sdk.done_functions, sdk.functions), C.status.object],
+    [`${percent(game.doneBytes, game.bytes, 1)}%`, SUMMARY.gameBytes, SUMMARY.ofBytes(game.doneBytes, game.bytes), C.status.pure],
+    [`${game.fuzzy.toFixed(1)}%`, SUMMARY.fuzzy, SUMMARY.fuzzyNote, C.status.nonmatching],
+    [`${percent(game.done, game.count, 1)}%`, SUMMARY.gameFunctions, SUMMARY.of(game.done, game.count), C.status.pure],
     data
-      ? [`${percent(data.typed, data.bytes, 2)}%`, SUMMARY.data, SUMMARY.ofBytes(data.typed, data.bytes), C.status.asm]
+      ? [`${percent(data.typed, data.bytes, 2)}%`, SUMMARY.data, SUMMARY.ofBytes(data.typed, data.bytes), C.status.object]
       : [SUMMARY.dataPending[0], SUMMARY.data, SUMMARY.dataPending[1], C.mute],
   ];
   const width = (WIDTH - 2 * MARGIN - 3 * GAP) / 4;
@@ -59,10 +59,10 @@ function cards(model: Model, y: number): Drawn {
 
 // The status legend, one row per status with its function count and code share.
 function legend(model: Model, x: number, y: number): Drawn {
-  const totals = model.summary.code;
+  const totals = model.all;
   let svg = text(x, y, SUMMARY.statusHeading, 24, C.ink);
   STATUSES.forEach((key, index) => {
-    const [functions, bytes] = totals.statuses[key];
+    const [functions, bytes] = [totals.statuses[key].functions, totals.statuses[key].bytes];
     const top = y + 40 + index * 38;
     svg += rect(x, top + 2, 20, 20, C.status[key]);
     svg += text(x + 30, top - 2, STATUS[key].label, 16, C.ink);
@@ -71,7 +71,7 @@ function legend(model: Model, x: number, y: number): Drawn {
   return { svg, bottom: y + 40 + STATUSES.length * 38 };
 }
 
-// Data panel: per target, the share of data bytes typed in C.
+// Data panel: per target, the share of data bytes typed and named in C.
 function dataPanel(model: Model, x: number, y: number, width: number): Drawn {
   const total = model.data;
   const rows = model.targets.filter((t) => t.data && t.data.bytes).sort((a, b) => b.data!.bytes - a.data!.bytes);
@@ -88,7 +88,7 @@ function dataPanel(model: Model, x: number, y: number, width: number): Drawn {
   return { svg, bottom: y + 40 + rows.length * 22 };
 }
 
-// Library panel: per PsyQ library, its functions by status and the versions it links from.
+// Library panel: per PsyQ library, its units by kind and the versions it links from.
 function libraryPanel(model: Model, x: number, y: number, width: number): Drawn {
   const libs = model.libraries.filter((lib) => lib.count > 2);
   let svg = text(x, y, POSTER.libraries, 24, C.ink);
@@ -100,16 +100,16 @@ function libraryPanel(model: Model, x: number, y: number, width: number): Drawn 
     const length = Math.max((weightOf(lib.functions) / peak) * barWidth, 2);
     svg += text(x, top, lib.name, 14, C.ink);
     svg += bar(x + nameWidth, top + 1, length, 14, STATUSES.map((key) => [lib.statuses[key].functions, C.status[key]]), lib.count);
-    svg += text(x + width, top, `${number(lib.done)} / ${number(lib.count)}`, 13, C.mute, { anchor: "end" });
+    svg += text(x + width, top, SDK.done(lib.tiers.object, lib.count), 13, C.mute, { anchor: "end" });
     const versions = Object.entries(lib.versions).map(([version, units]) => `${version} ×${units}`).join(" · ");
     svg += text(x + nameWidth, top + 18, versions ? SDK.versions(versions) : POSTER.libraryLinked, 11, C.mute);
   });
   const s = model.sdk.statuses;
-  svg += text(x, y + 40 + libs.length * 36, POSTER.libraryKey(s.object.functions, s.assembly.functions, s.pure.functions + s.match_with_helpers.functions), 13, C.mute);
+  svg += text(x, y + 40 + libs.length * 36, POSTER.libraryKey(s.object.functions, s.assembly.functions), 13, C.mute);
   return { svg, bottom: y + 40 + libs.length * 36 + 22 };
 }
 
-// Quality row: the counters of bin/status.
+// Quality row: the counters the report proves.
 function qualityRow(model: Model, y: number): Drawn {
   let svg = text(MARGIN, y, QUALITY.heading, 24, C.ink);
   const width = (WIDTH - 2 * MARGIN - 4 * GAP) / 5;

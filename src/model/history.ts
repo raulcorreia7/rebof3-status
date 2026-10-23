@@ -1,41 +1,13 @@
-// History rows (one per publish) -> one row per day, and the series the trend charts draw.
+// History rows (one per report) -> one row per day, and the series the trend charts draw.
 
 import { TREND } from "../strings.ts";
-import type { HistoryRow, ProgressData } from "../types.ts";
+import type { HistoryRow } from "../types.ts";
 
 /** Rows sorted by date; when a day has several rows the last one wins. */
 export function byDay(rows: HistoryRow[]): HistoryRow[] {
   const days = new Map<string, HistoryRow>();
   for (const row of rows) days.set(row.date, row);
   return [...days.values()].sort((a, b) => a.date.localeCompare(b.date));
-}
-
-/**
- * The history row that restates the headline numbers of a document, as rebof3's run_row does.
- * The page adds it so the last point of every chart matches the numbers above them, even when
- * the history file has no row for the day yet.
- */
-export function snapshotRow(data: ProgressData): HistoryRow {
-  const { game, sdk, quality } = data.summary;
-  const bytes = data.summary.data;
-  return {
-    date: data.generated_at.slice(0, 10),
-    revision: data.commit,
-    source: "snapshot",
-    game_functions: game.functions,
-    game_matched: game.done_functions,
-    game_bytes: game.bytes,
-    game_matched_bytes: game.done_bytes,
-    sdk_functions: sdk.functions,
-    sdk_done: sdk.done_functions,
-    data_bytes: bytes?.bytes ?? null,
-    data_typed: bytes?.typed ?? null,
-    fakes: quality.fakes,
-    harmful_fakes: quality.harmful_fakes,
-    field_ref: quality.field_ref,
-    local_externs: quality.local_externs,
-    sym_conflicts: quality.sym_conflicts,
-  };
 }
 
 type Measure = (row: HistoryRow) => number | null;
@@ -76,7 +48,7 @@ const chart = (id: string, title: string, pick: Measure, color: string, unit: st
   id, title, pick, trim, color, unit, digits,
 });
 
-/** The charts in reading order. */
+/** The charts in reading order. The quality counters have no new points after the report switch. */
 export const TREND_CHARTS: TrendChart[] = [
   chart("gameFunctions", TREND.charts.gameFunctions, ratio("game_matched", "game_functions"), "pure", "%", 1, true),
   chart("gameBytes", TREND.charts.gameBytes, ratio("game_matched_bytes", "game_bytes"), "pure", "%", 1, true),

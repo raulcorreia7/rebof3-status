@@ -6,7 +6,7 @@ import type { MapNode } from "./charts/treemap.ts";
 import type { MapTab, Route, SortKey } from "./model/route.ts";
 import type { Phase } from "./model/status.ts";
 import type { Tokens } from "./theme/tokens.ts";
-import type { Model, Status, Target } from "./types.ts";
+import type { Model, Status } from "./types.ts";
 
 /** What a selector reads. The page state satisfies it. */
 export interface Ctx {
@@ -73,7 +73,6 @@ export interface Views {
   };
   tabs: { label: string; tabs: { id: MapTab; label: string }[] };
   treemap: { tree: MapNode; scope: "game" | "sdk"; focus: string | null; crumbs: Link[]; label: string };
-  strips: { targets: Target[] };
   chart: { option: ChartOption; height: number; label: string } | null;
   trend: { charts: { id: string; title: string; value: string | null; option: ChartOption | null }[]; empty: string };
   filters: {

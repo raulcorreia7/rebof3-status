@@ -2,7 +2,7 @@
 // (theme/apply.ts), the charts read them from here, and the picture uses the dark set.
 
 import { statusProp } from "../model/status.ts";
-import type { DataStatus, Status, Tier } from "../types.ts";
+import type { Status, Tier } from "../types.ts";
 
 export interface Tokens {
   bg: string;
@@ -12,11 +12,8 @@ export interface Tokens {
   mute: string;
   accent: string;
   track: string;
-  /** Hatch colours of reserved space. */
-  hatch: string;
-  hatchStripe: string;
   danger: string;
-  status: Record<Status | DataStatus, string>;
+  status: Record<Status, string>;
   tier: Record<Tier, string>;
 }
 
@@ -28,22 +25,16 @@ export const DARK: Tokens = {
   mute: "#8b949e",
   accent: "#58a6ff",
   track: "#21262d",
-  hatch: "#21262d",
-  hatchStripe: "#3b434d",
   danger: "#f85149",
   status: {
     pure: "#2ea043",
-    match_with_helpers: "#7ee787",
-    asm: "#79c0ff",
-    object: "#26a69a",
-    assembly: "#db6d28",
     nonmatching: "#d29922",
     open: "#4b535d",
-    typed: "#a371f7",
-    raw: "#30363d",
-    header: "#6e7681",
+    object: "#26a69a",
+    asm: "#79c0ff",
+    assembly: "#db6d28",
   },
-  tier: { c: "#2ea043", object: "#26a69a", partial: "#e3b341", assembly: "#db6d28", unmatched: "#4b535d" },
+  tier: { object: "#26a69a", assembly: "#db6d28" },
 };
 
 const LIGHT: Tokens = {
@@ -54,28 +45,22 @@ const LIGHT: Tokens = {
   mute: "#59636e",
   accent: "#0969da",
   track: "#e6eaef",
-  hatch: "#e6eaef",
-  hatchStripe: "#b6bec7",
   danger: "#cf222e",
   status: {
     pure: "#1a7f37",
-    match_with_helpers: "#4ac26b",
-    asm: "#218bff",
-    object: "#0e8a80",
-    assembly: "#bc4c00",
     nonmatching: "#bf8700",
     open: "#8c959f",
-    typed: "#8250df",
-    raw: "#d0d7de",
-    header: "#afb8c1",
+    object: "#0e8a80",
+    asm: "#218bff",
+    assembly: "#bc4c00",
   },
-  tier: { c: "#1a7f37", object: "#0e8a80", partial: "#bf8700", assembly: "#bc4c00", unmatched: "#8c959f" },
+  tier: { object: "#0e8a80", assembly: "#bc4c00" },
 };
 
 export type Scheme = "dark" | "light";
 export const tokensFor = (scheme: Scheme): Tokens => (scheme === "dark" ? DARK : LIGHT);
 
-/** CSS custom properties for a token set: `--bg`, `--ink`, `--st-pure`, `--tier-c`. */
+/** CSS custom properties for a token set: `--bg`, `--ink`, `--st-pure`, `--tier-object`. */
 export function cssVars(tokens: Tokens): Record<string, string> {
   const vars: Record<string, string> = {};
   for (const [key, value] of Object.entries(tokens)) {

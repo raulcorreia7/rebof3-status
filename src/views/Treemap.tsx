@@ -53,7 +53,7 @@ function Canvas(props: { data: Accessor<Views["treemap"]>; scope: string }) {
   const open = (ref: MapRef) => {
     if (ref.kind === "fn") {
       const fn = page.model.functionById.get(ref.id);
-      if (fn) page.go({ view: { kind: "fn", target: fn.target, addr: fn.addr } });
+      if (fn) page.go({ view: { kind: "fn", id: fn.id } });
     } else if (ref.kind === "target") page.go({ view: { kind: "target", id: ref.id } });
     else if (ref.kind === "group") page.go({ view: { kind: "group", key: ref.id } });
     else page.go({ lib: ref.id });

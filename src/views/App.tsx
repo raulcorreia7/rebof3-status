@@ -11,11 +11,10 @@ import type { Block, Copy, Section, ViewKind, Views } from "../viewtypes.ts";
 import { ChartView, Cards, Filters, Legend, Meters, Table, Tabs, Text, Trend } from "./Basic.tsx";
 import { Inspector } from "./Inspector.tsx";
 import { scrollToSection } from "./scroll.ts";
-import { Strips } from "./Strips.tsx";
 import { Treemap } from "./Treemap.tsx";
 
 type ViewMap = { [K in ViewKind]: Component<{ data: () => Views[K] }> };
-const VIEWS: ViewMap = { cards: Cards, meters: Meters, text: Text, legend: Legend, tabs: Tabs, treemap: Treemap, strips: Strips, chart: ChartView, trend: Trend, filters: Filters, table: Table, inspector: Inspector };
+const VIEWS: ViewMap = { cards: Cards, meters: Meters, text: Text, legend: Legend, tabs: Tabs, treemap: Treemap, chart: ChartView, trend: Trend, filters: Filters, table: Table, inspector: Inspector };
 
 const NEXT: Record<Mode, Mode> = { auto: "light", light: "dark", dark: "auto" };
 
@@ -47,7 +46,7 @@ function Layout() {
           <Header />
           <For each={SECTIONS.filter((section) => section.where !== "aside")}>{(section) => <SectionView section={section} />}</For>
           <p class="small mute">
-            {FOOT.generated} <a href="progress.json">progress.json</a>
+            {FOOT.generated} <a href="report.json">report.json</a>
             {FOOT.doNotEdit}
           </p>
         </main>
@@ -72,7 +71,7 @@ function Header() {
         <a href={commitUrl(page.model.meta.commit)}>
           <code>{page.model.meta.shortCommit}</code>
         </a>
-        . {HEAD.getThe} <a href="progress.json">{HEAD.data}</a> {HEAD.or} <a href="progress.png">{HEAD.picture}</a>.
+        . {HEAD.getThe} <a href="report.json">{HEAD.data}</a> {HEAD.or} <a href="progress.png">{HEAD.picture}</a>.
       </p>
       <nav aria-label="Sections">
         <For each={SECTIONS.filter((section) => section.nav)}>

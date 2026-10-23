@@ -88,7 +88,7 @@ const weightOf = (rows: Fn[]): number => rows.reduce((sum, row) => sum + Math.ma
 
 /** Rows in tile order: by status, then target, then address. */
 export const sorted = (rows: Fn[]): Fn[] =>
-  [...rows].sort((a, b) => STATUSES.indexOf(a.status) - STATUSES.indexOf(b.status) || a.target.localeCompare(b.target) || a.address - b.address);
+  [...rows].sort((a, b) => STATUSES.indexOf(a.status) - STATUSES.indexOf(b.status) || a.target.localeCompare(b.target) || (a.address ?? Number.MAX_SAFE_INTEGER) - (b.address ?? Number.MAX_SAFE_INTEGER));
 
 const tip = (fn: Fn): string => `${fn.id} ${fn.name} · ${STATUS[fn.status].label} · ${bytes(fn.bytes)}`;
 
