@@ -1,0 +1,211 @@
+{
+ "targets": [
+  {
+   "target": "emi/battle/batl_re2/01",
+   "payload": 512,
+   "code": 0,
+   "data_payload": 512,
+   "typed": 512,
+   "percent": 100.0
+  },
+  {
+   "target": "emi/battle/battle/03",
+   "payload": 118224,
+   "code": 105380,
+   "data_payload": 12844,
+   "typed": 248,
+   "percent": 1.93
+  },
+  {
+   "target": "emi/battle/battle/15",
+   "payload": 133316,
+   "code": 121156,
+   "data_payload": 12160,
+   "typed": 12020,
+   "percent": 98.85
+  },
+  {
+   "target": "emi/etc/bate/03",
+   "payload": 512,
+   "code": 0,
+   "data_payload": 512,
+   "typed": 512,
+   "percent": 100.0
+  },
+  {
+   "target": "emi/etc/commu00/00",
+   "payload": 15696,
+   "code": 14424,
+   "data_payload": 1272,
+   "typed": 1272,
+   "percent": 100.0
+  },
+  {
+   "target": "emi/etc/game/00",
+   "payload": 229720,
+   "code": 203428,
+   "data_payload": 26292,
+   "typed": 25932,
+   "percent": 98.63
+  },
+  {
+   "target": "emi/etc/game/01",
+   "payload": 4404,
+   "code": 4168,
+   "data_payload": 236,
+   "typed": 236,
+   "percent": 100.0
+  },
+  {
+   "target": "emi/etc/shop/00",
+   "payload": 87660,
+   "code": 82596,
+   "data_payload": 5064,
+   "typed": 136,
+   "percent": 2.69
+  },
+  {
+   "target": "emi/etc/sisyou/00",
+   "payload": 13963,
+   "code": 13120,
+   "data_payload": 843,
+   "typed": 843,
+   "percent": 100.0
+  },
+  {
+   "target": "emi/etc/start/08",
+   "payload": 117986,
+   "code": 108008,
+   "data_payload": 9978,
+   "typed": 9998,
+   "percent": 100.2
+  },
+  {
+   "target": "emi/etc/start/09",
+   "payload": 5268,
+   "code": 4644,
+   "data_payload": 624,
+   "typed": 624,
+   "percent": 100.0
+  },
+  {
+   "target": "emi/scenario/sce10eff/00",
+   "payload": 6984,
+   "code": 6904,
+   "data_payload": 80,
+   "typed": 80,
+   "percent": 100.0
+  },
+  {
+   "target": "emi/scenario/scena00/00",
+   "payload": 28528,
+   "code": 23488,
+   "data_payload": 716,
+   "typed": 716,
+   "percent": 100.0
+  },
+  {
+   "target": "emi/scenario/scena16/00",
+   "payload": 6520,
+   "code": 6312,
+   "data_payload": 208,
+   "typed": 208,
+   "percent": 100.0
+  },
+  {
+   "target": "emi/world00/area008/13",
+   "payload": 10232,
+   "code": 6748,
+   "data_payload": 3484,
+   "typed": 3484,
+   "percent": 100.0
+  },
+  {
+   "target": "emi/world00/area016/13",
+   "payload": 9698,
+   "code": 8568,
+   "data_payload": 1130,
+   "typed": 1130,
+   "percent": 100.0
+  },
+  {
+   "target": "emi/world00/area024/14",
+   "payload": 12036,
+   "code": 5612,
+   "data_payload": 6424,
+   "typed": 6424,
+   "percent": 100.0
+  },
+  {
+   "target": "emi/world00/area026/13",
+   "payload": 8421,
+   "code": 2024,
+   "data_payload": 6397,
+   "typed": 6397,
+   "percent": 100.0
+  },
+  {
+   "target": "emi/world00/area027/13",
+   "payload": 8548,
+   "code": 3716,
+   "data_payload": 4832,
+   "typed": 4832,
+   "percent": 100.0
+  },
+  {
+   "target": "emi/world00/area028/13",
+   "payload": 4612,
+   "code": 2212,
+   "data_payload": 2400,
+   "typed": 2400,
+   "percent": 100.0
+  },
+  {
+   "target": "emi/world00/area030/04",
+   "payload": 75285,
+   "code": 69700,
+   "data_payload": 5585,
+   "typed": 0,
+   "percent": 0.0
+  },
+  {
+   "target": "emi/world00/area030/05",
+   "payload": 8784,
+   "code": 8676,
+   "data_payload": 108,
+   "typed": 108,
+   "percent": 100.0
+  },
+  {
+   "target": "emi/world00/area032/13",
+   "payload": 7440,
+   "code": 4968,
+   "data_payload": 2472,
+   "typed": 2472,
+   "percent": 100.0
+  },
+  {
+   "target": "exe/logo",
+   "payload": 122880,
+   "code": 38444,
+   "data_payload": 84436,
+   "typed": 0,
+   "percent": 0.0
+  },
+  {
+   "target": "exe/slus_004_22",
+   "payload": 1445888,
+   "code": 215200,
+   "data_payload": 338816,
+   "typed": 25120,
+   "percent": 7.41
+  }
+ ],
+ "totals": {
+  "payload": 2483117,
+  "code": 1059496,
+  "data_payload": 527425,
+  "typed": 105704,
+  "percent": 20.04
+ }
+}

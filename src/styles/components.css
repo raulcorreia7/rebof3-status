@@ -58,21 +58,6 @@ button { font: inherit; color: inherit; }
 .legend-item.off { opacity: 0.6; }
 .crumbs { margin: 8px 0 4px; font-size: 0.9rem; }
 .chart { width: 100%; }
-.map-tools { margin: 8px 0; }
-.toggle { cursor: pointer; }
-svg.strip { width: 100%; height: auto; display: block; margin: 0 0 14px; }
-svg.strip text { font: 11px var(--font); fill: var(--mute); pointer-events: none; }
-svg.strip .strip-name { font-size: 15px; font-weight: 700; fill: var(--ink); }
-svg.strip .strip-address { font-size: 9px; }
-svg.strip .pill-text { fill: #fff; font-size: 11px; }
-svg.strip .strip-reserved { font-size: 10px; }
-svg.strip .strip-track { fill: var(--track); }
-svg.strip .block { cursor: default; }
-svg.strip .block[data-fn] { cursor: pointer; }
-svg.strip .block[data-fn]:hover { filter: brightness(1.4); }
-svg.strip .block.dim { opacity: 0.18; }
-svg.defs { position: absolute; }
-
 /* PsyQ libraries */
 .libs { list-style: none; margin: 8px 0; padding: 0; display: grid; grid-template-columns: 90px 1fr 90px; gap: 2px 12px; align-items: center; }
 .libs li { display: contents; }

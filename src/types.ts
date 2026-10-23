@@ -1,127 +1,97 @@
-// The shape of progress.json (schema 2, written by tools/bof3/progress/document.py in rebof3)
-// and of the model built from it (model/index.ts).
+// The shape of objdiff-cli's report.json (version 2), the data census in
+// status-data.json, the committed history file, and the model built from them
+// (model/report.ts).
 
-export type Status = "pure" | "match_with_helpers" | "asm" | "object" | "assembly" | "nonmatching" | "open";
-export type DataStatus = "typed" | "raw" | "header";
-export type Tier = "c" | "object" | "partial" | "assembly" | "unmatched";
-type UnitKind = "f" | "s" | "d";
+export type Status = "pure" | "nonmatching" | "open" | "object" | "assembly" | "asm";
+export type Tier = "object" | "assembly";
+/** The three progress categories: game code, the PsyQ SDK and hand-written assembly. */
+export type Part = "game" | "sdk" | "hand";
 
-/** One Splat map row: [offset from the target base, size, kind, status, name]. */
-export type Unit = [offset: number, size: number, kind: UnitKind, status: Status | DataStatus, name: string];
-
-interface StatusScope {
-  functions: number;
-  bytes: number;
-  done_functions: number;
-  done_bytes: number;
-  statuses: Record<Status, [functions: number, bytes: number]>;
+/** One objdiff measure. Byte counts arrive as strings, shares as numbers. */
+export interface Measures {
+  fuzzy_match_percent?: number;
+  total_code?: string | number;
+  matched_code?: string | number;
+  total_functions?: number;
+  matched_functions?: number;
 }
 
-export interface Quality {
-  fakes: number;
-  harmful_fakes: number;
-  benign_fakes: number;
-  field_ref: number;
-  local_externs: number;
-  sym_conflicts: number;
-  hand_asm: number;
-}
-
-interface DataBytes {
-  bytes: number;
-  typed: number;
-}
-
-interface LinkSummary {
-  targets: number;
-  exact: number;
-  differs: number;
-  error: number;
-}
-
-export interface LayoutSummary {
-  rows: number;
-  gaps: number;
-  overlaps: number;
-  relocated: number;
-  unmodelled: number;
-  resized: number;
-  problems: number;
-}
-
-interface TargetLink {
-  status: "EXACT" | "DIFFERS" | "ERROR";
-  payload: number;
-  linked: number;
-  from_c: number;
-  from_assembly: number;
-  first_mismatch: number | null;
-}
-
-interface TargetLayout {
-  gaps: unknown[];
-  overlaps: unknown[];
-  relocated: number;
-  unmodelled: number;
-  resized: number;
-  problems: unknown[];
-}
-
-export interface RawTarget {
+export interface ReportCategory {
   id: string;
   name: string;
-  base: string;
-  end: string;
-  counts: Record<string, number>;
-  link: TargetLink | null;
-  layout: TargetLayout;
-  data: DataBytes | null;
-  units: Unit[];
+  measures: Measures;
 }
 
-interface RawLibrary {
+export interface ReportUnit {
   name: string;
-  versions: Record<string, number>;
-  tiers: Record<Tier, number>;
-  functions: { target: string; addr: string; name: string; bytes: number; status: Status; tier: Tier; version: string | null; score: number | null }[];
+  measures: Measures;
+  metadata: {
+    complete?: boolean;
+    source_path?: string;
+    progress_categories?: string[];
+  };
+}
+
+/** objdiff-cli report generate, version 2. */
+export interface Report {
+  version?: number;
+  measures?: Measures;
+  categories: ReportCategory[];
+  units: ReportUnit[];
+}
+
+export interface StatusDataTarget {
+  target: string;
+  payload: number;
+  code: number;
+  data_payload: number;
+  typed: number;
+  percent: number;
+}
+
+/** bin/status --data --json: the typed and named data census. */
+export interface StatusData {
+  targets: StatusDataTarget[];
+  totals: {
+    payload: number;
+    code: number;
+    data_payload: number;
+    typed: number;
+    percent: number;
+  };
 }
 
 /** One history row; a share is null for days the project did not measure it. */
 export type HistoryRow = { date: string; revision: string; source: string } & Record<string, number | string | null>;
 
-export interface ProgressData {
-  schema: number;
-  generated_at: string;
+/** The committed history and the identity of the report it ends with. */
+export interface History {
   commit: string;
-  dirty: boolean;
-  summary: {
-    code: StatusScope;
-    game: StatusScope;
-    sdk: StatusScope;
-    data: DataBytes | null;
-    quality: Quality;
-    links: LinkSummary | null;
-    layout: LayoutSummary;
-  };
-  targets: RawTarget[];
-  libraries: RawLibrary[];
-  history: HistoryRow[];
+  generated_at: string;
+  rows: HistoryRow[];
 }
 
 // Model ------------------------------------------------------------------------------------
 
 export interface Fn {
-  /** `<target id>@<address>`, unique. */
+  /** The objdiff unit name, unique. */
   id: string;
   target: string;
+  /** `0x` address from the unit name, or "" when the name carries none. */
   addr: string;
-  address: number;
+  address: number | null;
   name: string;
   bytes: number;
+  /** Bytes that build to the original. */
+  matched: number;
+  /** objdiff's fuzzy match of the unit, 0-100. */
+  fuzzy: number;
   status: Status;
-  kind: "game" | "sdk";
+  kind: Part;
   /** Lower-case text the search matches. */
   key: string;
+  /** The C source or PsyQ object the unit was built from, when the report names one. */
+  source: string | null;
   library?: string;
   tier?: Tier;
   version?: string | null;
@@ -136,6 +106,8 @@ export interface Tally {
   doneBytes: number;
   statuses: Record<Status, { functions: number; bytes: number }>;
   percent: number;
+  /** Code bytes weighted fuzzy match, 0-100. */
+  fuzzy: number;
 }
 
 export interface Target {
@@ -143,18 +115,13 @@ export interface Target {
   name: string;
   group: string;
   groupLabel: string;
-  base: number;
-  end: number;
+  /** Payload bytes. */
   size: number;
-  counts: Record<string, number>;
-  link: TargetLink | null;
-  layout: TargetLayout;
-  data: DataBytes | null;
-  units: Unit[];
+  data: { bytes: number; typed: number } | null;
   functions: Fn[];
   /** Game functions only. */
   game: Tally;
-  /** Game and PsyQ functions. */
+  /** Every unit in the target: game, PsyQ and hand-written assembly. */
   all: Tally;
 }
 
@@ -172,17 +139,32 @@ export interface Library extends Tally {
   functions: Fn[];
 }
 
+export interface Quality {
+  /** Game functions rebuilt exactly. */
+  exact: number;
+  /** Game functions with a draft that does not build to the original yet. */
+  inProgress: number;
+  /** Game functions still the original assembly. */
+  notStarted: number;
+  /** Hand-written assembly units. */
+  hand: number;
+  handDone: number;
+  /** Game code bytes weighted fuzzy match. */
+  fuzzy: number;
+}
+
 export interface Model {
-  meta: { schema: number; generatedAt: string; date: string; commit: string; shortCommit: string; dirty: boolean };
-  summary: ProgressData["summary"];
-  quality: Quality;
-  links: LinkSummary | null;
-  layout: LayoutSummary;
-  data: DataBytes | null;
-  /** Game and PsyQ functions. */
-  all: Tally;
+  meta: { version: number; generatedAt: string; date: string; commit: string; shortCommit: string };
+  /** Game code sums, the only functions the headline counts. */
   game: Tally;
+  /** PsyQ units, shown apart. */
   sdk: Tally;
+  /** Hand-written assembly units, shown apart. */
+  hand: Tally;
+  /** Every unit, for the map legend. */
+  all: Tally;
+  data: { bytes: number; typed: number } | null;
+  quality: Quality;
   groups: Group[];
   targets: Target[];
   targetById: Map<string, Target>;

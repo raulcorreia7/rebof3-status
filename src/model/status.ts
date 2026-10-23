@@ -1,7 +1,8 @@
 // The status table: the one place that says what a function status is. The legend, the filters,
 // the charts, the picture and the totals all read it. To add a status, add a row here, its label
 // in strings.ts (STATUS_LABEL) and its colours in theme/tokens.ts; nothing else changes.
-// Statuses are those of progress.json (tools/bof3/progress/document.py in rebof3).
+// A status says what the report proves: a finished game function, a draft, original assembly, a
+// PsyQ object, or an assembly-only unit.
 
 import { STATUS_LABEL } from "../strings.ts";
 import type { Fn, Status, Tier } from "../types.ts";
@@ -18,39 +19,35 @@ interface StatusRow {
   phase: Phase;
   /** The parts of the code where this status counts as done. */
   doneIn: readonly Fn["kind"][];
-  /** The function has a C file in the decompilation. */
-  hasC: boolean;
 }
 
-/** The CSS custom property of a function or map-row status (`match_with_helpers` -> `--st-match-with-helpers`). */
+/** The CSS custom property of a status (`nonmatching` -> `--st-nonmatching`). */
 export const statusProp = (key: string): string => `--st-${key.replaceAll("_", "-")}`;
 export const statusVar = (key: string): string => `var(${statusProp(key)})`;
 
-const row = (key: Status, phase: Phase, doneIn: readonly Fn["kind"][], hasC: boolean): StatusRow => ({
+const row = (key: Status, phase: Phase, doneIn: readonly Fn["kind"][]): StatusRow => ({
   key,
   label: STATUS_LABEL[key],
   color: statusVar(key),
   phase,
   doneIn,
-  hasC,
 });
 
-/** All statuses in tile order: finished work first. */
+/** All statuses in tile order. */
 export const STATUS_TABLE: readonly StatusRow[] = [
-  row("pure", "done", ["game", "sdk"], true),
-  row("match_with_helpers", "done", ["game"], true),
-  row("asm", "done", ["game"], true),
-  row("object", "done", ["sdk"], false),
-  row("assembly", "open", [], false),
-  row("nonmatching", "in-progress", [], true),
-  row("open", "open", [], false),
+  row("pure", "done", ["game"]),
+  row("nonmatching", "in-progress", []),
+  row("open", "open", []),
+  row("object", "done", ["sdk"]),
+  row("asm", "done", ["hand"]),
+  row("assembly", "open", []),
 ];
 
 export const STATUS = Object.fromEntries(STATUS_TABLE.map((entry) => [entry.key, entry])) as Record<Status, StatusRow>;
 export const STATUSES: readonly Status[] = STATUS_TABLE.map((entry) => entry.key);
-/** PsyQ match tiers, best first. */
-export const TIERS: readonly Tier[] = ["c", "object", "partial", "assembly", "unmatched"];
+/** PsyQ unit kinds, best first. */
+export const TIERS: readonly Tier[] = ["object", "assembly"];
 
 export const isStatus = (value: string): value is Status => Object.hasOwn(STATUS, value);
-/** A game function is done when it builds to the original bytes; an SDK function when it is exact C or links from an original object. */
+/** A unit is done when it builds to the original bytes: game C, a PsyQ object or exact hand assembly. */
 export const isDone = (fn: Pick<Fn, "kind" | "status">): boolean => STATUS[fn.status].doneIn.includes(fn.kind);

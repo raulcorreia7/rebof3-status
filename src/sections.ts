@@ -2,8 +2,8 @@
 //
 // A section has an id (its anchor), a title and an optional navigation label. Its blocks are
 // drawn top to bottom. Each block names a view kind (cards, meters, text, legend, tabs, treemap,
-// strips, chart, trend, filters, table, inspector), the selector that feeds it from the model and
-// the route (selectors.ts, inspect.ts), and the copy around it, all from strings.ts.
+// chart, trend, filters, table, inspector), the selector that feeds it from the model and the
+// route (selectors.ts, inspect.ts), and the copy around it, all from strings.ts.
 
 import { inspector } from "./inspect.ts";
 import * as pick from "./selectors.ts";
@@ -17,6 +17,7 @@ export const SECTIONS: Section[] = [
     title: "Overview",
     blocks: [
       { view: "cards", select: pick.overviewCards, note: SUMMARY.footnote },
+      { view: "text", select: pick.apart },
       { view: "meters", select: pick.overviewMeter, heading: SUMMARY.statusHeading },
     ],
   },
@@ -32,8 +33,7 @@ export const SECTIONS: Section[] = [
     blocks: [
       { view: "tabs", select: pick.mapTabs },
       { view: "legend", select: pick.legend, heading: pick.mapHeading, help: pick.mapHelp },
-      { view: "treemap", select: pick.mapTreemap, note: MAP.textFallback, when: (c) => c.route.map !== "strips" },
-      { view: "strips", select: pick.mapStrips, when: (c) => c.route.map === "strips" },
+      { view: "treemap", select: pick.mapTreemap, note: MAP.textFallback },
     ],
   },
   {
@@ -54,7 +54,7 @@ export const SECTIONS: Section[] = [
     title: QUALITY.heading,
     blocks: [
       { view: "cards", select: pick.qualityCards, note: (c) => QUALITY.sentence(c.model.quality) },
-      { view: "chart", select: pick.fakesChart, heading: QUALITY.perTargetHeading, help: QUALITY.perTargetHelp },
+      { view: "chart", select: pick.rebuildChart, heading: QUALITY.perTargetHeading, help: QUALITY.perTargetHelp },
       { view: "text", select: pick.verification, heading: QUALITY.verifyHeading },
       { view: "table", select: pick.auditTable },
     ],

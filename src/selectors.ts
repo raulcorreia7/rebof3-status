@@ -5,11 +5,12 @@ import { BAR_HEIGHT, barOption } from "./charts/bars.ts";
 import { latest, trendOption } from "./charts/trend.ts";
 import { treemapTree } from "./charts/treemap.ts";
 import { browse, PAGE_STEP } from "./model/browse.ts";
-import { bytes, hex, number, percent } from "./model/format.ts";
+import { ASSEMBLY_LIBRARY } from "./model/report.ts";
+import { bytes, number, percent } from "./model/format.ts";
 import { TREND_CHARTS } from "./model/history.ts";
 import { HOME } from "./model/route.ts";
 import { STATUS, STATUS_TABLE, TIERS } from "./model/status.ts";
-import { BROWSER, DATA, MAP, QUALITY, SDK, SUMMARY, TIER_LABEL, TREND, GROUPS } from "./strings.ts";
+import { BROWSER, DATA, GROUPS, MAP, QUALITY, SDK, SUMMARY, TIER_LABEL, TREND } from "./strings.ts";
 import type { Library, Tally, Target } from "./types.ts";
 import type { Card, Ctx, Link, MeterRow, Part, Views } from "./viewtypes.ts";
 
@@ -24,23 +25,15 @@ export function statusMeter(tally: Tally, aria: string): MeterRow {
   return { aria, parts };
 }
 
-const audit = (target: Target): string => {
-  const { gaps, overlaps, problems } = target.layout;
-  const notes = [gaps.length && `${gaps.length} gaps`, overlaps.length && `${overlaps.length} overlaps`, problems.length && `${problems.length} problems`].filter(Boolean);
-  return notes.length ? notes.join(", ") : "clean";
-};
-
-const linkPill = (target: Target, none: string): Part[] =>
-  target.link ? [{ text: target.link.status, pill: target.link.status === "EXACT" ? "ok" : "bad" }] : [{ text: none, mute: true }];
-
 // Overview and groups ----------------------------------------------------------------------
 
+/** The headline, in the order the numbers matter: bytes, fuzzy, functions, data. */
 export function overviewCards({ model }: Ctx): Views["cards"] {
-  const { game, sdk, data } = model.summary;
+  const { game, data } = model;
   const cards: Card[] = [
-    { id: "game", big: `${percent(game.done_functions, game.functions, 1)}%`, title: `${SUMMARY.gameFunctions}*`, sub: SUMMARY.of(game.done_functions, game.functions), color: STATUS.pure.color },
-    { id: "game-bytes", big: `${percent(game.done_bytes, game.bytes, 1)}%`, title: SUMMARY.gameBytes, sub: SUMMARY.ofBytes(game.done_bytes, game.bytes), color: STATUS.pure.color },
-    { id: "sdk", big: `${percent(sdk.done_functions, sdk.functions, 1)}%`, title: SUMMARY.sdk, sub: SUMMARY.of(sdk.done_functions, sdk.functions), color: STATUS.object.color },
+    { id: "game-bytes", big: `${percent(game.doneBytes, game.bytes, 1)}%`, title: SUMMARY.gameBytes, sub: SUMMARY.ofBytes(game.doneBytes, game.bytes), color: STATUS.pure.color },
+    { id: "fuzzy", big: `${game.fuzzy.toFixed(1)}%`, title: SUMMARY.fuzzy, sub: SUMMARY.fuzzyNote, color: STATUS.nonmatching.color },
+    { id: "game", big: `${percent(game.done, game.count, 1)}%`, title: `${SUMMARY.gameFunctions}*`, sub: SUMMARY.of(game.done, game.count), color: STATUS.pure.color },
     data
       ? { id: "data", big: `${percent(data.typed, data.bytes, 2)}%`, title: SUMMARY.data, sub: SUMMARY.ofBytes(data.typed, data.bytes), color: "var(--st-typed)" }
       : { id: "data", big: SUMMARY.dataPending[0], title: SUMMARY.data, sub: SUMMARY.dataPending[1], color: "var(--mute)" },
@@ -48,7 +41,17 @@ export function overviewCards({ model }: Ctx): Views["cards"] {
   return { grid: "cards", cards };
 }
 
-export const overviewMeter = ({ model }: Ctx): Views["meters"] => ({ rows: [statusMeter(model.all, SUMMARY.statusHeading)] });
+/** The SDK and the hand-written assembly, shown apart from the game totals. */
+export const apart = ({ model }: Ctx): Views["text"] => ({
+  paragraphs: [
+    {
+      label: SUMMARY.apartLabel,
+      text: SUMMARY.apart(model.sdk.done, model.sdk.count, model.sdk.statuses.assembly.functions, model.hand.done, model.hand.count),
+    },
+  ],
+});
+
+export const overviewMeter = ({ model }: Ctx): Views["meters"] => ({ rows: [statusMeter(model.game, SUMMARY.statusHeading)] });
 
 export function groupCards({ model }: Ctx): Views["cards"] {
   const cards = model.groups.map((group): Card => {
@@ -80,24 +83,22 @@ export const mapTabs = (): Views["tabs"] => ({
   label: MAP.heading,
   tabs: [
     { id: "tiles", label: MAP.tabs.tiles },
-    { id: "sdk", label: MAP.scopes.sdk },
-    { id: "strips", label: MAP.tabs.strips },
+    { id: "sdk", label: MAP.tabs.sdk },
   ],
 });
 
 export const mapHeading = ({ model, route }: Ctx): string => {
   const { game, sdk } = model;
-  if (route.map === "strips") return MAP.tabs.strips;
   return route.map === "sdk" ? MAP.sdkTitle(percent(sdk.done, sdk.count, 2), sdk.done, sdk.count) : MAP.gameTitle(percent(game.done, game.count, 2), game.done, game.count);
 };
 
-export const mapHelp = ({ route }: Ctx): string => (route.map === "tiles" ? MAP.tilesHelp : route.map === "sdk" ? MAP.sdkHelp : MAP.stripsHelp);
+export const mapHelp = ({ route }: Ctx): string => (route.map === "sdk" ? MAP.sdkHelp : MAP.tilesHelp);
 
 /** The status legend; it doubles as the status filter of the map. */
 export function legend({ model }: Ctx): Views["legend"] {
-  const totals = model.summary.code;
+  const totals = model.all;
   const items = STATUS_TABLE.map(({ key, label, color, phase }) => {
-    const [functions, bytes] = totals.statuses[key];
+    const [functions, bytes] = [totals.statuses[key].functions, totals.statuses[key].bytes];
     return { key, label, color, phase, sub: SUMMARY.statusLine(functions, percent(bytes, totals.bytes, 1)) };
   });
   return { variant: "legend", label: MAP.filterHelp, items, help: { text: MAP.filterHelp, clear: MAP.filterClear } };
@@ -129,25 +130,14 @@ export function mapTreemap({ model, route, tokens }: Ctx): Views["treemap"] {
   return { tree, scope: sdk ? "sdk" : "game", focus, crumbs, label };
 }
 
-/** The targets the strips draw: the route's target or group, else all, executables first. */
-export function mapStrips({ model, route }: Ctx): Views["strips"] {
-  const view = route.view;
-  const target = view.kind === "target" ? model.targetById.get(view.id) : undefined;
-  const group = view.kind === "group" ? model.groups.find((g) => g.key === view.key) : undefined;
-  const targets = target ? [target] : group ? group.targets : model.targets;
-  return { targets: [...targets].sort((a, b) => Number(b.id.startsWith("exe/")) - Number(a.id.startsWith("exe/")) || a.id.localeCompare(b.id)) };
-}
-
 // PsyQ SDK ---------------------------------------------------------------------------------
 
 function libNote(lib: Library): string {
   const parts: string[] = [];
   const versions = Object.entries(lib.versions).map(([version, units]) => `${version} ×${units}`).join(" · ");
   if (versions) parts.push(SDK.versions(versions));
-  if (lib.tiers.partial) parts.push(SDK.partial(lib.tiers.partial));
   if (lib.tiers.assembly) parts.push(SDK.assemblyOnly(lib.tiers.assembly));
-  if (lib.tiers.unmatched) parts.push(SDK.unmatched(lib.tiers.unmatched));
-  return parts.join(" · ") || SDK.noMatch;
+  return parts.join(" · ");
 }
 
 export function sdkLibraries({ model }: Ctx): Views["meters"] {
@@ -155,9 +145,9 @@ export function sdkLibraries({ model }: Ctx): Views["meters"] {
   return {
     key: TIERS.map((tier) => ({ label: TIER_LABEL[tier], color: `var(--tier-${tier})` })),
     rows: model.libraries.map((lib) => {
-      const done = SDK.done(lib.tiers.c + lib.tiers.object, lib.count);
+      const done = SDK.done(lib.tiers.object, lib.count);
       return {
-        name: { label: lib.name, to: { lib: lib.name, part: "sdk" }, scroll: "browse" },
+        name: { label: lib.name === ASSEMBLY_LIBRARY ? SDK.assemblyLibrary : lib.name, to: { lib: lib.name, part: "sdk" }, scroll: "browse" },
         aria: `${lib.name}: ${done}`,
         width: Math.max((lib.count / peak) * 100, 1),
         parts: TIERS.filter((tier) => lib.tiers[tier]).map((tier) => ({ width: percent(lib.tiers[tier], lib.count, 3), color: `var(--tier-${tier})` })),
@@ -170,7 +160,7 @@ export function sdkLibraries({ model }: Ctx): Views["meters"] {
 
 export const sdkKeyLine = ({ model }: Ctx): string => {
   const { statuses } = model.sdk;
-  return SDK.keyLine(statuses.object.functions, statuses.assembly.functions, statuses.pure.functions + statuses.match_with_helpers.functions);
+  return SDK.keyLine(statuses.object.functions, statuses.assembly.functions);
 };
 
 // Data and quality -------------------------------------------------------------------------
@@ -204,39 +194,41 @@ export const qualityCards = ({ model }: Ctx): Views["cards"] => ({
   cards: QUALITY.cards(model.quality).map(([title, big, sub]) => ({ id: title, title, big, sub })),
 });
 
-export function fakesChart({ model, tokens }: Ctx): Views["chart"] {
-  const rows = model.targets.filter((t) => t.all.statuses.match_with_helpers.functions).sort((a, b) => b.all.statuses.match_with_helpers.functions - a.all.statuses.match_with_helpers.functions);
+export function rebuildChart({ model, tokens }: Ctx): Views["chart"] {
+  const rows = model.targets.filter((t) => t.game.statuses.nonmatching.functions).sort((a, b) => b.game.statuses.nonmatching.functions - a.game.statuses.nonmatching.functions);
   if (!rows.length) return null;
   const option = barOption(
-    { categories: rows.map((t) => t.name), unit: "functions", series: [{ name: "rebuilt with helper macros", color: tokens.status.match_with_helpers, values: rows.map((t) => t.all.statuses.match_with_helpers.functions) }] },
+    { categories: rows.map((t) => t.name), unit: "functions", series: [{ name: "being rebuilt", color: tokens.status.nonmatching, values: rows.map((t) => t.game.statuses.nonmatching.functions) }] },
     tokens,
   );
   return { option, height: rows.length * BAR_HEIGHT + 30, label: QUALITY.perTargetHeading };
 }
 
 export function verification({ model }: Ctx): Views["text"] {
-  const { links, layout } = model;
-  const differing = model.targets.filter((t) => t.link && t.link.status !== "EXACT");
-  const names = differing.map((t) => (t.link?.first_mismatch != null ? `${t.id} (${QUALITY.firstDifference(hex(t.base + t.link.first_mismatch))})` : t.id));
+  const { game, data } = model;
   return {
     paragraphs: [
-      { label: "Image links:", text: links ? QUALITY.imageLinks(links.exact, links.targets) + (names.length ? QUALITY.differs(names) : ".") : QUALITY.imageLinksUnknown },
-      { label: "Address map:", text: QUALITY.addressMap(layout) + (layout.relocated || layout.unmodelled || layout.resized ? QUALITY.addressMapNotes(layout) : "") },
+      { label: QUALITY.gameScope, text: QUALITY.gameScopeText(game.done, game.count, game.doneBytes, game.bytes) },
+      { label: QUALITY.dataScope, text: QUALITY.dataScopeText(data?.typed ?? null, data?.bytes ?? null) },
     ],
   };
 }
 
+const dataCell = (target: Target): Part[] =>
+  target.data ? [{ text: `${percent(target.data.typed, target.data.bytes, 1)}% · ${number(target.data.typed)} / ${bytes(target.data.bytes)}` }] : [{ text: "-", mute: true }];
+
 export const auditTable = ({ model }: Ctx): Views["table"] => ({
-  disclosure: "Image link and map audit of each target",
-  columns: [{ label: "Target" }, { label: "Address range" }, { label: "Bytes", align: "r" }, { label: "Image link" }, { label: "Map audit" }],
+  disclosure: "Match quality of each target",
+  columns: [{ label: "Target" }, { label: "Functions", align: "r" }, { label: "Matched", align: "r" }, { label: "Code bytes", align: "r" }, { label: "Fuzzy", align: "r" }, { label: "Data typed" }],
   rows: model.targets.map((t) => ({
     id: t.id,
     cells: [
       [{ text: t.name, to: { view: { kind: "target", id: t.id } } }, { text: t.id, code: true, mute: true, br: true }],
-      [{ text: `${hex(t.base)}-${hex(t.end)}`, code: true }],
-      [{ text: number(t.size) }],
-      linkPill(t, "not linked"),
-      [{ text: audit(t) }],
+      [{ text: number(t.game.count) }],
+      [{ text: number(t.game.done) }],
+      [{ text: bytes(t.game.bytes) }],
+      [{ text: `${t.game.fuzzy.toFixed(1)}%` }],
+      dataCell(t),
     ],
   })),
 });
@@ -256,7 +248,7 @@ export function browserFilters({ model }: Ctx): Views["filters"] {
   return {
     search: { label: BROWSER.searchLabel, placeholder: BROWSER.searchPlaceholder },
     selects: [
-      { label: BROWSER.scopeLabel, field: "part", any: false, also: { lib: null }, options: (["all", "game", "sdk"] as const).map((value) => ({ value, label: BROWSER.scopes[value] })) },
+      { label: BROWSER.scopeLabel, field: "part", any: false, also: { lib: null }, options: (["all", "game", "sdk", "hand"] as const).map((value) => ({ value, label: BROWSER.scopes[value] })) },
       {
         label: BROWSER.targetLabel,
         field: "target",
@@ -264,7 +256,7 @@ export function browserFilters({ model }: Ctx): Views["filters"] {
         also: { group: null },
         options: [{ value: "", label: BROWSER.allTargets }, ...model.groups.flatMap((group) => group.targets.map((t) => ({ value: t.id, label: t.name, group: group.label })))],
       },
-      { label: BROWSER.libraryLabel, field: "lib", any: true, options: [{ value: "", label: BROWSER.allLibraries }, ...model.libraries.map((lib) => ({ value: lib.name, label: lib.name }))] },
+      { label: BROWSER.libraryLabel, field: "lib", any: true, options: [{ value: "", label: BROWSER.allLibraries }, ...model.libraries.map((lib) => ({ value: lib.name, label: lib.name === ASSEMBLY_LIBRARY ? SDK.assemblyLibrary : lib.name }))] },
       { label: BROWSER.sortLabel, field: "sort", any: false, options: (Object.keys(BROWSER.sorts) as (keyof typeof BROWSER.sorts)[]).map((value) => ({ value, label: BROWSER.sorts[value] })) },
     ],
   };
@@ -284,9 +276,9 @@ export function browserTable({ model, route, limit }: Ctx): Views["table"] {
     rows: found.slice(0, limit).map((fn) => ({
       id: fn.id,
       cells: [
-        [{ text: fn.name, to: { view: { kind: "fn", target: fn.target, addr: fn.addr } } }],
+        [{ text: fn.name, to: { view: { kind: "fn", id: fn.id } } }],
         [{ text: model.targetById.get(fn.target)?.name ?? "", mute: true }],
-        [{ text: fn.addr, code: true }],
+        [{ text: fn.addr || "-", code: true }],
         [{ text: "", status: fn.status }],
         [{ text: number(fn.bytes) }],
       ],

@@ -23,7 +23,8 @@ export function browse(model: Model, route: Route): Fn[] {
       (!route.group || groupOf(fn) === route.group) &&
       needed.every((word) => fn.key.includes(word)),
   );
-  const byAddress = (a: Fn, b: Fn) => (targetOrder.get(a.target) ?? 0) - (targetOrder.get(b.target) ?? 0) || a.address - b.address;
+  const byAddress = (a: Fn, b: Fn) =>
+    (targetOrder.get(a.target) ?? 0) - (targetOrder.get(b.target) ?? 0) || (a.address === null ? 1 : b.address === null ? -1 : a.address - b.address);
   const compare: Record<Route["sort"], (a: Fn, b: Fn) => number> = {
     address: byAddress,
     size: (a, b) => a.bytes - b.bytes || byAddress(a, b),

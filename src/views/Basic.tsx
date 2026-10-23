@@ -250,7 +250,7 @@ export function Filters(props: Props<"filters">) {
 export function Table(props: Props<"table">) {
   const page = usePage();
   const [copied, setCopied] = createSignal(false);
-  const selected = () => (page.route.view.kind === "fn" ? `${page.route.view.target}@${page.route.view.addr}` : "");
+  const selected = () => (page.route.view.kind === "fn" ? page.route.view.id : "");
   const sortBy = (sort: SortKey) => page.go(page.route.sort === sort ? { dir: page.route.dir === "asc" ? "desc" : "asc" } : { sort, dir: sort === "size" ? "desc" : "asc" }, true);
   const arrow = (sort?: SortKey) => (sort && page.route.sort === sort ? (page.route.dir === "asc" ? " ▲" : " ▼") : "");
   const ariaSort = (sort?: SortKey) => (sort ? (page.route.sort === sort ? (page.route.dir === "asc" ? "ascending" : "descending") : "none") : undefined);
