@@ -168,7 +168,7 @@ export function Tabs(props: Props<"tabs">) {
     <div class="tabs" role="group" aria-label={props.data().label}>
       <For each={props.data().tabs}>
         {(tab) => (
-          <button type="button" class={`tab${page.route.map === tab.id ? " on" : ""}`} aria-pressed={page.route.map === tab.id} onClick={() => page.go({ map: tab.id }, true)}>
+          <button type="button" class={`tab${page.route.map === tab.id ? " on" : ""}`} aria-pressed={page.route.map === tab.id} onClick={() => page.go({ map: tab.id, st: [] }, true)}>
             {tab.label}
           </button>
         )}
