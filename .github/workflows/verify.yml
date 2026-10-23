@@ -2,7 +2,7 @@ name: verify
 on:
   push:
     branches: [main]
-    paths-ignore: [progress.json] # a progress publish has no code to check
+    paths-ignore: [report.json, status-data.json, history.json] # a progress publish has no code to check
   workflow_dispatch:
 permissions:
   contents: read
