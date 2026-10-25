@@ -229,15 +229,15 @@
       "exact": 0,
       "non_matching": 0,
       "untagged": 0,
-      "unlifted": 24,
+      "unlifted": 23,
       "library": 0,
       "sdk": 0,
-      "total": 24,
+      "total": 23,
       "game": {
         "exact": 0,
-        "total": 24,
+        "total": 23,
         "exact_bytes": 0,
-        "bytes": 13776
+        "bytes": 6056
       }
     },
     {
@@ -293,15 +293,15 @@
       "exact": 0,
       "non_matching": 0,
       "untagged": 0,
-      "unlifted": 23,
+      "unlifted": 22,
       "library": 0,
       "sdk": 0,
-      "total": 23,
+      "total": 22,
       "game": {
         "exact": 0,
-        "total": 23,
+        "total": 22,
         "exact_bytes": 0,
-        "bytes": 12268
+        "bytes": 4568
       }
     },
     {
@@ -389,15 +389,15 @@
       "exact": 0,
       "non_matching": 0,
       "untagged": 0,
-      "unlifted": 16,
+      "unlifted": 15,
       "library": 0,
       "sdk": 0,
-      "total": 16,
+      "total": 15,
       "game": {
         "exact": 0,
-        "total": 16,
+        "total": 15,
         "exact_bytes": 0,
-        "bytes": 11916
+        "bytes": 4208
       }
     },
     {
@@ -405,15 +405,15 @@
       "exact": 0,
       "non_matching": 0,
       "untagged": 0,
-      "unlifted": 19,
+      "unlifted": 18,
       "library": 0,
       "sdk": 0,
-      "total": 19,
+      "total": 18,
       "game": {
         "exact": 0,
-        "total": 19,
+        "total": 18,
         "exact_bytes": 0,
-        "bytes": 7988
+        "bytes": 7692
       }
     },
     {
@@ -437,15 +437,15 @@
       "exact": 0,
       "non_matching": 0,
       "untagged": 0,
-      "unlifted": 21,
+      "unlifted": 20,
       "library": 0,
       "sdk": 0,
-      "total": 21,
+      "total": 20,
       "game": {
         "exact": 0,
-        "total": 21,
+        "total": 20,
         "exact_bytes": 0,
-        "bytes": 10644
+        "bytes": 4876
       }
     },
     {
@@ -581,6 +581,22 @@
       "exact": 0,
       "non_matching": 0,
       "untagged": 0,
+      "unlifted": 20,
+      "library": 0,
+      "sdk": 0,
+      "total": 20,
+      "game": {
+        "exact": 0,
+        "total": 20,
+        "exact_bytes": 0,
+        "bytes": 4804
+      }
+    },
+    {
+      "target": "emi/bmagic/magic059/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
       "unlifted": 21,
       "library": 0,
       "sdk": 0,
@@ -589,23 +605,7 @@
         "exact": 0,
         "total": 21,
         "exact_bytes": 0,
-        "bytes": 9144
-      }
-    },
-    {
-      "target": "emi/bmagic/magic059/03",
-      "exact": 0,
-      "non_matching": 0,
-      "untagged": 0,
-      "unlifted": 22,
-      "library": 0,
-      "sdk": 0,
-      "total": 22,
-      "game": {
-        "exact": 0,
-        "total": 22,
-        "exact_bytes": 0,
-        "bytes": 9680
+        "bytes": 6744
       }
     },
     {
@@ -853,15 +853,15 @@
       "exact": 0,
       "non_matching": 0,
       "untagged": 0,
-      "unlifted": 25,
+      "unlifted": 24,
       "library": 0,
       "sdk": 0,
-      "total": 25,
+      "total": 24,
       "game": {
         "exact": 0,
-        "total": 25,
+        "total": 24,
         "exact_bytes": 0,
-        "bytes": 13948
+        "bytes": 6240
       }
     },
     {
@@ -917,15 +917,15 @@
       "exact": 0,
       "non_matching": 0,
       "untagged": 0,
-      "unlifted": 19,
+      "unlifted": 18,
       "library": 0,
       "sdk": 0,
-      "total": 19,
+      "total": 18,
       "game": {
         "exact": 0,
-        "total": 19,
+        "total": 18,
         "exact_bytes": 0,
-        "bytes": 9436
+        "bytes": 3668
       }
     },
     {
@@ -1029,6 +1029,22 @@
       "exact": 0,
       "non_matching": 0,
       "untagged": 0,
+      "unlifted": 25,
+      "library": 0,
+      "sdk": 0,
+      "total": 25,
+      "game": {
+        "exact": 0,
+        "total": 25,
+        "exact_bytes": 0,
+        "bytes": 7096
+      }
+    },
+    {
+      "target": "emi/bmagic/magic093/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
       "unlifted": 26,
       "library": 0,
       "sdk": 0,
@@ -1037,23 +1053,7 @@
         "exact": 0,
         "total": 26,
         "exact_bytes": 0,
-        "bytes": 12916
-      }
-    },
-    {
-      "target": "emi/bmagic/magic093/03",
-      "exact": 0,
-      "non_matching": 0,
-      "untagged": 0,
-      "unlifted": 27,
-      "library": 0,
-      "sdk": 0,
-      "total": 27,
-      "game": {
-        "exact": 0,
-        "total": 27,
-        "exact_bytes": 0,
-        "bytes": 11216
+        "bytes": 7320
       }
     },
     {
@@ -1405,7 +1405,7 @@
         "exact": 0,
         "total": 11,
         "exact_bytes": 0,
-        "bytes": 9364
+        "bytes": 1684
       }
     },
     {
@@ -1509,6 +1509,22 @@
       "exact": 0,
       "non_matching": 0,
       "untagged": 0,
+      "unlifted": 22,
+      "library": 0,
+      "sdk": 0,
+      "total": 22,
+      "game": {
+        "exact": 0,
+        "total": 22,
+        "exact_bytes": 0,
+        "bytes": 7368
+      }
+    },
+    {
+      "target": "emi/bmagic/magic125/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
       "unlifted": 23,
       "library": 0,
       "sdk": 0,
@@ -1517,23 +1533,7 @@
         "exact": 0,
         "total": 23,
         "exact_bytes": 0,
-        "bytes": 15084
-      }
-    },
-    {
-      "target": "emi/bmagic/magic125/03",
-      "exact": 0,
-      "non_matching": 0,
-      "untagged": 0,
-      "unlifted": 24,
-      "library": 0,
-      "sdk": 0,
-      "total": 24,
-      "game": {
-        "exact": 0,
-        "total": 24,
-        "exact_bytes": 0,
-        "bytes": 14336
+        "bytes": 6612
       }
     },
     {
@@ -1557,15 +1557,15 @@
       "exact": 0,
       "non_matching": 0,
       "untagged": 0,
-      "unlifted": 20,
+      "unlifted": 19,
       "library": 0,
       "sdk": 0,
-      "total": 20,
+      "total": 19,
       "game": {
         "exact": 0,
-        "total": 20,
+        "total": 19,
         "exact_bytes": 0,
-        "bytes": 14280
+        "bytes": 6564
       }
     },
     {
@@ -1669,15 +1669,15 @@
       "exact": 0,
       "non_matching": 0,
       "untagged": 0,
-      "unlifted": 26,
+      "unlifted": 25,
       "library": 0,
       "sdk": 0,
-      "total": 26,
+      "total": 25,
       "game": {
         "exact": 0,
-        "total": 26,
+        "total": 25,
         "exact_bytes": 0,
-        "bytes": 12168
+        "bytes": 6348
       }
     },
     {
@@ -1725,7 +1725,7 @@
         "exact": 0,
         "total": 17,
         "exact_bytes": 0,
-        "bytes": 3856
+        "bytes": 3708
       }
     },
     {
@@ -1877,15 +1877,15 @@
       "exact": 0,
       "non_matching": 0,
       "untagged": 0,
-      "unlifted": 24,
+      "unlifted": 23,
       "library": 0,
       "sdk": 0,
-      "total": 24,
+      "total": 23,
       "game": {
         "exact": 0,
-        "total": 24,
+        "total": 23,
         "exact_bytes": 0,
-        "bytes": 15724
+        "bytes": 6116
       }
     },
     {
@@ -1909,15 +1909,15 @@
       "exact": 0,
       "non_matching": 0,
       "untagged": 0,
-      "unlifted": 20,
+      "unlifted": 19,
       "library": 0,
       "sdk": 0,
-      "total": 20,
+      "total": 19,
       "game": {
         "exact": 0,
-        "total": 20,
+        "total": 19,
         "exact_bytes": 0,
-        "bytes": 7852
+        "bytes": 7552
       }
     },
     {
@@ -1925,15 +1925,15 @@
       "exact": 0,
       "non_matching": 0,
       "untagged": 0,
-      "unlifted": 16,
+      "unlifted": 15,
       "library": 0,
       "sdk": 0,
-      "total": 16,
+      "total": 15,
       "game": {
         "exact": 0,
-        "total": 16,
+        "total": 15,
         "exact_bytes": 0,
-        "bytes": 10940
+        "bytes": 3228
       }
     },
     {
@@ -1989,15 +1989,15 @@
       "exact": 0,
       "non_matching": 0,
       "untagged": 0,
-      "unlifted": 27,
+      "unlifted": 26,
       "library": 0,
       "sdk": 0,
-      "total": 27,
+      "total": 26,
       "game": {
         "exact": 0,
-        "total": 27,
+        "total": 26,
         "exact_bytes": 0,
-        "bytes": 14592
+        "bytes": 6860
       }
     },
     {
@@ -2021,15 +2021,15 @@
       "exact": 0,
       "non_matching": 0,
       "untagged": 0,
-      "unlifted": 20,
+      "unlifted": 19,
       "library": 0,
       "sdk": 0,
-      "total": 20,
+      "total": 19,
       "game": {
         "exact": 0,
-        "total": 20,
+        "total": 19,
         "exact_bytes": 0,
-        "bytes": 11856
+        "bytes": 4124
       }
     },
     {
@@ -2037,15 +2037,15 @@
       "exact": 0,
       "non_matching": 0,
       "untagged": 0,
-      "unlifted": 1,
+      "unlifted": 21,
       "library": 0,
       "sdk": 0,
-      "total": 1,
+      "total": 21,
       "game": {
         "exact": 0,
-        "total": 1,
+        "total": 21,
         "exact_bytes": 0,
-        "bytes": 9900
+        "bytes": 6008
       }
     },
     {
@@ -2780,8 +2780,8 @@
       "game": {
         "exact": 20,
         "total": 20,
-        "exact_bytes": 4400,
-        "bytes": 4400
+        "exact_bytes": 4168,
+        "bytes": 4168
       }
     },
     {
@@ -2860,8 +2860,8 @@
       "game": {
         "exact": 14,
         "total": 14,
-        "exact_bytes": 5220,
-        "bytes": 5220
+        "exact_bytes": 4644,
+        "bytes": 4644
       }
     },
     {
@@ -2980,52 +2980,20 @@
       "target": "emi/plchar/plp247/00",
       "exact": 1,
       "non_matching": 0,
-      "untagged": 24,
+      "untagged": 23,
       "unlifted": 0,
       "library": 0,
       "sdk": 0,
-      "total": 25,
+      "total": 24,
       "game": {
         "exact": 1,
-        "total": 25,
+        "total": 24,
         "exact_bytes": 844,
         "bytes": 5872
       }
     },
     {
       "target": "emi/plchar/plp257/00",
-      "exact": 1,
-      "non_matching": 0,
-      "untagged": 27,
-      "unlifted": 0,
-      "library": 0,
-      "sdk": 0,
-      "total": 28,
-      "game": {
-        "exact": 1,
-        "total": 28,
-        "exact_bytes": 844,
-        "bytes": 6864
-      }
-    },
-    {
-      "target": "emi/plchar/plp267/00",
-      "exact": 1,
-      "non_matching": 0,
-      "untagged": 39,
-      "unlifted": 0,
-      "library": 0,
-      "sdk": 0,
-      "total": 40,
-      "game": {
-        "exact": 1,
-        "total": 40,
-        "exact_bytes": 844,
-        "bytes": 9596
-      }
-    },
-    {
-      "target": "emi/plchar/plp278/00",
       "exact": 1,
       "non_matching": 0,
       "untagged": 26,
@@ -3037,6 +3005,38 @@
         "exact": 1,
         "total": 27,
         "exact_bytes": 844,
+        "bytes": 6864
+      }
+    },
+    {
+      "target": "emi/plchar/plp267/00",
+      "exact": 1,
+      "non_matching": 0,
+      "untagged": 38,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 39,
+      "game": {
+        "exact": 1,
+        "total": 39,
+        "exact_bytes": 844,
+        "bytes": 9596
+      }
+    },
+    {
+      "target": "emi/plchar/plp278/00",
+      "exact": 1,
+      "non_matching": 0,
+      "untagged": 25,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 26,
+      "game": {
+        "exact": 1,
+        "total": 26,
+        "exact_bytes": 844,
         "bytes": 6312
       }
     },
@@ -3044,14 +3044,14 @@
       "target": "emi/plchar/plp27a/00",
       "exact": 1,
       "non_matching": 0,
-      "untagged": 22,
+      "untagged": 21,
       "unlifted": 0,
       "library": 0,
       "sdk": 0,
-      "total": 23,
+      "total": 22,
       "game": {
         "exact": 1,
-        "total": 23,
+        "total": 22,
         "exact_bytes": 844,
         "bytes": 5364
       }
@@ -3076,38 +3076,6 @@
       "target": "emi/plchar/plp457/00",
       "exact": 1,
       "non_matching": 0,
-      "untagged": 22,
-      "unlifted": 0,
-      "library": 0,
-      "sdk": 0,
-      "total": 23,
-      "game": {
-        "exact": 1,
-        "total": 23,
-        "exact_bytes": 844,
-        "bytes": 5364
-      }
-    },
-    {
-      "target": "emi/plchar/plp467/00",
-      "exact": 1,
-      "non_matching": 0,
-      "untagged": 34,
-      "unlifted": 0,
-      "library": 0,
-      "sdk": 0,
-      "total": 35,
-      "game": {
-        "exact": 1,
-        "total": 35,
-        "exact_bytes": 844,
-        "bytes": 8096
-      }
-    },
-    {
-      "target": "emi/plchar/plp478/00",
-      "exact": 1,
-      "non_matching": 0,
       "untagged": 21,
       "unlifted": 0,
       "library": 0,
@@ -3117,43 +3085,43 @@
         "exact": 1,
         "total": 22,
         "exact_bytes": 844,
+        "bytes": 5364
+      }
+    },
+    {
+      "target": "emi/plchar/plp467/00",
+      "exact": 1,
+      "non_matching": 0,
+      "untagged": 33,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 34,
+      "game": {
+        "exact": 1,
+        "total": 34,
+        "exact_bytes": 844,
+        "bytes": 8096
+      }
+    },
+    {
+      "target": "emi/plchar/plp478/00",
+      "exact": 1,
+      "non_matching": 0,
+      "untagged": 20,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 21,
+      "game": {
+        "exact": 1,
+        "total": 21,
+        "exact_bytes": 844,
         "bytes": 4812
       }
     },
     {
       "target": "emi/plchar/plp567/00",
-      "exact": 1,
-      "non_matching": 0,
-      "untagged": 37,
-      "unlifted": 0,
-      "library": 0,
-      "sdk": 0,
-      "total": 38,
-      "game": {
-        "exact": 1,
-        "total": 38,
-        "exact_bytes": 844,
-        "bytes": 9088
-      }
-    },
-    {
-      "target": "emi/plchar/plp578/00",
-      "exact": 1,
-      "non_matching": 0,
-      "untagged": 24,
-      "unlifted": 0,
-      "library": 0,
-      "sdk": 0,
-      "total": 25,
-      "game": {
-        "exact": 1,
-        "total": 25,
-        "exact_bytes": 844,
-        "bytes": 5804
-      }
-    },
-    {
-      "target": "emi/plchar/plp678/00",
       "exact": 1,
       "non_matching": 0,
       "untagged": 36,
@@ -3164,6 +3132,38 @@
       "game": {
         "exact": 1,
         "total": 37,
+        "exact_bytes": 844,
+        "bytes": 9088
+      }
+    },
+    {
+      "target": "emi/plchar/plp578/00",
+      "exact": 1,
+      "non_matching": 0,
+      "untagged": 23,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 24,
+      "game": {
+        "exact": 1,
+        "total": 24,
+        "exact_bytes": 844,
+        "bytes": 5804
+      }
+    },
+    {
+      "target": "emi/plchar/plp678/00",
+      "exact": 1,
+      "non_matching": 0,
+      "untagged": 35,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 36,
+      "game": {
+        "exact": 1,
+        "total": 36,
         "exact_bytes": 844,
         "bytes": 8536
       }
@@ -3180,8 +3180,8 @@
       "game": {
         "exact": 23,
         "total": 24,
-        "exact_bytes": 5180,
-        "bytes": 6968
+        "exact_bytes": 5116,
+        "bytes": 6904
       }
     },
     {
@@ -3260,8 +3260,8 @@
       "game": {
         "exact": 63,
         "total": 63,
-        "exact_bytes": 23756,
-        "bytes": 23756
+        "exact_bytes": 23488,
+        "bytes": 23488
       }
     },
     {
@@ -3516,8 +3516,8 @@
       "game": {
         "exact": 20,
         "total": 20,
-        "exact_bytes": 6376,
-        "bytes": 6376
+        "exact_bytes": 6312,
+        "bytes": 6312
       }
     },
     {
@@ -3964,8 +3964,8 @@
       "game": {
         "exact": 25,
         "total": 25,
-        "exact_bytes": 12016,
-        "bytes": 12016
+        "exact_bytes": 5612,
+        "bytes": 5612
       }
     },
     {
@@ -3996,8 +3996,8 @@
       "game": {
         "exact": 24,
         "total": 24,
-        "exact_bytes": 8416,
-        "bytes": 8416
+        "exact_bytes": 2024,
+        "bytes": 2024
       }
     },
     {
@@ -4012,8 +4012,8 @@
       "game": {
         "exact": 21,
         "total": 21,
-        "exact_bytes": 8500,
-        "bytes": 8500
+        "exact_bytes": 3716,
+        "bytes": 3716
       }
     },
     {
@@ -4028,8 +4028,8 @@
       "game": {
         "exact": 13,
         "total": 13,
-        "exact_bytes": 4608,
-        "bytes": 4608
+        "exact_bytes": 2212,
+        "bytes": 2212
       }
     },
     {
@@ -4092,8 +4092,8 @@
       "game": {
         "exact": 23,
         "total": 23,
-        "exact_bytes": 8772,
-        "bytes": 8772
+        "exact_bytes": 8676,
+        "bytes": 8676
       }
     },
     {
@@ -4124,8 +4124,8 @@
       "game": {
         "exact": 23,
         "total": 23,
-        "exact_bytes": 7436,
-        "bytes": 7436
+        "exact_bytes": 4968,
+        "bytes": 4968
       }
     },
     {
@@ -4468,16 +4468,16 @@
       "target": "emi/world01/area053/13",
       "exact": 0,
       "non_matching": 0,
-      "untagged": 1,
+      "untagged": 3,
       "unlifted": 0,
       "library": 0,
       "sdk": 0,
-      "total": 1,
+      "total": 3,
       "game": {
         "exact": 0,
-        "total": 1,
+        "total": 3,
         "exact_bytes": 0,
-        "bytes": 88
+        "bytes": 104
       }
     },
     {
@@ -4820,16 +4820,16 @@
       "target": "emi/world01/area075/13",
       "exact": 0,
       "non_matching": 0,
-      "untagged": 37,
+      "untagged": 38,
       "unlifted": 0,
       "library": 0,
       "sdk": 0,
-      "total": 37,
+      "total": 38,
       "game": {
         "exact": 0,
-        "total": 37,
+        "total": 38,
         "exact_bytes": 0,
-        "bytes": 9004
+        "bytes": 9012
       }
     },
     {
@@ -4916,16 +4916,16 @@
       "target": "emi/world02/area081/13",
       "exact": 0,
       "non_matching": 0,
-      "untagged": 5,
+      "untagged": 6,
       "unlifted": 0,
       "library": 0,
       "sdk": 0,
-      "total": 5,
+      "total": 6,
       "game": {
         "exact": 0,
-        "total": 5,
+        "total": 6,
         "exact_bytes": 0,
-        "bytes": 352
+        "bytes": 380
       }
     },
     {
@@ -5060,16 +5060,16 @@
       "target": "emi/world02/area090/13",
       "exact": 0,
       "non_matching": 0,
-      "untagged": 1,
+      "untagged": 2,
       "unlifted": 0,
       "library": 0,
       "sdk": 0,
-      "total": 1,
+      "total": 2,
       "game": {
         "exact": 0,
-        "total": 1,
+        "total": 2,
         "exact_bytes": 0,
-        "bytes": 88
+        "bytes": 96
       }
     },
     {
@@ -5316,16 +5316,16 @@
       "target": "emi/world02/area106/13",
       "exact": 0,
       "non_matching": 0,
-      "untagged": 15,
+      "untagged": 14,
       "unlifted": 0,
       "library": 0,
       "sdk": 0,
-      "total": 15,
+      "total": 14,
       "game": {
         "exact": 0,
-        "total": 15,
+        "total": 14,
         "exact_bytes": 0,
-        "bytes": 5712
+        "bytes": 4680
       }
     },
     {
@@ -6068,32 +6068,32 @@
       "target": "emi/world04/area153/13",
       "exact": 0,
       "non_matching": 0,
-      "untagged": 1,
+      "untagged": 2,
       "unlifted": 0,
       "library": 0,
       "sdk": 0,
-      "total": 1,
+      "total": 2,
       "game": {
         "exact": 0,
-        "total": 1,
+        "total": 2,
         "exact_bytes": 0,
-        "bytes": 88
+        "bytes": 96
       }
     },
     {
       "target": "emi/world04/area154/13",
       "exact": 0,
       "non_matching": 0,
-      "untagged": 1,
+      "untagged": 2,
       "unlifted": 0,
       "library": 0,
       "sdk": 0,
-      "total": 1,
+      "total": 2,
       "game": {
         "exact": 0,
-        "total": 1,
+        "total": 2,
         "exact_bytes": 0,
-        "bytes": 88
+        "bytes": 96
       }
     },
     {
@@ -6852,28 +6852,28 @@
   "totals": {
     "exact": 3297,
     "non_matching": 167,
-    "untagged": 5475,
+    "untagged": 5470,
     "unlifted": 3385,
     "library": 726,
     "sdk": 741,
-    "total": 13050,
+    "total": 13045,
     "game": {
       "exact": 3266,
-      "total": 12294,
-      "exact_bytes": 746688,
-      "bytes": 3151892
+      "total": 12289,
+      "exact_bytes": 722944,
+      "bytes": 2993752
     },
     "done": 4019
   },
   "game_code": {
-    "functions": 12294,
+    "functions": 12289,
     "exact": 3266,
-    "bytes": 3151892,
-    "exact_bytes": 746688,
-    "unique_functions": 6828,
-    "unique_exact": 2477,
-    "unique_bytes": 2426136,
-    "unique_exact_bytes": 664208
+    "bytes": 2993752,
+    "exact_bytes": 722944,
+    "unique_functions": 6816,
+    "unique_exact": 2474,
+    "unique_bytes": 2273016,
+    "unique_exact_bytes": 640304
   },
   "quality": {
     "fakes": 542,
