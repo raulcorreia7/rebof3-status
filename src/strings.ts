@@ -1,7 +1,7 @@
 // Every sentence and label the page and the picture show. Change wording here and nowhere else.
 
 import type { Quality, Status, Tier } from "./types.ts";
-import { bytes, megabytes, number, percent, plural } from "./model/format.ts";
+import { bytes, bytesOf, number, percent, plural } from "./model/format.ts";
 
 // Status key -> legend text. The order of the keys is the order of the legend.
 export const STATUS_LABEL: Record<Status, string> = {
@@ -73,32 +73,32 @@ export const SUMMARY = {
   gameHelp:
     "Every function of the game's programs and overlays. A function counts as rebuilt when its C builds to the exact original bytes.",
   gameFunctions: "Game functions rebuilt in C",
-  gameBytes: "Game code bytes rebuilt in C",
-  unique: "Unique game code rebuilt in C",
-  uniqueNote: (done: number, total: number) => `${number(done)} of ${number(total)}, each repeat counted once`,
+  gameBytes: "Game code rebuilt in C, by size",
+  unique: "Distinct game functions rebuilt in C",
+  uniqueNote: (done: number, total: number) => `${number(done)} of ${number(total)} · repeats counted once`,
   fuzzy: "Fuzzy match",
   fuzzyNote: "how close the code in the report is, weighted by bytes",
-  data: "Game data typed in C",
+  data: "Game data written as typed C",
   dataPending: ["from next run", "available after the next run"],
   dataHeading: "Game data",
   dataHelp:
     "The data bytes of the game's programs and overlays: tables, text and records. A byte counts as typed when C defines it with a real type.",
-  dataRaw: "Game data still plain bytes in C",
+  dataRaw: "Game data still raw bytes in C",
   dataRawNote: "byte arrays still named by their address",
   dataApart: (reserved: number, copied: number, sdk: number, asset: number) =>
     `Not data to type, so left out of the total: ${bytes(reserved)} reserved (work areas that are zero on the disc and filled while the game runs), ` +
     `${bytes(copied)} copied from another program, ${bytes(sdk)} of PsyQ library data and ${bytes(asset)} of assets kept as the original files.`,
   assetsHeading: "Assets",
   assetsHelp:
-    "The other files on the disc: pictures, sound, music, video, maps and tables. The asset tools read them from the original disc files; they are not part of the decompilation and never count in the figures above.",
-  assetsDecoded: "Assets decoded to open formats",
+    "The other files on the disc: pictures, sound, music, video, models, maps and tables. They stay in the original disc files and the game loads them from there; they are not part of the decompilation and never count in the figures above. Converted means the asset tools turn a file into a standard format anyone can open: pictures to PNG, sound to WAV, music to MIDI, models to OBJ or glTF, tables and text to JSON.",
+  assetsDecoded: "Assets converted to standard files",
   assetsExtracted: "Assets extracted from the disc",
-  assetsRoundTrip: "Assets that round-trip",
-  assetsRoundTripNote: (done: number) => `${bytes(done)} export and import back to the same bytes`,
+  assetsRoundTrip: "Assets that convert back byte for byte",
+  assetsRoundTripNote: (done: number) => `${bytes(done)} convert to a standard file and back to the exact original`,
   assetsPending: ["from next run", "measured by the next published run"],
   of: (done: number, total: number) => `${number(done)} of ${number(total)} functions`,
-  ofBytes: (done: number, total: number) => `${number(done)} of ${bytes(total)}`,
-  ofMegabytes: (done: number, total: number) => `${megabytes(done)} of ${megabytes(total)}`,
+  ofBytes: (done: number, total: number) => bytesOf(done, total),
+  ofMegabytes: (done: number, total: number) => bytesOf(done, total),
   footnote:
     "The same function often sits in several overlays, at a different address each time. Unique game code counts each one once, and counts it as rebuilt when any copy is.",
   mapNote: (shown: number, total: number) =>
@@ -111,8 +111,8 @@ export const SUMMARY = {
     (sdkAssembly ? `, ${number(sdkAssembly)} kept as assembly` : "") +
     `. Hand-written assembly: ${number(handDone)} of ${number(handCount)} exact. Neither is counted in game code.`,
   assetKinds: "Assets by kind",
-  assetKindsHelp: "One bar per kind of file, sized by its bytes on the disc. Teal is decoded to an open format, grey is copied as stored.",
-  assetHandling: { decoded: "decoded", raw: "copied as stored", none: "not extracted" } as Record<string, string>,
+  assetKindsHelp: "One bar per kind of file, sized by its size on the disc. Teal is converted to a standard file (PNG, WAV, MIDI, OBJ, JSON), grey is extracted as stored.",
+  assetHandling: { decoded: "converted", raw: "extracted as stored", none: "not extracted" } as Record<string, string>,
 };
 
 export const GROUPS = {
@@ -153,7 +153,7 @@ export const SDK = {
 };
 
 export const DATA = {
-  heading: (percent: string, typed: number, total: number) => `Game data: ${percent}% typed in C (${number(typed)} / ${bytes(total)})`,
+  heading: (percent: string, typed: number, total: number) => `Game data: ${percent}% typed in C (${bytesOf(typed, total)})`,
   headingNone: "Game data",
   help: "One bar per part of the game, executables first. The green part is typed in C; byte arrays still named by their address are not. Each target is capped at its data bytes, so no bar passes 100%. The match quality table lists every target.",
   typed: "typed in C",
@@ -188,7 +188,7 @@ export const QUALITY = {
   assetScopeText: (decoded: number | null, total: number | null) =>
     decoded === null || total === null
       ? "not measured in this run."
-      : `${megabytes(decoded)} of the ${megabytes(total)} of disc files that are not program code decode to open formats, from bin/rebof3 assets. Never counted as decompilation.`,
+      : `${bytes(decoded)} of the ${bytes(total)} of disc files that are not program code convert to standard files (PNG, WAV, MIDI, OBJ, JSON), from bin/rebof3 assets. Never counted as decompilation.`,
 };
 
 export const TREND = {
@@ -281,7 +281,7 @@ export const FOOT = {
 // Picture only.
 export const POSTER = {
   title: "Breath of Fire III decompilation status",
-  subtitle: (commit: string, date: string) => `rebof3 ${commit} · ${date} · one square per function, sized by its code bytes`,
+  subtitle: (commit: string, date: string) => `rebof3 ${commit} · ${date} · one square per function, sized by its code size`,
   libraries: "PsyQ libraries and versions",
   libraryKey: (objects: number, assembly: number) => `${number(objects)} objects · ${number(assembly)} assembly`,
   libraryLinked: "kept as assembly",

@@ -6,7 +6,7 @@ import { latest, trendOption } from "./charts/trend.ts";
 import { treemapTree } from "./charts/treemap.ts";
 import { browse, PAGE_STEP } from "./model/browse.ts";
 import { ASSEMBLY_LIBRARY } from "./model/report.ts";
-import { bytes, megabytes, number, percent } from "./model/format.ts";
+import { bytes, bytesOf, number, percent } from "./model/format.ts";
 import { TREND_CHARTS } from "./model/history.ts";
 import { HOME } from "./model/route.ts";
 import { STATUS, STATUS_TABLE, TIERS } from "./model/status.ts";
@@ -107,10 +107,10 @@ export function assetKinds({ model }: Ctx): Views["meters"] {
     key: ["decoded", "raw"].map((handling) => ({ label: SUMMARY.assetHandling[handling], color: color(handling) })),
     rows: kinds.map((kind) => ({
       label: kind.kind,
-      aria: `${kind.kind}: ${SUMMARY.assetHandling[kind.handling] ?? kind.handling}, ${megabytes(kind.bytes)}`,
+      aria: `${kind.kind}: ${SUMMARY.assetHandling[kind.handling] ?? kind.handling}, ${bytes(kind.bytes)}`,
       width: Math.max((kind.bytes / peak) * 100, 1),
       parts: [{ width: "100", color: color(kind.handling) }],
-      count: megabytes(kind.bytes),
+      count: bytes(kind.bytes),
       note: `${number(kind.entries)} ${kind.entries === 1 ? "file" : "files"} · ${SUMMARY.assetHandling[kind.handling] ?? kind.handling}` + (kind.round_trip_bytes ? ` · ${bytes(kind.round_trip_bytes)} round-trip` : ""),
     })),
   };
@@ -265,7 +265,7 @@ export function dataChart({ model, tokens }: Ctx): Views["chart"] {
         { name: DATA.typed, color: tokens.status.pure, values: rows.map((row) => (100 * row.typed) / row.bytes) },
         { name: DATA.untyped, color: tokens.track, values: rows.map((row) => (100 * (row.bytes - row.typed)) / row.bytes) },
       ],
-      describe: (i) => `<b>${rows[i].label}</b><br>${percent(rows[i].typed, rows[i].bytes, 1)}% · ${number(rows[i].typed)} / ${bytes(rows[i].bytes)}`,
+      describe: (i) => `<b>${rows[i].label}</b><br>${percent(rows[i].typed, rows[i].bytes, 1)}% · ${bytesOf(rows[i].typed, rows[i].bytes)}`,
     },
     tokens,
   );
@@ -300,7 +300,7 @@ export function verification({ model }: Ctx): Views["text"] {
 }
 
 const dataCell = (target: Target): Part[] =>
-  target.data ? [{ text: `${percent(target.data.typed, target.data.bytes, 1)}% · ${number(target.data.typed)} / ${bytes(target.data.bytes)}` }] : [{ text: "-", mute: true }];
+  target.data ? [{ text: `${percent(target.data.typed, target.data.bytes, 1)}% · ${bytesOf(target.data.typed, target.data.bytes)}` }] : [{ text: "-", mute: true }];
 
 export const auditTable = ({ model }: Ctx): Views["table"] => ({
   disclosure: "Match quality of each target",

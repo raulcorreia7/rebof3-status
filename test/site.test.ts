@@ -1,5 +1,6 @@
 // Checks the files `npm run build` writes into site/. Run the build first; `make test` does.
 
+import { SUMMARY } from "../src/strings.ts";
 import assert from "node:assert/strict";
 import { existsSync, readFileSync, statSync } from "node:fs";
 import { test } from "node:test";
@@ -23,7 +24,7 @@ const share = (part: number, whole: number, digits = 1) => `${((100 * part) / wh
 
 test("the picture carries the three-part headline in reading order", () => {
   const svg = text("progress.svg");
-  const headline = ["Game functions rebuilt in C", "Unique game code rebuilt in C", "Game data typed in C", "Assets decoded to open formats"];
+  const headline = [SUMMARY.gameFunctions, SUMMARY.unique, SUMMARY.data, SUMMARY.assetsDecoded];
   let at = -1;
   for (const label of headline) {
     const found = svg.indexOf(label, at + 1);
