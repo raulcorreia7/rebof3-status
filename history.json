@@ -1,6 +1,6 @@
 {
-  "commit": "cb2d6bc71257543aa4cbae47be31ca81b5a70642",
-  "generated_at": "2026-10-25T15:47:36Z",
+  "commit": "30f4c7c5ed470e98ee8a21c88b2afa223fd52049",
+  "generated_at": "2026-10-25T16:17:56Z",
   "rows": [
     {
       "date": "2026-07-10",
@@ -832,12 +832,12 @@
     },
     {
       "date": "2026-10-25",
-      "revision": "cb2d6bc71257543aa4cbae47be31ca81b5a70642",
+      "revision": "30f4c7c5ed470e98ee8a21c88b2afa223fd52049",
       "source": "run",
       "game_functions": 3451,
-      "game_matched": 3211,
+      "game_matched": 3212,
       "game_bytes": 929844,
-      "game_matched_bytes": 699628,
+      "game_matched_bytes": 700300,
       "sdk_functions": 732,
       "sdk_done": 728,
       "data_bytes": 219963,
