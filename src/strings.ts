@@ -100,7 +100,7 @@ export const SUMMARY = {
   ofBytes: (done: number, total: number) => bytesOf(done, total),
   ofMegabytes: (done: number, total: number) => bytesOf(done, total),
   footnote:
-    "Many overlays carry copies of the same function. This card counts each function once, as rebuilt when any copy is."
+    "Many overlays carry copies of the same function. This card counts each function once, as rebuilt when any copy is.",
   mapNote: (shown: number, total: number) =>
     `The map, the groups and the function list show the ${number(shown)} game functions the objdiff report covers; the headline counts all ${number(total)} in the target maps.`,
   statusHeading: "Status of game code",
@@ -199,7 +199,7 @@ export const TREND = {
   charts: {
     gameFunctions: "Game functions rebuilt in C over time",
     gameBytes: "Game code bytes rebuilt in C over time",
-    gameUnique: "Unique game code rebuilt in C over time",
+    gameUnique: "Game functions without duplicates over time",
     sdk: "PsyQ SDK from original objects over time",
     data: "Game data typed in C over time",
     assets: "Asset bytes decoded over time",
