@@ -40,7 +40,7 @@ npx tsc -p .     # type check
 
 The picture needs the DejaVu Sans font (`fonts-dejavu-core`).
 
-`verify.yml` checks the sources on each push to `main` that changes code; `deploy.yml` only publishes `gh-pages`, so a publish is one static upload and no build.
+`deploy.yml` builds and checks the page on every push to `main`, pull request and dispatch, using the latest `report.json`, `status-data.json` and `history.json` from the `gh-pages` branch (the fixtures when they are missing), then publishes it; a pull request only runs the checks. The publisher (monorepo `scripts/progress`) pushes new numbers to `gh-pages` and starts the run.
 
 ## How the page is built
 

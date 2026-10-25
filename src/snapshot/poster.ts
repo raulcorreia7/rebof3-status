@@ -34,13 +34,13 @@ const gameBlocks = (model: Model): Block[] =>
 
 const sdkBlocks = (model: Model): Block[] => model.libraries.map((lib) => ({ name: lib.name, rows: sorted(lib.functions) }));
 
-// The headline, in the order the numbers matter: bytes, fuzzy, functions, data.
+// The headline, in the order the numbers matter: game functions rebuilt in C, bytes, fuzzy, data.
 function cards(model: Model, y: number): Drawn {
   const { game, data } = model;
   const items: [string, string, string, string][] = [
+    [`${percent(game.done, game.count, 1)}%`, SUMMARY.gameFunctions, SUMMARY.of(game.done, game.count), C.status.pure],
     [`${percent(game.doneBytes, game.bytes, 1)}%`, SUMMARY.gameBytes, SUMMARY.ofBytes(game.doneBytes, game.bytes), C.status.pure],
     [`${game.fuzzy.toFixed(1)}%`, SUMMARY.fuzzy, SUMMARY.fuzzyNote, C.status.nonmatching],
-    [`${percent(game.done, game.count, 1)}%`, SUMMARY.gameFunctions, SUMMARY.of(game.done, game.count), C.status.pure],
     data
       ? [`${percent(data.typed, data.bytes, 2)}%`, SUMMARY.data, SUMMARY.ofBytes(data.typed, data.bytes), C.status.object]
       : [SUMMARY.dataPending[0], SUMMARY.data, SUMMARY.dataPending[1], C.mute],

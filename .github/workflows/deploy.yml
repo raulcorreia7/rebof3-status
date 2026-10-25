@@ -1,28 +1,71 @@
 name: deploy
+# Builds the page from main's code and the latest numbers on the gh-pages branch, then publishes
+# it. A code push to main rebuilds with the current numbers; the publisher (monorepo
+# scripts/progress) pushes new numbers to gh-pages and starts this run with
+# `gh workflow run deploy.yml`. A pull request only runs the checks.
 on:
+  push:
+    branches: [main]
+  pull_request:
   workflow_dispatch:
 permissions:
   contents: read
   pages: write
   id-token: write
 concurrency:
-  group: pages
+  group: pages-${{ github.ref }}
   cancel-in-progress: true
-# The gh-pages branch already holds the built page: publish files, build nothing. The publisher
-# triggers this run after it pushes the branch (`gh workflow run deploy.yml`).
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: package-lock.json
+      # The runner image usually ships DejaVu Sans; install it only when it is missing.
+      - name: Provide DejaVu Sans for the picture
+        run: |
+          if [ ! -f /usr/share/fonts/truetype/dejavu/DejaVuSans.ttf ]; then
+            sudo apt-get update -qq
+            sudo apt-get install -y --no-install-recommends fonts-dejavu-core
+          fi
+      # The numbers live on gh-pages; without them the build uses the test fixtures.
+      - name: Fetch the latest numbers
+        run: |
+          mkdir -p "$RUNNER_TEMP/data"
+          if git fetch --quiet --depth=1 origin gh-pages; then
+            for f in report.json status-data.json history.json; do
+              git show "FETCH_HEAD:$f" > "$RUNNER_TEMP/data/$f" 2>/dev/null || cp "test/fixtures/$f" "$RUNNER_TEMP/data/$f"
+            done
+          else
+            cp test/fixtures/report.json test/fixtures/status-data.json test/fixtures/history.json "$RUNNER_TEMP/data/"
+          fi
+      - run: npm ci --prefer-offline --no-audit --no-fund
+      - name: Type check
+        run: npm run lint
+      # The tests check the page built from the fixtures; the published page then gets the latest numbers.
+      - name: Build the page and the pictures from the fixtures
+        run: npm run build
+      - name: Test the model and the built site
+        run: npm test
+      - name: Write the latest numbers and pictures into the page
+        run: node render/snapshot.ts site "$RUNNER_TEMP/data"
+      - if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
   deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 10
     environment:
       name: github-pages
       url: ${{ steps.deploy.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: gh-pages
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: .
       - id: deploy
         uses: actions/deploy-pages@v4

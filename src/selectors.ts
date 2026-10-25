@@ -27,13 +27,13 @@ export function statusMeter(tally: Tally, aria: string): MeterRow {
 
 // Overview and groups ----------------------------------------------------------------------
 
-/** The headline, in the order the numbers matter: bytes, fuzzy, functions, data. */
+/** The headline, in the order the numbers matter: game functions rebuilt in C, bytes, fuzzy, data. */
 export function overviewCards({ model }: Ctx): Views["cards"] {
   const { game, data } = model;
   const cards: Card[] = [
+    { id: "game", big: `${percent(game.done, game.count, 1)}%`, title: `${SUMMARY.gameFunctions}*`, sub: SUMMARY.of(game.done, game.count), color: STATUS.pure.color },
     { id: "game-bytes", big: `${percent(game.doneBytes, game.bytes, 1)}%`, title: SUMMARY.gameBytes, sub: SUMMARY.ofBytes(game.doneBytes, game.bytes), color: STATUS.pure.color },
     { id: "fuzzy", big: `${game.fuzzy.toFixed(1)}%`, title: SUMMARY.fuzzy, sub: SUMMARY.fuzzyNote, color: STATUS.nonmatching.color },
-    { id: "game", big: `${percent(game.done, game.count, 1)}%`, title: `${SUMMARY.gameFunctions}*`, sub: SUMMARY.of(game.done, game.count), color: STATUS.pure.color },
     data
       ? { id: "data", big: `${percent(data.typed, data.bytes, 2)}%`, title: SUMMARY.data, sub: SUMMARY.ofBytes(data.typed, data.bytes), color: "var(--st-typed)" }
       : { id: "data", big: SUMMARY.dataPending[0], title: SUMMARY.data, sub: SUMMARY.dataPending[1], color: "var(--mute)" },

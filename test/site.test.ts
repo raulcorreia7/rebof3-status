@@ -20,7 +20,7 @@ test("the built site holds the page, the data and the pictures, none of them emp
 
 test("the picture carries the new headline in reading order", () => {
   const svg = text("progress.svg");
-  const headline = ["Game code matched by bytes", "Fuzzy match", "Game code rebuilt in C", "Data typed and named"];
+  const headline = ["Game code rebuilt in C", "Game code matched by bytes", "Fuzzy match", "Data typed and named"];
   let at = -1;
   for (const label of headline) {
     const found = svg.indexOf(label, at + 1);
