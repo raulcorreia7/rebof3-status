@@ -2658,17 +2658,17 @@
     },
     {
       "target": "emi/etc/commu00/00",
-      "exact": 62,
+      "exact": 63,
       "non_matching": 2,
       "untagged": 0,
-      "unlifted": 4,
+      "unlifted": 3,
       "library": 0,
       "sdk": 0,
       "total": 68,
       "game": {
-        "exact": 62,
+        "exact": 63,
         "total": 68,
-        "exact_bytes": 10540,
+        "exact_bytes": 11096,
         "bytes": 14424
       }
     },
@@ -6850,35 +6850,35 @@
     }
   ],
   "totals": {
-    "exact": 3296,
+    "exact": 3297,
     "non_matching": 167,
     "untagged": 5475,
-    "unlifted": 3386,
+    "unlifted": 3385,
     "library": 726,
     "sdk": 0,
     "total": 13050,
     "game": {
-      "exact": 3290,
+      "exact": 3291,
       "total": 12319,
-      "exact_bytes": 748024,
+      "exact_bytes": 748580,
       "bytes": 3153784
     },
-    "done": 4018
+    "done": 4019
   },
   "game_code": {
     "functions": 12319,
-    "exact": 3290,
+    "exact": 3291,
     "bytes": 3153784,
-    "exact_bytes": 748024,
+    "exact_bytes": 748580,
     "unique_functions": 6841,
-    "unique_exact": 2489,
+    "unique_exact": 2490,
     "unique_bytes": 2427088,
-    "unique_exact_bytes": 664604
+    "unique_exact_bytes": 665160
   },
   "quality": {
-    "fakes": 525,
-    "harmful_fakes": 272,
-    "field_ref": 1729,
+    "fakes": 532,
+    "harmful_fakes": 278,
+    "field_ref": 1730,
     "local_externs": 684,
     "sym_conflicts": 35,
     "hand_asm": 5
