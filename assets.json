@@ -1,0 +1,158 @@
+{
+  "kinds": [
+    {
+      "kind": "system",
+      "entries": 2,
+      "bytes": 28102,
+      "handling": "raw",
+      "round_trip_bytes": 0
+    },
+    {
+      "kind": "video",
+      "entries": 1,
+      "bytes": 2698080,
+      "handling": "raw",
+      "round_trip_bytes": 0
+    },
+    {
+      "kind": "xa-audio",
+      "entries": 3,
+      "bytes": 138664960,
+      "handling": "raw",
+      "round_trip_bytes": 0
+    },
+    {
+      "kind": "cdda",
+      "entries": 1,
+      "bytes": 37044000,
+      "handling": "decoded",
+      "round_trip_bytes": 0
+    },
+    {
+      "kind": "texture",
+      "entries": 593,
+      "bytes": 112312320,
+      "handling": "decoded",
+      "round_trip_bytes": 0
+    },
+    {
+      "kind": "palette",
+      "entries": 620,
+      "bytes": 1121696,
+      "handling": "decoded",
+      "round_trip_bytes": 0
+    },
+    {
+      "kind": "audio-bank",
+      "entries": 2040,
+      "bytes": 84062336,
+      "handling": "decoded",
+      "round_trip_bytes": 0
+    },
+    {
+      "kind": "audio-sequence",
+      "entries": 119,
+      "bytes": 1836303,
+      "handling": "raw",
+      "round_trip_bytes": 0
+    },
+    {
+      "kind": "audio-cues",
+      "entries": 904,
+      "bytes": 34432,
+      "handling": "decoded",
+      "round_trip_bytes": 0
+    },
+    {
+      "kind": "character-bank",
+      "entries": 144,
+      "bytes": 18686544,
+      "handling": "decoded",
+      "round_trip_bytes": 0
+    },
+    {
+      "kind": "area-message",
+      "entries": 200,
+      "bytes": 852489,
+      "handling": "raw",
+      "round_trip_bytes": 852489
+    },
+    {
+      "kind": "area-cells",
+      "entries": 191,
+      "bytes": 955000,
+      "handling": "raw",
+      "round_trip_bytes": 0
+    },
+    {
+      "kind": "area-script",
+      "entries": 200,
+      "bytes": 3820164,
+      "handling": "raw",
+      "round_trip_bytes": 0
+    },
+    {
+      "kind": "battle-script",
+      "entries": 42,
+      "bytes": 155064,
+      "handling": "raw",
+      "round_trip_bytes": 0
+    },
+    {
+      "kind": "area-scene",
+      "entries": 200,
+      "bytes": 22352,
+      "handling": "decoded",
+      "round_trip_bytes": 0
+    },
+    {
+      "kind": "area-formations",
+      "entries": 200,
+      "bytes": 232000,
+      "handling": "decoded",
+      "round_trip_bytes": 232000
+    },
+    {
+      "kind": "area-map",
+      "entries": 200,
+      "bytes": 10247719,
+      "handling": "decoded",
+      "round_trip_bytes": 0
+    },
+    {
+      "kind": "area-module",
+      "entries": 9,
+      "bytes": 34368,
+      "handling": "raw",
+      "round_trip_bytes": 0
+    },
+    {
+      "kind": "resource-table",
+      "entries": 44,
+      "bytes": 639720,
+      "handling": "raw",
+      "round_trip_bytes": 0
+    },
+    {
+      "kind": "magic-table",
+      "entries": 37,
+      "bytes": 30762,
+      "handling": "raw",
+      "round_trip_bytes": 0
+    },
+    {
+      "kind": "reserve",
+      "entries": 53,
+      "bytes": 765896,
+      "handling": "none",
+      "round_trip_bytes": 0
+    }
+  ],
+  "totals": {
+    "entries": 5803,
+    "bytes": 414244307,
+    "extracted_bytes": 413478411,
+    "decoded_bytes": 263763399,
+    "round_trip_bytes": 1084489
+  }
+}

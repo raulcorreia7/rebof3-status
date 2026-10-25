@@ -9,6 +9,7 @@
       "raw": 169,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 6383,
@@ -19,6 +20,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 169,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -31,6 +34,7 @@
       "raw": 104,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2026,
@@ -41,6 +45,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 104,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -53,6 +59,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 340,
@@ -63,6 +70,8 @@
       "objects": 1,
       "sources": 1,
       "data_payload": 512,
+      "in_c": 512,
+      "raw_c": 0,
       "typed": 512,
       "percent": 100.0
     },
@@ -75,6 +84,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 79489,
@@ -85,8 +95,10 @@
       "objects": 436,
       "sources": 436,
       "data_payload": 12844,
-      "typed": 12844,
-      "percent": 100.0
+      "in_c": 12844,
+      "raw_c": 1516,
+      "typed": 11328,
+      "percent": 88.2
     },
     {
       "target": "emi/battle/battle/15",
@@ -97,6 +109,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 100004,
@@ -107,8 +120,10 @@
       "objects": 487,
       "sources": 487,
       "data_payload": 12160,
-      "typed": 12020,
-      "percent": 98.85
+      "in_c": 12020,
+      "raw_c": 319,
+      "typed": 11701,
+      "percent": 96.23
     },
     {
       "target": "emi/bmagic/magic001/00",
@@ -119,6 +134,7 @@
       "raw": 100,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4372,
@@ -129,6 +145,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 100,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -141,6 +159,7 @@
       "raw": 24,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3014,
@@ -151,6 +170,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 24,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -163,6 +184,7 @@
       "raw": 348,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 3724,
       "nonzero": 5736,
@@ -173,6 +195,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 348,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -185,6 +209,7 @@
       "raw": 132,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3340,
@@ -195,6 +220,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 132,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -207,6 +234,7 @@
       "raw": 56,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 5454,
@@ -217,6 +245,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 56,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -229,6 +259,7 @@
       "raw": 288,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 8680,
@@ -239,6 +270,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 288,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -251,6 +284,7 @@
       "raw": 96,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2269,
@@ -261,6 +295,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 96,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -273,6 +309,7 @@
       "raw": 20,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 626,
@@ -283,6 +320,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 20,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -295,6 +334,7 @@
       "raw": 4,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2852,
@@ -305,6 +345,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 4,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -317,6 +359,7 @@
       "raw": 20,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4419,
@@ -327,6 +370,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 20,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -339,6 +384,7 @@
       "raw": 180,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 7494,
@@ -349,6 +395,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 180,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -361,6 +409,7 @@
       "raw": 56,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2320,
@@ -371,6 +420,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 56,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -383,6 +434,7 @@
       "raw": 93,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3313,
@@ -393,6 +445,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 93,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -405,6 +459,7 @@
       "raw": 40,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3234,
@@ -415,6 +470,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 40,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -427,6 +484,7 @@
       "raw": 68,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2575,
@@ -437,6 +495,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 68,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -449,6 +509,7 @@
       "raw": 92,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4282,
@@ -459,6 +520,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 92,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -471,6 +534,7 @@
       "raw": 241,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3139,
@@ -481,6 +545,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 241,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -493,6 +559,7 @@
       "raw": 56,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3095,
@@ -503,6 +570,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 56,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -515,6 +584,7 @@
       "raw": 229,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2951,
@@ -525,6 +595,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 229,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -537,6 +609,7 @@
       "raw": 24,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3010,
@@ -547,6 +620,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 24,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -559,6 +634,7 @@
       "raw": 4,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 5653,
@@ -569,6 +645,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 4,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -581,6 +659,7 @@
       "raw": 4,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2313,
@@ -591,6 +670,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 4,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -603,6 +684,7 @@
       "raw": 40,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3511,
@@ -613,6 +695,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 40,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -625,6 +709,7 @@
       "raw": 16,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2186,
@@ -635,6 +720,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 16,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -647,6 +734,7 @@
       "raw": 124,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2604,
@@ -657,6 +745,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 124,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -669,6 +759,7 @@
       "raw": 28,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 887,
@@ -679,6 +770,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 28,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -691,6 +784,7 @@
       "raw": 180,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 3724,
       "nonzero": 4612,
@@ -701,6 +795,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 180,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -713,6 +809,7 @@
       "raw": 44,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1906,
@@ -723,6 +820,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 44,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -735,6 +834,7 @@
       "raw": 16,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2931,
@@ -745,6 +845,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 16,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -757,6 +859,7 @@
       "raw": 52,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4827,
@@ -767,6 +870,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 52,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -779,6 +884,7 @@
       "raw": 83,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2725,
@@ -789,6 +895,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 83,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -801,6 +909,7 @@
       "raw": 40,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3496,
@@ -811,6 +920,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 40,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -823,6 +934,7 @@
       "raw": 4,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4920,
@@ -833,6 +945,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 4,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -845,6 +959,7 @@
       "raw": 184,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 5836,
@@ -855,6 +970,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 184,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -867,6 +984,7 @@
       "raw": 180,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 5878,
@@ -877,6 +995,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 180,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -889,6 +1009,7 @@
       "raw": 140,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 3044,
       "nonzero": 4460,
@@ -899,6 +1020,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 140,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -911,6 +1034,7 @@
       "raw": 168,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 5376,
       "nonzero": 7380,
@@ -921,6 +1045,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 168,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -933,6 +1059,7 @@
       "raw": 48,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1645,
@@ -943,6 +1070,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 48,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -955,6 +1084,7 @@
       "raw": 96,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3740,
@@ -965,6 +1095,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 96,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -977,6 +1109,7 @@
       "raw": 36,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4458,
@@ -987,6 +1120,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 36,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -999,6 +1134,7 @@
       "raw": 92,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3025,
@@ -1009,6 +1145,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 92,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1021,6 +1159,7 @@
       "raw": 4,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4489,
@@ -1031,6 +1170,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 4,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1043,6 +1184,7 @@
       "raw": 332,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 5592,
       "nonzero": 3969,
@@ -1053,6 +1195,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 332,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1065,6 +1209,7 @@
       "raw": 332,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 5592,
       "nonzero": 3972,
@@ -1075,6 +1220,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 332,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1087,6 +1234,7 @@
       "raw": 332,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 5592,
       "nonzero": 3972,
@@ -1097,6 +1245,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 332,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1109,6 +1259,7 @@
       "raw": 288,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 7000,
       "nonzero": 4825,
@@ -1119,6 +1270,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 288,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1131,6 +1284,7 @@
       "raw": 288,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 7000,
       "nonzero": 4634,
@@ -1141,6 +1295,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 288,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1153,6 +1309,7 @@
       "raw": 16,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2167,
@@ -1163,6 +1320,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 16,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1175,6 +1334,7 @@
       "raw": 40,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4352,
@@ -1185,6 +1345,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 40,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1197,6 +1359,7 @@
       "raw": 4,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 5125,
@@ -1207,6 +1370,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 4,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1219,6 +1384,7 @@
       "raw": 284,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4001,
@@ -1229,6 +1395,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 284,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1241,6 +1409,7 @@
       "raw": 56,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 995,
@@ -1251,6 +1420,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 56,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1263,6 +1434,7 @@
       "raw": 48,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2650,
@@ -1273,6 +1445,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 48,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1285,6 +1459,7 @@
       "raw": 192,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 6037,
@@ -1295,6 +1470,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 192,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1307,6 +1484,7 @@
       "raw": 288,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 2764,
       "nonzero": 6407,
@@ -1317,6 +1495,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 288,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1329,6 +1509,7 @@
       "raw": 28,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4154,
@@ -1339,6 +1520,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 28,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1351,6 +1534,7 @@
       "raw": 188,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 9484,
       "nonzero": 4588,
@@ -1361,6 +1545,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 188,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1373,6 +1559,7 @@
       "raw": 172,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3636,
@@ -1383,6 +1570,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 172,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1395,6 +1584,7 @@
       "raw": 16,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2929,
@@ -1405,6 +1595,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 16,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1417,6 +1609,7 @@
       "raw": 4,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 5066,
@@ -1427,6 +1620,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 4,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1439,6 +1634,7 @@
       "raw": 4,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 5243,
@@ -1449,6 +1645,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 4,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1461,6 +1659,7 @@
       "raw": 4,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2449,
@@ -1471,6 +1670,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 4,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1483,6 +1684,7 @@
       "raw": 132,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4759,
@@ -1493,6 +1695,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 132,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1505,6 +1709,7 @@
       "raw": 200,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4437,
@@ -1515,6 +1720,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 200,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1527,6 +1734,7 @@
       "raw": 4,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 5733,
@@ -1537,6 +1745,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 4,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1549,6 +1759,7 @@
       "raw": 4,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4290,
@@ -1559,6 +1770,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 4,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1571,6 +1784,7 @@
       "raw": 24,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 5370,
@@ -1581,6 +1795,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 24,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1593,6 +1809,7 @@
       "raw": 16,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3227,
@@ -1603,6 +1820,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 16,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1615,6 +1834,7 @@
       "raw": 88,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3013,
@@ -1625,6 +1845,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 88,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1637,6 +1859,7 @@
       "raw": 736,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 5859,
@@ -1647,6 +1870,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 736,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1659,6 +1884,7 @@
       "raw": 96,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4922,
@@ -1669,6 +1895,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 96,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1681,6 +1909,7 @@
       "raw": 116,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 5259,
@@ -1691,6 +1920,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 116,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1703,6 +1934,7 @@
       "raw": 224,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 7564,
       "nonzero": 3740,
@@ -1713,6 +1945,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 224,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1725,6 +1959,7 @@
       "raw": 92,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 3044,
       "nonzero": 2542,
@@ -1735,6 +1970,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 92,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1747,6 +1984,7 @@
       "raw": 4,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4486,
@@ -1757,6 +1995,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 4,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1769,6 +2009,7 @@
       "raw": 4,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2998,
@@ -1779,6 +2020,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 4,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1791,6 +2034,7 @@
       "raw": 312,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 1148,
       "nonzero": 2556,
@@ -1801,6 +2045,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 312,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1813,6 +2059,7 @@
       "raw": 132,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4403,
@@ -1823,6 +2070,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 132,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1835,6 +2084,7 @@
       "raw": 28,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2621,
@@ -1845,6 +2095,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 28,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1857,6 +2109,7 @@
       "raw": 116,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 5808,
@@ -1867,6 +2120,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 116,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1879,6 +2134,7 @@
       "raw": 148,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 7111,
@@ -1889,6 +2145,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 148,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1901,6 +2159,7 @@
       "raw": 20,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2315,
@@ -1911,6 +2170,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 20,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1923,6 +2184,7 @@
       "raw": 20,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1201,
@@ -1933,6 +2195,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 20,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1945,6 +2209,7 @@
       "raw": 36,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1304,
@@ -1955,6 +2220,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 36,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1967,6 +2234,7 @@
       "raw": 24,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3056,
@@ -1977,6 +2245,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 24,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -1989,6 +2259,7 @@
       "raw": 124,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 5962,
@@ -1999,6 +2270,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 124,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2011,6 +2284,7 @@
       "raw": 4,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 5541,
@@ -2021,6 +2295,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 4,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2033,6 +2309,7 @@
       "raw": 4,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4148,
@@ -2043,6 +2320,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 4,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2055,6 +2334,7 @@
       "raw": 152,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 10684,
       "nonzero": 3129,
@@ -2065,6 +2345,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 152,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2077,6 +2359,7 @@
       "raw": 20,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 5171,
@@ -2087,6 +2370,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 20,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2099,6 +2384,7 @@
       "raw": 4,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4671,
@@ -2109,6 +2395,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 4,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2121,6 +2409,7 @@
       "raw": 132,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 4068,
       "nonzero": 6995,
@@ -2131,6 +2420,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 132,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2143,6 +2434,7 @@
       "raw": 16,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4791,
@@ -2153,6 +2445,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 16,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2165,6 +2459,7 @@
       "raw": 68,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2525,
@@ -2175,6 +2470,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 68,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2187,6 +2484,7 @@
       "raw": 300,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 2072,
       "nonzero": 8879,
@@ -2197,6 +2495,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 300,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2209,6 +2509,7 @@
       "raw": 24,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3151,
@@ -2219,6 +2520,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 24,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2231,6 +2534,7 @@
       "raw": 28,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3724,
@@ -2241,6 +2545,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 28,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2253,6 +2559,7 @@
       "raw": 40,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2057,
@@ -2263,6 +2570,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 40,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2275,6 +2584,7 @@
       "raw": 4,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3503,
@@ -2285,6 +2595,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 4,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2297,6 +2609,7 @@
       "raw": 4,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4509,
@@ -2307,6 +2620,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 4,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2319,6 +2634,7 @@
       "raw": 68,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1454,
@@ -2329,6 +2645,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 68,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2341,6 +2659,7 @@
       "raw": 196,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 7564,
       "nonzero": 2491,
@@ -2351,6 +2670,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 196,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2363,6 +2684,7 @@
       "raw": 32,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2695,
@@ -2373,6 +2695,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 32,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2385,6 +2709,7 @@
       "raw": 196,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 10509,
@@ -2395,6 +2720,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 196,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2407,6 +2734,7 @@
       "raw": 36,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1947,
@@ -2417,6 +2745,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 36,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2429,6 +2759,7 @@
       "raw": 160,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 7564,
       "nonzero": 2134,
@@ -2439,6 +2770,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 160,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2451,6 +2784,7 @@
       "raw": 4,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1429,
@@ -2461,6 +2795,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 4,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2473,6 +2809,7 @@
       "raw": 36,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1445,
@@ -2483,6 +2820,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 36,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2495,6 +2834,7 @@
       "raw": 332,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 5592,
       "nonzero": 3973,
@@ -2505,6 +2845,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 332,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2517,6 +2859,7 @@
       "raw": 156,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 7564,
       "nonzero": 2056,
@@ -2527,6 +2870,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 156,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2539,6 +2884,7 @@
       "raw": 28,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 5288,
@@ -2549,6 +2895,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 28,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2561,6 +2909,7 @@
       "raw": 332,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 5592,
       "nonzero": 3973,
@@ -2571,6 +2920,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 332,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2583,6 +2934,7 @@
       "raw": 56,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4258,
@@ -2593,6 +2945,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 56,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2605,6 +2959,7 @@
       "raw": 60,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 5631,
@@ -2615,6 +2970,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 60,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2627,6 +2984,7 @@
       "raw": 4,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 5510,
@@ -2637,6 +2995,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 4,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2649,6 +3009,7 @@
       "raw": 4,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2301,
@@ -2659,6 +3020,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 4,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2671,6 +3034,7 @@
       "raw": 24,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 867,
@@ -2681,6 +3045,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 24,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2693,6 +3059,7 @@
       "raw": 44,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2105,
@@ -2703,6 +3070,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 44,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2715,6 +3084,7 @@
       "raw": 180,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 3724,
       "nonzero": 2613,
@@ -2725,6 +3095,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 180,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2737,6 +3109,7 @@
       "raw": 16,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4944,
@@ -2747,6 +3120,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 16,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2759,6 +3134,7 @@
       "raw": 16,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 5948,
@@ -2769,6 +3145,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 16,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2781,6 +3159,7 @@
       "raw": 16,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2907,
@@ -2791,6 +3170,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 16,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2803,6 +3184,7 @@
       "raw": 16,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4332,
@@ -2813,6 +3195,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 16,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2825,6 +3209,7 @@
       "raw": 212,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 5644,
       "nonzero": 5905,
@@ -2835,6 +3220,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 212,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2847,6 +3234,7 @@
       "raw": 288,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1981,
@@ -2854,9 +3242,11 @@
       "data": 0,
       "bss": 0,
       "map_bss": 0,
-      "objects": 0,
-      "sources": 0,
+      "objects": 1,
+      "sources": 1,
       "data_payload": 288,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2869,6 +3259,7 @@
       "raw": 248,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1619,
@@ -2879,6 +3270,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 248,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2891,6 +3284,7 @@
       "raw": 224,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3022,
@@ -2901,6 +3295,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 224,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2913,6 +3309,7 @@
       "raw": 192,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1211,
@@ -2923,6 +3320,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 192,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2935,6 +3334,7 @@
       "raw": 324,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2959,
@@ -2945,6 +3345,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 324,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2957,6 +3359,7 @@
       "raw": 200,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1311,
@@ -2967,6 +3370,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 200,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -2979,6 +3384,7 @@
       "raw": 296,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2902,
@@ -2989,6 +3395,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 296,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -3001,6 +3409,7 @@
       "raw": 152,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 720,
@@ -3011,6 +3420,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 152,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -3023,6 +3434,7 @@
       "raw": 84,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 368,
@@ -3033,6 +3445,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 84,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -3045,6 +3459,7 @@
       "raw": 148,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 568,
@@ -3055,6 +3470,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 148,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -3067,6 +3484,7 @@
       "raw": 488,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4244,
@@ -3077,6 +3495,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 488,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -3089,6 +3509,7 @@
       "raw": 212,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1043,
@@ -3099,6 +3520,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 212,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -3111,6 +3534,7 @@
       "raw": 108,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 673,
@@ -3121,6 +3545,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 108,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -3133,6 +3559,7 @@
       "raw": 112,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 534,
@@ -3143,6 +3570,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 112,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -3155,6 +3584,7 @@
       "raw": 144,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 732,
@@ -3165,6 +3595,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 144,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -3177,6 +3609,7 @@
       "raw": 408,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 5132,
@@ -3187,6 +3620,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 408,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -3199,6 +3634,7 @@
       "raw": 140,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1778,
@@ -3209,6 +3645,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 140,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -3221,6 +3659,7 @@
       "raw": 84,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 379,
@@ -3231,6 +3670,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 84,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -3243,6 +3684,7 @@
       "raw": 164,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 647,
@@ -3253,6 +3695,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 164,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -3265,6 +3709,7 @@
       "raw": 108,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 603,
@@ -3275,6 +3720,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 108,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -3287,6 +3734,7 @@
       "raw": 108,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 896,
@@ -3297,6 +3745,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 108,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -3309,6 +3759,7 @@
       "raw": 152,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2867,
@@ -3319,6 +3770,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 152,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -3331,6 +3784,7 @@
       "raw": 224,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2926,
@@ -3341,6 +3795,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 224,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -3353,6 +3809,7 @@
       "raw": 248,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1119,
@@ -3363,6 +3820,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 248,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -3375,6 +3834,7 @@
       "raw": 176,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1627,
@@ -3385,6 +3845,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 176,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -3397,6 +3859,7 @@
       "raw": 84,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 359,
@@ -3407,6 +3870,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 84,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -3419,6 +3884,7 @@
       "raw": 144,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 904,
@@ -3429,6 +3895,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 144,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -3441,6 +3909,7 @@
       "raw": 144,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 707,
@@ -3451,6 +3920,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 144,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -3463,6 +3934,7 @@
       "raw": 84,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 360,
@@ -3473,6 +3945,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 84,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -3485,6 +3959,7 @@
       "raw": 144,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 703,
@@ -3495,6 +3970,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 144,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -3507,6 +3984,7 @@
       "raw": 100,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 664,
@@ -3517,6 +3995,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 100,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -3529,6 +4009,7 @@
       "raw": 108,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1125,
@@ -3539,6 +4020,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 108,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -3551,6 +4034,7 @@
       "raw": 124,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1458,
@@ -3561,6 +4045,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 124,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -3573,6 +4059,7 @@
       "raw": 140,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1612,
@@ -3583,6 +4070,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 140,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -3595,6 +4084,7 @@
       "raw": 420,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 5375,
@@ -3605,6 +4095,8 @@
       "objects": 0,
       "sources": 0,
       "data_payload": 420,
+      "in_c": 0,
+      "raw_c": 0,
       "typed": 0,
       "percent": 0.0
     },
@@ -3617,6 +4109,7 @@
       "raw": 2856,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 25828,
@@ -3627,6 +4120,8 @@
       "objects": 3,
       "sources": 3,
       "data_payload": 2860,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 0.14
     },
@@ -3639,6 +4134,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 475,
@@ -3649,6 +4145,8 @@
       "objects": 1,
       "sources": 1,
       "data_payload": 512,
+      "in_c": 512,
+      "raw_c": 0,
       "typed": 512,
       "percent": 100.0
     },
@@ -3661,6 +4159,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 11824,
@@ -3671,6 +4170,8 @@
       "objects": 67,
       "sources": 67,
       "data_payload": 1272,
+      "in_c": 1272,
+      "raw_c": 0,
       "typed": 1272,
       "percent": 100.0
     },
@@ -3683,6 +4184,7 @@
       "raw": 684,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 12866,
@@ -3693,6 +4195,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 688,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 0.58
     },
@@ -3705,6 +4209,7 @@
       "raw": 1804,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 32601,
@@ -3715,6 +4220,8 @@
       "objects": 4,
       "sources": 4,
       "data_payload": 1808,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 0.22
     },
@@ -3727,6 +4234,7 @@
       "raw": 204,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2586,
@@ -3737,6 +4245,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 208,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 1.92
     },
@@ -3749,6 +4259,7 @@
       "raw": 48,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2281,
@@ -3759,6 +4270,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 52,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 7.69
     },
@@ -3771,6 +4284,7 @@
       "raw": 188,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2742,
@@ -3781,6 +4295,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 192,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 2.08
     },
@@ -3793,6 +4309,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 164298,
@@ -3803,8 +4320,10 @@
       "objects": 700,
       "sources": 700,
       "data_payload": 26292,
-      "typed": 26292,
-      "percent": 100.0
+      "in_c": 26292,
+      "raw_c": 1596,
+      "typed": 24696,
+      "percent": 93.93
     },
     {
       "target": "emi/etc/game/01",
@@ -3815,6 +4334,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3242,
@@ -3825,6 +4345,8 @@
       "objects": 6,
       "sources": 6,
       "data_payload": 236,
+      "in_c": 236,
+      "raw_c": 0,
       "typed": 236,
       "percent": 100.0
     },
@@ -3837,6 +4359,7 @@
       "raw": 3152,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 28699,
@@ -3847,6 +4370,8 @@
       "objects": 3,
       "sources": 3,
       "data_payload": 3156,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 0.13
     },
@@ -3859,6 +4384,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 66943,
@@ -3869,8 +4395,10 @@
       "objects": 274,
       "sources": 274,
       "data_payload": 5064,
-      "typed": 5032,
-      "percent": 99.37
+      "in_c": 5032,
+      "raw_c": 1993,
+      "typed": 3039,
+      "percent": 60.01
     },
     {
       "target": "emi/etc/sisyou/00",
@@ -3881,6 +4409,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 10786,
@@ -3891,8 +4420,10 @@
       "objects": 49,
       "sources": 49,
       "data_payload": 843,
-      "typed": 843,
-      "percent": 100.0
+      "in_c": 843,
+      "raw_c": 244,
+      "typed": 599,
+      "percent": 71.06
     },
     {
       "target": "emi/etc/start/08",
@@ -3903,6 +4434,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 88882,
@@ -3913,8 +4445,10 @@
       "objects": 345,
       "sources": 345,
       "data_payload": 9998,
-      "typed": 9998,
-      "percent": 100.0
+      "in_c": 9998,
+      "raw_c": 2073,
+      "typed": 7925,
+      "percent": 79.27
     },
     {
       "target": "emi/etc/start/09",
@@ -3925,6 +4459,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4071,
@@ -3935,6 +4470,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 624,
+      "in_c": 624,
+      "raw_c": 0,
       "typed": 624,
       "percent": 100.0
     },
@@ -3947,6 +4484,7 @@
       "raw": 96,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4725,
@@ -3957,6 +4495,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 100,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 4.0
     },
@@ -3969,6 +4509,7 @@
       "raw": 100,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4261,
@@ -3979,6 +4520,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 104,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 3.85
     },
@@ -3991,6 +4534,7 @@
       "raw": 128,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 6291,
@@ -4001,6 +4545,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 132,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 3.03
     },
@@ -4013,6 +4559,7 @@
       "raw": 100,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 5108,
@@ -4023,6 +4570,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 104,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 3.85
     },
@@ -4035,6 +4584,7 @@
       "raw": 128,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 7140,
@@ -4045,6 +4595,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 132,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 3.03
     },
@@ -4057,6 +4609,7 @@
       "raw": 120,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 5710,
@@ -4067,6 +4620,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 124,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 3.23
     },
@@ -4079,6 +4634,7 @@
       "raw": 132,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 6678,
@@ -4089,6 +4645,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 136,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 2.94
     },
@@ -4101,6 +4659,7 @@
       "raw": 88,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4289,
@@ -4111,6 +4670,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 92,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 4.35
     },
@@ -4123,6 +4684,7 @@
       "raw": 100,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4971,
@@ -4133,6 +4695,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 104,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 3.85
     },
@@ -4145,6 +4709,7 @@
       "raw": 128,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 7004,
@@ -4155,6 +4720,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 132,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 3.03
     },
@@ -4167,6 +4734,7 @@
       "raw": 96,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4588,
@@ -4177,6 +4745,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 100,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 4.0
     },
@@ -4189,6 +4759,7 @@
       "raw": 76,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3950,
@@ -4199,6 +4770,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 80,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 5.0
     },
@@ -4211,6 +4784,7 @@
       "raw": 96,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3309,
@@ -4221,6 +4795,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 100,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 4.0
     },
@@ -4233,6 +4809,7 @@
       "raw": 92,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3824,
@@ -4243,6 +4820,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 96,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 4.17
     },
@@ -4255,6 +4834,7 @@
       "raw": 120,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 5858,
@@ -4265,6 +4845,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 124,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 3.23
     },
@@ -4277,6 +4859,7 @@
       "raw": 88,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3443,
@@ -4287,6 +4870,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 92,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 4.35
     },
@@ -4299,6 +4884,7 @@
       "raw": 132,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 6538,
@@ -4309,6 +4895,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 136,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 2.94
     },
@@ -4321,6 +4909,7 @@
       "raw": 100,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4124,
@@ -4331,6 +4920,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 104,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 3.85
     },
@@ -4343,6 +4934,7 @@
       "raw": 128,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 6159,
@@ -4353,6 +4945,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 132,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 3.03
     },
@@ -4365,6 +4959,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4925,
@@ -4375,6 +4970,8 @@
       "objects": 4,
       "sources": 4,
       "data_payload": 80,
+      "in_c": 80,
+      "raw_c": 0,
       "typed": 80,
       "percent": 100.0
     },
@@ -4387,6 +4984,7 @@
       "raw": 56,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3743,
@@ -4397,6 +4995,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 60,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 6.67
     },
@@ -4409,6 +5009,7 @@
       "raw": 1960,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 8417,
@@ -4419,6 +5020,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 1964,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 0.2
     },
@@ -4431,6 +5034,7 @@
       "raw": 64,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2807,
@@ -4441,6 +5045,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 68,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 5.88
     },
@@ -4453,6 +5059,7 @@
       "raw": 112,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 5160,
@@ -4463,6 +5070,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 116,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 3.45
     },
@@ -4475,6 +5084,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 4324,
       "nonzero": 18301,
@@ -4485,6 +5095,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 716,
+      "in_c": 716,
+      "raw_c": 0,
       "typed": 716,
       "percent": 100.0
     },
@@ -4497,6 +5109,7 @@
       "raw": 1732,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 23937,
@@ -4507,6 +5120,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 1736,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 0.23
     },
@@ -4519,6 +5134,7 @@
       "raw": 1712,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 24032,
@@ -4529,6 +5145,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 1716,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 0.23
     },
@@ -4541,6 +5159,7 @@
       "raw": 920,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 19349,
@@ -4551,6 +5170,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 924,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 0.43
     },
@@ -4563,6 +5184,7 @@
       "raw": 740,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 10565,
@@ -4573,6 +5195,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 744,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 0.54
     },
@@ -4585,6 +5209,7 @@
       "raw": 2392,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 21605,
@@ -4595,6 +5220,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 2396,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 0.17
     },
@@ -4607,6 +5234,7 @@
       "raw": 2004,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 24222,
@@ -4617,6 +5245,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 2008,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 0.2
     },
@@ -4629,6 +5259,7 @@
       "raw": 1160,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 22026,
@@ -4639,6 +5270,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 1164,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 0.34
     },
@@ -4651,6 +5284,7 @@
       "raw": 1336,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 24561,
@@ -4661,6 +5295,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 1340,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 0.3
     },
@@ -4673,6 +5309,7 @@
       "raw": 2356,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 24452,
@@ -4683,6 +5320,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 2360,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 0.17
     },
@@ -4695,6 +5334,7 @@
       "raw": 1408,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 24970,
@@ -4705,6 +5345,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 1412,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 0.28
     },
@@ -4717,6 +5359,7 @@
       "raw": 1424,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 13505,
@@ -4727,6 +5370,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 1428,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 0.28
     },
@@ -4739,6 +5384,7 @@
       "raw": 1674,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 20977,
@@ -4749,6 +5395,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 1678,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 0.24
     },
@@ -4761,6 +5409,7 @@
       "raw": 936,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 16574,
@@ -4771,6 +5420,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 940,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 0.43
     },
@@ -4783,6 +5434,7 @@
       "raw": 1180,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 17901,
@@ -4793,6 +5445,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 1184,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 0.34
     },
@@ -4805,6 +5459,7 @@
       "raw": 1304,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 23714,
@@ -4815,6 +5470,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 1308,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 0.31
     },
@@ -4827,6 +5484,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4967,
@@ -4837,6 +5495,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 208,
+      "in_c": 208,
+      "raw_c": 0,
       "typed": 208,
       "percent": 100.0
     },
@@ -4849,6 +5509,7 @@
       "raw": 4556,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 9698,
@@ -4859,6 +5520,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 4560,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 0.09
     },
@@ -4871,6 +5534,7 @@
       "raw": 56,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 277,
@@ -4881,6 +5545,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 60,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 6.67
     },
@@ -4893,6 +5559,7 @@
       "raw": 56,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 354,
@@ -4903,6 +5570,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 60,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 6.67
     },
@@ -4915,6 +5584,7 @@
       "raw": 4900,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3803,
@@ -4922,9 +5592,11 @@
       "data": 4,
       "bss": 0,
       "map_bss": 0,
-      "objects": 2,
-      "sources": 2,
+      "objects": 3,
+      "sources": 3,
       "data_payload": 4904,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 0.08
     },
@@ -4937,6 +5609,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4167,
@@ -4947,8 +5620,10 @@
       "objects": 6,
       "sources": 6,
       "data_payload": 5180,
-      "typed": 5180,
-      "percent": 100.0
+      "in_c": 5180,
+      "raw_c": 5176,
+      "typed": 4,
+      "percent": 0.08
     },
     {
       "target": "emi/world00/area002/09",
@@ -4959,6 +5634,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2755,
@@ -4969,8 +5645,10 @@
       "objects": 3,
       "sources": 3,
       "data_payload": 3676,
-      "typed": 3676,
-      "percent": 100.0
+      "in_c": 3676,
+      "raw_c": 3672,
+      "typed": 4,
+      "percent": 0.11
     },
     {
       "target": "emi/world00/area003/13",
@@ -4981,6 +5659,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1374,
@@ -4991,8 +5670,10 @@
       "objects": 10,
       "sources": 10,
       "data_payload": 1396,
-      "typed": 1396,
-      "percent": 100.0
+      "in_c": 1396,
+      "raw_c": 1392,
+      "typed": 4,
+      "percent": 0.29
     },
     {
       "target": "emi/world00/area004/09",
@@ -5003,6 +5684,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2509,
@@ -5013,8 +5695,10 @@
       "objects": 3,
       "sources": 3,
       "data_payload": 3412,
-      "typed": 3412,
-      "percent": 100.0
+      "in_c": 3412,
+      "raw_c": 3408,
+      "typed": 4,
+      "percent": 0.12
     },
     {
       "target": "emi/world00/area005/13",
@@ -5025,6 +5709,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3047,
@@ -5035,8 +5720,10 @@
       "objects": 6,
       "sources": 6,
       "data_payload": 3596,
-      "typed": 3596,
-      "percent": 100.0
+      "in_c": 3596,
+      "raw_c": 3592,
+      "typed": 4,
+      "percent": 0.11
     },
     {
       "target": "emi/world00/area006/13",
@@ -5047,6 +5734,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1047,
@@ -5057,8 +5745,10 @@
       "objects": 1,
       "sources": 1,
       "data_payload": 1620,
-      "typed": 1620,
-      "percent": 100.0
+      "in_c": 1620,
+      "raw_c": 1620,
+      "typed": 0,
+      "percent": 0.0
     },
     {
       "target": "emi/world00/area007/13",
@@ -5069,6 +5759,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1933,
@@ -5079,8 +5770,10 @@
       "objects": 11,
       "sources": 11,
       "data_payload": 1644,
-      "typed": 1644,
-      "percent": 100.0
+      "in_c": 1644,
+      "raw_c": 1640,
+      "typed": 4,
+      "percent": 0.24
     },
     {
       "target": "emi/world00/area008/13",
@@ -5091,6 +5784,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 7824,
@@ -5101,8 +5795,10 @@
       "objects": 54,
       "sources": 54,
       "data_payload": 3484,
-      "typed": 3484,
-      "percent": 100.0
+      "in_c": 3484,
+      "raw_c": 3340,
+      "typed": 144,
+      "percent": 4.13
     },
     {
       "target": "emi/world00/area009/13",
@@ -5113,6 +5809,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1850,
@@ -5123,8 +5820,10 @@
       "objects": 1,
       "sources": 1,
       "data_payload": 2636,
-      "typed": 2636,
-      "percent": 100.0
+      "in_c": 2636,
+      "raw_c": 2636,
+      "typed": 0,
+      "percent": 0.0
     },
     {
       "target": "emi/world00/area010/13",
@@ -5135,6 +5834,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1969,
@@ -5145,8 +5845,10 @@
       "objects": 7,
       "sources": 7,
       "data_payload": 2276,
-      "typed": 2276,
-      "percent": 100.0
+      "in_c": 2276,
+      "raw_c": 2272,
+      "typed": 4,
+      "percent": 0.18
     },
     {
       "target": "emi/world00/area011/13",
@@ -5157,6 +5859,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 958,
@@ -5167,8 +5870,10 @@
       "objects": 5,
       "sources": 5,
       "data_payload": 896,
-      "typed": 896,
-      "percent": 100.0
+      "in_c": 896,
+      "raw_c": 892,
+      "typed": 4,
+      "percent": 0.45
     },
     {
       "target": "emi/world00/area012/13",
@@ -5179,6 +5884,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 717,
@@ -5189,8 +5895,10 @@
       "objects": 3,
       "sources": 3,
       "data_payload": 880,
-      "typed": 880,
-      "percent": 100.0
+      "in_c": 880,
+      "raw_c": 876,
+      "typed": 4,
+      "percent": 0.45
     },
     {
       "target": "emi/world00/area013/13",
@@ -5201,6 +5909,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3950,
@@ -5211,8 +5920,10 @@
       "objects": 8,
       "sources": 8,
       "data_payload": 5392,
-      "typed": 5392,
-      "percent": 100.0
+      "in_c": 5392,
+      "raw_c": 5388,
+      "typed": 4,
+      "percent": 0.07
     },
     {
       "target": "emi/world00/area014/13",
@@ -5223,6 +5934,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1904,
@@ -5233,8 +5945,10 @@
       "objects": 3,
       "sources": 3,
       "data_payload": 2720,
-      "typed": 2720,
-      "percent": 100.0
+      "in_c": 2720,
+      "raw_c": 2716,
+      "typed": 4,
+      "percent": 0.15
     },
     {
       "target": "emi/world00/area015/13",
@@ -5245,6 +5959,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3958,
@@ -5255,8 +5970,10 @@
       "objects": 13,
       "sources": 13,
       "data_payload": 4412,
-      "typed": 4412,
-      "percent": 100.0
+      "in_c": 4412,
+      "raw_c": 4408,
+      "typed": 4,
+      "percent": 0.09
     },
     {
       "target": "emi/world00/area016/13",
@@ -5267,6 +5984,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 6810,
@@ -5277,8 +5995,10 @@
       "objects": 38,
       "sources": 38,
       "data_payload": 1130,
-      "typed": 1130,
-      "percent": 100.0
+      "in_c": 1130,
+      "raw_c": 682,
+      "typed": 448,
+      "percent": 39.65
     },
     {
       "target": "emi/world00/area017/13",
@@ -5289,6 +6009,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 427,
@@ -5299,8 +6020,10 @@
       "objects": 1,
       "sources": 1,
       "data_payload": 664,
-      "typed": 664,
-      "percent": 100.0
+      "in_c": 664,
+      "raw_c": 664,
+      "typed": 0,
+      "percent": 0.0
     },
     {
       "target": "emi/world00/area018/13",
@@ -5311,6 +6034,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 924,
@@ -5321,8 +6045,10 @@
       "objects": 5,
       "sources": 5,
       "data_payload": 1008,
-      "typed": 1008,
-      "percent": 100.0
+      "in_c": 1008,
+      "raw_c": 1004,
+      "typed": 4,
+      "percent": 0.4
     },
     {
       "target": "emi/world00/area019/13",
@@ -5333,6 +6059,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1229,
@@ -5343,8 +6070,10 @@
       "objects": 10,
       "sources": 10,
       "data_payload": 1268,
-      "typed": 1268,
-      "percent": 100.0
+      "in_c": 1268,
+      "raw_c": 1264,
+      "typed": 4,
+      "percent": 0.32
     },
     {
       "target": "emi/world00/area020/13",
@@ -5355,6 +6084,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 357,
@@ -5365,8 +6095,10 @@
       "objects": 4,
       "sources": 4,
       "data_payload": 212,
-      "typed": 212,
-      "percent": 100.0
+      "in_c": 212,
+      "raw_c": 208,
+      "typed": 4,
+      "percent": 1.89
     },
     {
       "target": "emi/world00/area021/13",
@@ -5377,6 +6109,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1382,
@@ -5387,8 +6120,10 @@
       "objects": 6,
       "sources": 6,
       "data_payload": 1578,
-      "typed": 1578,
-      "percent": 100.0
+      "in_c": 1578,
+      "raw_c": 1574,
+      "typed": 4,
+      "percent": 0.25
     },
     {
       "target": "emi/world00/area022/13",
@@ -5399,6 +6134,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2394,
@@ -5409,8 +6145,10 @@
       "objects": 6,
       "sources": 6,
       "data_payload": 2908,
-      "typed": 2908,
-      "percent": 100.0
+      "in_c": 2908,
+      "raw_c": 2904,
+      "typed": 4,
+      "percent": 0.14
     },
     {
       "target": "emi/world00/area023/13",
@@ -5421,6 +6159,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2189,
@@ -5431,8 +6170,10 @@
       "objects": 9,
       "sources": 9,
       "data_payload": 2424,
-      "typed": 2424,
-      "percent": 100.0
+      "in_c": 2424,
+      "raw_c": 2420,
+      "typed": 4,
+      "percent": 0.17
     },
     {
       "target": "emi/world00/area024/14",
@@ -5443,6 +6184,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 9086,
@@ -5453,8 +6195,10 @@
       "objects": 4,
       "sources": 4,
       "data_payload": 6424,
-      "typed": 6424,
-      "percent": 100.0
+      "in_c": 6424,
+      "raw_c": 6364,
+      "typed": 60,
+      "percent": 0.93
     },
     {
       "target": "emi/world00/area025/13",
@@ -5465,6 +6209,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2512,
@@ -5475,8 +6220,10 @@
       "objects": 3,
       "sources": 3,
       "data_payload": 3224,
-      "typed": 3224,
-      "percent": 100.0
+      "in_c": 3224,
+      "raw_c": 3220,
+      "typed": 4,
+      "percent": 0.12
     },
     {
       "target": "emi/world00/area026/13",
@@ -5487,6 +6234,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 6508,
@@ -5497,8 +6245,10 @@
       "objects": 3,
       "sources": 3,
       "data_payload": 6397,
-      "typed": 6397,
-      "percent": 100.0
+      "in_c": 6397,
+      "raw_c": 6340,
+      "typed": 57,
+      "percent": 0.89
     },
     {
       "target": "emi/world00/area027/13",
@@ -5509,6 +6259,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 6534,
@@ -5519,8 +6270,10 @@
       "objects": 3,
       "sources": 3,
       "data_payload": 4832,
-      "typed": 4832,
-      "percent": 100.0
+      "in_c": 4832,
+      "raw_c": 4764,
+      "typed": 68,
+      "percent": 1.41
     },
     {
       "target": "emi/world00/area028/13",
@@ -5531,6 +6284,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3465,
@@ -5541,8 +6295,10 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 2400,
-      "typed": 2400,
-      "percent": 100.0
+      "in_c": 2400,
+      "raw_c": 2380,
+      "typed": 20,
+      "percent": 0.83
     },
     {
       "target": "emi/world00/area029/13",
@@ -5553,6 +6309,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 356,
@@ -5563,8 +6320,10 @@
       "objects": 4,
       "sources": 4,
       "data_payload": 208,
-      "typed": 208,
-      "percent": 100.0
+      "in_c": 208,
+      "raw_c": 204,
+      "typed": 4,
+      "percent": 1.92
     },
     {
       "target": "emi/world00/area030/03",
@@ -5575,6 +6334,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 40,
@@ -5585,8 +6345,10 @@
       "objects": 1,
       "sources": 1,
       "data_payload": 128,
-      "typed": 128,
-      "percent": 100.0
+      "in_c": 128,
+      "raw_c": 128,
+      "typed": 0,
+      "percent": 0.0
     },
     {
       "target": "emi/world00/area030/04",
@@ -5597,6 +6359,7 @@
       "raw": 1,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 53515,
@@ -5607,8 +6370,10 @@
       "objects": 238,
       "sources": 238,
       "data_payload": 5585,
-      "typed": 5564,
-      "percent": 99.62
+      "in_c": 5564,
+      "raw_c": 2008,
+      "typed": 3556,
+      "percent": 63.67
     },
     {
       "target": "emi/world00/area030/05",
@@ -5619,6 +6384,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 6729,
@@ -5629,8 +6395,10 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 108,
-      "typed": 108,
-      "percent": 100.0
+      "in_c": 108,
+      "raw_c": 32,
+      "typed": 76,
+      "percent": 70.37
     },
     {
       "target": "emi/world00/area031/13",
@@ -5641,6 +6409,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1113,
@@ -5651,8 +6420,10 @@
       "objects": 1,
       "sources": 1,
       "data_payload": 1640,
-      "typed": 1640,
-      "percent": 100.0
+      "in_c": 1640,
+      "raw_c": 1640,
+      "typed": 0,
+      "percent": 0.0
     },
     {
       "target": "emi/world00/area032/13",
@@ -5663,6 +6434,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 5508,
@@ -5673,8 +6445,10 @@
       "objects": 1,
       "sources": 1,
       "data_payload": 2472,
-      "typed": 2472,
-      "percent": 100.0
+      "in_c": 2472,
+      "raw_c": 2420,
+      "typed": 52,
+      "percent": 2.1
     },
     {
       "target": "emi/world00/area033/13",
@@ -5685,6 +6459,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 6559,
@@ -5695,8 +6470,10 @@
       "objects": 38,
       "sources": 38,
       "data_payload": 922,
-      "typed": 922,
-      "percent": 100.0
+      "in_c": 922,
+      "raw_c": 918,
+      "typed": 4,
+      "percent": 0.43
     },
     {
       "target": "emi/world00/area034/13",
@@ -5707,6 +6484,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2449,
@@ -5717,8 +6495,10 @@
       "objects": 6,
       "sources": 6,
       "data_payload": 2852,
-      "typed": 2852,
-      "percent": 100.0
+      "in_c": 2852,
+      "raw_c": 2848,
+      "typed": 4,
+      "percent": 0.14
     },
     {
       "target": "emi/world00/area035/13",
@@ -5729,6 +6509,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 596,
@@ -5739,8 +6520,10 @@
       "objects": 6,
       "sources": 6,
       "data_payload": 400,
-      "typed": 400,
-      "percent": 100.0
+      "in_c": 400,
+      "raw_c": 396,
+      "typed": 4,
+      "percent": 1.0
     },
     {
       "target": "emi/world00/area036/13",
@@ -5751,6 +6534,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1318,
@@ -5761,8 +6545,10 @@
       "objects": 9,
       "sources": 9,
       "data_payload": 532,
-      "typed": 532,
-      "percent": 100.0
+      "in_c": 532,
+      "raw_c": 528,
+      "typed": 4,
+      "percent": 0.75
     },
     {
       "target": "emi/world00/area037/13",
@@ -5773,6 +6559,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 5887,
@@ -5783,8 +6570,10 @@
       "objects": 27,
       "sources": 27,
       "data_payload": 3964,
-      "typed": 3964,
-      "percent": 100.0
+      "in_c": 3964,
+      "raw_c": 3960,
+      "typed": 4,
+      "percent": 0.1
     },
     {
       "target": "emi/world01/area038/13",
@@ -5795,6 +6584,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3151,
@@ -5805,8 +6595,10 @@
       "objects": 6,
       "sources": 6,
       "data_payload": 3428,
-      "typed": 3428,
-      "percent": 100.0
+      "in_c": 3428,
+      "raw_c": 3424,
+      "typed": 4,
+      "percent": 0.12
     },
     {
       "target": "emi/world01/area039/13",
@@ -5817,6 +6609,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 6085,
@@ -5827,8 +6620,10 @@
       "objects": 19,
       "sources": 19,
       "data_payload": 7268,
-      "typed": 7268,
-      "percent": 100.0
+      "in_c": 7268,
+      "raw_c": 7264,
+      "typed": 4,
+      "percent": 0.06
     },
     {
       "target": "emi/world01/area040/13",
@@ -5839,6 +6634,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 5684,
@@ -5849,8 +6645,10 @@
       "objects": 21,
       "sources": 21,
       "data_payload": 3472,
-      "typed": 3472,
-      "percent": 100.0
+      "in_c": 3472,
+      "raw_c": 3468,
+      "typed": 4,
+      "percent": 0.12
     },
     {
       "target": "emi/world01/area041/13",
@@ -5861,6 +6659,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 8217,
@@ -5871,8 +6670,10 @@
       "objects": 39,
       "sources": 39,
       "data_payload": 5066,
-      "typed": 5066,
-      "percent": 100.0
+      "in_c": 5066,
+      "raw_c": 5062,
+      "typed": 4,
+      "percent": 0.08
     },
     {
       "target": "emi/world01/area042/13",
@@ -5883,6 +6684,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 8222,
@@ -5893,8 +6695,10 @@
       "objects": 36,
       "sources": 36,
       "data_payload": 1144,
-      "typed": 1144,
-      "percent": 100.0
+      "in_c": 1144,
+      "raw_c": 1140,
+      "typed": 4,
+      "percent": 0.35
     },
     {
       "target": "emi/world01/area043/13",
@@ -5905,6 +6709,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2319,
@@ -5915,8 +6720,10 @@
       "objects": 8,
       "sources": 8,
       "data_payload": 1880,
-      "typed": 1880,
-      "percent": 100.0
+      "in_c": 1880,
+      "raw_c": 1876,
+      "typed": 4,
+      "percent": 0.21
     },
     {
       "target": "emi/world01/area044/13",
@@ -5927,6 +6734,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3742,
@@ -5937,8 +6745,10 @@
       "objects": 8,
       "sources": 8,
       "data_payload": 1740,
-      "typed": 1740,
-      "percent": 100.0
+      "in_c": 1740,
+      "raw_c": 1736,
+      "typed": 4,
+      "percent": 0.23
     },
     {
       "target": "emi/world01/area045/13",
@@ -5949,6 +6759,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 7267,
@@ -5959,8 +6770,10 @@
       "objects": 36,
       "sources": 36,
       "data_payload": 1698,
-      "typed": 1698,
-      "percent": 100.0
+      "in_c": 1698,
+      "raw_c": 1694,
+      "typed": 4,
+      "percent": 0.24
     },
     {
       "target": "emi/world01/area046/13",
@@ -5971,6 +6784,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1765,
@@ -5981,8 +6795,10 @@
       "objects": 6,
       "sources": 6,
       "data_payload": 1896,
-      "typed": 1896,
-      "percent": 100.0
+      "in_c": 1896,
+      "raw_c": 1892,
+      "typed": 4,
+      "percent": 0.21
     },
     {
       "target": "emi/world01/area047/13",
@@ -5993,6 +6809,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3621,
@@ -6003,8 +6820,10 @@
       "objects": 17,
       "sources": 17,
       "data_payload": 1252,
-      "typed": 1252,
-      "percent": 100.0
+      "in_c": 1252,
+      "raw_c": 1248,
+      "typed": 4,
+      "percent": 0.32
     },
     {
       "target": "emi/world01/area048/13",
@@ -6015,6 +6834,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 10785,
@@ -6025,8 +6845,10 @@
       "objects": 37,
       "sources": 37,
       "data_payload": 5792,
-      "typed": 5792,
-      "percent": 100.0
+      "in_c": 5792,
+      "raw_c": 5788,
+      "typed": 4,
+      "percent": 0.07
     },
     {
       "target": "emi/world01/area049/13",
@@ -6037,6 +6859,7 @@
       "raw": 92,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3280,
@@ -6047,6 +6870,8 @@
       "objects": 2,
       "sources": 2,
       "data_payload": 96,
+      "in_c": 4,
+      "raw_c": 0,
       "typed": 4,
       "percent": 4.17
     },
@@ -6059,6 +6884,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 9701,
@@ -6069,8 +6895,10 @@
       "objects": 30,
       "sources": 30,
       "data_payload": 9080,
-      "typed": 9080,
-      "percent": 100.0
+      "in_c": 9080,
+      "raw_c": 9076,
+      "typed": 4,
+      "percent": 0.04
     },
     {
       "target": "emi/world01/area050/13",
@@ -6081,6 +6909,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3407,
@@ -6091,8 +6920,10 @@
       "objects": 9,
       "sources": 9,
       "data_payload": 4384,
-      "typed": 4384,
-      "percent": 100.0
+      "in_c": 4384,
+      "raw_c": 4380,
+      "typed": 4,
+      "percent": 0.09
     },
     {
       "target": "emi/world01/area051/13",
@@ -6103,6 +6934,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1703,
@@ -6113,8 +6945,10 @@
       "objects": 6,
       "sources": 6,
       "data_payload": 1796,
-      "typed": 1796,
-      "percent": 100.0
+      "in_c": 1796,
+      "raw_c": 1792,
+      "typed": 4,
+      "percent": 0.22
     },
     {
       "target": "emi/world01/area052/13",
@@ -6125,6 +6959,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 7195,
@@ -6135,8 +6970,10 @@
       "objects": 28,
       "sources": 28,
       "data_payload": 3380,
-      "typed": 3380,
-      "percent": 100.0
+      "in_c": 3380,
+      "raw_c": 3376,
+      "typed": 4,
+      "percent": 0.12
     },
     {
       "target": "emi/world01/area053/13",
@@ -6147,6 +6984,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2052,
@@ -6157,8 +6995,10 @@
       "objects": 3,
       "sources": 3,
       "data_payload": 2544,
-      "typed": 2544,
-      "percent": 100.0
+      "in_c": 2544,
+      "raw_c": 2540,
+      "typed": 4,
+      "percent": 0.16
     },
     {
       "target": "emi/world01/area054/13",
@@ -6169,6 +7009,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2212,
@@ -6179,8 +7020,10 @@
       "objects": 3,
       "sources": 3,
       "data_payload": 2760,
-      "typed": 2760,
-      "percent": 100.0
+      "in_c": 2760,
+      "raw_c": 2756,
+      "typed": 4,
+      "percent": 0.14
     },
     {
       "target": "emi/world01/area055/13",
@@ -6191,6 +7034,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3941,
@@ -6201,8 +7045,10 @@
       "objects": 8,
       "sources": 8,
       "data_payload": 4712,
-      "typed": 4712,
-      "percent": 100.0
+      "in_c": 4712,
+      "raw_c": 4708,
+      "typed": 4,
+      "percent": 0.08
     },
     {
       "target": "emi/world01/area056/13",
@@ -6213,6 +7059,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2501,
@@ -6223,8 +7070,10 @@
       "objects": 23,
       "sources": 23,
       "data_payload": 972,
-      "typed": 972,
-      "percent": 100.0
+      "in_c": 972,
+      "raw_c": 968,
+      "typed": 4,
+      "percent": 0.41
     },
     {
       "target": "emi/world01/area057/13",
@@ -6235,6 +7084,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 5680,
@@ -6245,8 +7095,10 @@
       "objects": 7,
       "sources": 7,
       "data_payload": 7579,
-      "typed": 7579,
-      "percent": 100.0
+      "in_c": 7579,
+      "raw_c": 7575,
+      "typed": 4,
+      "percent": 0.05
     },
     {
       "target": "emi/world01/area058/13",
@@ -6257,6 +7109,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2743,
@@ -6267,8 +7120,10 @@
       "objects": 3,
       "sources": 3,
       "data_payload": 3804,
-      "typed": 3804,
-      "percent": 100.0
+      "in_c": 3804,
+      "raw_c": 3800,
+      "typed": 4,
+      "percent": 0.11
     },
     {
       "target": "emi/world01/area059/13",
@@ -6279,6 +7134,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2340,
@@ -6289,8 +7145,10 @@
       "objects": 17,
       "sources": 17,
       "data_payload": 1148,
-      "typed": 1148,
-      "percent": 100.0
+      "in_c": 1148,
+      "raw_c": 1144,
+      "typed": 4,
+      "percent": 0.35
     },
     {
       "target": "emi/world01/area060/13",
@@ -6301,6 +7159,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1613,
@@ -6311,8 +7170,10 @@
       "objects": 7,
       "sources": 7,
       "data_payload": 348,
-      "typed": 348,
-      "percent": 100.0
+      "in_c": 348,
+      "raw_c": 344,
+      "typed": 4,
+      "percent": 1.15
     },
     {
       "target": "emi/world01/area061/13",
@@ -6323,6 +7184,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 802,
@@ -6333,8 +7195,10 @@
       "objects": 8,
       "sources": 8,
       "data_payload": 724,
-      "typed": 724,
-      "percent": 100.0
+      "in_c": 724,
+      "raw_c": 720,
+      "typed": 4,
+      "percent": 0.55
     },
     {
       "target": "emi/world01/area062/13",
@@ -6345,6 +7209,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 540,
@@ -6355,8 +7220,10 @@
       "objects": 4,
       "sources": 4,
       "data_payload": 288,
-      "typed": 288,
-      "percent": 100.0
+      "in_c": 288,
+      "raw_c": 284,
+      "typed": 4,
+      "percent": 1.39
     },
     {
       "target": "emi/world01/area063/13",
@@ -6367,6 +7234,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 354,
@@ -6377,8 +7245,10 @@
       "objects": 4,
       "sources": 4,
       "data_payload": 208,
-      "typed": 208,
-      "percent": 100.0
+      "in_c": 208,
+      "raw_c": 204,
+      "typed": 4,
+      "percent": 1.92
     },
     {
       "target": "emi/world01/area064/13",
@@ -6389,6 +7259,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 354,
@@ -6399,8 +7270,10 @@
       "objects": 4,
       "sources": 4,
       "data_payload": 208,
-      "typed": 208,
-      "percent": 100.0
+      "in_c": 208,
+      "raw_c": 204,
+      "typed": 4,
+      "percent": 1.92
     },
     {
       "target": "emi/world01/area065/13",
@@ -6411,6 +7284,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 7086,
@@ -6421,8 +7295,10 @@
       "objects": 37,
       "sources": 37,
       "data_payload": 1446,
-      "typed": 1446,
-      "percent": 100.0
+      "in_c": 1446,
+      "raw_c": 1442,
+      "typed": 4,
+      "percent": 0.28
     },
     {
       "target": "emi/world01/area066/13",
@@ -6433,6 +7309,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 422,
@@ -6443,8 +7320,10 @@
       "objects": 1,
       "sources": 1,
       "data_payload": 592,
-      "typed": 592,
-      "percent": 100.0
+      "in_c": 592,
+      "raw_c": 592,
+      "typed": 0,
+      "percent": 0.0
     },
     {
       "target": "emi/world01/area067/14",
@@ -6455,6 +7334,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 7729,
@@ -6465,8 +7345,10 @@
       "objects": 43,
       "sources": 43,
       "data_payload": 3464,
-      "typed": 3464,
-      "percent": 100.0
+      "in_c": 3464,
+      "raw_c": 3460,
+      "typed": 4,
+      "percent": 0.12
     },
     {
       "target": "emi/world01/area068/13",
@@ -6477,6 +7359,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 6562,
@@ -6487,8 +7370,10 @@
       "objects": 52,
       "sources": 52,
       "data_payload": 3640,
-      "typed": 3640,
-      "percent": 100.0
+      "in_c": 3640,
+      "raw_c": 3636,
+      "typed": 4,
+      "percent": 0.11
     },
     {
       "target": "emi/world01/area069/13",
@@ -6499,6 +7384,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3746,
@@ -6509,8 +7395,10 @@
       "objects": 5,
       "sources": 5,
       "data_payload": 4340,
-      "typed": 4340,
-      "percent": 100.0
+      "in_c": 4340,
+      "raw_c": 4336,
+      "typed": 4,
+      "percent": 0.09
     },
     {
       "target": "emi/world01/area070/13",
@@ -6521,6 +7409,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 118,
@@ -6531,8 +7420,10 @@
       "objects": 1,
       "sources": 1,
       "data_payload": 224,
-      "typed": 224,
-      "percent": 100.0
+      "in_c": 224,
+      "raw_c": 224,
+      "typed": 0,
+      "percent": 0.0
     },
     {
       "target": "emi/world01/area071/13",
@@ -6543,6 +7434,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1048,
@@ -6553,8 +7445,10 @@
       "objects": 4,
       "sources": 4,
       "data_payload": 968,
-      "typed": 968,
-      "percent": 100.0
+      "in_c": 968,
+      "raw_c": 964,
+      "typed": 4,
+      "percent": 0.41
     },
     {
       "target": "emi/world01/area072/13",
@@ -6565,6 +7459,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 353,
@@ -6575,8 +7470,10 @@
       "objects": 4,
       "sources": 4,
       "data_payload": 208,
-      "typed": 208,
-      "percent": 100.0
+      "in_c": 208,
+      "raw_c": 204,
+      "typed": 4,
+      "percent": 1.92
     },
     {
       "target": "emi/world01/area073/13",
@@ -6587,6 +7484,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 353,
@@ -6597,8 +7495,10 @@
       "objects": 4,
       "sources": 4,
       "data_payload": 208,
-      "typed": 208,
-      "percent": 100.0
+      "in_c": 208,
+      "raw_c": 204,
+      "typed": 4,
+      "percent": 1.92
     },
     {
       "target": "emi/world01/area074/13",
@@ -6609,6 +7509,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3055,
@@ -6619,8 +7520,10 @@
       "objects": 10,
       "sources": 10,
       "data_payload": 3524,
-      "typed": 3524,
-      "percent": 100.0
+      "in_c": 3524,
+      "raw_c": 3520,
+      "typed": 4,
+      "percent": 0.11
     },
     {
       "target": "emi/world01/area075/13",
@@ -6631,6 +7534,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 8844,
@@ -6641,8 +7545,10 @@
       "objects": 39,
       "sources": 39,
       "data_payload": 2472,
-      "typed": 2472,
-      "percent": 100.0
+      "in_c": 2472,
+      "raw_c": 2468,
+      "typed": 4,
+      "percent": 0.16
     },
     {
       "target": "emi/world02/area076/13",
@@ -6653,6 +7559,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 135,
@@ -6663,8 +7570,10 @@
       "objects": 3,
       "sources": 3,
       "data_payload": 192,
-      "typed": 192,
-      "percent": 100.0
+      "in_c": 192,
+      "raw_c": 188,
+      "typed": 4,
+      "percent": 2.08
     },
     {
       "target": "emi/world02/area077/14",
@@ -6675,6 +7584,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 12096,
@@ -6685,8 +7595,10 @@
       "objects": 78,
       "sources": 78,
       "data_payload": 2348,
-      "typed": 2348,
-      "percent": 100.0
+      "in_c": 2348,
+      "raw_c": 2344,
+      "typed": 4,
+      "percent": 0.17
     },
     {
       "target": "emi/world02/area078/13",
@@ -6697,6 +7609,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4122,
@@ -6707,8 +7620,10 @@
       "objects": 11,
       "sources": 11,
       "data_payload": 4884,
-      "typed": 4884,
-      "percent": 100.0
+      "in_c": 4884,
+      "raw_c": 4880,
+      "typed": 4,
+      "percent": 0.08
     },
     {
       "target": "emi/world02/area079/13",
@@ -6719,6 +7634,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 6335,
@@ -6729,8 +7645,10 @@
       "objects": 11,
       "sources": 11,
       "data_payload": 7568,
-      "typed": 7568,
-      "percent": 100.0
+      "in_c": 7568,
+      "raw_c": 7564,
+      "typed": 4,
+      "percent": 0.05
     },
     {
       "target": "emi/world02/area080/13",
@@ -6741,6 +7659,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4706,
@@ -6751,8 +7670,10 @@
       "objects": 24,
       "sources": 24,
       "data_payload": 1796,
-      "typed": 1796,
-      "percent": 100.0
+      "in_c": 1796,
+      "raw_c": 1792,
+      "typed": 4,
+      "percent": 0.22
     },
     {
       "target": "emi/world02/area081/13",
@@ -6763,6 +7684,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2341,
@@ -6773,8 +7695,10 @@
       "objects": 7,
       "sources": 7,
       "data_payload": 2720,
-      "typed": 2720,
-      "percent": 100.0
+      "in_c": 2720,
+      "raw_c": 2716,
+      "typed": 4,
+      "percent": 0.15
     },
     {
       "target": "emi/world02/area082/13",
@@ -6785,6 +7709,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 10407,
@@ -6795,8 +7720,10 @@
       "objects": 57,
       "sources": 57,
       "data_payload": 3004,
-      "typed": 3004,
-      "percent": 100.0
+      "in_c": 3004,
+      "raw_c": 3000,
+      "typed": 4,
+      "percent": 0.13
     },
     {
       "target": "emi/world02/area083/13",
@@ -6807,6 +7734,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 632,
@@ -6817,8 +7745,10 @@
       "objects": 1,
       "sources": 1,
       "data_payload": 1180,
-      "typed": 1180,
-      "percent": 100.0
+      "in_c": 1180,
+      "raw_c": 1180,
+      "typed": 0,
+      "percent": 0.0
     },
     {
       "target": "emi/world02/area084/13",
@@ -6829,6 +7759,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 793,
@@ -6839,8 +7770,10 @@
       "objects": 3,
       "sources": 3,
       "data_payload": 1284,
-      "typed": 1284,
-      "percent": 100.0
+      "in_c": 1284,
+      "raw_c": 1280,
+      "typed": 4,
+      "percent": 0.31
     },
     {
       "target": "emi/world02/area085/13",
@@ -6851,6 +7784,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4310,
@@ -6861,8 +7795,10 @@
       "objects": 26,
       "sources": 26,
       "data_payload": 1556,
-      "typed": 1556,
-      "percent": 100.0
+      "in_c": 1556,
+      "raw_c": 1552,
+      "typed": 4,
+      "percent": 0.26
     },
     {
       "target": "emi/world02/area086/13",
@@ -6873,6 +7809,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3237,
@@ -6883,8 +7820,10 @@
       "objects": 11,
       "sources": 11,
       "data_payload": 1724,
-      "typed": 1724,
-      "percent": 100.0
+      "in_c": 1724,
+      "raw_c": 1720,
+      "typed": 4,
+      "percent": 0.23
     },
     {
       "target": "emi/world02/area087/13",
@@ -6895,6 +7834,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 7960,
@@ -6905,8 +7845,10 @@
       "objects": 37,
       "sources": 37,
       "data_payload": 2670,
-      "typed": 2670,
-      "percent": 100.0
+      "in_c": 2670,
+      "raw_c": 2666,
+      "typed": 4,
+      "percent": 0.15
     },
     {
       "target": "emi/world02/area088/13",
@@ -6917,6 +7859,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 9892,
@@ -6927,8 +7870,10 @@
       "objects": 50,
       "sources": 50,
       "data_payload": 2474,
-      "typed": 2474,
-      "percent": 100.0
+      "in_c": 2474,
+      "raw_c": 2470,
+      "typed": 4,
+      "percent": 0.16
     },
     {
       "target": "emi/world02/area089/03",
@@ -6939,6 +7884,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 39,
@@ -6949,8 +7895,10 @@
       "objects": 1,
       "sources": 1,
       "data_payload": 128,
-      "typed": 128,
-      "percent": 100.0
+      "in_c": 128,
+      "raw_c": 128,
+      "typed": 0,
+      "percent": 0.0
     },
     {
       "target": "emi/world02/area090/13",
@@ -6961,6 +7909,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3818,
@@ -6971,8 +7920,10 @@
       "objects": 3,
       "sources": 3,
       "data_payload": 5348,
-      "typed": 5348,
-      "percent": 100.0
+      "in_c": 5348,
+      "raw_c": 5344,
+      "typed": 4,
+      "percent": 0.07
     },
     {
       "target": "emi/world02/area091/13",
@@ -6983,6 +7934,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2971,
@@ -6993,8 +7945,10 @@
       "objects": 17,
       "sources": 17,
       "data_payload": 435,
-      "typed": 435,
-      "percent": 100.0
+      "in_c": 435,
+      "raw_c": 431,
+      "typed": 4,
+      "percent": 0.92
     },
     {
       "target": "emi/world02/area092/13",
@@ -7005,6 +7959,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4240,
@@ -7015,8 +7970,10 @@
       "objects": 14,
       "sources": 14,
       "data_payload": 1891,
-      "typed": 1891,
-      "percent": 100.0
+      "in_c": 1891,
+      "raw_c": 1887,
+      "typed": 4,
+      "percent": 0.21
     },
     {
       "target": "emi/world02/area093/13",
@@ -7027,6 +7984,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 129,
@@ -7037,8 +7995,10 @@
       "objects": 3,
       "sources": 3,
       "data_payload": 152,
-      "typed": 152,
-      "percent": 100.0
+      "in_c": 152,
+      "raw_c": 148,
+      "typed": 4,
+      "percent": 2.63
     },
     {
       "target": "emi/world02/area094/13",
@@ -7049,6 +8009,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 7955,
@@ -7059,8 +8020,10 @@
       "objects": 21,
       "sources": 21,
       "data_payload": 7797,
-      "typed": 7797,
-      "percent": 100.0
+      "in_c": 7797,
+      "raw_c": 7793,
+      "typed": 4,
+      "percent": 0.05
     },
     {
       "target": "emi/world02/area095/13",
@@ -7071,6 +8034,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3545,
@@ -7081,8 +8045,10 @@
       "objects": 16,
       "sources": 16,
       "data_payload": 2076,
-      "typed": 2076,
-      "percent": 100.0
+      "in_c": 2076,
+      "raw_c": 2072,
+      "typed": 4,
+      "percent": 0.19
     },
     {
       "target": "emi/world02/area096/13",
@@ -7093,6 +8059,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3449,
@@ -7103,8 +8070,10 @@
       "objects": 16,
       "sources": 16,
       "data_payload": 2048,
-      "typed": 2048,
-      "percent": 100.0
+      "in_c": 2048,
+      "raw_c": 2044,
+      "typed": 4,
+      "percent": 0.2
     },
     {
       "target": "emi/world02/area097/13",
@@ -7115,6 +8084,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 404,
@@ -7125,8 +8095,10 @@
       "objects": 5,
       "sources": 5,
       "data_payload": 268,
-      "typed": 268,
-      "percent": 100.0
+      "in_c": 268,
+      "raw_c": 264,
+      "typed": 4,
+      "percent": 1.49
     },
     {
       "target": "emi/world02/area098/13",
@@ -7137,6 +8109,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 10710,
@@ -7147,8 +8120,10 @@
       "objects": 60,
       "sources": 60,
       "data_payload": 1488,
-      "typed": 1488,
-      "percent": 100.0
+      "in_c": 1488,
+      "raw_c": 1484,
+      "typed": 4,
+      "percent": 0.27
     },
     {
       "target": "emi/world02/area099/13",
@@ -7159,6 +8134,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 5837,
@@ -7169,8 +8145,10 @@
       "objects": 13,
       "sources": 13,
       "data_payload": 6244,
-      "typed": 6244,
-      "percent": 100.0
+      "in_c": 6244,
+      "raw_c": 6240,
+      "typed": 4,
+      "percent": 0.06
     },
     {
       "target": "emi/world02/area100/13",
@@ -7181,6 +8159,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 6820,
@@ -7191,8 +8170,10 @@
       "objects": 32,
       "sources": 32,
       "data_payload": 3876,
-      "typed": 3876,
-      "percent": 100.0
+      "in_c": 3876,
+      "raw_c": 3872,
+      "typed": 4,
+      "percent": 0.1
     },
     {
       "target": "emi/world02/area101/13",
@@ -7203,6 +8184,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 925,
@@ -7213,8 +8195,10 @@
       "objects": 1,
       "sources": 1,
       "data_payload": 1264,
-      "typed": 1264,
-      "percent": 100.0
+      "in_c": 1264,
+      "raw_c": 1264,
+      "typed": 0,
+      "percent": 0.0
     },
     {
       "target": "emi/world02/area102/13",
@@ -7225,6 +8209,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2620,
@@ -7235,8 +8220,10 @@
       "objects": 17,
       "sources": 17,
       "data_payload": 420,
-      "typed": 420,
-      "percent": 100.0
+      "in_c": 420,
+      "raw_c": 416,
+      "typed": 4,
+      "percent": 0.95
     },
     {
       "target": "emi/world02/area103/13",
@@ -7247,6 +8234,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 9144,
@@ -7257,8 +8245,10 @@
       "objects": 50,
       "sources": 50,
       "data_payload": 1088,
-      "typed": 1088,
-      "percent": 100.0
+      "in_c": 1088,
+      "raw_c": 1084,
+      "typed": 4,
+      "percent": 0.37
     },
     {
       "target": "emi/world02/area104/14",
@@ -7269,6 +8259,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 11686,
@@ -7279,8 +8270,10 @@
       "objects": 61,
       "sources": 61,
       "data_payload": 496,
-      "typed": 496,
-      "percent": 100.0
+      "in_c": 496,
+      "raw_c": 492,
+      "typed": 4,
+      "percent": 0.81
     },
     {
       "target": "emi/world02/area105/13",
@@ -7291,6 +8284,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1580,
@@ -7301,8 +8295,10 @@
       "objects": 12,
       "sources": 12,
       "data_payload": 340,
-      "typed": 340,
-      "percent": 100.0
+      "in_c": 340,
+      "raw_c": 336,
+      "typed": 4,
+      "percent": 1.18
     },
     {
       "target": "emi/world02/area106/13",
@@ -7313,6 +8309,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 5615,
@@ -7323,8 +8320,10 @@
       "objects": 17,
       "sources": 17,
       "data_payload": 1544,
-      "typed": 1544,
-      "percent": 100.0
+      "in_c": 1544,
+      "raw_c": 1540,
+      "typed": 4,
+      "percent": 0.26
     },
     {
       "target": "emi/world02/area107/13",
@@ -7335,6 +8334,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 534,
@@ -7345,8 +8345,10 @@
       "objects": 8,
       "sources": 8,
       "data_payload": 200,
-      "typed": 200,
-      "percent": 100.0
+      "in_c": 200,
+      "raw_c": 196,
+      "typed": 4,
+      "percent": 2.0
     },
     {
       "target": "emi/world02/area108/14",
@@ -7357,6 +8359,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 10718,
@@ -7367,8 +8370,10 @@
       "objects": 58,
       "sources": 58,
       "data_payload": 3404,
-      "typed": 3404,
-      "percent": 100.0
+      "in_c": 3404,
+      "raw_c": 3400,
+      "typed": 4,
+      "percent": 0.12
     },
     {
       "target": "emi/world02/area109/13",
@@ -7379,6 +8384,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 664,
@@ -7389,8 +8395,10 @@
       "objects": 5,
       "sources": 5,
       "data_payload": 308,
-      "typed": 308,
-      "percent": 100.0
+      "in_c": 308,
+      "raw_c": 304,
+      "typed": 4,
+      "percent": 1.3
     },
     {
       "target": "emi/world02/area110/13",
@@ -7401,6 +8409,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 352,
@@ -7411,8 +8420,10 @@
       "objects": 4,
       "sources": 4,
       "data_payload": 208,
-      "typed": 208,
-      "percent": 100.0
+      "in_c": 208,
+      "raw_c": 204,
+      "typed": 4,
+      "percent": 1.92
     },
     {
       "target": "emi/world02/area111/13",
@@ -7423,6 +8434,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 9042,
@@ -7433,8 +8445,10 @@
       "objects": 28,
       "sources": 28,
       "data_payload": 5128,
-      "typed": 5128,
-      "percent": 100.0
+      "in_c": 5128,
+      "raw_c": 5124,
+      "typed": 4,
+      "percent": 0.08
     },
     {
       "target": "emi/world02/area112/13",
@@ -7445,6 +8459,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 5585,
@@ -7455,8 +8470,10 @@
       "objects": 23,
       "sources": 23,
       "data_payload": 1892,
-      "typed": 1892,
-      "percent": 100.0
+      "in_c": 1892,
+      "raw_c": 1888,
+      "typed": 4,
+      "percent": 0.21
     },
     {
       "target": "emi/world02/area113/13",
@@ -7467,6 +8484,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 373,
@@ -7477,8 +8495,10 @@
       "objects": 8,
       "sources": 8,
       "data_payload": 148,
-      "typed": 148,
-      "percent": 100.0
+      "in_c": 148,
+      "raw_c": 144,
+      "typed": 4,
+      "percent": 2.7
     },
     {
       "target": "emi/world03/area114/13",
@@ -7489,6 +8509,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 981,
@@ -7499,8 +8520,10 @@
       "objects": 6,
       "sources": 6,
       "data_payload": 332,
-      "typed": 332,
-      "percent": 100.0
+      "in_c": 332,
+      "raw_c": 328,
+      "typed": 4,
+      "percent": 1.2
     },
     {
       "target": "emi/world03/area115/13",
@@ -7511,6 +8534,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 6548,
@@ -7521,8 +8545,10 @@
       "objects": 36,
       "sources": 36,
       "data_payload": 690,
-      "typed": 690,
-      "percent": 100.0
+      "in_c": 690,
+      "raw_c": 686,
+      "typed": 4,
+      "percent": 0.58
     },
     {
       "target": "emi/world03/area116/13",
@@ -7533,6 +8559,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1692,
@@ -7543,8 +8570,10 @@
       "objects": 15,
       "sources": 15,
       "data_payload": 624,
-      "typed": 624,
-      "percent": 100.0
+      "in_c": 624,
+      "raw_c": 620,
+      "typed": 4,
+      "percent": 0.64
     },
     {
       "target": "emi/world03/area117/13",
@@ -7555,6 +8584,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 8058,
@@ -7565,8 +8595,10 @@
       "objects": 30,
       "sources": 30,
       "data_payload": 4076,
-      "typed": 4076,
-      "percent": 100.0
+      "in_c": 4076,
+      "raw_c": 4072,
+      "typed": 4,
+      "percent": 0.1
     },
     {
       "target": "emi/world03/area118/13",
@@ -7577,6 +8609,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 8583,
@@ -7587,8 +8620,10 @@
       "objects": 33,
       "sources": 33,
       "data_payload": 2264,
-      "typed": 2264,
-      "percent": 100.0
+      "in_c": 2264,
+      "raw_c": 2260,
+      "typed": 4,
+      "percent": 0.18
     },
     {
       "target": "emi/world03/area119/13",
@@ -7599,6 +8634,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 7585,
@@ -7609,8 +8645,10 @@
       "objects": 45,
       "sources": 45,
       "data_payload": 3488,
-      "typed": 3488,
-      "percent": 100.0
+      "in_c": 3488,
+      "raw_c": 3484,
+      "typed": 4,
+      "percent": 0.11
     },
     {
       "target": "emi/world03/area120/13",
@@ -7621,6 +8659,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 6750,
@@ -7631,8 +8670,10 @@
       "objects": 29,
       "sources": 29,
       "data_payload": 3132,
-      "typed": 3132,
-      "percent": 100.0
+      "in_c": 3132,
+      "raw_c": 3128,
+      "typed": 4,
+      "percent": 0.13
     },
     {
       "target": "emi/world03/area121/14",
@@ -7643,6 +8684,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 11108,
@@ -7653,8 +8695,10 @@
       "objects": 67,
       "sources": 67,
       "data_payload": 1003,
-      "typed": 1003,
-      "percent": 100.0
+      "in_c": 1003,
+      "raw_c": 999,
+      "typed": 4,
+      "percent": 0.4
     },
     {
       "target": "emi/world03/area122/13",
@@ -7665,6 +8709,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2981,
@@ -7675,8 +8720,10 @@
       "objects": 1,
       "sources": 1,
       "data_payload": 3812,
-      "typed": 3812,
-      "percent": 100.0
+      "in_c": 3812,
+      "raw_c": 3812,
+      "typed": 0,
+      "percent": 0.0
     },
     {
       "target": "emi/world03/area123/13",
@@ -7687,6 +8734,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3078,
@@ -7697,8 +8745,10 @@
       "objects": 3,
       "sources": 3,
       "data_payload": 3872,
-      "typed": 3872,
-      "percent": 100.0
+      "in_c": 3872,
+      "raw_c": 3868,
+      "typed": 4,
+      "percent": 0.1
     },
     {
       "target": "emi/world03/area124/13",
@@ -7709,6 +8759,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 364,
@@ -7719,8 +8770,10 @@
       "objects": 4,
       "sources": 4,
       "data_payload": 220,
-      "typed": 220,
-      "percent": 100.0
+      "in_c": 220,
+      "raw_c": 216,
+      "typed": 4,
+      "percent": 1.82
     },
     {
       "target": "emi/world03/area125/13",
@@ -7731,6 +8784,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2179,
@@ -7741,8 +8795,10 @@
       "objects": 20,
       "sources": 20,
       "data_payload": 496,
-      "typed": 496,
-      "percent": 100.0
+      "in_c": 496,
+      "raw_c": 492,
+      "typed": 4,
+      "percent": 0.81
     },
     {
       "target": "emi/world03/area126/13",
@@ -7753,6 +8809,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1504,
@@ -7763,8 +8820,10 @@
       "objects": 1,
       "sources": 1,
       "data_payload": 2044,
-      "typed": 2044,
-      "percent": 100.0
+      "in_c": 2044,
+      "raw_c": 2044,
+      "typed": 0,
+      "percent": 0.0
     },
     {
       "target": "emi/world03/area127/13",
@@ -7775,6 +8834,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 207,
@@ -7785,8 +8845,10 @@
       "objects": 3,
       "sources": 3,
       "data_payload": 228,
-      "typed": 228,
-      "percent": 100.0
+      "in_c": 228,
+      "raw_c": 224,
+      "typed": 4,
+      "percent": 1.75
     },
     {
       "target": "emi/world03/area128/13",
@@ -7797,6 +8859,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3497,
@@ -7807,8 +8870,10 @@
       "objects": 10,
       "sources": 10,
       "data_payload": 2832,
-      "typed": 2832,
-      "percent": 100.0
+      "in_c": 2832,
+      "raw_c": 2828,
+      "typed": 4,
+      "percent": 0.14
     },
     {
       "target": "emi/world03/area129/03",
@@ -7819,6 +8884,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 39,
@@ -7829,8 +8895,10 @@
       "objects": 1,
       "sources": 1,
       "data_payload": 128,
-      "typed": 128,
-      "percent": 100.0
+      "in_c": 128,
+      "raw_c": 128,
+      "typed": 0,
+      "percent": 0.0
     },
     {
       "target": "emi/world03/area130/13",
@@ -7841,6 +8909,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 7001,
@@ -7851,8 +8920,10 @@
       "objects": 33,
       "sources": 33,
       "data_payload": 4512,
-      "typed": 4512,
-      "percent": 100.0
+      "in_c": 4512,
+      "raw_c": 4508,
+      "typed": 4,
+      "percent": 0.09
     },
     {
       "target": "emi/world03/area131/13",
@@ -7863,6 +8934,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3414,
@@ -7873,8 +8945,10 @@
       "objects": 20,
       "sources": 20,
       "data_payload": 3212,
-      "typed": 3212,
-      "percent": 100.0
+      "in_c": 3212,
+      "raw_c": 3208,
+      "typed": 4,
+      "percent": 0.12
     },
     {
       "target": "emi/world03/area132/13",
@@ -7885,6 +8959,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 5699,
@@ -7895,8 +8970,10 @@
       "objects": 30,
       "sources": 30,
       "data_payload": 3260,
-      "typed": 3260,
-      "percent": 100.0
+      "in_c": 3260,
+      "raw_c": 3256,
+      "typed": 4,
+      "percent": 0.12
     },
     {
       "target": "emi/world03/area133/13",
@@ -7907,6 +8984,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3500,
@@ -7917,8 +8995,10 @@
       "objects": 7,
       "sources": 7,
       "data_payload": 4164,
-      "typed": 4164,
-      "percent": 100.0
+      "in_c": 4164,
+      "raw_c": 4160,
+      "typed": 4,
+      "percent": 0.1
     },
     {
       "target": "emi/world03/area134/13",
@@ -7929,6 +9009,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 10845,
@@ -7939,8 +9020,10 @@
       "objects": 96,
       "sources": 96,
       "data_payload": 3224,
-      "typed": 3224,
-      "percent": 100.0
+      "in_c": 3224,
+      "raw_c": 3220,
+      "typed": 4,
+      "percent": 0.12
     },
     {
       "target": "emi/world03/area135/14",
@@ -7951,6 +9034,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 12267,
@@ -7961,8 +9045,10 @@
       "objects": 75,
       "sources": 75,
       "data_payload": 2648,
-      "typed": 2648,
-      "percent": 100.0
+      "in_c": 2648,
+      "raw_c": 2644,
+      "typed": 4,
+      "percent": 0.15
     },
     {
       "target": "emi/world03/area136/13",
@@ -7973,6 +9059,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4686,
@@ -7983,8 +9070,10 @@
       "objects": 19,
       "sources": 19,
       "data_payload": 4122,
-      "typed": 4122,
-      "percent": 100.0
+      "in_c": 4122,
+      "raw_c": 4118,
+      "typed": 4,
+      "percent": 0.1
     },
     {
       "target": "emi/world03/area137/13",
@@ -7995,6 +9084,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 171,
@@ -8005,8 +9095,10 @@
       "objects": 1,
       "sources": 1,
       "data_payload": 276,
-      "typed": 276,
-      "percent": 100.0
+      "in_c": 276,
+      "raw_c": 276,
+      "typed": 0,
+      "percent": 0.0
     },
     {
       "target": "emi/world03/area138/13",
@@ -8017,6 +9109,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 73,
@@ -8027,8 +9120,10 @@
       "objects": 1,
       "sources": 1,
       "data_payload": 168,
-      "typed": 168,
-      "percent": 100.0
+      "in_c": 168,
+      "raw_c": 168,
+      "typed": 0,
+      "percent": 0.0
     },
     {
       "target": "emi/world03/area139/13",
@@ -8039,6 +9134,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4837,
@@ -8049,8 +9145,10 @@
       "objects": 21,
       "sources": 21,
       "data_payload": 452,
-      "typed": 452,
-      "percent": 100.0
+      "in_c": 452,
+      "raw_c": 448,
+      "typed": 4,
+      "percent": 0.88
     },
     {
       "target": "emi/world03/area140/13",
@@ -8061,6 +9159,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 5717,
@@ -8071,8 +9170,10 @@
       "objects": 31,
       "sources": 31,
       "data_payload": 832,
-      "typed": 832,
-      "percent": 100.0
+      "in_c": 832,
+      "raw_c": 828,
+      "typed": 4,
+      "percent": 0.48
     },
     {
       "target": "emi/world03/area141/13",
@@ -8083,6 +9184,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 6629,
@@ -8093,8 +9195,10 @@
       "objects": 27,
       "sources": 27,
       "data_payload": 1909,
-      "typed": 1909,
-      "percent": 100.0
+      "in_c": 1909,
+      "raw_c": 1905,
+      "typed": 4,
+      "percent": 0.21
     },
     {
       "target": "emi/world03/area142/13",
@@ -8105,6 +9209,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2955,
@@ -8115,8 +9220,10 @@
       "objects": 10,
       "sources": 10,
       "data_payload": 1588,
-      "typed": 1588,
-      "percent": 100.0
+      "in_c": 1588,
+      "raw_c": 1584,
+      "typed": 4,
+      "percent": 0.25
     },
     {
       "target": "emi/world03/area143/13",
@@ -8127,6 +9234,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 7598,
@@ -8137,8 +9245,10 @@
       "objects": 37,
       "sources": 37,
       "data_payload": 4144,
-      "typed": 4144,
-      "percent": 100.0
+      "in_c": 4144,
+      "raw_c": 4140,
+      "typed": 4,
+      "percent": 0.1
     },
     {
       "target": "emi/world03/area144/13",
@@ -8149,6 +9259,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 5593,
@@ -8159,8 +9270,10 @@
       "objects": 26,
       "sources": 26,
       "data_payload": 3048,
-      "typed": 3048,
-      "percent": 100.0
+      "in_c": 3048,
+      "raw_c": 3044,
+      "typed": 4,
+      "percent": 0.13
     },
     {
       "target": "emi/world03/area145/14",
@@ -8171,6 +9284,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 9473,
@@ -8181,8 +9295,10 @@
       "objects": 44,
       "sources": 44,
       "data_payload": 2440,
-      "typed": 2440,
-      "percent": 100.0
+      "in_c": 2440,
+      "raw_c": 2436,
+      "typed": 4,
+      "percent": 0.16
     },
     {
       "target": "emi/world03/area146/13",
@@ -8193,6 +9309,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2718,
@@ -8203,8 +9320,10 @@
       "objects": 11,
       "sources": 11,
       "data_payload": 2456,
-      "typed": 2456,
-      "percent": 100.0
+      "in_c": 2456,
+      "raw_c": 2452,
+      "typed": 4,
+      "percent": 0.16
     },
     {
       "target": "emi/world03/area147/13",
@@ -8215,6 +9334,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2112,
@@ -8225,8 +9345,10 @@
       "objects": 9,
       "sources": 9,
       "data_payload": 616,
-      "typed": 616,
-      "percent": 100.0
+      "in_c": 616,
+      "raw_c": 612,
+      "typed": 4,
+      "percent": 0.65
     },
     {
       "target": "emi/world03/area148/13",
@@ -8237,6 +9359,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 10157,
@@ -8247,8 +9370,10 @@
       "objects": 38,
       "sources": 38,
       "data_payload": 4696,
-      "typed": 4696,
-      "percent": 100.0
+      "in_c": 4696,
+      "raw_c": 4692,
+      "typed": 4,
+      "percent": 0.09
     },
     {
       "target": "emi/world03/area149/13",
@@ -8259,6 +9384,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4977,
@@ -8269,8 +9395,10 @@
       "objects": 18,
       "sources": 18,
       "data_payload": 3524,
-      "typed": 3524,
-      "percent": 100.0
+      "in_c": 3524,
+      "raw_c": 3520,
+      "typed": 4,
+      "percent": 0.11
     },
     {
       "target": "emi/world03/area150/13",
@@ -8281,6 +9409,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2393,
@@ -8291,8 +9420,10 @@
       "objects": 7,
       "sources": 7,
       "data_payload": 2182,
-      "typed": 2182,
-      "percent": 100.0
+      "in_c": 2182,
+      "raw_c": 2178,
+      "typed": 4,
+      "percent": 0.18
     },
     {
       "target": "emi/world03/area151/13",
@@ -8303,6 +9434,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 7527,
@@ -8313,8 +9445,10 @@
       "objects": 36,
       "sources": 36,
       "data_payload": 2090,
-      "typed": 2090,
-      "percent": 100.0
+      "in_c": 2090,
+      "raw_c": 2086,
+      "typed": 4,
+      "percent": 0.19
     },
     {
       "target": "emi/world04/area152/13",
@@ -8325,6 +9459,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 6233,
@@ -8335,8 +9470,10 @@
       "objects": 37,
       "sources": 37,
       "data_payload": 514,
-      "typed": 514,
-      "percent": 100.0
+      "in_c": 514,
+      "raw_c": 510,
+      "typed": 4,
+      "percent": 0.78
     },
     {
       "target": "emi/world04/area153/13",
@@ -8347,6 +9484,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2859,
@@ -8357,8 +9495,10 @@
       "objects": 3,
       "sources": 3,
       "data_payload": 4012,
-      "typed": 4012,
-      "percent": 100.0
+      "in_c": 4012,
+      "raw_c": 4008,
+      "typed": 4,
+      "percent": 0.1
     },
     {
       "target": "emi/world04/area154/13",
@@ -8369,6 +9509,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1029,
@@ -8379,8 +9520,10 @@
       "objects": 3,
       "sources": 3,
       "data_payload": 1412,
-      "typed": 1412,
-      "percent": 100.0
+      "in_c": 1412,
+      "raw_c": 1408,
+      "typed": 4,
+      "percent": 0.28
     },
     {
       "target": "emi/world04/area155/13",
@@ -8391,6 +9534,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 684,
@@ -8401,8 +9545,10 @@
       "objects": 3,
       "sources": 3,
       "data_payload": 808,
-      "typed": 808,
-      "percent": 100.0
+      "in_c": 808,
+      "raw_c": 804,
+      "typed": 4,
+      "percent": 0.5
     },
     {
       "target": "emi/world04/area156/13",
@@ -8413,6 +9559,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3002,
@@ -8423,8 +9570,10 @@
       "objects": 3,
       "sources": 3,
       "data_payload": 3428,
-      "typed": 3428,
-      "percent": 100.0
+      "in_c": 3428,
+      "raw_c": 3424,
+      "typed": 4,
+      "percent": 0.12
     },
     {
       "target": "emi/world04/area157/13",
@@ -8435,6 +9584,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2943,
@@ -8445,8 +9595,10 @@
       "objects": 15,
       "sources": 15,
       "data_payload": 940,
-      "typed": 940,
-      "percent": 100.0
+      "in_c": 940,
+      "raw_c": 936,
+      "typed": 4,
+      "percent": 0.43
     },
     {
       "target": "emi/world04/area158/13",
@@ -8457,6 +9609,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1725,
@@ -8467,8 +9620,10 @@
       "objects": 9,
       "sources": 9,
       "data_payload": 336,
-      "typed": 336,
-      "percent": 100.0
+      "in_c": 336,
+      "raw_c": 332,
+      "typed": 4,
+      "percent": 1.19
     },
     {
       "target": "emi/world04/area159/13",
@@ -8479,6 +9634,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 152,
@@ -8489,8 +9645,10 @@
       "objects": 1,
       "sources": 1,
       "data_payload": 232,
-      "typed": 232,
-      "percent": 100.0
+      "in_c": 232,
+      "raw_c": 232,
+      "typed": 0,
+      "percent": 0.0
     },
     {
       "target": "emi/world04/area160/13",
@@ -8501,6 +9659,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1663,
@@ -8511,8 +9670,10 @@
       "objects": 9,
       "sources": 9,
       "data_payload": 268,
-      "typed": 268,
-      "percent": 100.0
+      "in_c": 268,
+      "raw_c": 264,
+      "typed": 4,
+      "percent": 1.49
     },
     {
       "target": "emi/world04/area161/13",
@@ -8523,6 +9684,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1674,
@@ -8533,8 +9695,10 @@
       "objects": 9,
       "sources": 9,
       "data_payload": 276,
-      "typed": 276,
-      "percent": 100.0
+      "in_c": 276,
+      "raw_c": 272,
+      "typed": 4,
+      "percent": 1.45
     },
     {
       "target": "emi/world04/area162/13",
@@ -8545,6 +9709,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1704,
@@ -8555,8 +9720,10 @@
       "objects": 9,
       "sources": 9,
       "data_payload": 312,
-      "typed": 312,
-      "percent": 100.0
+      "in_c": 312,
+      "raw_c": 308,
+      "typed": 4,
+      "percent": 1.28
     },
     {
       "target": "emi/world04/area163/13",
@@ -8567,6 +9734,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1652,
@@ -8577,8 +9745,10 @@
       "objects": 9,
       "sources": 9,
       "data_payload": 264,
-      "typed": 264,
-      "percent": 100.0
+      "in_c": 264,
+      "raw_c": 260,
+      "typed": 4,
+      "percent": 1.52
     },
     {
       "target": "emi/world04/area164/13",
@@ -8589,6 +9759,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1726,
@@ -8599,8 +9770,10 @@
       "objects": 9,
       "sources": 9,
       "data_payload": 340,
-      "typed": 340,
-      "percent": 100.0
+      "in_c": 340,
+      "raw_c": 336,
+      "typed": 4,
+      "percent": 1.18
     },
     {
       "target": "emi/world04/area165/13",
@@ -8611,6 +9784,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1938,
@@ -8621,8 +9795,10 @@
       "objects": 13,
       "sources": 13,
       "data_payload": 292,
-      "typed": 292,
-      "percent": 100.0
+      "in_c": 292,
+      "raw_c": 288,
+      "typed": 4,
+      "percent": 1.37
     },
     {
       "target": "emi/world04/area166/13",
@@ -8633,6 +9809,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2438,
@@ -8643,8 +9820,10 @@
       "objects": 15,
       "sources": 15,
       "data_payload": 566,
-      "typed": 566,
-      "percent": 100.0
+      "in_c": 566,
+      "raw_c": 562,
+      "typed": 4,
+      "percent": 0.71
     },
     {
       "target": "emi/world04/area167/13",
@@ -8655,6 +9834,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 11738,
@@ -8665,8 +9845,10 @@
       "objects": 36,
       "sources": 36,
       "data_payload": 7896,
-      "typed": 7896,
-      "percent": 100.0
+      "in_c": 7896,
+      "raw_c": 7892,
+      "typed": 4,
+      "percent": 0.05
     },
     {
       "target": "emi/world04/area168/13",
@@ -8677,6 +9859,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 6666,
@@ -8687,8 +9870,10 @@
       "objects": 34,
       "sources": 34,
       "data_payload": 1194,
-      "typed": 1194,
-      "percent": 100.0
+      "in_c": 1194,
+      "raw_c": 1190,
+      "typed": 4,
+      "percent": 0.34
     },
     {
       "target": "emi/world04/area169/13",
@@ -8699,6 +9884,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2791,
@@ -8709,8 +9895,10 @@
       "objects": 15,
       "sources": 15,
       "data_payload": 282,
-      "typed": 282,
-      "percent": 100.0
+      "in_c": 282,
+      "raw_c": 278,
+      "typed": 4,
+      "percent": 1.42
     },
     {
       "target": "emi/world04/area170/13",
@@ -8721,6 +9909,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 10979,
@@ -8731,8 +9920,10 @@
       "objects": 39,
       "sources": 39,
       "data_payload": 3588,
-      "typed": 3588,
-      "percent": 100.0
+      "in_c": 3588,
+      "raw_c": 3584,
+      "typed": 4,
+      "percent": 0.11
     },
     {
       "target": "emi/world04/area171/13",
@@ -8743,6 +9934,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4044,
@@ -8753,8 +9945,10 @@
       "objects": 20,
       "sources": 20,
       "data_payload": 658,
-      "typed": 658,
-      "percent": 100.0
+      "in_c": 658,
+      "raw_c": 654,
+      "typed": 4,
+      "percent": 0.61
     },
     {
       "target": "emi/world04/area172/13",
@@ -8765,6 +9959,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 11493,
@@ -8775,8 +9970,10 @@
       "objects": 54,
       "sources": 54,
       "data_payload": 5924,
-      "typed": 5924,
-      "percent": 100.0
+      "in_c": 5924,
+      "raw_c": 5920,
+      "typed": 4,
+      "percent": 0.07
     },
     {
       "target": "emi/world04/area173/14",
@@ -8787,6 +9984,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 8538,
@@ -8797,8 +9995,10 @@
       "objects": 45,
       "sources": 45,
       "data_payload": 2720,
-      "typed": 2720,
-      "percent": 100.0
+      "in_c": 2720,
+      "raw_c": 2716,
+      "typed": 4,
+      "percent": 0.15
     },
     {
       "target": "emi/world04/area174/13",
@@ -8809,6 +10009,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 11366,
@@ -8819,8 +10020,10 @@
       "objects": 47,
       "sources": 47,
       "data_payload": 6076,
-      "typed": 6076,
-      "percent": 100.0
+      "in_c": 6076,
+      "raw_c": 6072,
+      "typed": 4,
+      "percent": 0.07
     },
     {
       "target": "emi/world04/area175/13",
@@ -8831,6 +10034,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 7570,
@@ -8841,8 +10045,10 @@
       "objects": 64,
       "sources": 64,
       "data_payload": 3516,
-      "typed": 3516,
-      "percent": 100.0
+      "in_c": 3516,
+      "raw_c": 3512,
+      "typed": 4,
+      "percent": 0.11
     },
     {
       "target": "emi/world04/area176/13",
@@ -8853,6 +10059,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2208,
@@ -8863,8 +10070,10 @@
       "objects": 36,
       "sources": 36,
       "data_payload": 852,
-      "typed": 852,
-      "percent": 100.0
+      "in_c": 852,
+      "raw_c": 848,
+      "typed": 4,
+      "percent": 0.47
     },
     {
       "target": "emi/world04/area177/13",
@@ -8875,6 +10084,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2225,
@@ -8885,8 +10095,10 @@
       "objects": 36,
       "sources": 36,
       "data_payload": 876,
-      "typed": 876,
-      "percent": 100.0
+      "in_c": 876,
+      "raw_c": 872,
+      "typed": 4,
+      "percent": 0.46
     },
     {
       "target": "emi/world04/area178/13",
@@ -8897,6 +10109,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2225,
@@ -8907,8 +10120,10 @@
       "objects": 36,
       "sources": 36,
       "data_payload": 876,
-      "typed": 876,
-      "percent": 100.0
+      "in_c": 876,
+      "raw_c": 872,
+      "typed": 4,
+      "percent": 0.46
     },
     {
       "target": "emi/world04/area179/13",
@@ -8919,6 +10134,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2225,
@@ -8929,8 +10145,10 @@
       "objects": 36,
       "sources": 36,
       "data_payload": 876,
-      "typed": 876,
-      "percent": 100.0
+      "in_c": 876,
+      "raw_c": 872,
+      "typed": 4,
+      "percent": 0.46
     },
     {
       "target": "emi/world04/area180/13",
@@ -8941,6 +10159,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2225,
@@ -8951,8 +10170,10 @@
       "objects": 36,
       "sources": 36,
       "data_payload": 876,
-      "typed": 876,
-      "percent": 100.0
+      "in_c": 876,
+      "raw_c": 872,
+      "typed": 4,
+      "percent": 0.46
     },
     {
       "target": "emi/world04/area181/13",
@@ -8963,6 +10184,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2225,
@@ -8973,8 +10195,10 @@
       "objects": 36,
       "sources": 36,
       "data_payload": 876,
-      "typed": 876,
-      "percent": 100.0
+      "in_c": 876,
+      "raw_c": 872,
+      "typed": 4,
+      "percent": 0.46
     },
     {
       "target": "emi/world04/area182/13",
@@ -8985,6 +10209,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2225,
@@ -8995,8 +10220,10 @@
       "objects": 36,
       "sources": 36,
       "data_payload": 876,
-      "typed": 876,
-      "percent": 100.0
+      "in_c": 876,
+      "raw_c": 872,
+      "typed": 4,
+      "percent": 0.46
     },
     {
       "target": "emi/world04/area183/13",
@@ -9007,6 +10234,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2241,
@@ -9017,8 +10245,10 @@
       "objects": 36,
       "sources": 36,
       "data_payload": 900,
-      "typed": 900,
-      "percent": 100.0
+      "in_c": 900,
+      "raw_c": 896,
+      "typed": 4,
+      "percent": 0.44
     },
     {
       "target": "emi/world04/area184/13",
@@ -9029,6 +10259,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2241,
@@ -9039,8 +10270,10 @@
       "objects": 36,
       "sources": 36,
       "data_payload": 900,
-      "typed": 900,
-      "percent": 100.0
+      "in_c": 900,
+      "raw_c": 896,
+      "typed": 4,
+      "percent": 0.44
     },
     {
       "target": "emi/world04/area185/13",
@@ -9051,6 +10284,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2756,
@@ -9061,8 +10295,10 @@
       "objects": 37,
       "sources": 37,
       "data_payload": 908,
-      "typed": 908,
-      "percent": 100.0
+      "in_c": 908,
+      "raw_c": 904,
+      "typed": 4,
+      "percent": 0.44
     },
     {
       "target": "emi/world04/area186/13",
@@ -9073,6 +10309,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 3043,
@@ -9083,8 +10320,10 @@
       "objects": 5,
       "sources": 5,
       "data_payload": 3068,
-      "typed": 3068,
-      "percent": 100.0
+      "in_c": 3068,
+      "raw_c": 3064,
+      "typed": 4,
+      "percent": 0.13
     },
     {
       "target": "emi/world04/area187/13",
@@ -9095,6 +10334,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 1784,
@@ -9105,8 +10345,10 @@
       "objects": 7,
       "sources": 7,
       "data_payload": 2120,
-      "typed": 2120,
-      "percent": 100.0
+      "in_c": 2120,
+      "raw_c": 2116,
+      "typed": 4,
+      "percent": 0.19
     },
     {
       "target": "emi/world04/area188/13",
@@ -9117,6 +10359,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 11658,
@@ -9127,8 +10370,10 @@
       "objects": 47,
       "sources": 47,
       "data_payload": 6896,
-      "typed": 6896,
-      "percent": 100.0
+      "in_c": 6896,
+      "raw_c": 6892,
+      "typed": 4,
+      "percent": 0.06
     },
     {
       "target": "emi/world04/area189/13",
@@ -9139,6 +10384,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 10629,
@@ -9149,8 +10395,10 @@
       "objects": 35,
       "sources": 35,
       "data_payload": 650,
-      "typed": 650,
-      "percent": 100.0
+      "in_c": 650,
+      "raw_c": 646,
+      "typed": 4,
+      "percent": 0.62
     },
     {
       "target": "emi/world04/area190/13",
@@ -9161,6 +10409,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 30,
@@ -9171,8 +10420,10 @@
       "objects": 1,
       "sources": 1,
       "data_payload": 92,
-      "typed": 92,
-      "percent": 100.0
+      "in_c": 92,
+      "raw_c": 92,
+      "typed": 0,
+      "percent": 0.0
     },
     {
       "target": "emi/world04/area191/13",
@@ -9183,6 +10434,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4638,
@@ -9193,8 +10445,10 @@
       "objects": 28,
       "sources": 28,
       "data_payload": 2064,
-      "typed": 2064,
-      "percent": 100.0
+      "in_c": 2064,
+      "raw_c": 2060,
+      "typed": 4,
+      "percent": 0.19
     },
     {
       "target": "emi/world04/area192/13",
@@ -9205,6 +10459,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2800,
@@ -9215,8 +10470,10 @@
       "objects": 17,
       "sources": 17,
       "data_payload": 956,
-      "typed": 956,
-      "percent": 100.0
+      "in_c": 956,
+      "raw_c": 952,
+      "typed": 4,
+      "percent": 0.42
     },
     {
       "target": "emi/world04/area193/13",
@@ -9227,6 +10484,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 2807,
@@ -9237,8 +10495,10 @@
       "objects": 11,
       "sources": 11,
       "data_payload": 2164,
-      "typed": 2164,
-      "percent": 100.0
+      "in_c": 2164,
+      "raw_c": 2160,
+      "typed": 4,
+      "percent": 0.18
     },
     {
       "target": "emi/world04/area194/13",
@@ -9249,6 +10509,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 867,
@@ -9259,8 +10520,10 @@
       "objects": 1,
       "sources": 1,
       "data_payload": 1164,
-      "typed": 1164,
-      "percent": 100.0
+      "in_c": 1164,
+      "raw_c": 1164,
+      "typed": 0,
+      "percent": 0.0
     },
     {
       "target": "emi/world04/area195/13",
@@ -9271,6 +10534,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 217,
@@ -9281,8 +10545,10 @@
       "objects": 1,
       "sources": 1,
       "data_payload": 356,
-      "typed": 356,
-      "percent": 100.0
+      "in_c": 356,
+      "raw_c": 356,
+      "typed": 0,
+      "percent": 0.0
     },
     {
       "target": "emi/world04/area196/13",
@@ -9293,6 +10559,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4139,
@@ -9303,8 +10570,10 @@
       "objects": 15,
       "sources": 15,
       "data_payload": 484,
-      "typed": 484,
-      "percent": 100.0
+      "in_c": 484,
+      "raw_c": 480,
+      "typed": 4,
+      "percent": 0.83
     },
     {
       "target": "emi/world04/area197/13",
@@ -9315,6 +10584,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 5801,
@@ -9325,8 +10595,10 @@
       "objects": 33,
       "sources": 33,
       "data_payload": 1920,
-      "typed": 1920,
-      "percent": 100.0
+      "in_c": 1920,
+      "raw_c": 1916,
+      "typed": 4,
+      "percent": 0.21
     },
     {
       "target": "emi/world04/area198/13",
@@ -9337,6 +10609,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 4501,
@@ -9347,8 +10620,10 @@
       "objects": 24,
       "sources": 24,
       "data_payload": 1532,
-      "typed": 1532,
-      "percent": 100.0
+      "in_c": 1532,
+      "raw_c": 1528,
+      "typed": 4,
+      "percent": 0.26
     },
     {
       "target": "emi/world04/area199/13",
@@ -9359,6 +10634,7 @@
       "raw": 0,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 7669,
@@ -9369,8 +10645,10 @@
       "objects": 17,
       "sources": 17,
       "data_payload": 4320,
-      "typed": 4320,
-      "percent": 100.0
+      "in_c": 4320,
+      "raw_c": 4316,
+      "typed": 4,
+      "percent": 0.09
     },
     {
       "target": "exe/logo",
@@ -9381,6 +10659,7 @@
       "raw": 100,
       "copied": 0,
       "sdk": 0,
+      "asset": 0,
       "asm_data": 0,
       "reserved": 0,
       "nonzero": 67728,
@@ -9391,8 +10670,10 @@
       "objects": 15,
       "sources": 15,
       "data_payload": 84440,
-      "typed": 80484,
-      "percent": 95.32
+      "in_c": 80484,
+      "raw_c": 3540,
+      "typed": 76944,
+      "percent": 91.12
     },
     {
       "target": "exe/slus_004_22",
@@ -9403,6 +10684,7 @@
       "raw": 538,
       "copied": 32,
       "sdk": 19246,
+      "asset": 0,
       "asm_data": 2776,
       "reserved": 1180080,
       "nonzero": 197151,
@@ -9413,8 +10695,10 @@
       "objects": 536,
       "sources": 536,
       "data_payload": 31330,
-      "typed": 26176,
-      "percent": 83.55
+      "in_c": 26176,
+      "raw_c": 3236,
+      "typed": 22940,
+      "percent": 73.22
     }
   ],
   "totals": {
@@ -9426,6 +10710,7 @@
     "raw": 64940,
     "copied": 32,
     "sdk": 19246,
+    "asset": 0,
     "asm_data": 2776,
     "reserved": 1315120,
     "nonzero": 2796138,
@@ -9433,10 +10718,12 @@
     "data": 602760,
     "bss": 0,
     "map_bss": 0,
-    "objects": 7006,
-    "sources": 7006,
+    "objects": 7008,
+    "sources": 7008,
     "data_payload": 696640,
-    "typed": 623036,
-    "percent": 89.43
+    "in_c": 623036,
+    "raw_c": 454331,
+    "typed": 168705,
+    "percent": 24.22
   }
 }

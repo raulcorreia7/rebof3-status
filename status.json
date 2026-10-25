@@ -1,0 +1,6886 @@
+{
+  "targets": [
+    {
+      "target": "emi/battle/batl_end/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 31,
+      "library": 0,
+      "sdk": 0,
+      "total": 31,
+      "game": {
+        "exact": 0,
+        "total": 31,
+        "exact_bytes": 0,
+        "bytes": 8248
+      }
+    },
+    {
+      "target": "emi/battle/batl_ovr/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 10,
+      "library": 0,
+      "sdk": 0,
+      "total": 10,
+      "game": {
+        "exact": 0,
+        "total": 10,
+        "exact_bytes": 0,
+        "bytes": 2540
+      }
+    },
+    {
+      "target": "emi/battle/batl_re2/01",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 0,
+      "game": {
+        "exact": 0,
+        "total": 0,
+        "exact_bytes": 0,
+        "bytes": 0
+      }
+    },
+    {
+      "target": "emi/battle/battle/03",
+      "exact": 414,
+      "non_matching": 17,
+      "untagged": 0,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 431,
+      "game": {
+        "exact": 413,
+        "total": 431,
+        "exact_bytes": 86404,
+        "bytes": 105380
+      }
+    },
+    {
+      "target": "emi/battle/battle/15",
+      "exact": 460,
+      "non_matching": 22,
+      "untagged": 0,
+      "unlifted": 12,
+      "library": 0,
+      "sdk": 0,
+      "total": 494,
+      "game": {
+        "exact": 460,
+        "total": 494,
+        "exact_bytes": 85160,
+        "bytes": 121156
+      }
+    },
+    {
+      "target": "emi/bmagic/magic001/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 33,
+      "library": 0,
+      "sdk": 0,
+      "total": 33,
+      "game": {
+        "exact": 0,
+        "total": 33,
+        "exact_bytes": 0,
+        "bytes": 6232
+      }
+    },
+    {
+      "target": "emi/bmagic/magic002/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 9,
+      "library": 0,
+      "sdk": 0,
+      "total": 9,
+      "game": {
+        "exact": 0,
+        "total": 9,
+        "exact_bytes": 0,
+        "bytes": 4212
+      }
+    },
+    {
+      "target": "emi/bmagic/magic003/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 36,
+      "library": 0,
+      "sdk": 0,
+      "total": 36,
+      "game": {
+        "exact": 0,
+        "total": 36,
+        "exact_bytes": 0,
+        "bytes": 7760
+      }
+    },
+    {
+      "target": "emi/bmagic/magic004/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 18,
+      "library": 0,
+      "sdk": 0,
+      "total": 18,
+      "game": {
+        "exact": 0,
+        "total": 18,
+        "exact_bytes": 0,
+        "bytes": 4584
+      }
+    },
+    {
+      "target": "emi/bmagic/magic006/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 26,
+      "library": 0,
+      "sdk": 0,
+      "total": 26,
+      "game": {
+        "exact": 0,
+        "total": 26,
+        "exact_bytes": 0,
+        "bytes": 7680
+      }
+    },
+    {
+      "target": "emi/bmagic/magic008/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 64,
+      "library": 0,
+      "sdk": 0,
+      "total": 64,
+      "game": {
+        "exact": 0,
+        "total": 64,
+        "exact_bytes": 0,
+        "bytes": 12028
+      }
+    },
+    {
+      "target": "emi/bmagic/magic009/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 17,
+      "library": 0,
+      "sdk": 0,
+      "total": 17,
+      "game": {
+        "exact": 0,
+        "total": 17,
+        "exact_bytes": 0,
+        "bytes": 3188
+      }
+    },
+    {
+      "target": "emi/bmagic/magic010/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 5,
+      "library": 0,
+      "sdk": 0,
+      "total": 5,
+      "game": {
+        "exact": 0,
+        "total": 5,
+        "exact_bytes": 0,
+        "bytes": 908
+      }
+    },
+    {
+      "target": "emi/bmagic/magic012/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 13,
+      "library": 0,
+      "sdk": 0,
+      "total": 13,
+      "game": {
+        "exact": 0,
+        "total": 13,
+        "exact_bytes": 0,
+        "bytes": 4064
+      }
+    },
+    {
+      "target": "emi/bmagic/magic013/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 24,
+      "library": 0,
+      "sdk": 0,
+      "total": 24,
+      "game": {
+        "exact": 0,
+        "total": 24,
+        "exact_bytes": 0,
+        "bytes": 13776
+      }
+    },
+    {
+      "target": "emi/bmagic/magic015/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 48,
+      "library": 0,
+      "sdk": 0,
+      "total": 48,
+      "game": {
+        "exact": 0,
+        "total": 48,
+        "exact_bytes": 0,
+        "bytes": 10640
+      }
+    },
+    {
+      "target": "emi/bmagic/magic017/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 17,
+      "library": 0,
+      "sdk": 0,
+      "total": 17,
+      "game": {
+        "exact": 0,
+        "total": 17,
+        "exact_bytes": 0,
+        "bytes": 3420
+      }
+    },
+    {
+      "target": "emi/bmagic/magic020/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 25,
+      "library": 0,
+      "sdk": 0,
+      "total": 25,
+      "game": {
+        "exact": 0,
+        "total": 25,
+        "exact_bytes": 0,
+        "bytes": 4720
+      }
+    },
+    {
+      "target": "emi/bmagic/magic021/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 23,
+      "library": 0,
+      "sdk": 0,
+      "total": 23,
+      "game": {
+        "exact": 0,
+        "total": 23,
+        "exact_bytes": 0,
+        "bytes": 12268
+      }
+    },
+    {
+      "target": "emi/bmagic/magic038/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 14,
+      "library": 0,
+      "sdk": 0,
+      "total": 14,
+      "game": {
+        "exact": 0,
+        "total": 14,
+        "exact_bytes": 0,
+        "bytes": 3476
+      }
+    },
+    {
+      "target": "emi/bmagic/magic039/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 21,
+      "library": 0,
+      "sdk": 0,
+      "total": 21,
+      "game": {
+        "exact": 0,
+        "total": 21,
+        "exact_bytes": 0,
+        "bytes": 6096
+      }
+    },
+    {
+      "target": "emi/bmagic/magic040/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 17,
+      "library": 0,
+      "sdk": 0,
+      "total": 17,
+      "game": {
+        "exact": 0,
+        "total": 17,
+        "exact_bytes": 0,
+        "bytes": 4172
+      }
+    },
+    {
+      "target": "emi/bmagic/magic041/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 21,
+      "library": 0,
+      "sdk": 0,
+      "total": 21,
+      "game": {
+        "exact": 0,
+        "total": 21,
+        "exact_bytes": 0,
+        "bytes": 4444
+      }
+    },
+    {
+      "target": "emi/bmagic/magic042/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 14,
+      "library": 0,
+      "sdk": 0,
+      "total": 14,
+      "game": {
+        "exact": 0,
+        "total": 14,
+        "exact_bytes": 0,
+        "bytes": 3928
+      }
+    },
+    {
+      "target": "emi/bmagic/magic043/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 16,
+      "library": 0,
+      "sdk": 0,
+      "total": 16,
+      "game": {
+        "exact": 0,
+        "total": 16,
+        "exact_bytes": 0,
+        "bytes": 11916
+      }
+    },
+    {
+      "target": "emi/bmagic/magic044/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 19,
+      "library": 0,
+      "sdk": 0,
+      "total": 19,
+      "game": {
+        "exact": 0,
+        "total": 19,
+        "exact_bytes": 0,
+        "bytes": 7988
+      }
+    },
+    {
+      "target": "emi/bmagic/magic045/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 15,
+      "library": 0,
+      "sdk": 0,
+      "total": 15,
+      "game": {
+        "exact": 0,
+        "total": 15,
+        "exact_bytes": 0,
+        "bytes": 3324
+      }
+    },
+    {
+      "target": "emi/bmagic/magic046/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 21,
+      "library": 0,
+      "sdk": 0,
+      "total": 21,
+      "game": {
+        "exact": 0,
+        "total": 21,
+        "exact_bytes": 0,
+        "bytes": 10644
+      }
+    },
+    {
+      "target": "emi/bmagic/magic048/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 13,
+      "library": 0,
+      "sdk": 0,
+      "total": 13,
+      "game": {
+        "exact": 0,
+        "total": 13,
+        "exact_bytes": 0,
+        "bytes": 3096
+      }
+    },
+    {
+      "target": "emi/bmagic/magic050/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 12,
+      "library": 0,
+      "sdk": 0,
+      "total": 12,
+      "game": {
+        "exact": 0,
+        "total": 12,
+        "exact_bytes": 0,
+        "bytes": 3712
+      }
+    },
+    {
+      "target": "emi/bmagic/magic052/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 9,
+      "library": 0,
+      "sdk": 0,
+      "total": 9,
+      "game": {
+        "exact": 0,
+        "total": 9,
+        "exact_bytes": 0,
+        "bytes": 1224
+      }
+    },
+    {
+      "target": "emi/bmagic/magic053/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 23,
+      "library": 0,
+      "sdk": 0,
+      "total": 23,
+      "game": {
+        "exact": 0,
+        "total": 23,
+        "exact_bytes": 0,
+        "bytes": 6456
+      }
+    },
+    {
+      "target": "emi/bmagic/magic054/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 14,
+      "library": 0,
+      "sdk": 0,
+      "total": 14,
+      "game": {
+        "exact": 0,
+        "total": 14,
+        "exact_bytes": 0,
+        "bytes": 2608
+      }
+    },
+    {
+      "target": "emi/bmagic/magic055/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 14,
+      "library": 0,
+      "sdk": 0,
+      "total": 14,
+      "game": {
+        "exact": 0,
+        "total": 14,
+        "exact_bytes": 0,
+        "bytes": 4196
+      }
+    },
+    {
+      "target": "emi/bmagic/magic056/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 28,
+      "library": 0,
+      "sdk": 0,
+      "total": 28,
+      "game": {
+        "exact": 0,
+        "total": 28,
+        "exact_bytes": 0,
+        "bytes": 6972
+      }
+    },
+    {
+      "target": "emi/bmagic/magic057/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 23,
+      "library": 0,
+      "sdk": 0,
+      "total": 23,
+      "game": {
+        "exact": 0,
+        "total": 23,
+        "exact_bytes": 0,
+        "bytes": 3724
+      }
+    },
+    {
+      "target": "emi/bmagic/magic058/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 21,
+      "library": 0,
+      "sdk": 0,
+      "total": 21,
+      "game": {
+        "exact": 0,
+        "total": 21,
+        "exact_bytes": 0,
+        "bytes": 9144
+      }
+    },
+    {
+      "target": "emi/bmagic/magic059/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 22,
+      "library": 0,
+      "sdk": 0,
+      "total": 22,
+      "game": {
+        "exact": 0,
+        "total": 22,
+        "exact_bytes": 0,
+        "bytes": 9680
+      }
+    },
+    {
+      "target": "emi/bmagic/magic060/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 34,
+      "library": 0,
+      "sdk": 0,
+      "total": 34,
+      "game": {
+        "exact": 0,
+        "total": 34,
+        "exact_bytes": 0,
+        "bytes": 7984
+      }
+    },
+    {
+      "target": "emi/bmagic/magic062/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 25,
+      "library": 0,
+      "sdk": 0,
+      "total": 25,
+      "game": {
+        "exact": 0,
+        "total": 25,
+        "exact_bytes": 0,
+        "bytes": 8072
+      }
+    },
+    {
+      "target": "emi/bmagic/magic063/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 26,
+      "library": 0,
+      "sdk": 0,
+      "total": 26,
+      "game": {
+        "exact": 0,
+        "total": 26,
+        "exact_bytes": 0,
+        "bytes": 6120
+      }
+    },
+    {
+      "target": "emi/bmagic/magic064/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 46,
+      "library": 0,
+      "sdk": 0,
+      "total": 46,
+      "game": {
+        "exact": 0,
+        "total": 46,
+        "exact_bytes": 0,
+        "bytes": 10000
+      }
+    },
+    {
+      "target": "emi/bmagic/magic065/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 12,
+      "library": 0,
+      "sdk": 0,
+      "total": 12,
+      "game": {
+        "exact": 0,
+        "total": 12,
+        "exact_bytes": 0,
+        "bytes": 2276
+      }
+    },
+    {
+      "target": "emi/bmagic/magic066/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 20,
+      "library": 0,
+      "sdk": 0,
+      "total": 20,
+      "game": {
+        "exact": 0,
+        "total": 20,
+        "exact_bytes": 0,
+        "bytes": 5204
+      }
+    },
+    {
+      "target": "emi/bmagic/magic067/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 28,
+      "library": 0,
+      "sdk": 0,
+      "total": 28,
+      "game": {
+        "exact": 0,
+        "total": 28,
+        "exact_bytes": 0,
+        "bytes": 6348
+      }
+    },
+    {
+      "target": "emi/bmagic/magic068/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 15,
+      "library": 0,
+      "sdk": 0,
+      "total": 15,
+      "game": {
+        "exact": 0,
+        "total": 15,
+        "exact_bytes": 0,
+        "bytes": 4224
+      }
+    },
+    {
+      "target": "emi/bmagic/magic069/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 25,
+      "library": 0,
+      "sdk": 0,
+      "total": 25,
+      "game": {
+        "exact": 0,
+        "total": 25,
+        "exact_bytes": 0,
+        "bytes": 6452
+      }
+    },
+    {
+      "target": "emi/bmagic/magic070/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 17,
+      "library": 0,
+      "sdk": 0,
+      "total": 17,
+      "game": {
+        "exact": 0,
+        "total": 17,
+        "exact_bytes": 0,
+        "bytes": 5268
+      }
+    },
+    {
+      "target": "emi/bmagic/magic071/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 17,
+      "library": 0,
+      "sdk": 0,
+      "total": 17,
+      "game": {
+        "exact": 0,
+        "total": 17,
+        "exact_bytes": 0,
+        "bytes": 5268
+      }
+    },
+    {
+      "target": "emi/bmagic/magic072/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 17,
+      "library": 0,
+      "sdk": 0,
+      "total": 17,
+      "game": {
+        "exact": 0,
+        "total": 17,
+        "exact_bytes": 0,
+        "bytes": 5268
+      }
+    },
+    {
+      "target": "emi/bmagic/magic073/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 22,
+      "library": 0,
+      "sdk": 0,
+      "total": 22,
+      "game": {
+        "exact": 0,
+        "total": 22,
+        "exact_bytes": 0,
+        "bytes": 6524
+      }
+    },
+    {
+      "target": "emi/bmagic/magic074/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 21,
+      "library": 0,
+      "sdk": 0,
+      "total": 21,
+      "game": {
+        "exact": 0,
+        "total": 21,
+        "exact_bytes": 0,
+        "bytes": 6248
+      }
+    },
+    {
+      "target": "emi/bmagic/magic075/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 11,
+      "library": 0,
+      "sdk": 0,
+      "total": 11,
+      "game": {
+        "exact": 0,
+        "total": 11,
+        "exact_bytes": 0,
+        "bytes": 2972
+      }
+    },
+    {
+      "target": "emi/bmagic/magic076/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 25,
+      "library": 0,
+      "sdk": 0,
+      "total": 25,
+      "game": {
+        "exact": 0,
+        "total": 25,
+        "exact_bytes": 0,
+        "bytes": 13948
+      }
+    },
+    {
+      "target": "emi/bmagic/magic078/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 25,
+      "library": 0,
+      "sdk": 0,
+      "total": 25,
+      "game": {
+        "exact": 0,
+        "total": 25,
+        "exact_bytes": 0,
+        "bytes": 7384
+      }
+    },
+    {
+      "target": "emi/bmagic/magic079/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 29,
+      "library": 0,
+      "sdk": 0,
+      "total": 29,
+      "game": {
+        "exact": 0,
+        "total": 29,
+        "exact_bytes": 0,
+        "bytes": 5792
+      }
+    },
+    {
+      "target": "emi/bmagic/magic080/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 5,
+      "library": 0,
+      "sdk": 0,
+      "total": 5,
+      "game": {
+        "exact": 0,
+        "total": 5,
+        "exact_bytes": 0,
+        "bytes": 1312
+      }
+    },
+    {
+      "target": "emi/bmagic/magic081/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 19,
+      "library": 0,
+      "sdk": 0,
+      "total": 19,
+      "game": {
+        "exact": 0,
+        "total": 19,
+        "exact_bytes": 0,
+        "bytes": 9436
+      }
+    },
+    {
+      "target": "emi/bmagic/magic082/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 25,
+      "library": 0,
+      "sdk": 0,
+      "total": 25,
+      "game": {
+        "exact": 0,
+        "total": 25,
+        "exact_bytes": 0,
+        "bytes": 8320
+      }
+    },
+    {
+      "target": "emi/bmagic/magic083/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 25,
+      "library": 0,
+      "sdk": 0,
+      "total": 25,
+      "game": {
+        "exact": 0,
+        "total": 25,
+        "exact_bytes": 0,
+        "bytes": 8816
+      }
+    },
+    {
+      "target": "emi/bmagic/magic086/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 28,
+      "library": 0,
+      "sdk": 0,
+      "total": 28,
+      "game": {
+        "exact": 0,
+        "total": 28,
+        "exact_bytes": 0,
+        "bytes": 6004
+      }
+    },
+    {
+      "target": "emi/bmagic/magic087/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 23,
+      "library": 0,
+      "sdk": 0,
+      "total": 23,
+      "game": {
+        "exact": 0,
+        "total": 23,
+        "exact_bytes": 0,
+        "bytes": 6404
+      }
+    },
+    {
+      "target": "emi/bmagic/magic088/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 23,
+      "library": 0,
+      "sdk": 0,
+      "total": 23,
+      "game": {
+        "exact": 0,
+        "total": 23,
+        "exact_bytes": 0,
+        "bytes": 5056
+      }
+    },
+    {
+      "target": "emi/bmagic/magic091/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 14,
+      "library": 0,
+      "sdk": 0,
+      "total": 14,
+      "game": {
+        "exact": 0,
+        "total": 14,
+        "exact_bytes": 0,
+        "bytes": 4196
+      }
+    },
+    {
+      "target": "emi/bmagic/magic092/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 26,
+      "library": 0,
+      "sdk": 0,
+      "total": 26,
+      "game": {
+        "exact": 0,
+        "total": 26,
+        "exact_bytes": 0,
+        "bytes": 12916
+      }
+    },
+    {
+      "target": "emi/bmagic/magic093/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 27,
+      "library": 0,
+      "sdk": 0,
+      "total": 27,
+      "game": {
+        "exact": 0,
+        "total": 27,
+        "exact_bytes": 0,
+        "bytes": 11216
+      }
+    },
+    {
+      "target": "emi/bmagic/magic094/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 12,
+      "library": 0,
+      "sdk": 0,
+      "total": 12,
+      "game": {
+        "exact": 0,
+        "total": 12,
+        "exact_bytes": 0,
+        "bytes": 3476
+      }
+    },
+    {
+      "target": "emi/bmagic/magic095/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 14,
+      "library": 0,
+      "sdk": 0,
+      "total": 14,
+      "game": {
+        "exact": 0,
+        "total": 14,
+        "exact_bytes": 0,
+        "bytes": 6676
+      }
+    },
+    {
+      "target": "emi/bmagic/magic096/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 17,
+      "library": 0,
+      "sdk": 0,
+      "total": 17,
+      "game": {
+        "exact": 0,
+        "total": 17,
+        "exact_bytes": 0,
+        "bytes": 6116
+      }
+    },
+    {
+      "target": "emi/bmagic/magic097/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 15,
+      "library": 0,
+      "sdk": 0,
+      "total": 15,
+      "game": {
+        "exact": 0,
+        "total": 15,
+        "exact_bytes": 0,
+        "bytes": 7888
+      }
+    },
+    {
+      "target": "emi/bmagic/magic098/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 14,
+      "library": 0,
+      "sdk": 0,
+      "total": 14,
+      "game": {
+        "exact": 0,
+        "total": 14,
+        "exact_bytes": 0,
+        "bytes": 5968
+      }
+    },
+    {
+      "target": "emi/bmagic/magic099/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 27,
+      "library": 0,
+      "sdk": 0,
+      "total": 27,
+      "game": {
+        "exact": 0,
+        "total": 27,
+        "exact_bytes": 0,
+        "bytes": 7608
+      }
+    },
+    {
+      "target": "emi/bmagic/magic100/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 15,
+      "library": 0,
+      "sdk": 0,
+      "total": 15,
+      "game": {
+        "exact": 0,
+        "total": 15,
+        "exact_bytes": 0,
+        "bytes": 4560
+      }
+    },
+    {
+      "target": "emi/bmagic/magic101/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 17,
+      "library": 0,
+      "sdk": 0,
+      "total": 17,
+      "game": {
+        "exact": 0,
+        "total": 17,
+        "exact_bytes": 0,
+        "bytes": 4260
+      }
+    },
+    {
+      "target": "emi/bmagic/magic102/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 10,
+      "library": 0,
+      "sdk": 0,
+      "total": 10,
+      "game": {
+        "exact": 0,
+        "total": 10,
+        "exact_bytes": 0,
+        "bytes": 8320
+      }
+    },
+    {
+      "target": "emi/bmagic/magic103/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 24,
+      "library": 0,
+      "sdk": 0,
+      "total": 24,
+      "game": {
+        "exact": 0,
+        "total": 24,
+        "exact_bytes": 0,
+        "bytes": 7044
+      }
+    },
+    {
+      "target": "emi/bmagic/magic104/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 19,
+      "library": 0,
+      "sdk": 0,
+      "total": 19,
+      "game": {
+        "exact": 0,
+        "total": 19,
+        "exact_bytes": 0,
+        "bytes": 7316
+      }
+    },
+    {
+      "target": "emi/bmagic/magic105/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 17,
+      "library": 0,
+      "sdk": 0,
+      "total": 17,
+      "game": {
+        "exact": 0,
+        "total": 17,
+        "exact_bytes": 0,
+        "bytes": 5172
+      }
+    },
+    {
+      "target": "emi/bmagic/magic106/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 13,
+      "library": 0,
+      "sdk": 0,
+      "total": 13,
+      "game": {
+        "exact": 0,
+        "total": 13,
+        "exact_bytes": 0,
+        "bytes": 3516
+      }
+    },
+    {
+      "target": "emi/bmagic/magic107/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 17,
+      "library": 0,
+      "sdk": 0,
+      "total": 17,
+      "game": {
+        "exact": 0,
+        "total": 17,
+        "exact_bytes": 0,
+        "bytes": 6296
+      }
+    },
+    {
+      "target": "emi/bmagic/magic108/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 15,
+      "library": 0,
+      "sdk": 0,
+      "total": 15,
+      "game": {
+        "exact": 0,
+        "total": 15,
+        "exact_bytes": 0,
+        "bytes": 4272
+      }
+    },
+    {
+      "target": "emi/bmagic/magic109/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 6,
+      "library": 0,
+      "sdk": 0,
+      "total": 6,
+      "game": {
+        "exact": 0,
+        "total": 6,
+        "exact_bytes": 0,
+        "bytes": 3524
+      }
+    },
+    {
+      "target": "emi/bmagic/magic110/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 28,
+      "library": 0,
+      "sdk": 0,
+      "total": 28,
+      "game": {
+        "exact": 0,
+        "total": 28,
+        "exact_bytes": 0,
+        "bytes": 6224
+      }
+    },
+    {
+      "target": "emi/bmagic/magic111/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 21,
+      "library": 0,
+      "sdk": 0,
+      "total": 21,
+      "game": {
+        "exact": 0,
+        "total": 21,
+        "exact_bytes": 0,
+        "bytes": 3752
+      }
+    },
+    {
+      "target": "emi/bmagic/magic113/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 31,
+      "library": 0,
+      "sdk": 0,
+      "total": 31,
+      "game": {
+        "exact": 0,
+        "total": 31,
+        "exact_bytes": 0,
+        "bytes": 8048
+      }
+    },
+    {
+      "target": "emi/bmagic/magic114/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 28,
+      "library": 0,
+      "sdk": 0,
+      "total": 28,
+      "game": {
+        "exact": 0,
+        "total": 28,
+        "exact_bytes": 0,
+        "bytes": 9648
+      }
+    },
+    {
+      "target": "emi/bmagic/magic115/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 17,
+      "library": 0,
+      "sdk": 0,
+      "total": 17,
+      "game": {
+        "exact": 0,
+        "total": 17,
+        "exact_bytes": 0,
+        "bytes": 3280
+      }
+    },
+    {
+      "target": "emi/bmagic/magic116/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 11,
+      "library": 0,
+      "sdk": 0,
+      "total": 11,
+      "game": {
+        "exact": 0,
+        "total": 11,
+        "exact_bytes": 0,
+        "bytes": 9364
+      }
+    },
+    {
+      "target": "emi/bmagic/magic117/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 10,
+      "library": 0,
+      "sdk": 0,
+      "total": 10,
+      "game": {
+        "exact": 0,
+        "total": 10,
+        "exact_bytes": 0,
+        "bytes": 1896
+      }
+    },
+    {
+      "target": "emi/bmagic/magic118/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 15,
+      "library": 0,
+      "sdk": 0,
+      "total": 15,
+      "game": {
+        "exact": 0,
+        "total": 15,
+        "exact_bytes": 0,
+        "bytes": 4296
+      }
+    },
+    {
+      "target": "emi/bmagic/magic120/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 27,
+      "library": 0,
+      "sdk": 0,
+      "total": 27,
+      "game": {
+        "exact": 0,
+        "total": 27,
+        "exact_bytes": 0,
+        "bytes": 8344
+      }
+    },
+    {
+      "target": "emi/bmagic/magic121/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 16,
+      "library": 0,
+      "sdk": 0,
+      "total": 16,
+      "game": {
+        "exact": 0,
+        "total": 16,
+        "exact_bytes": 0,
+        "bytes": 8276
+      }
+    },
+    {
+      "target": "emi/bmagic/magic122/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 13,
+      "library": 0,
+      "sdk": 0,
+      "total": 13,
+      "game": {
+        "exact": 0,
+        "total": 13,
+        "exact_bytes": 0,
+        "bytes": 5856
+      }
+    },
+    {
+      "target": "emi/bmagic/magic123/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 14,
+      "library": 0,
+      "sdk": 0,
+      "total": 14,
+      "game": {
+        "exact": 0,
+        "total": 14,
+        "exact_bytes": 0,
+        "bytes": 4432
+      }
+    },
+    {
+      "target": "emi/bmagic/magic124/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 23,
+      "library": 0,
+      "sdk": 0,
+      "total": 23,
+      "game": {
+        "exact": 0,
+        "total": 23,
+        "exact_bytes": 0,
+        "bytes": 15084
+      }
+    },
+    {
+      "target": "emi/bmagic/magic125/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 24,
+      "library": 0,
+      "sdk": 0,
+      "total": 24,
+      "game": {
+        "exact": 0,
+        "total": 24,
+        "exact_bytes": 0,
+        "bytes": 14336
+      }
+    },
+    {
+      "target": "emi/bmagic/magic126/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 35,
+      "library": 0,
+      "sdk": 0,
+      "total": 35,
+      "game": {
+        "exact": 0,
+        "total": 35,
+        "exact_bytes": 0,
+        "bytes": 9816
+      }
+    },
+    {
+      "target": "emi/bmagic/magic129/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 20,
+      "library": 0,
+      "sdk": 0,
+      "total": 20,
+      "game": {
+        "exact": 0,
+        "total": 20,
+        "exact_bytes": 0,
+        "bytes": 14280
+      }
+    },
+    {
+      "target": "emi/bmagic/magic130/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 17,
+      "library": 0,
+      "sdk": 0,
+      "total": 17,
+      "game": {
+        "exact": 0,
+        "total": 17,
+        "exact_bytes": 0,
+        "bytes": 3636
+      }
+    },
+    {
+      "target": "emi/bmagic/magic131/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 52,
+      "library": 0,
+      "sdk": 0,
+      "total": 52,
+      "game": {
+        "exact": 0,
+        "total": 52,
+        "exact_bytes": 0,
+        "bytes": 12192
+      }
+    },
+    {
+      "target": "emi/bmagic/magic132/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 17,
+      "library": 0,
+      "sdk": 0,
+      "total": 17,
+      "game": {
+        "exact": 0,
+        "total": 17,
+        "exact_bytes": 0,
+        "bytes": 4440
+      }
+    },
+    {
+      "target": "emi/bmagic/magic137/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 23,
+      "library": 0,
+      "sdk": 0,
+      "total": 23,
+      "game": {
+        "exact": 0,
+        "total": 23,
+        "exact_bytes": 0,
+        "bytes": 5384
+      }
+    },
+    {
+      "target": "emi/bmagic/magic138/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 14,
+      "library": 0,
+      "sdk": 0,
+      "total": 14,
+      "game": {
+        "exact": 0,
+        "total": 14,
+        "exact_bytes": 0,
+        "bytes": 2828
+      }
+    },
+    {
+      "target": "emi/bmagic/magic143/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 14,
+      "library": 0,
+      "sdk": 0,
+      "total": 14,
+      "game": {
+        "exact": 0,
+        "total": 14,
+        "exact_bytes": 0,
+        "bytes": 4856
+      }
+    },
+    {
+      "target": "emi/bmagic/magic144/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 26,
+      "library": 0,
+      "sdk": 0,
+      "total": 26,
+      "game": {
+        "exact": 0,
+        "total": 26,
+        "exact_bytes": 0,
+        "bytes": 12168
+      }
+    },
+    {
+      "target": "emi/bmagic/magic145/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 10,
+      "library": 0,
+      "sdk": 0,
+      "total": 10,
+      "game": {
+        "exact": 0,
+        "total": 10,
+        "exact_bytes": 0,
+        "bytes": 2052
+      }
+    },
+    {
+      "target": "emi/bmagic/magic146/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 16,
+      "library": 0,
+      "sdk": 0,
+      "total": 16,
+      "game": {
+        "exact": 0,
+        "total": 16,
+        "exact_bytes": 0,
+        "bytes": 3492
+      }
+    },
+    {
+      "target": "emi/bmagic/magic150/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 17,
+      "library": 0,
+      "sdk": 0,
+      "total": 17,
+      "game": {
+        "exact": 0,
+        "total": 17,
+        "exact_bytes": 0,
+        "bytes": 3856
+      }
+    },
+    {
+      "target": "emi/bmagic/magic151/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 50,
+      "library": 0,
+      "sdk": 0,
+      "total": 50,
+      "game": {
+        "exact": 0,
+        "total": 50,
+        "exact_bytes": 0,
+        "bytes": 14420
+      }
+    },
+    {
+      "target": "emi/bmagic/magic154/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 17,
+      "library": 0,
+      "sdk": 0,
+      "total": 17,
+      "game": {
+        "exact": 0,
+        "total": 17,
+        "exact_bytes": 0,
+        "bytes": 2752
+      }
+    },
+    {
+      "target": "emi/bmagic/magic158/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 11,
+      "library": 0,
+      "sdk": 0,
+      "total": 11,
+      "game": {
+        "exact": 0,
+        "total": 11,
+        "exact_bytes": 0,
+        "bytes": 2920
+      }
+    },
+    {
+      "target": "emi/bmagic/magic159/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 11,
+      "library": 0,
+      "sdk": 0,
+      "total": 11,
+      "game": {
+        "exact": 0,
+        "total": 11,
+        "exact_bytes": 0,
+        "bytes": 2096
+      }
+    },
+    {
+      "target": "emi/bmagic/magic161/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 13,
+      "library": 0,
+      "sdk": 0,
+      "total": 13,
+      "game": {
+        "exact": 0,
+        "total": 13,
+        "exact_bytes": 0,
+        "bytes": 1992
+      }
+    },
+    {
+      "target": "emi/bmagic/magic162/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 17,
+      "library": 0,
+      "sdk": 0,
+      "total": 17,
+      "game": {
+        "exact": 0,
+        "total": 17,
+        "exact_bytes": 0,
+        "bytes": 5264
+      }
+    },
+    {
+      "target": "emi/bmagic/magic166/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 10,
+      "library": 0,
+      "sdk": 0,
+      "total": 10,
+      "game": {
+        "exact": 0,
+        "total": 10,
+        "exact_bytes": 0,
+        "bytes": 2812
+      }
+    },
+    {
+      "target": "emi/bmagic/magic167/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 23,
+      "library": 0,
+      "sdk": 0,
+      "total": 23,
+      "game": {
+        "exact": 0,
+        "total": 23,
+        "exact_bytes": 0,
+        "bytes": 7352
+      }
+    },
+    {
+      "target": "emi/bmagic/magic168/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 17,
+      "library": 0,
+      "sdk": 0,
+      "total": 17,
+      "game": {
+        "exact": 0,
+        "total": 17,
+        "exact_bytes": 0,
+        "bytes": 5264
+      }
+    },
+    {
+      "target": "emi/bmagic/magic169/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 24,
+      "library": 0,
+      "sdk": 0,
+      "total": 24,
+      "game": {
+        "exact": 0,
+        "total": 24,
+        "exact_bytes": 0,
+        "bytes": 15724
+      }
+    },
+    {
+      "target": "emi/bmagic/magic172/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 21,
+      "library": 0,
+      "sdk": 0,
+      "total": 21,
+      "game": {
+        "exact": 0,
+        "total": 21,
+        "exact_bytes": 0,
+        "bytes": 8048
+      }
+    },
+    {
+      "target": "emi/bmagic/magic173/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 20,
+      "library": 0,
+      "sdk": 0,
+      "total": 20,
+      "game": {
+        "exact": 0,
+        "total": 20,
+        "exact_bytes": 0,
+        "bytes": 7852
+      }
+    },
+    {
+      "target": "emi/bmagic/magic213/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 16,
+      "library": 0,
+      "sdk": 0,
+      "total": 16,
+      "game": {
+        "exact": 0,
+        "total": 16,
+        "exact_bytes": 0,
+        "bytes": 10940
+      }
+    },
+    {
+      "target": "emi/bmagic/magic216/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 5,
+      "library": 0,
+      "sdk": 0,
+      "total": 5,
+      "game": {
+        "exact": 0,
+        "total": 5,
+        "exact_bytes": 0,
+        "bytes": 1128
+      }
+    },
+    {
+      "target": "emi/bmagic/magic218/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 11,
+      "library": 0,
+      "sdk": 0,
+      "total": 11,
+      "game": {
+        "exact": 0,
+        "total": 11,
+        "exact_bytes": 0,
+        "bytes": 2924
+      }
+    },
+    {
+      "target": "emi/bmagic/magic219/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 15,
+      "library": 0,
+      "sdk": 0,
+      "total": 15,
+      "game": {
+        "exact": 0,
+        "total": 15,
+        "exact_bytes": 0,
+        "bytes": 3540
+      }
+    },
+    {
+      "target": "emi/bmagic/magic220/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 27,
+      "library": 0,
+      "sdk": 0,
+      "total": 27,
+      "game": {
+        "exact": 0,
+        "total": 27,
+        "exact_bytes": 0,
+        "bytes": 14592
+      }
+    },
+    {
+      "target": "emi/bmagic/magic222/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 34,
+      "library": 0,
+      "sdk": 0,
+      "total": 34,
+      "game": {
+        "exact": 0,
+        "total": 34,
+        "exact_bytes": 0,
+        "bytes": 8604
+      }
+    },
+    {
+      "target": "emi/bmagic/magic223/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 20,
+      "library": 0,
+      "sdk": 0,
+      "total": 20,
+      "game": {
+        "exact": 0,
+        "total": 20,
+        "exact_bytes": 0,
+        "bytes": 11856
+      }
+    },
+    {
+      "target": "emi/bmagic/magic225/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 1,
+      "library": 0,
+      "sdk": 0,
+      "total": 1,
+      "game": {
+        "exact": 0,
+        "total": 1,
+        "exact_bytes": 0,
+        "bytes": 9900
+      }
+    },
+    {
+      "target": "emi/bmagic/magic226/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 28,
+      "library": 0,
+      "sdk": 0,
+      "total": 28,
+      "game": {
+        "exact": 0,
+        "total": 28,
+        "exact_bytes": 0,
+        "bytes": 8240
+      }
+    },
+    {
+      "target": "emi/boss/boss001/13",
+      "exact": 1,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 27,
+      "library": 0,
+      "sdk": 0,
+      "total": 28,
+      "game": {
+        "exact": 1,
+        "total": 28,
+        "exact_bytes": 56,
+        "bytes": 2396
+      }
+    },
+    {
+      "target": "emi/boss/boss002/16",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 35,
+      "library": 0,
+      "sdk": 0,
+      "total": 35,
+      "game": {
+        "exact": 0,
+        "total": 35,
+        "exact_bytes": 0,
+        "bytes": 1944
+      }
+    },
+    {
+      "target": "emi/boss/boss004/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 24,
+      "library": 0,
+      "sdk": 0,
+      "total": 24,
+      "game": {
+        "exact": 0,
+        "total": 24,
+        "exact_bytes": 0,
+        "bytes": 3776
+      }
+    },
+    {
+      "target": "emi/boss/boss007/16",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 16,
+      "library": 0,
+      "sdk": 0,
+      "total": 16,
+      "game": {
+        "exact": 0,
+        "total": 16,
+        "exact_bytes": 0,
+        "bytes": 1368
+      }
+    },
+    {
+      "target": "emi/boss/boss008/16",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 49,
+      "library": 0,
+      "sdk": 0,
+      "total": 49,
+      "game": {
+        "exact": 0,
+        "total": 49,
+        "exact_bytes": 0,
+        "bytes": 3644
+      }
+    },
+    {
+      "target": "emi/boss/boss012/16",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 18,
+      "library": 0,
+      "sdk": 0,
+      "total": 18,
+      "game": {
+        "exact": 0,
+        "total": 18,
+        "exact_bytes": 0,
+        "bytes": 1552
+      }
+    },
+    {
+      "target": "emi/boss/boss013/16",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 29,
+      "library": 0,
+      "sdk": 0,
+      "total": 29,
+      "game": {
+        "exact": 0,
+        "total": 29,
+        "exact_bytes": 0,
+        "bytes": 3516
+      }
+    },
+    {
+      "target": "emi/boss/boss014/16",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 20,
+      "library": 0,
+      "sdk": 0,
+      "total": 20,
+      "game": {
+        "exact": 0,
+        "total": 20,
+        "exact_bytes": 0,
+        "bytes": 804
+      }
+    },
+    {
+      "target": "emi/boss/boss015/16",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 10,
+      "library": 0,
+      "sdk": 0,
+      "total": 10,
+      "game": {
+        "exact": 0,
+        "total": 10,
+        "exact_bytes": 0,
+        "bytes": 408
+      }
+    },
+    {
+      "target": "emi/boss/boss017/16",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 14,
+      "library": 0,
+      "sdk": 0,
+      "total": 14,
+      "game": {
+        "exact": 0,
+        "total": 14,
+        "exact_bytes": 0,
+        "bytes": 620
+      }
+    },
+    {
+      "target": "emi/boss/boss018/16",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 47,
+      "library": 0,
+      "sdk": 0,
+      "total": 47,
+      "game": {
+        "exact": 0,
+        "total": 47,
+        "exact_bytes": 0,
+        "bytes": 5100
+      }
+    },
+    {
+      "target": "emi/boss/boss021/16",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 18,
+      "library": 0,
+      "sdk": 0,
+      "total": 18,
+      "game": {
+        "exact": 0,
+        "total": 18,
+        "exact_bytes": 0,
+        "bytes": 1172
+      }
+    },
+    {
+      "target": "emi/boss/boss022/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 13,
+      "library": 0,
+      "sdk": 0,
+      "total": 13,
+      "game": {
+        "exact": 0,
+        "total": 13,
+        "exact_bytes": 0,
+        "bytes": 788
+      }
+    },
+    {
+      "target": "emi/boss/boss023/16",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 10,
+      "library": 0,
+      "sdk": 0,
+      "total": 10,
+      "game": {
+        "exact": 0,
+        "total": 10,
+        "exact_bytes": 0,
+        "bytes": 572
+      }
+    },
+    {
+      "target": "emi/boss/boss024/16",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 20,
+      "library": 0,
+      "sdk": 0,
+      "total": 20,
+      "game": {
+        "exact": 0,
+        "total": 20,
+        "exact_bytes": 0,
+        "bytes": 832
+      }
+    },
+    {
+      "target": "emi/boss/boss025/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 43,
+      "library": 0,
+      "sdk": 0,
+      "total": 43,
+      "game": {
+        "exact": 0,
+        "total": 43,
+        "exact_bytes": 0,
+        "bytes": 6436
+      }
+    },
+    {
+      "target": "emi/boss/boss028/16",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 27,
+      "library": 0,
+      "sdk": 0,
+      "total": 27,
+      "game": {
+        "exact": 0,
+        "total": 27,
+        "exact_bytes": 0,
+        "bytes": 2364
+      }
+    },
+    {
+      "target": "emi/boss/boss029/16",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 10,
+      "library": 0,
+      "sdk": 0,
+      "total": 10,
+      "game": {
+        "exact": 0,
+        "total": 10,
+        "exact_bytes": 0,
+        "bytes": 420
+      }
+    },
+    {
+      "target": "emi/boss/boss030/16",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 16,
+      "library": 0,
+      "sdk": 0,
+      "total": 16,
+      "game": {
+        "exact": 0,
+        "total": 16,
+        "exact_bytes": 0,
+        "bytes": 688
+      }
+    },
+    {
+      "target": "emi/boss/boss031/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 12,
+      "library": 0,
+      "sdk": 0,
+      "total": 12,
+      "game": {
+        "exact": 0,
+        "total": 12,
+        "exact_bytes": 0,
+        "bytes": 692
+      }
+    },
+    {
+      "target": "emi/boss/boss032/16",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 12,
+      "library": 0,
+      "sdk": 0,
+      "total": 12,
+      "game": {
+        "exact": 0,
+        "total": 12,
+        "exact_bytes": 0,
+        "bytes": 1064
+      }
+    },
+    {
+      "target": "emi/boss/boss033/16",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 30,
+      "library": 0,
+      "sdk": 0,
+      "total": 30,
+      "game": {
+        "exact": 0,
+        "total": 30,
+        "exact_bytes": 0,
+        "bytes": 3904
+      }
+    },
+    {
+      "target": "emi/boss/boss034/16",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 30,
+      "library": 0,
+      "sdk": 0,
+      "total": 30,
+      "game": {
+        "exact": 0,
+        "total": 30,
+        "exact_bytes": 0,
+        "bytes": 3740
+      }
+    },
+    {
+      "target": "emi/boss/boss035/16",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 26,
+      "library": 0,
+      "sdk": 0,
+      "total": 26,
+      "game": {
+        "exact": 0,
+        "total": 26,
+        "exact_bytes": 0,
+        "bytes": 1256
+      }
+    },
+    {
+      "target": "emi/boss/boss036/16",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 28,
+      "library": 0,
+      "sdk": 0,
+      "total": 28,
+      "game": {
+        "exact": 0,
+        "total": 28,
+        "exact_bytes": 0,
+        "bytes": 2064
+      }
+    },
+    {
+      "target": "emi/boss/boss037/16",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 10,
+      "library": 0,
+      "sdk": 0,
+      "total": 10,
+      "game": {
+        "exact": 0,
+        "total": 10,
+        "exact_bytes": 0,
+        "bytes": 396
+      }
+    },
+    {
+      "target": "emi/boss/boss038/16",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 20,
+      "library": 0,
+      "sdk": 0,
+      "total": 20,
+      "game": {
+        "exact": 0,
+        "total": 20,
+        "exact_bytes": 0,
+        "bytes": 1036
+      }
+    },
+    {
+      "target": "emi/boss/boss040/16",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 20,
+      "library": 0,
+      "sdk": 0,
+      "total": 20,
+      "game": {
+        "exact": 0,
+        "total": 20,
+        "exact_bytes": 0,
+        "bytes": 792
+      }
+    },
+    {
+      "target": "emi/boss/boss042/16",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 10,
+      "library": 0,
+      "sdk": 0,
+      "total": 10,
+      "game": {
+        "exact": 0,
+        "total": 10,
+        "exact_bytes": 0,
+        "bytes": 396
+      }
+    },
+    {
+      "target": "emi/boss/boss049/16",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 20,
+      "library": 0,
+      "sdk": 0,
+      "total": 20,
+      "game": {
+        "exact": 0,
+        "total": 20,
+        "exact_bytes": 0,
+        "bytes": 792
+      }
+    },
+    {
+      "target": "emi/boss/boss050/16",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 14,
+      "library": 0,
+      "sdk": 0,
+      "total": 14,
+      "game": {
+        "exact": 0,
+        "total": 14,
+        "exact_bytes": 0,
+        "bytes": 804
+      }
+    },
+    {
+      "target": "emi/boss/boss051/16",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 19,
+      "library": 0,
+      "sdk": 0,
+      "total": 19,
+      "game": {
+        "exact": 0,
+        "total": 19,
+        "exact_bytes": 0,
+        "bytes": 1436
+      }
+    },
+    {
+      "target": "emi/boss/boss052/16",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 17,
+      "library": 0,
+      "sdk": 0,
+      "total": 17,
+      "game": {
+        "exact": 0,
+        "total": 17,
+        "exact_bytes": 0,
+        "bytes": 1836
+      }
+    },
+    {
+      "target": "emi/boss/boss054/16",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 22,
+      "library": 0,
+      "sdk": 0,
+      "total": 22,
+      "game": {
+        "exact": 0,
+        "total": 22,
+        "exact_bytes": 0,
+        "bytes": 2112
+      }
+    },
+    {
+      "target": "emi/boss/boss055/16",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 60,
+      "library": 0,
+      "sdk": 0,
+      "total": 60,
+      "game": {
+        "exact": 0,
+        "total": 60,
+        "exact_bytes": 0,
+        "bytes": 7280
+      }
+    },
+    {
+      "target": "emi/etc/bate/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 62,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 62,
+      "game": {
+        "exact": 0,
+        "total": 62,
+        "exact_bytes": 0,
+        "bytes": 31004
+      }
+    },
+    {
+      "target": "emi/etc/bate/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 0,
+      "game": {
+        "exact": 0,
+        "total": 0,
+        "exact_bytes": 0,
+        "bytes": 0
+      }
+    },
+    {
+      "target": "emi/etc/commu00/00",
+      "exact": 62,
+      "non_matching": 2,
+      "untagged": 0,
+      "unlifted": 4,
+      "library": 0,
+      "sdk": 0,
+      "total": 68,
+      "game": {
+        "exact": 62,
+        "total": 68,
+        "exact_bytes": 10540,
+        "bytes": 14424
+      }
+    },
+    {
+      "target": "emi/etc/commu01/07",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 36,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 36,
+      "game": {
+        "exact": 0,
+        "total": 36,
+        "exact_bytes": 0,
+        "bytes": 16260
+      }
+    },
+    {
+      "target": "emi/etc/commu02/08",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 140,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 140,
+      "game": {
+        "exact": 0,
+        "total": 140,
+        "exact_bytes": 0,
+        "bytes": 40400
+      }
+    },
+    {
+      "target": "emi/etc/commu03/06",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 15,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 15,
+      "game": {
+        "exact": 0,
+        "total": 15,
+        "exact_bytes": 0,
+        "bytes": 3196
+      }
+    },
+    {
+      "target": "emi/etc/commu04/06",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 11,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 11,
+      "game": {
+        "exact": 0,
+        "total": 11,
+        "exact_bytes": 0,
+        "bytes": 2884
+      }
+    },
+    {
+      "target": "emi/etc/commu05/07",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 10,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 10,
+      "game": {
+        "exact": 0,
+        "total": 10,
+        "exact_bytes": 0,
+        "bytes": 3384
+      }
+    },
+    {
+      "target": "emi/etc/game/00",
+      "exact": 647,
+      "non_matching": 34,
+      "untagged": 0,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 681,
+      "game": {
+        "exact": 647,
+        "total": 681,
+        "exact_bytes": 164596,
+        "bytes": 203428
+      }
+    },
+    {
+      "target": "emi/etc/game/01",
+      "exact": 20,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 20,
+      "game": {
+        "exact": 20,
+        "total": 20,
+        "exact_bytes": 4400,
+        "bytes": 4400
+      }
+    },
+    {
+      "target": "emi/etc/shisu/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 87,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 87,
+      "game": {
+        "exact": 0,
+        "total": 87,
+        "exact_bytes": 0,
+        "bytes": 35040
+      }
+    },
+    {
+      "target": "emi/etc/shop/00",
+      "exact": 238,
+      "non_matching": 16,
+      "untagged": 0,
+      "unlifted": 8,
+      "library": 0,
+      "sdk": 0,
+      "total": 262,
+      "game": {
+        "exact": 238,
+        "total": 262,
+        "exact_bytes": 56388,
+        "bytes": 82596
+      }
+    },
+    {
+      "target": "emi/etc/sisyou/00",
+      "exact": 44,
+      "non_matching": 2,
+      "untagged": 0,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 46,
+      "game": {
+        "exact": 44,
+        "total": 46,
+        "exact_bytes": 10664,
+        "bytes": 13120
+      }
+    },
+    {
+      "target": "emi/etc/start/08",
+      "exact": 312,
+      "non_matching": 28,
+      "untagged": 0,
+      "unlifted": 13,
+      "library": 0,
+      "sdk": 0,
+      "total": 353,
+      "game": {
+        "exact": 312,
+        "total": 353,
+        "exact_bytes": 64044,
+        "bytes": 108008
+      }
+    },
+    {
+      "target": "emi/etc/start/09",
+      "exact": 14,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 14,
+      "game": {
+        "exact": 14,
+        "total": 14,
+        "exact_bytes": 5220,
+        "bytes": 5220
+      }
+    },
+    {
+      "target": "emi/plchar/plp012/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 27,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 27,
+      "game": {
+        "exact": 0,
+        "total": 27,
+        "exact_bytes": 0,
+        "bytes": 6516
+      }
+    },
+    {
+      "target": "emi/plchar/plp015/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 25,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 25,
+      "game": {
+        "exact": 0,
+        "total": 25,
+        "exact_bytes": 0,
+        "bytes": 6008
+      }
+    },
+    {
+      "target": "emi/plchar/plp016/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 37,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 37,
+      "game": {
+        "exact": 0,
+        "total": 37,
+        "exact_bytes": 0,
+        "bytes": 8740
+      }
+    },
+    {
+      "target": "emi/plchar/plp025/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 28,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 28,
+      "game": {
+        "exact": 0,
+        "total": 28,
+        "exact_bytes": 0,
+        "bytes": 7068
+      }
+    },
+    {
+      "target": "emi/plchar/plp026/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 40,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 40,
+      "game": {
+        "exact": 0,
+        "total": 40,
+        "exact_bytes": 0,
+        "bytes": 9800
+      }
+    },
+    {
+      "target": "emi/plchar/plp034/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 33,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 33,
+      "game": {
+        "exact": 0,
+        "total": 33,
+        "exact_bytes": 0,
+        "bytes": 7912
+      }
+    },
+    {
+      "target": "emi/plchar/plp056/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 38,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 38,
+      "game": {
+        "exact": 0,
+        "total": 38,
+        "exact_bytes": 0,
+        "bytes": 9292
+      }
+    },
+    {
+      "target": "emi/plchar/plp247/00",
+      "exact": 1,
+      "non_matching": 0,
+      "untagged": 24,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 25,
+      "game": {
+        "exact": 1,
+        "total": 25,
+        "exact_bytes": 844,
+        "bytes": 5872
+      }
+    },
+    {
+      "target": "emi/plchar/plp257/00",
+      "exact": 1,
+      "non_matching": 0,
+      "untagged": 27,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 28,
+      "game": {
+        "exact": 1,
+        "total": 28,
+        "exact_bytes": 844,
+        "bytes": 6864
+      }
+    },
+    {
+      "target": "emi/plchar/plp267/00",
+      "exact": 1,
+      "non_matching": 0,
+      "untagged": 39,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 40,
+      "game": {
+        "exact": 1,
+        "total": 40,
+        "exact_bytes": 844,
+        "bytes": 9596
+      }
+    },
+    {
+      "target": "emi/plchar/plp278/00",
+      "exact": 1,
+      "non_matching": 0,
+      "untagged": 26,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 27,
+      "game": {
+        "exact": 1,
+        "total": 27,
+        "exact_bytes": 844,
+        "bytes": 6312
+      }
+    },
+    {
+      "target": "emi/plchar/plp27a/00",
+      "exact": 1,
+      "non_matching": 0,
+      "untagged": 22,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 23,
+      "game": {
+        "exact": 1,
+        "total": 23,
+        "exact_bytes": 844,
+        "bytes": 5364
+      }
+    },
+    {
+      "target": "emi/plchar/plp349/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 25,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 25,
+      "game": {
+        "exact": 0,
+        "total": 25,
+        "exact_bytes": 0,
+        "bytes": 4576
+      }
+    },
+    {
+      "target": "emi/plchar/plp457/00",
+      "exact": 1,
+      "non_matching": 0,
+      "untagged": 22,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 23,
+      "game": {
+        "exact": 1,
+        "total": 23,
+        "exact_bytes": 844,
+        "bytes": 5364
+      }
+    },
+    {
+      "target": "emi/plchar/plp467/00",
+      "exact": 1,
+      "non_matching": 0,
+      "untagged": 34,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 35,
+      "game": {
+        "exact": 1,
+        "total": 35,
+        "exact_bytes": 844,
+        "bytes": 8096
+      }
+    },
+    {
+      "target": "emi/plchar/plp478/00",
+      "exact": 1,
+      "non_matching": 0,
+      "untagged": 21,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 22,
+      "game": {
+        "exact": 1,
+        "total": 22,
+        "exact_bytes": 844,
+        "bytes": 4812
+      }
+    },
+    {
+      "target": "emi/plchar/plp567/00",
+      "exact": 1,
+      "non_matching": 0,
+      "untagged": 37,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 38,
+      "game": {
+        "exact": 1,
+        "total": 38,
+        "exact_bytes": 844,
+        "bytes": 9088
+      }
+    },
+    {
+      "target": "emi/plchar/plp578/00",
+      "exact": 1,
+      "non_matching": 0,
+      "untagged": 24,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 25,
+      "game": {
+        "exact": 1,
+        "total": 25,
+        "exact_bytes": 844,
+        "bytes": 5804
+      }
+    },
+    {
+      "target": "emi/plchar/plp678/00",
+      "exact": 1,
+      "non_matching": 0,
+      "untagged": 36,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 37,
+      "game": {
+        "exact": 1,
+        "total": 37,
+        "exact_bytes": 844,
+        "bytes": 8536
+      }
+    },
+    {
+      "target": "emi/scenario/sce10eff/00",
+      "exact": 23,
+      "non_matching": 1,
+      "untagged": 0,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 24,
+      "game": {
+        "exact": 23,
+        "total": 24,
+        "exact_bytes": 5180,
+        "bytes": 6968
+      }
+    },
+    {
+      "target": "emi/scenario/sce15ef0/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 16,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 16,
+      "game": {
+        "exact": 0,
+        "total": 16,
+        "exact_bytes": 0,
+        "bytes": 4988
+      }
+    },
+    {
+      "target": "emi/scenario/sce15ef1/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 40,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 40,
+      "game": {
+        "exact": 0,
+        "total": 40,
+        "exact_bytes": 0,
+        "bytes": 11532
+      }
+    },
+    {
+      "target": "emi/scenario/sce15ef2/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 25,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 25,
+      "game": {
+        "exact": 0,
+        "total": 25,
+        "exact_bytes": 0,
+        "bytes": 3856
+      }
+    },
+    {
+      "target": "emi/scenario/sce15ef3/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 43,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 43,
+      "game": {
+        "exact": 0,
+        "total": 43,
+        "exact_bytes": 0,
+        "bytes": 7076
+      }
+    },
+    {
+      "target": "emi/scenario/scena00/00",
+      "exact": 63,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 63,
+      "game": {
+        "exact": 63,
+        "total": 63,
+        "exact_bytes": 23756,
+        "bytes": 23756
+      }
+    },
+    {
+      "target": "emi/scenario/scena01/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 72,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 72,
+      "game": {
+        "exact": 0,
+        "total": 72,
+        "exact_bytes": 0,
+        "bytes": 28844
+      }
+    },
+    {
+      "target": "emi/scenario/scena02/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 86,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 86,
+      "game": {
+        "exact": 0,
+        "total": 86,
+        "exact_bytes": 0,
+        "bytes": 28872
+      }
+    },
+    {
+      "target": "emi/scenario/scena03/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 81,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 81,
+      "game": {
+        "exact": 0,
+        "total": 81,
+        "exact_bytes": 0,
+        "bytes": 24748
+      }
+    },
+    {
+      "target": "emi/scenario/scena04/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 44,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 44,
+      "game": {
+        "exact": 0,
+        "total": 44,
+        "exact_bytes": 0,
+        "bytes": 13432
+      }
+    },
+    {
+      "target": "emi/scenario/scena05/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 69,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 69,
+      "game": {
+        "exact": 0,
+        "total": 69,
+        "exact_bytes": 0,
+        "bytes": 25000
+      }
+    },
+    {
+      "target": "emi/scenario/scena06/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 70,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 70,
+      "game": {
+        "exact": 0,
+        "total": 70,
+        "exact_bytes": 0,
+        "bytes": 28956
+      }
+    },
+    {
+      "target": "emi/scenario/scena07/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 105,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 105,
+      "game": {
+        "exact": 0,
+        "total": 105,
+        "exact_bytes": 0,
+        "bytes": 28480
+      }
+    },
+    {
+      "target": "emi/scenario/scena08/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 109,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 109,
+      "game": {
+        "exact": 0,
+        "total": 109,
+        "exact_bytes": 0,
+        "bytes": 31044
+      }
+    },
+    {
+      "target": "emi/scenario/scena09/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 87,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 87,
+      "game": {
+        "exact": 0,
+        "total": 87,
+        "exact_bytes": 0,
+        "bytes": 28704
+      }
+    },
+    {
+      "target": "emi/scenario/scena10/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 67,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 67,
+      "game": {
+        "exact": 0,
+        "total": 67,
+        "exact_bytes": 0,
+        "bytes": 30812
+      }
+    },
+    {
+      "target": "emi/scenario/scena11/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 52,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 52,
+      "game": {
+        "exact": 0,
+        "total": 52,
+        "exact_bytes": 0,
+        "bytes": 15876
+      }
+    },
+    {
+      "target": "emi/scenario/scena12/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 67,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 67,
+      "game": {
+        "exact": 0,
+        "total": 67,
+        "exact_bytes": 0,
+        "bytes": 24572
+      }
+    },
+    {
+      "target": "emi/scenario/scena13/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 54,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 54,
+      "game": {
+        "exact": 0,
+        "total": 54,
+        "exact_bytes": 0,
+        "bytes": 20548
+      }
+    },
+    {
+      "target": "emi/scenario/scena14/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 44,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 44,
+      "game": {
+        "exact": 0,
+        "total": 44,
+        "exact_bytes": 0,
+        "bytes": 21540
+      }
+    },
+    {
+      "target": "emi/scenario/scena15/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 83,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 83,
+      "game": {
+        "exact": 0,
+        "total": 83,
+        "exact_bytes": 0,
+        "bytes": 30268
+      }
+    },
+    {
+      "target": "emi/scenario/scena16/00",
+      "exact": 20,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 20,
+      "game": {
+        "exact": 20,
+        "total": 20,
+        "exact_bytes": 6376,
+        "bytes": 6376
+      }
+    },
+    {
+      "target": "emi/scenario/scena17/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 58,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 58,
+      "game": {
+        "exact": 0,
+        "total": 58,
+        "exact_bytes": 0,
+        "bytes": 8204
+      }
+    },
+    {
+      "target": "emi/scenario/scena18/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 11,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 11,
+      "game": {
+        "exact": 0,
+        "total": 11,
+        "exact_bytes": 0,
+        "bytes": 332
+      }
+    },
+    {
+      "target": "emi/scenario/scena19/00",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 11,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 11,
+      "game": {
+        "exact": 0,
+        "total": 11,
+        "exact_bytes": 0,
+        "bytes": 432
+      }
+    },
+    {
+      "target": "emi/world00/area000/13",
+      "exact": 1,
+      "non_matching": 0,
+      "untagged": 3,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 4,
+      "game": {
+        "exact": 1,
+        "total": 4,
+        "exact_bytes": 64,
+        "bytes": 276
+      }
+    },
+    {
+      "target": "emi/world00/area001/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 4,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 4,
+      "game": {
+        "exact": 0,
+        "total": 4,
+        "exact_bytes": 0,
+        "bytes": 472
+      }
+    },
+    {
+      "target": "emi/world00/area002/09",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 1,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 1,
+      "game": {
+        "exact": 0,
+        "total": 1,
+        "exact_bytes": 0,
+        "bytes": 108
+      }
+    },
+    {
+      "target": "emi/world00/area003/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 8,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 8,
+      "game": {
+        "exact": 0,
+        "total": 8,
+        "exact_bytes": 0,
+        "bytes": 528
+      }
+    },
+    {
+      "target": "emi/world00/area004/09",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 1,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 1,
+      "game": {
+        "exact": 0,
+        "total": 1,
+        "exact_bytes": 0,
+        "bytes": 120
+      }
+    },
+    {
+      "target": "emi/world00/area005/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 4,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 4,
+      "game": {
+        "exact": 0,
+        "total": 4,
+        "exact_bytes": 0,
+        "bytes": 216
+      }
+    },
+    {
+      "target": "emi/world00/area006/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 0,
+      "game": {
+        "exact": 0,
+        "total": 0,
+        "exact_bytes": 0,
+        "bytes": 0
+      }
+    },
+    {
+      "target": "emi/world00/area007/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 9,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 9,
+      "game": {
+        "exact": 0,
+        "total": 9,
+        "exact_bytes": 0,
+        "bytes": 904
+      }
+    },
+    {
+      "target": "emi/world00/area008/13",
+      "exact": 47,
+      "non_matching": 1,
+      "untagged": 0,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 48,
+      "game": {
+        "exact": 47,
+        "total": 48,
+        "exact_bytes": 5392,
+        "bytes": 6748
+      }
+    },
+    {
+      "target": "emi/world00/area009/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 0,
+      "game": {
+        "exact": 0,
+        "total": 0,
+        "exact_bytes": 0,
+        "bytes": 0
+      }
+    },
+    {
+      "target": "emi/world00/area010/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 5,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 5,
+      "game": {
+        "exact": 0,
+        "total": 5,
+        "exact_bytes": 0,
+        "bytes": 344
+      }
+    },
+    {
+      "target": "emi/world00/area011/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 3,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 3,
+      "game": {
+        "exact": 0,
+        "total": 3,
+        "exact_bytes": 0,
+        "bytes": 372
+      }
+    },
+    {
+      "target": "emi/world00/area012/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 1,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 1,
+      "game": {
+        "exact": 0,
+        "total": 1,
+        "exact_bytes": 0,
+        "bytes": 76
+      }
+    },
+    {
+      "target": "emi/world00/area013/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 6,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 6,
+      "game": {
+        "exact": 0,
+        "total": 6,
+        "exact_bytes": 0,
+        "bytes": 568
+      }
+    },
+    {
+      "target": "emi/world00/area014/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 1,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 1,
+      "game": {
+        "exact": 0,
+        "total": 1,
+        "exact_bytes": 0,
+        "bytes": 32
+      }
+    },
+    {
+      "target": "emi/world00/area015/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 11,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 11,
+      "game": {
+        "exact": 0,
+        "total": 11,
+        "exact_bytes": 0,
+        "bytes": 972
+      }
+    },
+    {
+      "target": "emi/world00/area016/13",
+      "exact": 33,
+      "non_matching": 1,
+      "untagged": 0,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 34,
+      "game": {
+        "exact": 33,
+        "total": 34,
+        "exact_bytes": 7012,
+        "bytes": 8568
+      }
+    },
+    {
+      "target": "emi/world00/area017/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 0,
+      "game": {
+        "exact": 0,
+        "total": 0,
+        "exact_bytes": 0,
+        "bytes": 0
+      }
+    },
+    {
+      "target": "emi/world00/area018/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 3,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 3,
+      "game": {
+        "exact": 0,
+        "total": 3,
+        "exact_bytes": 0,
+        "bytes": 316
+      }
+    },
+    {
+      "target": "emi/world00/area019/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 8,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 8,
+      "game": {
+        "exact": 0,
+        "total": 8,
+        "exact_bytes": 0,
+        "bytes": 396
+      }
+    },
+    {
+      "target": "emi/world00/area020/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 2,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 2,
+      "game": {
+        "exact": 0,
+        "total": 2,
+        "exact_bytes": 0,
+        "bytes": 328
+      }
+    },
+    {
+      "target": "emi/world00/area021/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 4,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 4,
+      "game": {
+        "exact": 0,
+        "total": 4,
+        "exact_bytes": 0,
+        "bytes": 404
+      }
+    },
+    {
+      "target": "emi/world00/area022/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 4,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 4,
+      "game": {
+        "exact": 0,
+        "total": 4,
+        "exact_bytes": 0,
+        "bytes": 280
+      }
+    },
+    {
+      "target": "emi/world00/area023/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 7,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 7,
+      "game": {
+        "exact": 0,
+        "total": 7,
+        "exact_bytes": 0,
+        "bytes": 416
+      }
+    },
+    {
+      "target": "emi/world00/area024/14",
+      "exact": 25,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 25,
+      "game": {
+        "exact": 25,
+        "total": 25,
+        "exact_bytes": 12016,
+        "bytes": 12016
+      }
+    },
+    {
+      "target": "emi/world00/area025/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 1,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 1,
+      "game": {
+        "exact": 0,
+        "total": 1,
+        "exact_bytes": 0,
+        "bytes": 312
+      }
+    },
+    {
+      "target": "emi/world00/area026/13",
+      "exact": 24,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 24,
+      "game": {
+        "exact": 24,
+        "total": 24,
+        "exact_bytes": 8416,
+        "bytes": 8416
+      }
+    },
+    {
+      "target": "emi/world00/area027/13",
+      "exact": 21,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 21,
+      "game": {
+        "exact": 21,
+        "total": 21,
+        "exact_bytes": 8500,
+        "bytes": 8500
+      }
+    },
+    {
+      "target": "emi/world00/area028/13",
+      "exact": 13,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 13,
+      "game": {
+        "exact": 13,
+        "total": 13,
+        "exact_bytes": 4608,
+        "bytes": 4608
+      }
+    },
+    {
+      "target": "emi/world00/area029/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 2,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 2,
+      "game": {
+        "exact": 0,
+        "total": 2,
+        "exact_bytes": 0,
+        "bytes": 328
+      }
+    },
+    {
+      "target": "emi/world00/area030/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 0,
+      "game": {
+        "exact": 0,
+        "total": 0,
+        "exact_bytes": 0,
+        "bytes": 0
+      }
+    },
+    {
+      "target": "emi/world00/area030/04",
+      "exact": 218,
+      "non_matching": 15,
+      "untagged": 0,
+      "unlifted": 4,
+      "library": 0,
+      "sdk": 0,
+      "total": 237,
+      "game": {
+        "exact": 218,
+        "total": 237,
+        "exact_bytes": 49656,
+        "bytes": 69700
+      }
+    },
+    {
+      "target": "emi/world00/area030/05",
+      "exact": 23,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 23,
+      "game": {
+        "exact": 23,
+        "total": 23,
+        "exact_bytes": 8772,
+        "bytes": 8772
+      }
+    },
+    {
+      "target": "emi/world00/area031/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 0,
+      "game": {
+        "exact": 0,
+        "total": 0,
+        "exact_bytes": 0,
+        "bytes": 0
+      }
+    },
+    {
+      "target": "emi/world00/area032/13",
+      "exact": 23,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 23,
+      "game": {
+        "exact": 23,
+        "total": 23,
+        "exact_bytes": 7436,
+        "bytes": 7436
+      }
+    },
+    {
+      "target": "emi/world00/area033/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 36,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 36,
+      "game": {
+        "exact": 0,
+        "total": 36,
+        "exact_bytes": 0,
+        "bytes": 8364
+      }
+    },
+    {
+      "target": "emi/world00/area034/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 4,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 4,
+      "game": {
+        "exact": 0,
+        "total": 4,
+        "exact_bytes": 0,
+        "bytes": 560
+      }
+    },
+    {
+      "target": "emi/world00/area035/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 4,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 4,
+      "game": {
+        "exact": 0,
+        "total": 4,
+        "exact_bytes": 0,
+        "bytes": 380
+      }
+    },
+    {
+      "target": "emi/world00/area036/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 7,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 7,
+      "game": {
+        "exact": 0,
+        "total": 7,
+        "exact_bytes": 0,
+        "bytes": 1272
+      }
+    },
+    {
+      "target": "emi/world00/area037/13",
+      "exact": 8,
+      "non_matching": 0,
+      "untagged": 17,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 25,
+      "game": {
+        "exact": 8,
+        "total": 25,
+        "exact_bytes": 544,
+        "bytes": 3888
+      }
+    },
+    {
+      "target": "emi/world01/area038/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 4,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 4,
+      "game": {
+        "exact": 0,
+        "total": 4,
+        "exact_bytes": 0,
+        "bytes": 1064
+      }
+    },
+    {
+      "target": "emi/world01/area039/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 17,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 17,
+      "game": {
+        "exact": 0,
+        "total": 17,
+        "exact_bytes": 0,
+        "bytes": 964
+      }
+    },
+    {
+      "target": "emi/world01/area040/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 19,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 19,
+      "game": {
+        "exact": 0,
+        "total": 19,
+        "exact_bytes": 0,
+        "bytes": 4100
+      }
+    },
+    {
+      "target": "emi/world01/area041/13",
+      "exact": 2,
+      "non_matching": 0,
+      "untagged": 35,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 37,
+      "game": {
+        "exact": 2,
+        "total": 37,
+        "exact_bytes": 136,
+        "bytes": 5828
+      }
+    },
+    {
+      "target": "emi/world01/area042/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 34,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 34,
+      "game": {
+        "exact": 0,
+        "total": 34,
+        "exact_bytes": 0,
+        "bytes": 9860
+      }
+    },
+    {
+      "target": "emi/world01/area043/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 6,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 6,
+      "game": {
+        "exact": 0,
+        "total": 6,
+        "exact_bytes": 0,
+        "bytes": 1192
+      }
+    },
+    {
+      "target": "emi/world01/area044/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 6,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 6,
+      "game": {
+        "exact": 0,
+        "total": 6,
+        "exact_bytes": 0,
+        "bytes": 3340
+      }
+    },
+    {
+      "target": "emi/world01/area045/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 34,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 34,
+      "game": {
+        "exact": 0,
+        "total": 34,
+        "exact_bytes": 0,
+        "bytes": 8568
+      }
+    },
+    {
+      "target": "emi/world01/area046/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 4,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 4,
+      "game": {
+        "exact": 0,
+        "total": 4,
+        "exact_bytes": 0,
+        "bytes": 532
+      }
+    },
+    {
+      "target": "emi/world01/area047/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 15,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 15,
+      "game": {
+        "exact": 0,
+        "total": 15,
+        "exact_bytes": 0,
+        "bytes": 3524
+      }
+    },
+    {
+      "target": "emi/world01/area048/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 35,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 35,
+      "game": {
+        "exact": 0,
+        "total": 35,
+        "exact_bytes": 0,
+        "bytes": 8536
+      }
+    },
+    {
+      "target": "emi/world01/area049/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 25,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 25,
+      "game": {
+        "exact": 0,
+        "total": 25,
+        "exact_bytes": 0,
+        "bytes": 4480
+      }
+    },
+    {
+      "target": "emi/world01/area049/14",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 28,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 28,
+      "game": {
+        "exact": 0,
+        "total": 28,
+        "exact_bytes": 0,
+        "bytes": 3464
+      }
+    },
+    {
+      "target": "emi/world01/area050/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 7,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 7,
+      "game": {
+        "exact": 0,
+        "total": 7,
+        "exact_bytes": 0,
+        "bytes": 464
+      }
+    },
+    {
+      "target": "emi/world01/area051/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 4,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 4,
+      "game": {
+        "exact": 0,
+        "total": 4,
+        "exact_bytes": 0,
+        "bytes": 436
+      }
+    },
+    {
+      "target": "emi/world01/area052/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 26,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 26,
+      "game": {
+        "exact": 0,
+        "total": 26,
+        "exact_bytes": 0,
+        "bytes": 6132
+      }
+    },
+    {
+      "target": "emi/world01/area053/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 1,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 1,
+      "game": {
+        "exact": 0,
+        "total": 1,
+        "exact_bytes": 0,
+        "bytes": 88
+      }
+    },
+    {
+      "target": "emi/world01/area054/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 1,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 1,
+      "game": {
+        "exact": 0,
+        "total": 1,
+        "exact_bytes": 0,
+        "bytes": 64
+      }
+    },
+    {
+      "target": "emi/world01/area055/13",
+      "exact": 2,
+      "non_matching": 0,
+      "untagged": 4,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 6,
+      "game": {
+        "exact": 2,
+        "total": 6,
+        "exact_bytes": 136,
+        "bytes": 420
+      }
+    },
+    {
+      "target": "emi/world01/area056/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 21,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 21,
+      "game": {
+        "exact": 0,
+        "total": 21,
+        "exact_bytes": 0,
+        "bytes": 2264
+      }
+    },
+    {
+      "target": "emi/world01/area057/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 5,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 5,
+      "game": {
+        "exact": 0,
+        "total": 5,
+        "exact_bytes": 0,
+        "bytes": 380
+      }
+    },
+    {
+      "target": "emi/world01/area058/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 1,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 1,
+      "game": {
+        "exact": 0,
+        "total": 1,
+        "exact_bytes": 0,
+        "bytes": 112
+      }
+    },
+    {
+      "target": "emi/world01/area059/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 15,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 15,
+      "game": {
+        "exact": 0,
+        "total": 15,
+        "exact_bytes": 0,
+        "bytes": 1968
+      }
+    },
+    {
+      "target": "emi/world01/area060/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 5,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 5,
+      "game": {
+        "exact": 0,
+        "total": 5,
+        "exact_bytes": 0,
+        "bytes": 1836
+      }
+    },
+    {
+      "target": "emi/world01/area061/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 6,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 6,
+      "game": {
+        "exact": 0,
+        "total": 6,
+        "exact_bytes": 0,
+        "bytes": 364
+      }
+    },
+    {
+      "target": "emi/world01/area062/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 2,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 2,
+      "game": {
+        "exact": 0,
+        "total": 2,
+        "exact_bytes": 0,
+        "bytes": 492
+      }
+    },
+    {
+      "target": "emi/world01/area063/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 2,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 2,
+      "game": {
+        "exact": 0,
+        "total": 2,
+        "exact_bytes": 0,
+        "bytes": 328
+      }
+    },
+    {
+      "target": "emi/world01/area064/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 2,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 2,
+      "game": {
+        "exact": 0,
+        "total": 2,
+        "exact_bytes": 0,
+        "bytes": 328
+      }
+    },
+    {
+      "target": "emi/world01/area065/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 35,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 35,
+      "game": {
+        "exact": 0,
+        "total": 35,
+        "exact_bytes": 0,
+        "bytes": 8624
+      }
+    },
+    {
+      "target": "emi/world01/area066/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 0,
+      "game": {
+        "exact": 0,
+        "total": 0,
+        "exact_bytes": 0,
+        "bytes": 0
+      }
+    },
+    {
+      "target": "emi/world01/area067/14",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 41,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 41,
+      "game": {
+        "exact": 0,
+        "total": 41,
+        "exact_bytes": 0,
+        "bytes": 6688
+      }
+    },
+    {
+      "target": "emi/world01/area068/13",
+      "exact": 2,
+      "non_matching": 0,
+      "untagged": 48,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 50,
+      "game": {
+        "exact": 2,
+        "total": 50,
+        "exact_bytes": 136,
+        "bytes": 5088
+      }
+    },
+    {
+      "target": "emi/world01/area069/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 3,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 3,
+      "game": {
+        "exact": 0,
+        "total": 3,
+        "exact_bytes": 0,
+        "bytes": 276
+      }
+    },
+    {
+      "target": "emi/world01/area070/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 0,
+      "game": {
+        "exact": 0,
+        "total": 0,
+        "exact_bytes": 0,
+        "bytes": 0
+      }
+    },
+    {
+      "target": "emi/world01/area071/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 2,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 2,
+      "game": {
+        "exact": 0,
+        "total": 2,
+        "exact_bytes": 0,
+        "bytes": 376
+      }
+    },
+    {
+      "target": "emi/world01/area072/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 2,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 2,
+      "game": {
+        "exact": 0,
+        "total": 2,
+        "exact_bytes": 0,
+        "bytes": 328
+      }
+    },
+    {
+      "target": "emi/world01/area073/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 2,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 2,
+      "game": {
+        "exact": 0,
+        "total": 2,
+        "exact_bytes": 0,
+        "bytes": 328
+      }
+    },
+    {
+      "target": "emi/world01/area074/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 8,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 8,
+      "game": {
+        "exact": 0,
+        "total": 8,
+        "exact_bytes": 0,
+        "bytes": 712
+      }
+    },
+    {
+      "target": "emi/world01/area075/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 37,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 37,
+      "game": {
+        "exact": 0,
+        "total": 37,
+        "exact_bytes": 0,
+        "bytes": 9004
+      }
+    },
+    {
+      "target": "emi/world02/area076/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 1,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 1,
+      "game": {
+        "exact": 0,
+        "total": 1,
+        "exact_bytes": 0,
+        "bytes": 52
+      }
+    },
+    {
+      "target": "emi/world02/area077/14",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 76,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 76,
+      "game": {
+        "exact": 0,
+        "total": 76,
+        "exact_bytes": 0,
+        "bytes": 13900
+      }
+    },
+    {
+      "target": "emi/world02/area078/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 9,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 9,
+      "game": {
+        "exact": 0,
+        "total": 9,
+        "exact_bytes": 0,
+        "bytes": 628
+      }
+    },
+    {
+      "target": "emi/world02/area079/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 9,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 9,
+      "game": {
+        "exact": 0,
+        "total": 9,
+        "exact_bytes": 0,
+        "bytes": 772
+      }
+    },
+    {
+      "target": "emi/world02/area080/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 22,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 22,
+      "game": {
+        "exact": 0,
+        "total": 22,
+        "exact_bytes": 0,
+        "bytes": 4520
+      }
+    },
+    {
+      "target": "emi/world02/area081/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 5,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 5,
+      "game": {
+        "exact": 0,
+        "total": 5,
+        "exact_bytes": 0,
+        "bytes": 352
+      }
+    },
+    {
+      "target": "emi/world02/area082/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 55,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 55,
+      "game": {
+        "exact": 0,
+        "total": 55,
+        "exact_bytes": 0,
+        "bytes": 11056
+      }
+    },
+    {
+      "target": "emi/world02/area083/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 0,
+      "game": {
+        "exact": 0,
+        "total": 0,
+        "exact_bytes": 0,
+        "bytes": 0
+      }
+    },
+    {
+      "target": "emi/world02/area084/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 1,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 1,
+      "game": {
+        "exact": 0,
+        "total": 1,
+        "exact_bytes": 0,
+        "bytes": 112
+      }
+    },
+    {
+      "target": "emi/world02/area085/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 24,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 24,
+      "game": {
+        "exact": 0,
+        "total": 24,
+        "exact_bytes": 0,
+        "bytes": 4392
+      }
+    },
+    {
+      "target": "emi/world02/area086/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 9,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 9,
+      "game": {
+        "exact": 0,
+        "total": 9,
+        "exact_bytes": 0,
+        "bytes": 2632
+      }
+    },
+    {
+      "target": "emi/world02/area087/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 35,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 35,
+      "game": {
+        "exact": 0,
+        "total": 35,
+        "exact_bytes": 0,
+        "bytes": 8616
+      }
+    },
+    {
+      "target": "emi/world02/area088/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 48,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 48,
+      "game": {
+        "exact": 0,
+        "total": 48,
+        "exact_bytes": 0,
+        "bytes": 11480
+      }
+    },
+    {
+      "target": "emi/world02/area089/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 0,
+      "game": {
+        "exact": 0,
+        "total": 0,
+        "exact_bytes": 0,
+        "bytes": 0
+      }
+    },
+    {
+      "target": "emi/world02/area090/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 1,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 1,
+      "game": {
+        "exact": 0,
+        "total": 1,
+        "exact_bytes": 0,
+        "bytes": 88
+      }
+    },
+    {
+      "target": "emi/world02/area091/13",
+      "exact": 2,
+      "non_matching": 0,
+      "untagged": 13,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 15,
+      "game": {
+        "exact": 2,
+        "total": 15,
+        "exact_bytes": 136,
+        "bytes": 3572
+      }
+    },
+    {
+      "target": "emi/world02/area092/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 12,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 12,
+      "game": {
+        "exact": 0,
+        "total": 12,
+        "exact_bytes": 0,
+        "bytes": 3692
+      }
+    },
+    {
+      "target": "emi/world02/area093/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 1,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 1,
+      "game": {
+        "exact": 0,
+        "total": 1,
+        "exact_bytes": 0,
+        "bytes": 64
+      }
+    },
+    {
+      "target": "emi/world02/area094/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 19,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 19,
+      "game": {
+        "exact": 0,
+        "total": 19,
+        "exact_bytes": 0,
+        "bytes": 2304
+      }
+    },
+    {
+      "target": "emi/world02/area095/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 14,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 14,
+      "game": {
+        "exact": 0,
+        "total": 14,
+        "exact_bytes": 0,
+        "bytes": 2688
+      }
+    },
+    {
+      "target": "emi/world02/area096/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 14,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 14,
+      "game": {
+        "exact": 0,
+        "total": 14,
+        "exact_bytes": 0,
+        "bytes": 2576
+      }
+    },
+    {
+      "target": "emi/world02/area097/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 3,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 3,
+      "game": {
+        "exact": 0,
+        "total": 3,
+        "exact_bytes": 0,
+        "bytes": 348
+      }
+    },
+    {
+      "target": "emi/world02/area098/13",
+      "exact": 2,
+      "non_matching": 0,
+      "untagged": 56,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 58,
+      "game": {
+        "exact": 2,
+        "total": 58,
+        "exact_bytes": 136,
+        "bytes": 13140
+      }
+    },
+    {
+      "target": "emi/world02/area099/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 11,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 11,
+      "game": {
+        "exact": 0,
+        "total": 11,
+        "exact_bytes": 0,
+        "bytes": 1348
+      }
+    },
+    {
+      "target": "emi/world02/area100/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 30,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 30,
+      "game": {
+        "exact": 0,
+        "total": 30,
+        "exact_bytes": 0,
+        "bytes": 5196
+      }
+    },
+    {
+      "target": "emi/world02/area101/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 0,
+      "game": {
+        "exact": 0,
+        "total": 0,
+        "exact_bytes": 0,
+        "bytes": 0
+      }
+    },
+    {
+      "target": "emi/world02/area102/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 15,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 15,
+      "game": {
+        "exact": 0,
+        "total": 15,
+        "exact_bytes": 0,
+        "bytes": 3372
+      }
+    },
+    {
+      "target": "emi/world02/area103/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 48,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 48,
+      "game": {
+        "exact": 0,
+        "total": 48,
+        "exact_bytes": 0,
+        "bytes": 11568
+      }
+    },
+    {
+      "target": "emi/world02/area104/14",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 59,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 59,
+      "game": {
+        "exact": 0,
+        "total": 59,
+        "exact_bytes": 0,
+        "bytes": 15724
+      }
+    },
+    {
+      "target": "emi/world02/area105/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 10,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 10,
+      "game": {
+        "exact": 0,
+        "total": 10,
+        "exact_bytes": 0,
+        "bytes": 1820
+      }
+    },
+    {
+      "target": "emi/world02/area106/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 15,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 15,
+      "game": {
+        "exact": 0,
+        "total": 15,
+        "exact_bytes": 0,
+        "bytes": 5712
+      }
+    },
+    {
+      "target": "emi/world02/area107/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 6,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 6,
+      "game": {
+        "exact": 0,
+        "total": 6,
+        "exact_bytes": 0,
+        "bytes": 576
+      }
+    },
+    {
+      "target": "emi/world02/area108/14",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 56,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 56,
+      "game": {
+        "exact": 0,
+        "total": 56,
+        "exact_bytes": 0,
+        "bytes": 10916
+      }
+    },
+    {
+      "target": "emi/world02/area109/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 3,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 3,
+      "game": {
+        "exact": 0,
+        "total": 3,
+        "exact_bytes": 0,
+        "bytes": 652
+      }
+    },
+    {
+      "target": "emi/world02/area110/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 2,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 2,
+      "game": {
+        "exact": 0,
+        "total": 2,
+        "exact_bytes": 0,
+        "bytes": 328
+      }
+    },
+    {
+      "target": "emi/world02/area111/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 26,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 26,
+      "game": {
+        "exact": 0,
+        "total": 26,
+        "exact_bytes": 0,
+        "bytes": 7212
+      }
+    },
+    {
+      "target": "emi/world02/area112/13",
+      "exact": 1,
+      "non_matching": 0,
+      "untagged": 20,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 21,
+      "game": {
+        "exact": 1,
+        "total": 21,
+        "exact_bytes": 196,
+        "bytes": 5600
+      }
+    },
+    {
+      "target": "emi/world02/area113/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 6,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 6,
+      "game": {
+        "exact": 0,
+        "total": 6,
+        "exact_bytes": 0,
+        "bytes": 380
+      }
+    },
+    {
+      "target": "emi/world03/area114/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 4,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 4,
+      "game": {
+        "exact": 0,
+        "total": 4,
+        "exact_bytes": 0,
+        "bytes": 952
+      }
+    },
+    {
+      "target": "emi/world03/area115/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 34,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 34,
+      "game": {
+        "exact": 0,
+        "total": 34,
+        "exact_bytes": 0,
+        "bytes": 8568
+      }
+    },
+    {
+      "target": "emi/world03/area116/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 13,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 13,
+      "game": {
+        "exact": 0,
+        "total": 13,
+        "exact_bytes": 0,
+        "bytes": 1664
+      }
+    },
+    {
+      "target": "emi/world03/area117/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 28,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 28,
+      "game": {
+        "exact": 0,
+        "total": 28,
+        "exact_bytes": 0,
+        "bytes": 6664
+      }
+    },
+    {
+      "target": "emi/world03/area118/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 31,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 31,
+      "game": {
+        "exact": 0,
+        "total": 31,
+        "exact_bytes": 0,
+        "bytes": 9496
+      }
+    },
+    {
+      "target": "emi/world03/area119/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 43,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 43,
+      "game": {
+        "exact": 0,
+        "total": 43,
+        "exact_bytes": 0,
+        "bytes": 6592
+      }
+    },
+    {
+      "target": "emi/world03/area120/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 27,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 27,
+      "game": {
+        "exact": 0,
+        "total": 27,
+        "exact_bytes": 0,
+        "bytes": 6048
+      }
+    },
+    {
+      "target": "emi/world03/area121/14",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 65,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 65,
+      "game": {
+        "exact": 0,
+        "total": 65,
+        "exact_bytes": 0,
+        "bytes": 14544
+      }
+    },
+    {
+      "target": "emi/world03/area122/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 0,
+      "game": {
+        "exact": 0,
+        "total": 0,
+        "exact_bytes": 0,
+        "bytes": 0
+      }
+    },
+    {
+      "target": "emi/world03/area123/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 1,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 1,
+      "game": {
+        "exact": 0,
+        "total": 1,
+        "exact_bytes": 0,
+        "bytes": 64
+      }
+    },
+    {
+      "target": "emi/world03/area124/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 2,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 2,
+      "game": {
+        "exact": 0,
+        "total": 2,
+        "exact_bytes": 0,
+        "bytes": 328
+      }
+    },
+    {
+      "target": "emi/world03/area125/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 18,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 18,
+      "game": {
+        "exact": 0,
+        "total": 18,
+        "exact_bytes": 0,
+        "bytes": 2632
+      }
+    },
+    {
+      "target": "emi/world03/area126/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 0,
+      "game": {
+        "exact": 0,
+        "total": 0,
+        "exact_bytes": 0,
+        "bytes": 0
+      }
+    },
+    {
+      "target": "emi/world03/area127/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 1,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 1,
+      "game": {
+        "exact": 0,
+        "total": 1,
+        "exact_bytes": 0,
+        "bytes": 112
+      }
+    },
+    {
+      "target": "emi/world03/area128/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 8,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 8,
+      "game": {
+        "exact": 0,
+        "total": 8,
+        "exact_bytes": 0,
+        "bytes": 1756
+      }
+    },
+    {
+      "target": "emi/world03/area129/03",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 0,
+      "game": {
+        "exact": 0,
+        "total": 0,
+        "exact_bytes": 0,
+        "bytes": 0
+      }
+    },
+    {
+      "target": "emi/world03/area130/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 31,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 31,
+      "game": {
+        "exact": 0,
+        "total": 31,
+        "exact_bytes": 0,
+        "bytes": 4796
+      }
+    },
+    {
+      "target": "emi/world03/area131/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 18,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 18,
+      "game": {
+        "exact": 0,
+        "total": 18,
+        "exact_bytes": 0,
+        "bytes": 1136
+      }
+    },
+    {
+      "target": "emi/world03/area132/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 28,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 28,
+      "game": {
+        "exact": 0,
+        "total": 28,
+        "exact_bytes": 0,
+        "bytes": 4564
+      }
+    },
+    {
+      "target": "emi/world03/area133/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 5,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 5,
+      "game": {
+        "exact": 0,
+        "total": 5,
+        "exact_bytes": 0,
+        "bytes": 440
+      }
+    },
+    {
+      "target": "emi/world03/area134/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 94,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 94,
+      "game": {
+        "exact": 0,
+        "total": 94,
+        "exact_bytes": 0,
+        "bytes": 11040
+      }
+    },
+    {
+      "target": "emi/world03/area135/14",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 73,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 73,
+      "game": {
+        "exact": 0,
+        "total": 73,
+        "exact_bytes": 0,
+        "bytes": 13676
+      }
+    },
+    {
+      "target": "emi/world03/area136/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 17,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 17,
+      "game": {
+        "exact": 0,
+        "total": 17,
+        "exact_bytes": 0,
+        "bytes": 2024
+      }
+    },
+    {
+      "target": "emi/world03/area137/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 0,
+      "game": {
+        "exact": 0,
+        "total": 0,
+        "exact_bytes": 0,
+        "bytes": 0
+      }
+    },
+    {
+      "target": "emi/world03/area138/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 0,
+      "game": {
+        "exact": 0,
+        "total": 0,
+        "exact_bytes": 0,
+        "bytes": 0
+      }
+    },
+    {
+      "target": "emi/world03/area139/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 19,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 19,
+      "game": {
+        "exact": 0,
+        "total": 19,
+        "exact_bytes": 0,
+        "bytes": 6184
+      }
+    },
+    {
+      "target": "emi/world03/area140/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 29,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 29,
+      "game": {
+        "exact": 0,
+        "total": 29,
+        "exact_bytes": 0,
+        "bytes": 7056
+      }
+    },
+    {
+      "target": "emi/world03/area141/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 25,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 25,
+      "game": {
+        "exact": 0,
+        "total": 25,
+        "exact_bytes": 0,
+        "bytes": 6892
+      }
+    },
+    {
+      "target": "emi/world03/area142/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 8,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 8,
+      "game": {
+        "exact": 0,
+        "total": 8,
+        "exact_bytes": 0,
+        "bytes": 2384
+      }
+    },
+    {
+      "target": "emi/world03/area143/13",
+      "exact": 3,
+      "non_matching": 0,
+      "untagged": 32,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 35,
+      "game": {
+        "exact": 3,
+        "total": 35,
+        "exact_bytes": 332,
+        "bytes": 5860
+      }
+    },
+    {
+      "target": "emi/world03/area144/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 24,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 24,
+      "game": {
+        "exact": 0,
+        "total": 24,
+        "exact_bytes": 0,
+        "bytes": 4476
+      }
+    },
+    {
+      "target": "emi/world03/area145/14",
+      "exact": 3,
+      "non_matching": 0,
+      "untagged": 39,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 42,
+      "game": {
+        "exact": 3,
+        "total": 42,
+        "exact_bytes": 588,
+        "bytes": 10148
+      }
+    },
+    {
+      "target": "emi/world03/area146/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 9,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 9,
+      "game": {
+        "exact": 0,
+        "total": 9,
+        "exact_bytes": 0,
+        "bytes": 1392
+      }
+    },
+    {
+      "target": "emi/world03/area147/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 7,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 7,
+      "game": {
+        "exact": 0,
+        "total": 7,
+        "exact_bytes": 0,
+        "bytes": 2440
+      }
+    },
+    {
+      "target": "emi/world03/area148/13",
+      "exact": 2,
+      "non_matching": 0,
+      "untagged": 34,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 36,
+      "game": {
+        "exact": 2,
+        "total": 36,
+        "exact_bytes": 392,
+        "bytes": 9064
+      }
+    },
+    {
+      "target": "emi/world03/area149/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 16,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 16,
+      "game": {
+        "exact": 0,
+        "total": 16,
+        "exact_bytes": 0,
+        "bytes": 3020
+      }
+    },
+    {
+      "target": "emi/world03/area150/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 5,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 5,
+      "game": {
+        "exact": 0,
+        "total": 5,
+        "exact_bytes": 0,
+        "bytes": 904
+      }
+    },
+    {
+      "target": "emi/world03/area151/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 34,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 34,
+      "game": {
+        "exact": 0,
+        "total": 34,
+        "exact_bytes": 0,
+        "bytes": 8420
+      }
+    },
+    {
+      "target": "emi/world04/area152/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 35,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 35,
+      "game": {
+        "exact": 0,
+        "total": 35,
+        "exact_bytes": 0,
+        "bytes": 8248
+      }
+    },
+    {
+      "target": "emi/world04/area153/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 1,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 1,
+      "game": {
+        "exact": 0,
+        "total": 1,
+        "exact_bytes": 0,
+        "bytes": 88
+      }
+    },
+    {
+      "target": "emi/world04/area154/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 1,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 1,
+      "game": {
+        "exact": 0,
+        "total": 1,
+        "exact_bytes": 0,
+        "bytes": 88
+      }
+    },
+    {
+      "target": "emi/world04/area155/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 1,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 1,
+      "game": {
+        "exact": 0,
+        "total": 1,
+        "exact_bytes": 0,
+        "bytes": 188
+      }
+    },
+    {
+      "target": "emi/world04/area156/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 1,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 1,
+      "game": {
+        "exact": 0,
+        "total": 1,
+        "exact_bytes": 0,
+        "bytes": 656
+      }
+    },
+    {
+      "target": "emi/world04/area157/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 13,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 13,
+      "game": {
+        "exact": 0,
+        "total": 13,
+        "exact_bytes": 0,
+        "bytes": 3272
+      }
+    },
+    {
+      "target": "emi/world04/area158/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 7,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 7,
+      "game": {
+        "exact": 0,
+        "total": 7,
+        "exact_bytes": 0,
+        "bytes": 2076
+      }
+    },
+    {
+      "target": "emi/world04/area159/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 0,
+      "game": {
+        "exact": 0,
+        "total": 0,
+        "exact_bytes": 0,
+        "bytes": 0
+      }
+    },
+    {
+      "target": "emi/world04/area160/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 7,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 7,
+      "game": {
+        "exact": 0,
+        "total": 7,
+        "exact_bytes": 0,
+        "bytes": 2068
+      }
+    },
+    {
+      "target": "emi/world04/area161/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 7,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 7,
+      "game": {
+        "exact": 0,
+        "total": 7,
+        "exact_bytes": 0,
+        "bytes": 2080
+      }
+    },
+    {
+      "target": "emi/world04/area162/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 7,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 7,
+      "game": {
+        "exact": 0,
+        "total": 7,
+        "exact_bytes": 0,
+        "bytes": 2068
+      }
+    },
+    {
+      "target": "emi/world04/area163/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 7,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 7,
+      "game": {
+        "exact": 0,
+        "total": 7,
+        "exact_bytes": 0,
+        "bytes": 2068
+      }
+    },
+    {
+      "target": "emi/world04/area164/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 7,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 7,
+      "game": {
+        "exact": 0,
+        "total": 7,
+        "exact_bytes": 0,
+        "bytes": 2068
+      }
+    },
+    {
+      "target": "emi/world04/area165/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 11,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 11,
+      "game": {
+        "exact": 0,
+        "total": 11,
+        "exact_bytes": 0,
+        "bytes": 2448
+      }
+    },
+    {
+      "target": "emi/world04/area166/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 13,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 13,
+      "game": {
+        "exact": 0,
+        "total": 13,
+        "exact_bytes": 0,
+        "bytes": 2836
+      }
+    },
+    {
+      "target": "emi/world04/area167/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 34,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 34,
+      "game": {
+        "exact": 0,
+        "total": 34,
+        "exact_bytes": 0,
+        "bytes": 7648
+      }
+    },
+    {
+      "target": "emi/world04/area168/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 32,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 32,
+      "game": {
+        "exact": 0,
+        "total": 32,
+        "exact_bytes": 0,
+        "bytes": 7924
+      }
+    },
+    {
+      "target": "emi/world04/area169/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 13,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 13,
+      "game": {
+        "exact": 0,
+        "total": 13,
+        "exact_bytes": 0,
+        "bytes": 3724
+      }
+    },
+    {
+      "target": "emi/world04/area170/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 37,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 37,
+      "game": {
+        "exact": 0,
+        "total": 37,
+        "exact_bytes": 0,
+        "bytes": 10948
+      }
+    },
+    {
+      "target": "emi/world04/area171/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 18,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 18,
+      "game": {
+        "exact": 0,
+        "total": 18,
+        "exact_bytes": 0,
+        "bytes": 4864
+      }
+    },
+    {
+      "target": "emi/world04/area172/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 52,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 52,
+      "game": {
+        "exact": 0,
+        "total": 52,
+        "exact_bytes": 0,
+        "bytes": 9336
+      }
+    },
+    {
+      "target": "emi/world04/area173/14",
+      "exact": 2,
+      "non_matching": 0,
+      "untagged": 41,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 43,
+      "game": {
+        "exact": 2,
+        "total": 43,
+        "exact_bytes": 392,
+        "bytes": 8844
+      }
+    },
+    {
+      "target": "emi/world04/area174/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 45,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 45,
+      "game": {
+        "exact": 0,
+        "total": 45,
+        "exact_bytes": 0,
+        "bytes": 9128
+      }
+    },
+    {
+      "target": "emi/world04/area175/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 62,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 62,
+      "game": {
+        "exact": 0,
+        "total": 62,
+        "exact_bytes": 0,
+        "bytes": 6612
+      }
+    },
+    {
+      "target": "emi/world04/area176/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 34,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 34,
+      "game": {
+        "exact": 0,
+        "total": 34,
+        "exact_bytes": 0,
+        "bytes": 2140
+      }
+    },
+    {
+      "target": "emi/world04/area177/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 34,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 34,
+      "game": {
+        "exact": 0,
+        "total": 34,
+        "exact_bytes": 0,
+        "bytes": 2140
+      }
+    },
+    {
+      "target": "emi/world04/area178/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 34,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 34,
+      "game": {
+        "exact": 0,
+        "total": 34,
+        "exact_bytes": 0,
+        "bytes": 2140
+      }
+    },
+    {
+      "target": "emi/world04/area179/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 34,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 34,
+      "game": {
+        "exact": 0,
+        "total": 34,
+        "exact_bytes": 0,
+        "bytes": 2140
+      }
+    },
+    {
+      "target": "emi/world04/area180/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 34,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 34,
+      "game": {
+        "exact": 0,
+        "total": 34,
+        "exact_bytes": 0,
+        "bytes": 2140
+      }
+    },
+    {
+      "target": "emi/world04/area181/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 34,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 34,
+      "game": {
+        "exact": 0,
+        "total": 34,
+        "exact_bytes": 0,
+        "bytes": 2140
+      }
+    },
+    {
+      "target": "emi/world04/area182/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 34,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 34,
+      "game": {
+        "exact": 0,
+        "total": 34,
+        "exact_bytes": 0,
+        "bytes": 2140
+      }
+    },
+    {
+      "target": "emi/world04/area183/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 34,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 34,
+      "game": {
+        "exact": 0,
+        "total": 34,
+        "exact_bytes": 0,
+        "bytes": 2140
+      }
+    },
+    {
+      "target": "emi/world04/area184/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 34,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 34,
+      "game": {
+        "exact": 0,
+        "total": 34,
+        "exact_bytes": 0,
+        "bytes": 2140
+      }
+    },
+    {
+      "target": "emi/world04/area185/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 35,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 35,
+      "game": {
+        "exact": 0,
+        "total": 35,
+        "exact_bytes": 0,
+        "bytes": 2812
+      }
+    },
+    {
+      "target": "emi/world04/area186/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 3,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 3,
+      "game": {
+        "exact": 0,
+        "total": 3,
+        "exact_bytes": 0,
+        "bytes": 892
+      }
+    },
+    {
+      "target": "emi/world04/area187/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 5,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 5,
+      "game": {
+        "exact": 0,
+        "total": 5,
+        "exact_bytes": 0,
+        "bytes": 476
+      }
+    },
+    {
+      "target": "emi/world04/area188/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 45,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 45,
+      "game": {
+        "exact": 0,
+        "total": 45,
+        "exact_bytes": 0,
+        "bytes": 8628
+      }
+    },
+    {
+      "target": "emi/world04/area189/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 33,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 33,
+      "game": {
+        "exact": 0,
+        "total": 33,
+        "exact_bytes": 0,
+        "bytes": 13572
+      }
+    },
+    {
+      "target": "emi/world04/area190/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 0,
+      "game": {
+        "exact": 0,
+        "total": 0,
+        "exact_bytes": 0,
+        "bytes": 0
+      }
+    },
+    {
+      "target": "emi/world04/area191/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 26,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 26,
+      "game": {
+        "exact": 0,
+        "total": 26,
+        "exact_bytes": 0,
+        "bytes": 4052
+      }
+    },
+    {
+      "target": "emi/world04/area192/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 15,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 15,
+      "game": {
+        "exact": 0,
+        "total": 15,
+        "exact_bytes": 0,
+        "bytes": 2648
+      }
+    },
+    {
+      "target": "emi/world04/area193/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 9,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 9,
+      "game": {
+        "exact": 0,
+        "total": 9,
+        "exact_bytes": 0,
+        "bytes": 1456
+      }
+    },
+    {
+      "target": "emi/world04/area194/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 0,
+      "game": {
+        "exact": 0,
+        "total": 0,
+        "exact_bytes": 0,
+        "bytes": 0
+      }
+    },
+    {
+      "target": "emi/world04/area195/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 0,
+      "game": {
+        "exact": 0,
+        "total": 0,
+        "exact_bytes": 0,
+        "bytes": 0
+      }
+    },
+    {
+      "target": "emi/world04/area196/13",
+      "exact": 2,
+      "non_matching": 0,
+      "untagged": 11,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 13,
+      "game": {
+        "exact": 2,
+        "total": 13,
+        "exact_bytes": 392,
+        "bytes": 5416
+      }
+    },
+    {
+      "target": "emi/world04/area197/13",
+      "exact": 7,
+      "non_matching": 0,
+      "untagged": 24,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 31,
+      "game": {
+        "exact": 7,
+        "total": 31,
+        "exact_bytes": 1372,
+        "bytes": 5912
+      }
+    },
+    {
+      "target": "emi/world04/area198/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 22,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 22,
+      "game": {
+        "exact": 0,
+        "total": 22,
+        "exact_bytes": 0,
+        "bytes": 4600
+      }
+    },
+    {
+      "target": "emi/world04/area199/13",
+      "exact": 0,
+      "non_matching": 0,
+      "untagged": 15,
+      "unlifted": 0,
+      "library": 0,
+      "sdk": 0,
+      "total": 15,
+      "game": {
+        "exact": 0,
+        "total": 15,
+        "exact_bytes": 0,
+        "bytes": 6320
+      }
+    },
+    {
+      "target": "exe/logo",
+      "exact": 22,
+      "non_matching": 0,
+      "untagged": 0,
+      "unlifted": 1,
+      "library": 238,
+      "sdk": 0,
+      "total": 261,
+      "game": {
+        "exact": 22,
+        "total": 23,
+        "exact_bytes": 2648,
+        "bytes": 2680
+      }
+    },
+    {
+      "target": "exe/slus_004_22",
+      "exact": 479,
+      "non_matching": 28,
+      "untagged": 0,
+      "unlifted": 0,
+      "library": 488,
+      "sdk": 0,
+      "total": 995,
+      "game": {
+        "exact": 474,
+        "total": 502,
+        "exact_bytes": 96548,
+        "bytes": 120608
+      }
+    }
+  ],
+  "totals": {
+    "exact": 3296,
+    "non_matching": 167,
+    "untagged": 5475,
+    "unlifted": 3386,
+    "library": 726,
+    "sdk": 0,
+    "total": 13050,
+    "game": {
+      "exact": 3290,
+      "total": 12319,
+      "exact_bytes": 748024,
+      "bytes": 3153784
+    },
+    "done": 4018
+  },
+  "game_code": {
+    "functions": 12319,
+    "exact": 3290,
+    "bytes": 3153784,
+    "exact_bytes": 748024,
+    "unique_functions": 6841,
+    "unique_exact": 2489,
+    "unique_bytes": 2427088,
+    "unique_exact_bytes": 664604
+  },
+  "quality": {
+    "fakes": 525,
+    "harmful_fakes": 272,
+    "field_ref": 1729,
+    "local_externs": 684,
+    "sym_conflicts": 35,
+    "hand_asm": 5
+  }
+}
