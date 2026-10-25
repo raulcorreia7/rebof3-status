@@ -50,6 +50,8 @@ export function barOption({ categories, series, unit = "", normalize = false, de
     series: series.map((part) => ({
       name: part.name,
       type: "bar",
+      // The series default is true and would animate past the top-level `animation: false`.
+      animation: false,
       stack: "total",
       barWidth: BAR_HEIGHT - 8,
       data: part.values,

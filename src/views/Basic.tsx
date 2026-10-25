@@ -1,6 +1,6 @@
 // The simple views: cards, meters, text, legend, tabs, trend, filters and tables.
 
-import { createSignal, For, onCleanup, Show, type Accessor } from "solid-js";
+import { createSignal, For, Index, onCleanup, Show, type Accessor } from "solid-js";
 import { BROWSER, SDK } from "../strings.ts";
 import { usePage } from "../state.ts";
 import type { SortKey } from "../model/route.ts";
@@ -184,14 +184,18 @@ export function ChartView(props: Props<"chart">) {
 export function Trend(props: Props<"trend">) {
   return (
     <div class="trend-grid">
-      <For each={props.data().charts}>
+      {/* Index, not For: a new selector result must update the eight chart options in place,
+          not dispose and re-create their ECharts instances. */}
+      <Index each={props.data().charts}>
         {(chart) => (
-          <figure data-chart={chart.id}>
-            <figcaption>{chart.value ? `${chart.title}: ${chart.value}` : chart.title}</figcaption>
-            {chart.option ? <Chart option={chart.option} height={170} label={`${chart.title}, latest ${chart.value}`} /> : <p class="empty mute small">{props.data().empty}</p>}
+          <figure data-chart={chart().id}>
+            <figcaption>{chart().value ? `${chart().title}: ${chart().value}` : chart().title}</figcaption>
+            <Show when={chart().option} fallback={<p class="empty mute small">{props.data().empty}</p>}>
+              {(option) => <Chart option={option()} height={170} label={`${chart().title}, latest ${chart().value}`} />}
+            </Show>
           </figure>
         )}
-      </For>
+      </Index>
     </div>
   );
 }

@@ -59,6 +59,8 @@ export function trendOption(days: HistoryRow[], chart: TrendChart, tokens: Token
       {
         name: chart.title,
         type: "line",
+        // The series default is true and would animate past the top-level `animation: false`.
+        animation: false,
         data: points,
         symbol: points.length < 40 ? "circle" : "none",
         symbolSize: 5,

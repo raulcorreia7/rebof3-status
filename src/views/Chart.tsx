@@ -2,11 +2,35 @@
 // view, keeps it sized, and redraws when the option changes.
 
 import type { ECharts } from "echarts/core";
-import { createEffect, onCleanup, onMount } from "solid-js";
+import { createEffect, onCleanup, onMount, untrack } from "solid-js";
 import type { ChartOption } from "../charts/register.ts";
 
 export interface ChartClick {
   data?: { ref?: unknown };
+}
+
+/** Copy the drawn canvas over the chart, so an option swap fades instead of cutting. */
+function capture(host: HTMLDivElement): HTMLCanvasElement | null {
+  const source = [...host.querySelectorAll("canvas")].find((canvas) => !canvas.classList.contains("chart-snapshot"));
+  if (!source) return null;
+  host.querySelector(".chart-snapshot")?.remove();
+  const overlay = document.createElement("canvas");
+  overlay.className = "chart-snapshot";
+  overlay.width = source.width;
+  overlay.height = source.height;
+  const context = overlay.getContext("2d");
+  if (!context) return null;
+  context.drawImage(source, 0, 0);
+  host.append(overlay);
+  return overlay;
+}
+
+/** Let the new drawing show through over 180 ms, then drop the copy. */
+function release(overlay: HTMLCanvasElement): void {
+  requestAnimationFrame(() => {
+    overlay.style.opacity = "0";
+  });
+  window.setTimeout(() => overlay.remove(), 260);
 }
 
 interface Props {
@@ -17,6 +41,10 @@ interface Props {
   onClick?: (params: ChartClick) => void;
   /** Receives the instance once it exists, and null when it is disposed. */
   onChart?: (chart: ECharts | null) => void;
+  /** Fade the previous drawing into the new one on an option change (treemap drills). */
+  crossfade?: boolean;
+  /** Replace the option instead of merging it; for a data swap the crossfade hides the cut. */
+  replace?: boolean;
 }
 
 export function Chart(props: Props) {
@@ -34,8 +62,9 @@ export function Chart(props: Props) {
       if (gone) return;
       chart = echarts.init(host, null, { renderer: "canvas" });
       chart.on("click", (params) => props.onClick?.(params as ChartClick));
+      chart.setOption(props.option);
+      // After the first option, so a listener can read the model.
       props.onChart?.(chart);
-      chart.setOption(props.option, true);
     };
     const watcher = new IntersectionObserver((entries) => entries.some((entry) => entry.isIntersecting) && create(), { rootMargin: "300px" });
     watcher.observe(host);
@@ -51,6 +80,7 @@ export function Chart(props: Props) {
       cancelAnimationFrame(frame);
       watcher.disconnect();
       resizer.disconnect();
+      host.querySelector(".chart-snapshot")?.remove();
       chart?.dispose();
       chart = null;
       props.onChart?.(null);
@@ -59,7 +89,13 @@ export function Chart(props: Props) {
 
   createEffect(() => {
     const option = props.option;
-    chart?.setOption(option, true);
+    if (!chart) return;
+    // Merge, don't replace: a notMerge update tears down the series view and clears the canvas,
+    // which reads as a flicker on every option change. The option builders disable series
+    // animation; the treemap asks for a crossfade instead.
+    const overlay = untrack(() => props.crossfade) ? capture(host) : null;
+    chart.setOption(option, untrack(() => props.replace) ? { notMerge: true } : undefined);
+    if (overlay) release(overlay);
   });
 
   return <div ref={host} class="chart" style={{ height: `${props.height}px` }} role="img" aria-label={props.label} />;

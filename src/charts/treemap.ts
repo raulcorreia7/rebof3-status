@@ -61,8 +61,13 @@ function parentNode(ref: MapRef, name: string, functions: Fn[], done: number, st
   };
 }
 
+/** The last tree; a route change that does not change the map must not rebuild it. */
+let cached: { model: Model; scope: "game" | "sdk"; tokens: Tokens; statuses: string; tree: MapNode } | null = null;
+
 /** The tree for one scope: game code by group and target, or the PsyQ SDK by library. */
 export function treemapTree(model: Model, scope: "game" | "sdk", style: MapStyle): MapNode {
+  const statuses = style.statuses.join(",");
+  if (cached && cached.model === model && cached.scope === scope && cached.tokens === style.tokens && cached.statuses === statuses) return cached.tree;
   const children: MapNode[] =
     scope === "game"
       ? model.groups.map((group) => {
@@ -79,7 +84,7 @@ export function treemapTree(model: Model, scope: "game" | "sdk", style: MapStyle
           };
         })
       : model.libraries.map((lib) => parentNode({ kind: "library", id: lib.name }, lib.name, lib.functions, lib.done, style));
-  return {
+  const tree: MapNode = {
     id: ROOT_ID,
     name: scope,
     value: children.reduce((sum, child) => sum + child.value, 0),
@@ -87,6 +92,8 @@ export function treemapTree(model: Model, scope: "game" | "sdk", style: MapStyle
     tip: "",
     children: children.filter((child) => child.value > 0),
   };
+  cached = { model, scope, tokens: style.tokens, statuses, tree };
+  return tree;
 }
 
 /** Size of a drawn rectangle, so labels only appear where they fit. */
@@ -94,6 +101,8 @@ type LayoutOf = (dataIndex: number) => { width: number; height: number } | undef
 
 // Text width in pixels at `size`, a rough estimate that errs on the wide side.
 const textWidth = (text: string, size: number): number => text.length * size * 0.62;
+
+const depthBelow = (node: MapNode): number => (node.children?.length ? 1 + depthBelow(node.children[0]) : 0);
 
 /** The node with `id` in the tree, or the root. */
 export function findNode(root: MapNode, id: string | null): MapNode {
@@ -106,10 +115,8 @@ export function findNode(root: MapNode, id: string | null): MapNode {
   return root;
 }
 
-const depthBelow = (node: MapNode): number => (node.children?.length ? 1 + depthBelow(node.children[0]) : 0);
-
 /** The option for the children of `view`, which is the root or any node that was zoomed to. */
-export function treemapOption(view: MapNode, { tokens }: MapStyle, layoutOf: LayoutOf): ChartOption {
+export function treemapOption(view: MapNode, { tokens }: Pick<MapStyle, "tokens">, layoutOf: LayoutOf): ChartOption {
   const fits = (dataIndex: number, name: string, size: number): boolean => {
     const box = layoutOf(dataIndex);
     return !!box && box.width >= textWidth(name, size) + 8 && box.height >= size + 6;
@@ -130,6 +137,12 @@ export function treemapOption(view: MapNode, { tokens }: MapStyle, layoutOf: Lay
     series: [
       {
         type: "treemap",
+        // The treemap series defaults to a 900 ms quinticInOut update, ignoring the
+        // top-level `animation: false`. The drill transition is the chart's canvas crossfade
+        // (views/Chart.tsx), so every layout update snaps.
+        animation: false,
+        animationDuration: 0,
+        animationDurationUpdate: 0,
         left: 0,
         top: 0,
         right: 0,

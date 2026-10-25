@@ -57,7 +57,9 @@ button { font: inherit; color: inherit; }
 .legend-item.on { border-color: var(--accent); background: var(--track); }
 .legend-item.off { opacity: 0.6; }
 .crumbs { margin: 8px 0 4px; font-size: 0.9rem; }
-.chart { width: 100%; }
+.chart { width: 100%; position: relative; }
+/* The previous treemap drawing, faded out over the new one after a drill. */
+.chart-snapshot { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; transition: opacity 180ms ease-out; }
 /* PsyQ libraries */
 .libs { list-style: none; margin: 8px 0; padding: 0; display: grid; grid-template-columns: 90px 1fr 90px; gap: 2px 12px; align-items: center; }
 .libs li { display: contents; }

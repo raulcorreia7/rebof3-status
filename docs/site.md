@@ -11,6 +11,7 @@ the SDK and the hand-written assembly are shown apart.
 The page is data. `src/sections.ts` is an ordered list of sections; each has an `id`, a title, an optional navigation label and a list of blocks. A block names a **view kind** (`cards`, `meters`, `text`, `legend`, `tabs`, `treemap`, `chart`, `trend`, `filters`, `table`, `inspector`) and a **selector** that turns the model and the route into the data that view draws. `src/views/App.tsx` draws the list in order, so adding, removing or reordering a section means editing that list.
 
 - State lives in `src/state.ts`: a Solid store for the route, which is kept in the URL hash (`src/model/route.ts`) so every view is a link, plus the theme and the table's row limit. Views are thin: they read the data a selector returns and the route.
+- `src/views/Chart.tsx` keeps one ECharts instance per chart for the life of the page. Option updates merge; the treemap replaces its focused data and fades the old drawing over the new one for 180 ms (`prefers-reduced-motion` turns the fade off). The chart builders state `animation: false` on the series: the treemap series otherwise defaults to a 900 ms update animation that ignores the top-level flag.
 - Selectors are pure functions in `src/selectors.ts` and `src/inspect.ts`; the data shapes are in `src/viewtypes.ts`.
 - `src/model/`, `src/charts/` and `src/snapshot/` know nothing about the framework, and the picture and the page share them.
 
