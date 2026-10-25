@@ -194,8 +194,8 @@
       "data": 9874,
       "bss": 0,
       "map_bss": 0,
-      "objects": 344,
-      "sources": 344,
+      "objects": 345,
+      "sources": 345,
       "data_payload": 9998,
       "typed": 9998,
       "percent": 100.0
@@ -515,8 +515,8 @@
     "data": 191322,
     "bss": 0,
     "map_bss": 0,
-    "objects": 3240,
-    "sources": 3240,
+    "objects": 3241,
+    "sources": 3241,
     "data_payload": 214897,
     "typed": 209130,
     "percent": 97.32
