@@ -1,6 +1,6 @@
 {
-  "commit": "355e72d46869c1572ca11cc0cc34df281f892d96",
-  "generated_at": "2026-10-25T17:25:50Z",
+  "commit": "42580b389811f2fa2ea3658807e03211406aa3f7",
+  "generated_at": "2026-10-25T17:40:05Z",
   "rows": [
     {
       "date": "2026-07-10",
@@ -832,7 +832,7 @@
     },
     {
       "date": "2026-10-25",
-      "revision": "355e72d46869c1572ca11cc0cc34df281f892d96",
+      "revision": "42580b389811f2fa2ea3658807e03211406aa3f7",
       "source": "run",
       "game_functions": 8950,
       "game_matched": 3223,
@@ -845,8 +845,8 @@
       "fakes": 525,
       "harmful_fakes": null,
       "field_ref": 1727,
-      "local_externs": 709,
-      "sym_conflicts": 793
+      "local_externs": 706,
+      "sym_conflicts": 809
     }
   ]
 }
