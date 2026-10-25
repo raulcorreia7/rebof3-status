@@ -74,8 +74,8 @@ export const SUMMARY = {
     "Every function of the game's programs and overlays. A function counts as rebuilt when its C builds to the exact original bytes.",
   gameFunctions: "Game functions rebuilt in C",
   gameBytes: "Game code rebuilt in C, by size",
-  unique: "Distinct game functions rebuilt in C",
-  uniqueNote: (done: number, total: number) => `${number(done)} of ${number(total)} · repeats counted once`,
+  unique: "Game functions without duplicates",
+  uniqueNote: (done: number, total: number) => `${number(done)} of ${number(total)} rebuilt in C`,
   fuzzy: "Fuzzy match",
   fuzzyNote: "how close the code in the report is, weighted by bytes",
   data: "Game data written as typed C",
@@ -100,7 +100,7 @@ export const SUMMARY = {
   ofBytes: (done: number, total: number) => bytesOf(done, total),
   ofMegabytes: (done: number, total: number) => bytesOf(done, total),
   footnote:
-    "The same function often sits in several overlays, at a different address each time. Unique game code counts each one once, and counts it as rebuilt when any copy is.",
+    "Many overlays carry copies of the same function. This card counts each function once, as rebuilt when any copy is."
   mapNote: (shown: number, total: number) =>
     `The map, the groups and the function list show the ${number(shown)} game functions the objdiff report covers; the headline counts all ${number(total)} in the target maps.`,
   statusHeading: "Status of game code",
@@ -194,7 +194,7 @@ export const QUALITY = {
 export const TREND = {
   heading: "Progress over time",
   help:
-    "One point per day. The number in each title is the latest value. Since the unique game code chart starts, game code counts every function in the target maps, not only the ones the objdiff report covers, and typed data leaves out byte arrays still named by their address; earlier points use the old counts.",
+    "One point per day. The number in each title is the latest value. Since the chart without duplicates starts, game code counts every function in the target maps, not only the ones the objdiff report covers, and typed data leaves out byte arrays still named by their address; earlier points use the old counts.",
   empty: "starts with the next published run",
   charts: {
     gameFunctions: "Game functions rebuilt in C over time",
