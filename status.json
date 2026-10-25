@@ -6823,13 +6823,13 @@
       "untagged": 0,
       "unlifted": 1,
       "library": 238,
-      "sdk": 0,
+      "sdk": 244,
       "total": 261,
       "game": {
-        "exact": 22,
-        "total": 23,
-        "exact_bytes": 2648,
-        "bytes": 2680
+        "exact": 14,
+        "total": 15,
+        "exact_bytes": 1952,
+        "bytes": 1984
       }
     },
     {
@@ -6839,13 +6839,13 @@
       "untagged": 0,
       "unlifted": 0,
       "library": 488,
-      "sdk": 0,
+      "sdk": 497,
       "total": 995,
       "game": {
-        "exact": 474,
-        "total": 502,
-        "exact_bytes": 96548,
-        "bytes": 120608
+        "exact": 457,
+        "total": 485,
+        "exact_bytes": 95352,
+        "bytes": 119412
       }
     }
   ],
@@ -6855,25 +6855,25 @@
     "untagged": 5475,
     "unlifted": 3385,
     "library": 726,
-    "sdk": 0,
+    "sdk": 741,
     "total": 13050,
     "game": {
-      "exact": 3291,
-      "total": 12319,
-      "exact_bytes": 748580,
-      "bytes": 3153784
+      "exact": 3266,
+      "total": 12294,
+      "exact_bytes": 746688,
+      "bytes": 3151892
     },
     "done": 4019
   },
   "game_code": {
-    "functions": 12319,
-    "exact": 3291,
-    "bytes": 3153784,
-    "exact_bytes": 748580,
-    "unique_functions": 6841,
-    "unique_exact": 2490,
-    "unique_bytes": 2427088,
-    "unique_exact_bytes": 665160
+    "functions": 12294,
+    "exact": 3266,
+    "bytes": 3151892,
+    "exact_bytes": 746688,
+    "unique_functions": 6828,
+    "unique_exact": 2477,
+    "unique_bytes": 2426136,
+    "unique_exact_bytes": 664208
   },
   "quality": {
     "fakes": 542,
