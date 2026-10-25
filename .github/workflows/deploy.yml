@@ -43,6 +43,10 @@ jobs:
             for f in report.json status-data.json history.json; do
               git show "FETCH_HEAD:$f" > "$RUNNER_TEMP/data/$f" 2>/dev/null || cp "test/fixtures/$f" "$RUNNER_TEMP/data/$f"
             done
+            # The headline census and the assets: only from the same measurement, never a fixture.
+            for f in status.json assets.json; do
+              git show "FETCH_HEAD:$f" > "$RUNNER_TEMP/data/$f" 2>/dev/null || rm -f "$RUNNER_TEMP/data/$f"
+            done
           else
             cp test/fixtures/report.json test/fixtures/status-data.json test/fixtures/history.json "$RUNNER_TEMP/data/"
           fi

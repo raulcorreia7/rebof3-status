@@ -6,7 +6,7 @@
 // history.json and, when it measured them, status.json and assets.json.
 
 import { Resvg } from "@resvg/resvg-js";
-import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { copyFileSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { buildModel } from "../src/model/report.ts";
@@ -25,7 +25,12 @@ const readOptional = <T>(name: string): T | null => (existsSync(join(data, name)
 
 mkdirSync(out, { recursive: true });
 for (const name of DATA_FILES) copyFileSync(join(data, name), join(out, name));
-for (const name of OPTIONAL_FILES) if (existsSync(join(data, name))) copyFileSync(join(data, name), join(out, name));
+// An optional file the data lacks is removed: a copy left by an earlier run would come from
+// another measurement.
+for (const name of OPTIONAL_FILES) {
+  if (existsSync(join(data, name))) copyFileSync(join(data, name), join(out, name));
+  else rmSync(join(out, name), { force: true });
+}
 const model = buildModel(read<Report>("report.json"), read<StatusData>("status-data.json"), read<History>("history.json"), {
   census: readOptional<StatusCensus>("status.json"),
   assets: readOptional<AssetCensus>("assets.json"),
