@@ -1,5 +1,5 @@
-// The function map: a treemap of groups > targets > functions (or libraries > functions), sized
-// by code bytes and coloured by status. Pure option builders; views/Treemap.tsx draws them.
+// The PsyQ SDK map: a treemap of libraries > functions, sized by code bytes and coloured by
+// status. Pure option builders; views/Treemap.tsx draws them.
 
 import { TIER_LABEL } from "../strings.ts";
 import { STATUS } from "../model/status.ts";
@@ -11,7 +11,7 @@ import type { ChartOption } from "./register.ts";
 /** A function counts for at least this many bytes so a stub still gets a visible rectangle. */
 const MIN_BYTES = 64;
 
-export type MapRef = { kind: "group" | "target" | "library" | "fn"; id: string };
+export type MapRef = { kind: "library" | "fn"; id: string };
 
 export interface MapNode {
   id: string;
@@ -49,81 +49,50 @@ function fnNode(fn: Fn, { tokens, statuses }: MapStyle): MapNode {
   };
 }
 
-function parentNode(ref: MapRef, name: string, functions: Fn[], done: number, style: MapStyle): MapNode {
-  const children = functions.map((fn) => fnNode(fn, style));
-  return {
-    id: nodeId(ref),
-    name,
-    value: children.reduce((sum, child) => sum + child.value, 0),
-    ref,
-    tip: `<b>${escapeText(name)}</b><br>${number(done)} of ${number(functions.length)} functions done (${percent(done, functions.length, 1)}%)`,
-    children,
-  };
-}
-
 /** The last tree; a route change that does not change the map must not rebuild it. */
-let cached: { model: Model; scope: "game" | "sdk"; tokens: Tokens; statuses: string; tree: MapNode } | null = null;
+let cached: { model: Model; tokens: Tokens; statuses: string; tree: MapNode } | null = null;
 
-/** The tree for one scope: game code by group and target, or the PsyQ SDK by library. */
-export function treemapTree(model: Model, scope: "game" | "sdk", style: MapStyle): MapNode {
+/** The PsyQ SDK by library. */
+export function treemapTree(model: Model, style: MapStyle): MapNode {
   const statuses = style.statuses.join(",");
-  if (cached && cached.model === model && cached.scope === scope && cached.tokens === style.tokens && cached.statuses === statuses) return cached.tree;
-  const children: MapNode[] =
-    scope === "game"
-      ? model.groups.map((group) => {
-          const targets = group.targets
-            .filter((target) => target.game.count)
-            .map((target) => parentNode({ kind: "target", id: target.id }, target.name, target.functions.filter((fn) => fn.kind === "game"), target.game.done, style));
-          return {
-            id: nodeId({ kind: "group", id: group.key }),
-            name: group.label,
-            value: targets.reduce((sum, target) => sum + target.value, 0),
-            ref: { kind: "group", id: group.key },
-            tip: `<b>${escapeText(group.label)}</b><br>${number(group.done)} of ${number(group.count)} functions matched (${percent(group.done, group.count, 1)}%)`,
-            children: targets,
-          };
-        })
-      : model.libraries.map((lib) => parentNode({ kind: "library", id: lib.name }, lib.name, lib.functions, lib.done, style));
+  if (cached && cached.model === model && cached.tokens === style.tokens && cached.statuses === statuses) return cached.tree;
+  const children: MapNode[] = model.libraries.map((lib) => {
+    const leaves = lib.functions.map((fn) => fnNode(fn, style));
+    return {
+      id: nodeId({ kind: "library", id: lib.name }),
+      name: lib.name,
+      value: leaves.reduce((sum, leaf) => sum + leaf.value, 0),
+      ref: { kind: "library", id: lib.name },
+      tip: `<b>${escapeText(lib.name)}</b><br>${number(lib.done)} of ${number(lib.count)} functions done (${percent(lib.done, lib.count, 1)}%)`,
+      children: leaves,
+    };
+  });
   const tree: MapNode = {
     id: ROOT_ID,
-    name: scope,
+    name: "sdk",
     value: children.reduce((sum, child) => sum + child.value, 0),
-    ref: { kind: "group", id: ROOT_ID },
+    ref: { kind: "library", id: ROOT_ID },
     tip: "",
     children: children.filter((child) => child.value > 0),
   };
-  cached = { model, scope, tokens: style.tokens, statuses, tree };
+  cached = { model, tokens: style.tokens, statuses, tree };
   return tree;
 }
 
-/** Size of a drawn rectangle, so labels only appear where they fit. */
-type LayoutOf = (dataIndex: number) => { width: number; height: number } | undefined;
-
-// Text width in pixels at `size`, a rough estimate that errs on the wide side.
-const textWidth = (text: string, size: number): number => text.length * size * 0.62;
-
-const depthBelow = (node: MapNode): number => (node.children?.length ? 1 + depthBelow(node.children[0]) : 0);
-
-/** The node with `id` in the tree, or the root. */
+/** The library with `id`, or the root. */
 export function findNode(root: MapNode, id: string | null): MapNode {
-  if (!id || id === root.id) return root;
-  const stack = [...(root.children ?? [])];
-  for (let node = stack.pop(); node; node = stack.pop()) {
-    if (node.id === id) return node;
-    if (node.children) stack.push(...node.children);
-  }
-  return root;
+  return root.children?.find((node) => node.id === id) ?? root;
 }
 
-/** The option for the children of `view`, which is the root or any node that was zoomed to. */
-export function treemapOption(view: MapNode, { tokens }: Pick<MapStyle, "tokens">, layoutOf: LayoutOf): ChartOption {
-  const fits = (dataIndex: number, name: string, size: number): boolean => {
-    const box = layoutOf(dataIndex);
-    return !!box && box.width >= textWidth(name, size) + 8 && box.height >= size + 6;
-  };
-  const upper = { show: true, height: 18, color: tokens.ink, fontSize: 12, fontWeight: "bold" as const, overflow: "truncate" as const };
+/**
+ * The option for the children of `view`: the root or one library. ECharts fits every label to its
+ * rectangle (it truncates the text and drops lines that do not fit), so labels are right on the
+ * first paint without reading the layout back.
+ */
+export function treemapOption(view: MapNode, tokens: Tokens): ChartOption {
+  const upper = { show: true, height: 18, color: tokens.ink, fontSize: 12, fontWeight: "bold" as const };
   const parent = { itemStyle: { color: "transparent", borderColor: tokens.bg, borderWidth: 2, gapWidth: 1 }, label: { show: false }, upperLabel: upper };
-  const leaf = { itemStyle: { borderColor: tokens.bg, borderWidth: 1, gapWidth: 1 }, label: { show: true }, upperLabel: { show: false } };
+  const leaf = (named: boolean) => ({ itemStyle: { borderColor: tokens.bg, borderWidth: 1, gapWidth: 1 }, label: { show: named }, upperLabel: { show: false } });
   const hidden = { itemStyle: { color: "transparent", borderWidth: 0, gapWidth: 0 }, label: { show: false }, upperLabel: { show: false } };
   return {
     animation: false,
@@ -151,18 +120,11 @@ export function treemapOption(view: MapNode, { tokens }: Pick<MapStyle, "tokens"
         nodeClick: false,
         breadcrumb: { show: false },
         squareRatio: 1,
-        label: {
-          show: true,
-          color: "#ffffff",
-          fontSize: 10,
-          textBorderColor: "rgba(0,0,0,0.7)",
-          textBorderWidth: 2,
-          overflow: "truncate",
-          formatter: (p: { dataIndex: number; data: { name: string } }) => (fits(p.dataIndex, p.data.name, 10) ? p.data.name : ""),
-        },
+        label: { show: true, color: "#ffffff", fontSize: 10, textBorderColor: "rgba(0,0,0,0.7)", textBorderWidth: 2 },
         upperLabel: upper,
-        // Depth 0 is the hidden root; every level below it up to the functions is a framed block.
-        levels: [hidden, ...Array.from({ length: depthBelow(view) - 1 }, () => parent), leaf],
+        // Depth 0 is the hidden root. At the top each library frames its functions, which are too
+        // small to name; zoomed into one library, the functions are named.
+        levels: view.id === ROOT_ID ? [hidden, parent, leaf(false)] : [hidden, leaf(true)],
         data: view.children,
       },
     ],

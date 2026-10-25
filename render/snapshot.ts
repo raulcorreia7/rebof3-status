@@ -9,10 +9,9 @@ import { Resvg } from "@resvg/resvg-js";
 import { copyFileSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { buildModel } from "../src/model/report.ts";
+import { modelFromFiles } from "../src/model/report.ts";
 import { badge } from "../src/snapshot/badge.ts";
 import { renderPoster } from "../src/snapshot/poster.ts";
-import type { AssetCensus, History, Report, StatusCensus, StatusData } from "../src/types.ts";
 
 const PNG_WIDTH = 2400;
 const DATA_FILES = ["report.json", "status-data.json", "history.json"];
@@ -20,8 +19,8 @@ const OPTIONAL_FILES = ["status.json", "assets.json"];
 const out = process.argv[2] ?? "site";
 const data = resolve(process.argv[3] ?? fileURLToPath(new URL("../test/fixtures/", import.meta.url)));
 
-const read = <T>(name: string): T => JSON.parse(readFileSync(join(data, name), "utf8")) as T;
-const readOptional = <T>(name: string): T | null => (existsSync(join(data, name)) ? read<T>(name) : null);
+const read = (name: string): unknown => JSON.parse(readFileSync(join(data, name), "utf8"));
+const readOptional = (name: string): unknown => (existsSync(join(data, name)) ? read(name) : null);
 
 mkdirSync(out, { recursive: true });
 for (const name of DATA_FILES) copyFileSync(join(data, name), join(out, name));
@@ -31,9 +30,12 @@ for (const name of OPTIONAL_FILES) {
   if (existsSync(join(data, name))) copyFileSync(join(data, name), join(out, name));
   else rmSync(join(out, name), { force: true });
 }
-const model = buildModel(read<Report>("report.json"), read<StatusData>("status-data.json"), read<History>("history.json"), {
-  census: readOptional<StatusCensus>("status.json"),
-  assets: readOptional<AssetCensus>("assets.json"),
+const model = modelFromFiles({
+  report: read("report.json"),
+  data: read("status-data.json"),
+  history: read("history.json"),
+  census: readOptional("status.json"),
+  assets: readOptional("assets.json"),
 });
 const svg = renderPoster(model);
 writeFileSync(join(out, "progress.svg"), svg);

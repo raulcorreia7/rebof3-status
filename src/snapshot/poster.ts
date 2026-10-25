@@ -1,16 +1,17 @@
 // progress.svg: the whole status board as one picture. render/snapshot.ts turns it into progress.png.
 //
-// The tiles, cards and bars are drawn here as SVG strings. The trend charts are the ECharts
-// options the page uses, rendered on the server and nested into the picture.
+// The cards, the parts of the game, the SDK tiles and the bars are drawn here as SVG strings. The
+// trend charts are the ECharts options the page uses, rendered on the server and nested into the
+// picture.
 
 import { renderSvg } from "../charts/ssr.ts";
 import { trendOption } from "../charts/trend.ts";
 import { TREND_CHARTS } from "../model/history.ts";
-import { bytes, bytesOf, escapeText, number, percent, round } from "../model/format.ts";
-import { STATUS, STATUSES } from "../model/status.ts";
+import { bytesOf, escapeText, percent, round } from "../model/format.ts";
+import { codeCounts, STATUS, STATUSES } from "../model/status.ts";
 import { textWidth } from "../model/text.ts";
 import { DATA, MAP, POSTER, QUALITY, SDK, SUMMARY, TREND } from "../strings.ts";
-import type { Fn, Model } from "../types.ts";
+import type { Code, Fn, Model } from "../types.ts";
 import { bar, C, FONT, frame, rect, text } from "./svg.ts";
 import { panel, sorted, weightOf, type Block } from "./tiles.ts";
 
@@ -26,12 +27,6 @@ interface Drawn {
   svg: string;
   bottom: number;
 }
-
-const gameBlocks = (model: Model): Block[] =>
-  model.groups
-    .flatMap((group) => group.targets)
-    .map((target) => ({ name: target.name, rows: sorted(target.functions.filter((fn) => fn.kind === "game")) }))
-    .filter((block) => block.rows.length);
 
 const sdkBlocks = (model: Model): Block[] => model.libraries.map((lib) => ({ name: lib.name, rows: sorted(lib.functions) }));
 
@@ -64,19 +59,82 @@ function cards(model: Model, y: number): Drawn {
   return { svg, bottom: y + height };
 }
 
-// The game status legend, one row per status with its function count and its share of game code.
+// The game status key, one row per status with its function count.
 function legend(model: Model, x: number, y: number): Drawn {
-  const totals = model.game;
-  const keys = STATUSES.filter((key) => key === "pure" || key === "nonmatching" || key === "open");
+  const { code } = model;
+  const rows: [keyof typeof C.status, string][] = [
+    ["pure", MAP.key(code.exact, code.exactBytes)],
+    ["nonmatching", MAP.key(code.draft, null)],
+    ["open", MAP.key(code.functions - code.exact - code.draft, null)],
+  ];
   let svg = text(x, y, SUMMARY.statusHeading, 24, C.ink);
-  keys.forEach((key, index) => {
-    const [functions, bytes] = [totals.statuses[key].functions, totals.statuses[key].bytes];
+  rows.forEach(([key, sub], index) => {
     const top = y + 40 + index * 38;
     svg += rect(x, top + 2, 20, 20, C.status[key]);
     svg += text(x + 30, top - 2, STATUS[key].label, 16, C.ink);
-    svg += text(x + 30, top + 17, SUMMARY.statusLine(functions, percent(bytes, totals.bytes, 1), "game code bytes"), 12, C.mute);
+    svg += text(x + 30, top + 17, sub, 12, C.mute);
   });
-  return { svg, bottom: y + 40 + keys.length * 38 };
+  return { svg, bottom: y + 40 + rows.length * 38 };
+}
+
+/** One bar split by status, by function count. */
+const codeBar = (x: number, y: number, width: number, height: number, code: Code): string =>
+  bar(x, y, width, height, codeCounts(code).map(([key, count]) => [count, C.status[key]]), code.functions);
+
+// Image rows: name, a bar as long as the image's share of the group's biggest, and its count.
+const ROW = 20;
+const ROW_COLUMNS = 3;
+// Image tiles: one small square per image, split by status; the page names each one.
+const TILE = 18;
+const TILE_GAP = 3;
+
+// Game code by part of the game: per group a heading, its bar, then its images.
+function domainPanel(model: Model, x: number, y: number, width: number): Drawn {
+  let svg = text(x, y, MAP.heading, 24, C.ink);
+  let top = y + 44;
+  for (const group of model.groups.filter((g) => g.code.functions)) {
+    const images = group.targets.filter((target) => target.code.functions);
+    const share = `${percent(group.code.exact, group.code.functions, 1)}%`;
+    svg += text(x, top, group.label, 17, C.ink, { weight: "bold" });
+    const after = x + textWidth(group.label, 17) * 1.06 + 12;
+    svg += text(after, top, share, 17, C.status.pure, { weight: "bold" });
+    svg += text(width + x, top + 3, MAP.group(group.code.exact, group.code.functions, group.code.bytes, images.length), 13, C.mute, { anchor: "end" });
+    svg += codeBar(x, top + 26, width, 10, group.code);
+    top += 46;
+    if (group.tiles) {
+      const cols = Math.floor((width + TILE_GAP) / (TILE + TILE_GAP));
+      images.forEach((target, index) => {
+        const tx = x + (index % cols) * (TILE + TILE_GAP);
+        const ty = top + Math.floor(index / cols) * (TILE + TILE_GAP);
+        // A tile fills from the bottom: rebuilt, then draft, over the not-started track.
+        let fill = ty + TILE;
+        svg += rect(tx, ty, TILE, TILE, C.status.open, `<title>${escapeText(target.name)}</title>`);
+        for (const [key, count] of codeCounts(target.code).filter(([key]) => key !== "open")) {
+          const h = (count / target.code.functions) * TILE;
+          fill -= h;
+          svg += rect(tx, fill, TILE, h, C.status[key]);
+        }
+      });
+      top += Math.ceil(images.length / cols) * (TILE + TILE_GAP) + 16;
+    } else {
+      const columnWidth = (width - (ROW_COLUMNS - 1) * GAP) / ROW_COLUMNS;
+      // The column fits the longest name: a file name is never cut.
+      const nameWidth = Math.max(...images.map((target) => textWidth(target.name, 12))) + 10;
+      const countWidth = 70;
+      const barRoom = columnWidth - nameWidth - countWidth - 12;
+      const peak = Math.max(...images.map((target) => target.code.bytes), 1);
+      const lines = Math.ceil(images.length / ROW_COLUMNS);
+      images.forEach((target, index) => {
+        const cx = x + Math.floor(index / lines) * (columnWidth + GAP);
+        const cy = top + (index % lines) * ROW;
+        svg += text(cx, cy, target.name, 12, C.ink);
+        svg += codeBar(cx + nameWidth, cy + 2, Math.max((target.code.bytes / peak) * barRoom, 2), 11, target.code);
+        svg += text(cx + columnWidth, cy, MAP.image(target.code.exact, target.code.functions), 12, C.mute, { anchor: "end" });
+      });
+      top += lines * ROW + 16;
+    }
+  }
+  return { svg, bottom: top - 16 };
 }
 
 // Data panel: per part of the game, the share of data bytes typed and named in C.
@@ -158,10 +216,9 @@ export function renderPoster(model: Model): string {
   const top = cards(model, MARGIN + 70);
   svg += top.svg;
 
-  const gameTitle = MAP.gameTitle(model.game.done, model.game.count);
   const sdkTitle = MAP.sdkTitle(percent(model.sdk.done, model.sdk.count), model.sdk.done, model.sdk.count);
   const y = top.bottom + GAP + 6;
-  const left = panel(gameTitle, gameBlocks(model), MARGIN, y, GAME_WIDTH, 1);
+  const left = domainPanel(model, MARGIN, y, GAME_WIDTH);
   const right = MARGIN + GAME_WIDTH + GAP;
   const side = panel(sdkTitle, sdkBlocks(model), right, y, SIDE_WIDTH, SDK_SCALE);
   svg += left.svg + side.svg;

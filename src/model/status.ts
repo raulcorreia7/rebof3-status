@@ -5,7 +5,7 @@
 // PsyQ object, or an assembly-only unit.
 
 import { STATUS_LABEL } from "../strings.ts";
-import type { Fn, Status, Tier } from "../types.ts";
+import type { Code, Fn, Status, Tier } from "../types.ts";
 
 export type Phase = "done" | "in-progress" | "open";
 
@@ -49,5 +49,9 @@ export const STATUSES: readonly Status[] = STATUS_TABLE.map((entry) => entry.key
 export const TIERS: readonly Tier[] = ["object", "assembly"];
 
 export const isStatus = (value: string): value is Status => Object.hasOwn(STATUS, value);
+/** Game functions rebuilt, draft and not started, as bin/status counts them; statuses with none are left out. */
+export const codeCounts = (code: Code): [Status, number][] =>
+  ([["pure", code.exact], ["nonmatching", code.draft], ["open", code.functions - code.exact - code.draft]] as [Status, number][]).filter(([, count]) => count);
+
 /** A unit is done when it builds to the original bytes: game C, a PsyQ object or exact hand assembly. */
 export const isDone = (fn: Pick<Fn, "kind" | "status">): boolean => STATUS[fn.status].doneIn.includes(fn.kind);

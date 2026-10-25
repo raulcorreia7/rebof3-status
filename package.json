@@ -14,11 +14,14 @@
   },
   "devDependencies": {
     "@resvg/resvg-js": "2.6.2",
+    "@tailwindcss/vite": "4.3.3",
     "@types/node": "22.20.5",
     "echarts": "6.1.0",
     "solid-js": "1.9.17",
+    "tailwindcss": "4.3.3",
     "typescript": "5.9.3",
     "vite": "8.3.5",
-    "vite-plugin-solid": "2.11.14"
+    "vite-plugin-solid": "2.11.14",
+    "zod": "4.6.6"
   }
 }

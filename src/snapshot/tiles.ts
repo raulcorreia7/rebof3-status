@@ -1,6 +1,6 @@
 // One square per function, packed into blocks and squarified into a panel (the picture's map).
 
-import { bytes, escapeText, number, round } from "../model/format.ts";
+import { bytes, escapeText, round } from "../model/format.ts";
 import { STATUS, STATUSES } from "../model/status.ts";
 import { shorten, textWidth } from "../model/text.ts";
 import type { Fn } from "../types.ts";

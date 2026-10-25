@@ -1,113 +1,23 @@
-// The shape of objdiff-cli's report.json (version 2), the data census in
-// status-data.json, the game code census in status.json, the asset census in assets.json, the
-// committed history file, and the model built from them (model/report.ts).
+// The data files' types, derived from their schemas (model/schema.ts), and the model built from
+// them (model/report.ts).
+
+import type * as z from "zod/mini";
+import type { AssetCensusSchema, HistorySchema, ReportSchema, StatusCensusSchema, StatusDataSchema } from "./model/schema.ts";
 
 export type Status = "pure" | "nonmatching" | "open" | "object" | "assembly" | "asm";
 export type Tier = "object" | "assembly";
 /** The three progress categories: game code, the PsyQ SDK and hand-written assembly. */
 export type Part = "game" | "sdk" | "hand";
 
-/** One objdiff measure. Byte counts arrive as strings, shares as numbers. */
-export interface Measures {
-  fuzzy_match_percent?: number;
-  total_code?: string | number;
-  matched_code?: string | number;
-  total_functions?: number;
-  matched_functions?: number;
-}
-
-export interface ReportCategory {
-  id: string;
-  name: string;
-  measures: Measures;
-}
-
-export interface ReportUnit {
-  name: string;
-  measures: Measures;
-  metadata: {
-    complete?: boolean;
-    source_path?: string;
-    progress_categories?: string[];
-  };
-}
-
-/** objdiff-cli report generate, version 2. */
-export interface Report {
-  version?: number;
-  measures?: Measures;
-  categories: ReportCategory[];
-  units: ReportUnit[];
-}
-
-export interface StatusDataTarget {
-  target: string;
-  payload: number;
-  code: number;
-  data_payload: number;
-  typed: number;
-  percent: number;
-}
-
-/** bin/status --data --json: the typed and named data census. */
-export interface StatusData {
-  targets: StatusDataTarget[];
-  totals: {
-    payload: number;
-    code: number;
-    data_payload: number;
-    typed: number;
-    /** Bytes in C as byte arrays still named by address: not typed. Absent from older publishes. */
-    raw_c?: number;
-    /** Payload bytes left out of data_payload: zero-filled reservations, image copies, PsyQ and asset spans. */
-    reserved?: number;
-    copied?: number;
-    sdk?: number;
-    asset?: number;
-    percent: number;
-  };
-}
-
-/** bin/status --json: the game code census of every target map. Only the headline is read. */
-export interface StatusCensus {
-  game_code: {
-    functions: number;
-    exact: number;
-    bytes: number;
-    exact_bytes: number;
-    unique_functions: number;
-    unique_exact: number;
-    unique_bytes: number;
-    unique_exact_bytes: number;
-  };
-}
-
-/** One disc asset kind as the asset tool handles it. */
-export interface AssetKindRow {
-  kind: string;
-  entries: number;
-  bytes: number;
-  /** `decoded` to an open format, `raw` (the stored bytes) or `none` (not extracted). */
-  handling: string;
-  /** Bytes that export and import back to themselves. */
-  round_trip_bytes: number;
-}
-
-/** assets.json: the disc assets by kind, program code left out. Written by the publisher. */
-export interface AssetCensus {
-  kinds: AssetKindRow[];
-  totals: { entries: number; bytes: number; extracted_bytes: number; decoded_bytes: number; round_trip_bytes: number };
-}
-
-/** One history row; a share is null for days the project did not measure it. */
-export type HistoryRow = { date: string; revision: string; source: string } & Record<string, number | string | null>;
-
-/** The committed history and the identity of the report it ends with. */
-export interface History {
-  commit: string;
-  generated_at: string;
-  rows: HistoryRow[];
-}
+export type Report = z.output<typeof ReportSchema>;
+export type ReportUnit = Report["units"][number];
+export type StatusData = z.output<typeof StatusDataSchema>;
+export type StatusCensus = z.output<typeof StatusCensusSchema>;
+export type StatusCensusTarget = NonNullable<StatusCensus["targets"]>[number];
+export type AssetCensus = z.output<typeof AssetCensusSchema>;
+export type AssetKindRow = AssetCensus["kinds"][number];
+export type History = z.output<typeof HistorySchema>;
+export type HistoryRow = History["rows"][number];
 
 // Model ------------------------------------------------------------------------------------
 
@@ -148,6 +58,16 @@ export interface Tally {
   fuzzy: number;
 }
 
+/** Game functions of a target or group as bin/status counts them: the headline's units. */
+export interface Code {
+  functions: number;
+  exact: number;
+  /** Functions with a NON_MATCHING draft in C. */
+  draft: number;
+  bytes: number;
+  exactBytes: number;
+}
+
 export interface Target {
   id: string;
   name: string;
@@ -156,8 +76,10 @@ export interface Target {
   /** Payload bytes. */
   size: number;
   data: { bytes: number; typed: number } | null;
+  /** Game functions from bin/status; from the report when status.json lacks targets. */
+  code: Code;
   functions: Fn[];
-  /** Game functions only. */
+  /** Game functions in the report only. */
   game: Tally;
   /** Every unit in the target: game, PsyQ and hand-written assembly. */
   all: Tally;
@@ -167,6 +89,10 @@ export interface Group extends Tally {
   key: string;
   label: string;
   note: string;
+  /** Draw the targets as a grid of small tiles instead of one row each. */
+  tiles: boolean;
+  /** The sum of its targets' code. */
+  code: Code;
   targets: Target[];
   /** The sum of its targets' data, or null when none has data. */
   data: { bytes: number; typed: number } | null;
@@ -211,7 +137,9 @@ export interface Model {
   meta: { version: number; generatedAt: string; date: string; commit: string; shortCommit: string };
   /** The headline numbers. Game code comes from status.json when it is published, else the report. */
   headline: Headline;
-  /** Game code in the report: the functions the map, the groups and the browser show. */
+  /** Game code by bin/status, the sum of every target's code: what the map and the groups show. */
+  code: Code;
+  /** Game code in the report: the functions the browser lists, and the fuzzy match. */
   game: Tally;
   /** PsyQ units, shown apart. */
   sdk: Tally;

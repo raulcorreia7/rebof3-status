@@ -1,16 +1,20 @@
 // The page, as data. App draws this list in order: to add, remove or reorder a section, edit it.
-// The order follows the headline, most important first: game code (with its parts and map), game
-// data, assets; then quality and trend; the PsyQ SDK, which is not counted, and the browser last.
+// The order follows the headline, most important first: game code (with its map by part of the
+// game), game data, assets; then quality and trend; the PsyQ SDK, which is not counted, and the
+// browser last.
 //
 // A section has an id (its anchor), a title and an optional navigation label. Its blocks are
-// drawn top to bottom. Each block names a view kind (cards, meters, text, legend, tabs, treemap,
-// chart, trend, filters, table, inspector), the selector that feeds it from the model and the
-// route (selectors.ts, inspect.ts), and the copy around it, all from strings.ts.
+// drawn top to bottom. Each block names a view kind (cards, meters, text, legend, tabs, domains,
+// treemap, chart, trend, filters, table, inspector), the selector that feeds it from the model and
+// the route (selectors.ts, inspect.ts), and the copy around it, all from strings.ts.
 
 import { inspector } from "./inspect.ts";
 import * as pick from "./selectors.ts";
-import { BROWSER, DATA, GROUPS, MAP, QUALITY, SDK, SUMMARY, TREND } from "./strings.ts";
-import type { Section } from "./viewtypes.ts";
+import { BROWSER, DATA, MAP, QUALITY, SDK, SUMMARY, TREND } from "./strings.ts";
+import type { Ctx, Section } from "./viewtypes.ts";
+
+const sdkTab = ({ route }: Ctx) => route.map === "sdk";
+const gameTab = (c: Ctx) => !sdkTab(c);
 
 export const SECTIONS: Section[] = [
   {
@@ -24,25 +28,20 @@ export const SECTIONS: Section[] = [
     nav: "Game code",
     title: SUMMARY.gameHeading,
     blocks: [
-      { view: "cards", select: pick.gameCards, help: SUMMARY.gameHelp, note: pick.gameNote },
+      { view: "cards", select: pick.gameCards, help: SUMMARY.gameHelp, note: SUMMARY.footnote },
       { view: "text", select: pick.apart },
       { view: "meters", select: pick.overviewMeter, heading: SUMMARY.statusHeading },
     ],
   },
   {
-    id: "groups",
-    nav: "Parts",
-    title: GROUPS.heading,
-    blocks: [{ view: "cards", select: pick.groupCards, help: GROUPS.intro }],
-  },
-  {
     id: "map",
     nav: "Map",
-    title: MAP.heading,
+    title: (c) => (sdkTab(c) ? MAP.sdkHeading : MAP.heading),
     blocks: [
       { view: "tabs", select: pick.mapTabs },
-      { view: "legend", select: pick.legend, heading: pick.mapHeading, help: pick.mapHelp },
-      { view: "treemap", select: pick.mapTreemap, note: MAP.textFallback },
+      { view: "domains", select: pick.domains, help: MAP.help, when: gameTab },
+      { view: "legend", select: pick.sdkLegend, heading: pick.sdkHeading, help: MAP.sdkHelp, when: sdkTab },
+      { view: "treemap", select: pick.sdkTreemap, note: MAP.textFallback, when: sdkTab },
     ],
   },
   {
@@ -93,7 +92,7 @@ export const SECTIONS: Section[] = [
     blocks: [
       { view: "filters", select: pick.browserFilters },
       { view: "legend", select: pick.statusChips },
-      { view: "table", select: pick.browserTable },
+      { view: "table", select: pick.browserTable, note: pick.browserScope },
     ],
   },
   {

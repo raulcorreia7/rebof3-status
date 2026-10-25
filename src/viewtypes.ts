@@ -59,12 +59,11 @@ export interface Card {
   big: string;
   sub?: string;
   color?: string;
-  /** A group card: note, status meter, summary line, target links and one action. */
-  panel?: { note: string; meter: MeterRow; line: string; links: (Link & { side: string })[]; action: Link };
 }
 
 export interface Views {
-  cards: { grid: string; small?: boolean; cards: Card[] };
+  /** `narrow` fits more cards to a row; `small` draws smaller numbers. */
+  cards: { narrow?: boolean; small?: boolean; cards: Card[] };
   meters: { key?: { label: string; color: string }[]; rows: MeterRow[] };
   text: { paragraphs: { label?: string; text: string }[] };
   legend: {
@@ -74,7 +73,34 @@ export interface Views {
     help?: { text: string; clear: string };
   };
   tabs: { label: string; tabs: { id: MapTab; label: string }[] };
-  treemap: { tree: MapNode; scope: "game" | "sdk"; focus: string | null; crumbs: Link[]; label: string };
+  treemap: { tree: MapNode; focus: string | null; crumbs: Link[]; label: string };
+  /** Game code by part of the game: a heading and a bar per group, then its images as rows or tiles. */
+  domains: {
+    key: { label: string; color: string; sub: string }[];
+    /** What the statuses mean, under the key. */
+    keyHelp: string;
+    groups: {
+      key: string;
+      title: Link;
+      note: string;
+      percent: string;
+      line: string;
+      meter: MeterRow;
+      tiles: boolean;
+      images: {
+        id: string;
+        /** Full name for a row, short name for a tile (`AREA037 · 13`). */
+        label: string;
+        line: string;
+        size: string;
+        aria: string;
+        /** Bar length as a share of the group's biggest image; rows only. */
+        width: number;
+        parts: MeterRow["parts"];
+        to: Partial<Route>;
+      }[];
+    }[];
+  };
   chart: { option: ChartOption; height: number; label: string } | null;
   trend: { charts: { id: string; title: string; value: string | null; option: ChartOption | null }[]; empty: string };
   filters: {

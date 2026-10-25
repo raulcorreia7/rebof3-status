@@ -4,10 +4,10 @@
 import { bytes, hex, number, percent } from "./model/format.ts";
 import { findFunction, neighbours, sourceUrl } from "./model/index.ts";
 import { ASSEMBLY_LIBRARY } from "./model/report.ts";
-import { STATUS_TABLE } from "./model/status.ts";
-import { statusMeter } from "./selectors.ts";
+import { codeCounts } from "./model/status.ts";
+import { codeMeter } from "./selectors.ts";
 import { INSPECT, SDK, SITE, SUMMARY, TIER_LABEL } from "./strings.ts";
-import type { Fn, Group, Model, Target } from "./types.ts";
+import type { Code, Fn, Group, Model, Target } from "./types.ts";
 import type { Ctx, Link, Part, Views } from "./viewtypes.ts";
 
 const F = INSPECT.fields;
@@ -50,16 +50,19 @@ function functionBody(model: Model, fn: Fn): Pick<Inspector, "fields" | "buttons
   return { fields, lists: [], buttons: [] };
 }
 
-function targetBody(model: Model, target: Target): Pick<Inspector, "fields" | "buttons" | "lists" | "meter"> {
-  const { game, all, data } = target;
+const codeStatuses = (code: Code): Inspector["statuses"] => codeCounts(code).map(([status, count]) => ({ status, count: number(count) }));
+
+function targetBody(model: Model, target: Target): Pick<Inspector, "fields" | "buttons" | "lists" | "meter" | "statuses"> {
+  const { code, data } = target;
   return {
-    meter: statusMeter(all, target.name),
+    meter: codeMeter(code, target.name),
+    statuses: codeStatuses(code),
     fields: [
       field(F.target, text(target.id, { code: true })),
       field(F.group, text(target.groupLabel)),
       field(F.payload, text(bytes(target.size))),
-      field(F.functions, text(`${number(game.done)} / ${number(game.count)} matched (${percent(game.done, game.count, 1)}%)`)),
-      field(F.bytes, text(bytes(game.bytes))),
+      field(F.functions, text(INSPECT.functions(code.exact, code.functions, percent(code.exact, code.functions, 1)))),
+      field(F.bytes, text(SUMMARY.ofBytes(code.exactBytes, code.bytes))),
       field(F.data, text(data ? `${percent(data.typed, data.bytes, 1)}% · ${SUMMARY.ofBytes(data.typed, data.bytes)}` : "-")),
       field(F.source, text(`src/${target.id}`, { url: `${SITE.repoUrl}/tree/${model.meta.commit}/src/${target.id}`, code: true })),
     ],
@@ -74,14 +77,14 @@ function targetBody(model: Model, target: Target): Pick<Inspector, "fields" | "b
 function groupBody(group: Group): Pick<Inspector, "fields" | "buttons" | "lists" | "meter" | "note" | "statuses"> {
   const items: (Link & { side: string })[] = group.targets.map((target) => ({
     label: target.name,
-    to: { view: { kind: "target", id: target.id } },
-    side: target.game.count ? `${number(target.game.done)} / ${number(target.game.count)}` : "data only",
+    to: { view: { kind: "target", id: target.id }, target: target.id, group: null, lib: null, part: "all" },
+    side: target.code.functions ? `${number(target.code.exact)} / ${number(target.code.functions)}` : "data only",
   }));
   return {
     note: group.note,
-    meter: statusMeter(group, group.label),
-    statuses: STATUS_TABLE.filter(({ key }) => group.statuses[key].functions).map(({ key }) => ({ status: key, count: number(group.statuses[key].functions) })),
-    fields: [],
+    meter: codeMeter(group.code, group.label),
+    statuses: codeStatuses(group.code),
+    fields: [field(F.functions, text(INSPECT.functions(group.code.exact, group.code.functions, percent(group.code.exact, group.code.functions, 1)))), field(F.bytes, text(SUMMARY.ofBytes(group.code.exactBytes, group.code.bytes)))],
     lists: [{ heading: F.targets, items }],
     buttons: [{ label: INSPECT.browseTarget, to: { group: group.key, target: null, lib: null, part: "game" }, scroll: "browse" }],
   };

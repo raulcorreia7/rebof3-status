@@ -2,11 +2,9 @@
 // committed history, build the model and draw the page.
 
 import { render } from "solid-js/web";
-import { buildModel } from "./model/report.ts";
+import { modelFromFiles } from "./model/report.ts";
 import { SITE } from "./strings.ts";
-import "./styles/theme.css";
-import "./styles/components.css";
-import type { AssetCensus, History, Report, StatusCensus, StatusData } from "./types.ts";
+import "./styles/app.css";
 import { App } from "./views/App.tsx";
 
 const host = document.getElementById("page");
@@ -28,14 +26,14 @@ async function start(): Promise<void> {
   // Fetch the chart chunk while the data downloads; the charts mount as soon as it is in.
   void import("./charts/canvas.ts");
   try {
-    const [report, status, history, census, assets] = await Promise.all([
+    const [report, data, history, census, assets] = await Promise.all([
       load(`${dataBase}report.json`),
       load(`${dataBase}status-data.json`),
       load(`${dataBase}history.json`),
       optional(`${dataBase}status.json`),
       optional(`${dataBase}assets.json`),
     ]);
-    const model = buildModel(report as Report, status as StatusData, history as History, { census: census as StatusCensus | null, assets: assets as AssetCensus | null });
+    const model = modelFromFiles({ report, data, history, census, assets });
     host.replaceChildren();
     render(() => <App model={model} />, host);
   } catch (error) {

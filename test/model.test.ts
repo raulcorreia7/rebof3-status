@@ -1,20 +1,20 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { test } from "node:test";
-import { buildModel } from "../src/model/report.ts";
+import { modelFromFiles } from "../src/model/report.ts";
+import { AssetCensusSchema, ReportSchema, StatusCensusSchema, StatusDataSchema } from "../src/model/schema.ts";
 import { STATUSES } from "../src/model/status.ts";
-import type { AssetCensus, History, Report, StatusCensus, StatusData } from "../src/types.ts";
 
-const read = <T>(name: string): T => JSON.parse(readFileSync(new URL(`./fixtures/${name}`, import.meta.url), "utf8")) as T;
-const report = read<Report>("report.json");
-const status = read<StatusData>("status-data.json");
-const history = read<History>("history.json");
-const census = read<StatusCensus>("status.json");
-const assets = read<AssetCensus>("assets.json");
-const model = buildModel(report, status, history, { census, assets });
-const fallback = buildModel(report, status, history);
+const read = (name: string): unknown => JSON.parse(readFileSync(new URL(`./fixtures/${name}`, import.meta.url), "utf8"));
+const files = { report: read("report.json"), data: read("status-data.json"), history: read("history.json"), census: read("status.json"), assets: read("assets.json") };
+const report = ReportSchema.parse(files.report);
+const status = StatusDataSchema.parse(files.data);
+const census = StatusCensusSchema.parse(files.census);
+const assets = AssetCensusSchema.parse(files.assets);
+const model = modelFromFiles(files);
+const fallback = modelFromFiles({ ...files, census: null, assets: null });
 const sum = (items: number[]) => items.reduce((a, b) => a + b, 0);
-const category = (id: string) => report.categories.find((entry) => entry.id === id)!.measures;
+const sdkFunctions = (files.report as { categories: { id: string; measures: { total_functions: number } }[] }).categories.find((entry) => entry.id === "sdk")!.measures.total_functions;
 
 test("the headline counts game code from bin/status, and from the report only without status.json", () => {
   const code = census.game_code;
@@ -54,8 +54,7 @@ test("every status counts its functions and bytes exactly once", () => {
 });
 
 test("the SDK and the hand-written assembly never enter the game tally", () => {
-  const sdk = category("sdk");
-  assert.equal(model.sdk.count, sdk.total_functions);
+  assert.equal(model.sdk.count, sdkFunctions);
   assert.equal(model.sdk.count + model.hand.count + model.game.count, report.units.length);
   assert.equal(model.sdk.done, model.sdk.statuses.object.functions);
   assert.equal(model.sdk.statuses.assembly.functions, 4);
@@ -63,11 +62,16 @@ test("the SDK and the hand-written assembly never enter the game tally", () => {
 });
 
 test("groups and targets partition the game code", () => {
-  assert.equal(sum(model.groups.map((group) => group.count)), model.game.count);
-  assert.equal(sum(model.groups.map((group) => group.done)), model.game.done);
+  // Every bin/status function sits in exactly one group, so the groups add up to the headline.
+  const four = (c: { functions: number; exact: number; bytes: number; exactBytes: number }) => [c.functions, c.exact, c.bytes, c.exactBytes];
+  const added = (groups: typeof model.groups) => four({ functions: sum(groups.map((g) => g.code.functions)), exact: sum(groups.map((g) => g.code.exact)), bytes: sum(groups.map((g) => g.code.bytes)), exactBytes: sum(groups.map((g) => g.code.exactBytes)) });
+  assert.deepEqual(added(model.groups), four(model.headline.game));
+  assert.deepEqual(added(fallback.groups), four(fallback.headline.game));
+  assert.deepEqual(four(model.code), four(model.headline.game));
+  for (const group of model.groups) assert.ok(group.code.draft <= group.code.functions - group.code.exact, group.key);
   assert.equal(sum(model.targets.map((target) => target.game.count)), model.game.count);
   assert.equal(model.targets.length, status.targets.length);
-  assert.deepEqual(model.groups.map((group) => group.key).slice(0, 2), ["exe/main", "exe/logo"]);
+  assert.deepEqual(model.groups.map((group) => group.key), ["main", "system", "battle", "magic", "bosses", "characters", "world", "scenario"]);
 });
 
 test("a target never reports more typed bytes than its data payload", () => {

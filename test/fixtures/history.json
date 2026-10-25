@@ -1,6 +1,6 @@
 {
-  "commit": "a6e38f77847e0a8d7389f1cad0c191bc1f81747c",
-  "generated_at": "2026-10-25T20:00:00Z",
+  "commit": "abc217214528d6a254d53303113cbecbbc8626ed",
+  "generated_at": "2026-10-25T20:34:01Z",
   "rows": [
     {
       "date": "2026-07-10",
@@ -832,21 +832,30 @@
     },
     {
       "date": "2026-10-25",
-      "revision": "7fa8503a1f95e56911ed6a49c77f4c073b578867",
+      "revision": "abc217214528d6a254d53303113cbecbbc8626ed",
       "source": "run",
-      "game_functions": 12343,
-      "game_matched": 3224,
-      "game_bytes": 2997048,
-      "game_matched_bytes": 707012,
+      "game_functions": 12319,
+      "game_matched": 3291,
+      "game_bytes": 3153784,
+      "game_matched_bytes": 748580,
+      "game_unique": 6841,
+      "game_unique_matched": 2490,
+      "game_unique_bytes": 2427088,
+      "game_unique_matched_bytes": 665160,
       "sdk_functions": 732,
       "sdk_done": 728,
       "data_bytes": 696640,
-      "data_typed": 623036,
-      "fakes": 525,
-      "harmful_fakes": null,
-      "field_ref": 1727,
-      "local_externs": 707,
-      "sym_conflicts": 1502
+      "data_typed": 168705,
+      "data_raw_c": 454331,
+      "asset_bytes": 414244307,
+      "asset_extracted_bytes": 413478411,
+      "asset_decoded_bytes": 263763399,
+      "asset_round_trip_bytes": 1084489,
+      "fakes": 542,
+      "harmful_fakes": 287,
+      "field_ref": 1725,
+      "local_externs": 670,
+      "sym_conflicts": 35
     }
   ]
 }

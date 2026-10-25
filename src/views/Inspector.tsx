@@ -49,27 +49,29 @@ export function Inspector(props: { data: Accessor<Views["inspector"]> }) {
   return (
     <Show when={props.data()}>
       {(data) => (
-        <aside class="inspector" ref={panel} tabIndex={-1} aria-label={`${data().kind}: ${data().title}`} data-inspector={data().view}>
-          <div class="inspector-head">
+        <aside
+          class="sticky top-0 h-screen w-100 max-w-full flex-none self-start overflow-auto border-l border-line bg-card p-4 focus:outline-none max-xl:fixed max-xl:inset-x-0 max-xl:bottom-0 max-xl:top-auto max-xl:z-20 max-xl:h-[62vh] max-xl:w-auto max-xl:rounded-t-xl max-xl:border max-xl:shadow-[0_-8px_24px_rgb(0_0_0/0.35)]"
+          ref={panel} tabIndex={-1} aria-label={`${data().kind}: ${data().title}`} data-inspector={data().view}>
+          <div class="flex items-start justify-between gap-2">
             <div>
-              <div class="mute small">{data().kind}</div>
-              <h2>{data().title}</h2>
+              <div class="text-sm text-mute">{data().kind}</div>
+              <h2 class="text-xl font-semibold break-all">{data().title}</h2>
             </div>
-            <div class="inspector-actions">
-              <button type="button" class="ghost" onClick={copy}>
+            <div class="flex flex-wrap justify-end gap-1.5">
+              <button type="button" class="btn" onClick={copy}>
                 {copied() ? INSPECT.copied : INSPECT.copyLink}
               </button>
-              <button type="button" class="ghost" onClick={close} aria-label={INSPECT.close}>
+              <button type="button" class="btn" onClick={close} aria-label={INSPECT.close}>
                 {INSPECT.close}
               </button>
             </div>
           </div>
-          <Show when={data().message}>{(message) => <p>{message()}</p>}</Show>
-          <Show when={data().note}>{(note) => <p class="mute">{note()}</p>}</Show>
+          <Show when={data().message}>{(message) => <p class="my-1">{message()}</p>}</Show>
+          <Show when={data().note}>{(note) => <p class="my-1 text-mute">{note()}</p>}</Show>
           <Show when={data().meter}>{(meter) => <Meter row={meter()} />}</Show>
           <Show when={data().statuses}>
             {(statuses) => (
-              <ul class="status-list">
+              <ul class="my-2 text-sm">
                 <For each={statuses()}>
                   {(item) => (
                     <li>
@@ -81,12 +83,12 @@ export function Inspector(props: { data: Accessor<Views["inspector"]> }) {
             )}
           </Show>
           <Show when={data().fields.length}>
-            <dl>
+            <dl class="my-3 grid grid-cols-[7.5rem_1fr] gap-x-3 gap-y-1.5 text-sm">
               <For each={data().fields}>
                 {(field) => (
                   <>
-                    <dt>{field.label}</dt>
-                    <dd>
+                    <dt class="text-mute">{field.label}</dt>
+                    <dd class="break-words">
                       <Parts parts={field.value} />
                     </dd>
                   </>
@@ -97,15 +99,15 @@ export function Inspector(props: { data: Accessor<Views["inspector"]> }) {
           <For each={data().lists}>
             {(list) => (
               <>
-                <h3>{list.heading}</h3>
-                <ul class="target-list">
+                <h3 class="mt-5 mb-1 font-semibold">{list.heading}</h3>
+                <ul class="mt-2 mb-2.5 divide-y divide-line border-t border-line text-sm">
                   <For each={list.items}>
                     {(item) => (
-                      <li>
+                      <li class="flex justify-between gap-2 py-0.5">
                         <Jump to={item.to} scroll={item.scroll}>
                           {item.label}
                         </Jump>
-                        <span class="mute small">{item.side}</span>
+                        <span class="text-sm text-mute">{item.side}</span>
                       </li>
                     )}
                   </For>
@@ -113,10 +115,10 @@ export function Inspector(props: { data: Accessor<Views["inspector"]> }) {
               </>
             )}
           </For>
-          <div class="inspector-buttons">
+          <div class="mt-2.5 flex flex-wrap gap-2">
             <For each={data().buttons}>
               {(button) => (
-                <Jump class="button" to={button.to} scroll={button.scroll}>
+                <Jump class="btn text-accent" to={button.to} scroll={button.scroll}>
                   {button.label}
                 </Jump>
               )}

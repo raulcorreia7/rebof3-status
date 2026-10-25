@@ -7,53 +7,28 @@ import type { SortKey } from "../model/route.ts";
 import type { Status } from "../types.ts";
 import type { Views } from "../viewtypes.ts";
 import { Chart } from "./Chart.tsx";
-import { Chip, Jump, Meter, Parts } from "./ui.tsx";
+import { BarParts, Chip, Jump, Meter, Parts } from "./ui.tsx";
 
 /** How long the search box waits after the last key before the table filters. */
 const SEARCH_PAUSE_MS = 150;
 
 type Props<K extends keyof Views> = { data: Accessor<Views[K]> };
 
+const input = "rounded-md border border-line bg-card px-2.5 py-1.5 text-ink";
+
 export function Cards(props: Props<"cards">) {
   return (
-    <div class={props.data().grid}>
+    <div class={`mt-2.5 grid gap-4 ${props.data().narrow ? "grid-cols-[repeat(auto-fit,minmax(11rem,1fr))]" : "grid-cols-[repeat(auto-fit,minmax(13rem,1fr))]"}`}>
       <For each={props.data().cards}>
-        {(card) =>
-          card.panel ? (
-            <article class="card group" data-group={card.id}>
-              <header>
-                <h3>{card.title}</h3>
-                <div class="card-big small-big">{card.big}</div>
-              </header>
-              <p class="mute small">{card.panel.note}</p>
-              <Meter row={card.panel.meter} />
-              <p class="small">{card.panel.line}</p>
-              <ul class="target-list">
-                <For each={card.panel.links}>
-                  {(link) => (
-                    <li>
-                      <Jump to={link.to} scroll={link.scroll}>
-                        {link.label}
-                      </Jump>
-                      <span class="mute small">{link.side}</span>
-                    </li>
-                  )}
-                </For>
-              </ul>
-              <Jump class="button" to={card.panel.action.to} scroll={card.panel.action.scroll}>
-                {card.panel.action.label}
-              </Jump>
-            </article>
-          ) : (
-            <div class="card" data-card={card.id}>
-              <div class="card-title">{card.title}</div>
-              <div class={`card-big${props.data().small ? " small-big" : ""}`} style={{ color: card.color }}>
-                {card.big}
-              </div>
-              <div class="mute small">{card.sub}</div>
+        {(card) => (
+          <div class="card" data-card={card.id}>
+            <div class="text-sm">{card.title}</div>
+            <div class={`font-bold leading-tight tabular-nums ${props.data().small ? "text-2xl" : "text-4xl"}`} style={{ color: card.color }}>
+              {card.big}
             </div>
-          )
-        }
+            <div class="text-sm text-mute">{card.sub}</div>
+          </div>
+        )}
       </For>
     </div>
   );
@@ -64,11 +39,11 @@ export function Meters(props: Props<"meters">) {
     <>
       <Show when={props.data().key}>
         {(key) => (
-          <div class="legend" aria-hidden="true">
+          <div class="mt-2.5 flex flex-wrap gap-x-4 gap-y-1 text-sm" aria-hidden="true">
             <For each={key()}>
               {(item) => (
-                <span class="legend-item static">
-                  <i class="chip" style={{ "--c": item.color }} />
+                <span class="inline-flex items-center">
+                  <Chip color={item.color} />
                   {item.label}
                 </span>
               )}
@@ -80,22 +55,22 @@ export function Meters(props: Props<"meters">) {
         when={props.data().rows.some((row) => row.name || row.label)}
         fallback={<For each={props.data().rows}>{(row) => <Meter row={row} />}</For>}
       >
-        <ul class="libs">
+        <ul class="my-2 grid grid-cols-[6rem_1fr_6rem] items-center gap-x-3 gap-y-0.5">
           <For each={props.data().rows}>
             {(row) => (
-              <li>
-                <Show when={row.name} fallback={<span class="lib-name">{row.label}</span>}>
+              <li class="contents">
+                <Show when={row.name} fallback={<span class="break-words">{row.label}</span>}>
                   {(name) => (
-                    <Jump class="lib-name" to={name().to} scroll={name().scroll} title={SDK.browse}>
+                    <Jump class="break-words" to={name().to} scroll={name().scroll} title={SDK.browse}>
                       {name().label}
                     </Jump>
                   )}
                 </Show>
-                <div class="lib-bar" style={{ width: `${row.width}%` }} role="img" aria-label={row.aria}>
-                  <For each={row.parts}>{(part) => <i style={{ width: `${part.width}%`, background: part.color }} />}</For>
+                <div class="bar h-3.5 min-w-1" style={{ width: `${row.width}%` }} role="img" aria-label={row.aria}>
+                  <BarParts parts={row.parts} />
                 </div>
-                <span class="lib-count">{row.count}</span>
-                <span class="lib-note mute small">{row.note}</span>
+                <span class="text-right text-sm text-mute tabular-nums">{row.count}</span>
+                <span class="col-span-2 col-start-2 mb-2 text-sm text-mute">{row.note}</span>
               </li>
             )}
           </For>
@@ -109,7 +84,7 @@ export function Text(props: Props<"text">) {
   return (
     <For each={props.data().paragraphs}>
       {(paragraph) => (
-        <p class="small">
+        <p class="my-1 text-sm">
           <b>{paragraph.label}</b> {paragraph.text}
         </p>
       )}
@@ -123,24 +98,24 @@ export function Legend(props: Props<"legend">) {
   const toggle = (status: Status) =>
     page.go({ st: page.route.st.includes(status) ? page.route.st.filter((key) => key !== status) : [...page.route.st, status] }, true);
   const chips = () => props.data().variant === "chips";
+  const look = (on: boolean) => {
+    const shape = chips() ? "items-center rounded-full px-2.5 py-0.5 text-xs" : "items-start rounded-md px-2 py-0.5 text-sm";
+    const state = on ? "border-accent bg-track" : page.route.st.length && !chips() ? "opacity-60" : "";
+    return `inline-flex cursor-pointer border border-line bg-card text-left ${shape} ${state}`;
+  };
   return (
-    <div class={chips() ? "" : "legend-block"}>
-      <div class={chips() ? "chips" : "legend"} role="group" aria-label={props.data().label}>
+    <div>
+      <div class={`mt-2.5 flex flex-wrap ${chips() ? "gap-1.5" : "gap-x-2 gap-y-1.5"}`} role="group" aria-label={props.data().label}>
         <For each={props.data().items}>
           {(item) => {
             const on = () => page.route.st.includes(item.key);
             return (
-              <button
-                type="button"
-                class={chips() ? `chip-button${on() ? " on" : ""}` : `legend-item phase-${item.phase}${on() ? " on" : ""}${page.route.st.length && !on() ? " off" : ""}`}
-                aria-pressed={on()}
-                onClick={() => toggle(item.key)}
-              >
-                <Chip color={item.color} />
+              <button type="button" class={look(on())} aria-pressed={on()} onClick={() => toggle(item.key)}>
+                <Chip color={item.color} class={item.sub ? "mt-1.5 mr-1.5" : undefined} />
                 {item.sub ? (
                   <span>
                     {item.label}
-                    <small>{item.sub}</small>
+                    <small class="block text-xs text-mute">{item.sub}</small>
                   </span>
                 ) : (
                   item.label
@@ -152,7 +127,7 @@ export function Legend(props: Props<"legend">) {
       </div>
       <Show when={props.data().help}>
         {(help) => (
-          <p class="mute small">
+          <p class="my-1 text-sm text-mute">
             {help().text}{" "}
             <Show when={page.route.st.length}>
               <button type="button" class="link" onClick={() => page.go({ st: [] }, true)}>
@@ -169,13 +144,21 @@ export function Legend(props: Props<"legend">) {
 export function Tabs(props: Props<"tabs">) {
   const page = usePage();
   return (
-    <div class="tabs" role="group" aria-label={props.data().label}>
+    <div class="mt-2.5 inline-flex divide-x divide-line overflow-hidden rounded-md border border-line" role="group" aria-label={props.data().label}>
       <For each={props.data().tabs}>
-        {(tab) => (
-          <button type="button" class={`tab${page.route.map === tab.id ? " on" : ""}`} aria-pressed={page.route.map === tab.id} onClick={() => page.go({ map: tab.id, st: [] }, true)}>
-            {tab.label}
-          </button>
-        )}
+        {(tab) => {
+          const on = () => page.route.map === tab.id;
+          return (
+            <button
+              type="button"
+              class={`cursor-pointer px-3.5 py-1 ${on() ? "bg-accent font-semibold text-bg" : "bg-card"}`}
+              aria-pressed={on()}
+              onClick={() => page.go({ map: tab.id, st: [] }, true)}
+            >
+              {tab.label}
+            </button>
+          );
+        }}
       </For>
     </div>
   );
@@ -187,14 +170,14 @@ export function ChartView(props: Props<"chart">) {
 
 export function Trend(props: Props<"trend">) {
   return (
-    <div class="trend-grid">
+    <div class="mt-2.5 grid grid-cols-[repeat(auto-fit,minmax(18rem,1fr))] gap-4">
       {/* Index, not For: a new selector result must update the eight chart options in place,
           not dispose and re-create their ECharts instances. */}
       <Index each={props.data().charts}>
         {(chart) => (
-          <figure data-chart={chart().id}>
-            <figcaption>{chart().value ? `${chart().title}: ${chart().value}` : chart().title}</figcaption>
-            <Show when={chart().option} fallback={<p class="empty mute small">{props.data().empty}</p>}>
+          <figure class="card px-2.5 py-2" data-chart={chart().id}>
+            <figcaption class="text-sm">{chart().value ? `${chart().title}: ${chart().value}` : chart().title}</figcaption>
+            <Show when={chart().option} fallback={<p class="py-5 text-sm text-mute">{props.data().empty}</p>}>
               {(option) => <Chart option={option()} height={170} label={`${chart().title}, latest ${chart().value}`} />}
             </Show>
           </figure>
@@ -215,9 +198,10 @@ export function Filters(props: Props<"filters">) {
   };
   onCleanup(() => window.clearTimeout(pause));
   return (
-    <div class="filters">
+    <div class="mt-2.5 flex flex-wrap items-end gap-x-3 gap-y-2">
       <input
         type="search"
+        class={`${input} max-w-90 flex-[1_1_15rem]`}
         placeholder={props.data().search.placeholder}
         aria-label={props.data().search.label}
         autocomplete="off"
@@ -242,9 +226,12 @@ export function Filters(props: Props<"filters">) {
             </For>
           );
           return (
-            <label>
+            <label class="flex flex-col gap-0.5 text-xs text-mute">
               {select.label}
-              <select onChange={(event) => page.go({ [select.field]: select.any ? event.currentTarget.value || null : event.currentTarget.value, ...select.also }, true)}>
+              <select
+                class={`${input} text-base`}
+                onChange={(event) => page.go({ [select.field]: select.any ? event.currentTarget.value || null : event.currentTarget.value, ...select.also }, true)}
+              >
                 <For each={groups}>{(entry) => (entry.group ? <optgroup label={entry.group}>{options(entry.items)}</optgroup> : options(entry.items))}</For>
               </select>
             </label>
@@ -262,6 +249,7 @@ export function Table(props: Props<"table">) {
   const sortBy = (sort: SortKey) => page.go(page.route.sort === sort ? { dir: page.route.dir === "asc" ? "desc" : "asc" } : { sort, dir: sort === "size" ? "desc" : "asc" }, true);
   const arrow = (sort?: SortKey) => (sort && page.route.sort === sort ? (page.route.dir === "asc" ? " ▲" : " ▼") : "");
   const ariaSort = (sort?: SortKey) => (sort ? (page.route.sort === sort ? (page.route.dir === "asc" ? "ascending" : "descending") : "none") : undefined);
+  const align = (column: { align?: "r" }) => (column.align ? "text-right" : "text-left");
   const copy = async () => {
     try {
       await navigator.clipboard.writeText(window.location.href);
@@ -272,15 +260,15 @@ export function Table(props: Props<"table">) {
     }
   };
   const table = () => (
-    <div class="scroll">
-      <table>
+    <div class="mt-2 max-h-[70vh] overflow-auto rounded-md border border-line bg-card">
+      <table class="w-full border-collapse text-sm tabular-nums">
         <thead>
           <tr>
             <For each={props.data().columns}>
               {(column) => (
-                <th class={column.align} aria-sort={ariaSort(column.sort)}>
+                <th class={`sticky top-0 border-b border-line bg-card px-3 py-1.5 text-xs font-semibold whitespace-nowrap text-mute ${align(column)}`} aria-sort={ariaSort(column.sort)}>
                   {column.sort ? (
-                    <button type="button" class="th" onClick={() => sortBy(column.sort!)}>
+                    <button type="button" class="cursor-pointer" onClick={() => sortBy(column.sort!)}>
                       {column.label}
                       {arrow(column.sort)}
                     </button>
@@ -292,13 +280,13 @@ export function Table(props: Props<"table">) {
             </For>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="divide-y divide-line">
           <For each={props.data().rows}>
             {(row) => (
-              <tr class={row.id === selected() ? "selected" : ""} data-fn={row.id}>
+              <tr class={row.id === selected() ? "bg-track" : ""} data-fn={row.id}>
                 <For each={row.cells}>
                   {(cell, index) => (
-                    <td class={props.data().columns[index()].align}>
+                    <td class={`px-3 py-1.5 whitespace-nowrap ${align(props.data().columns[index()])}`}>
                       <Parts parts={cell} />
                     </td>
                   )}
@@ -313,13 +301,13 @@ export function Table(props: Props<"table">) {
   return (
     <>
       <Show when={props.data().message !== undefined}>
-        <div class="browse-bar">
-          <p class="mute small" id="count" aria-live="polite">
+        <div class="mt-2 flex flex-wrap justify-between gap-x-4 gap-y-1">
+          <p class="text-sm text-mute" id="count" aria-live="polite">
             {props.data().message}
           </p>
           <Show when={props.data().actions}>
             {(actions) => (
-              <span class="browse-actions">
+              <span class="flex gap-3.5 text-sm">
                 <Show when={actions().canReset}>
                   <button type="button" class="link" onClick={() => page.go({ q: "", st: [], part: "all", lib: null, target: null, group: null, sort: "address", dir: "asc" }, true)}>
                     {BROWSER.reset}
@@ -335,15 +323,15 @@ export function Table(props: Props<"table">) {
       </Show>
       <Show when={props.data().disclosure} fallback={table()}>
         {(summary) => (
-          <details>
-            <summary>{summary()}</summary>
+          <details class="mt-5 text-sm">
+            <summary class="cursor-pointer text-mute hover:text-ink">{summary()}</summary>
             {table()}
           </details>
         )}
       </Show>
       <Show when={props.data().more}>
         {(more) => (
-          <button type="button" class="button" onClick={page.showMore}>
+          <button type="button" class="btn mt-2.5 text-accent" onClick={page.showMore}>
             {more()}
           </button>
         )}

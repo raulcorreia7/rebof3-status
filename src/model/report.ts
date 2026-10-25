@@ -4,22 +4,24 @@
 
 import { hex, share } from "./format.ts";
 import { compareGroups, describeGroup, groupKey } from "./groups.ts";
+import * as z from "zod/mini";
 import { byDay } from "./history.ts";
+import { AssetCensusSchema, HistorySchema, ReportSchema, StatusCensusSchema, StatusDataSchema } from "./schema.ts";
 import { STATUS, STATUSES, isDone } from "./status.ts";
 import type {
   AssetCensus,
+  Code,
   Fn,
   Group,
   Headline,
   History,
   HistoryRow,
   Library,
-  Measures,
   Model,
   Part,
   Report,
-  ReportCategory,
   StatusCensus,
+  StatusCensusTarget,
   StatusData,
   Target,
   Tier,
@@ -30,12 +32,6 @@ const CATEGORY = { game: "game", sdk: "sdk", hand: "hand-asm" } as const;
 export const ASSEMBLY_LIBRARY = "assembly";
 const PSYQ_OBJECT = /^toolchains\/psyq\/([^/]+)\/([^/]+)\//;
 const EXE_NAME: Record<string, string> = { slus_004_22: "SLUS_004.22", logo: "LOGO.EXE" };
-
-/** A measure is a number or a numeric string in the report. */
-const num = (value: unknown): number => {
-  const parsed = typeof value === "number" ? value : typeof value === "string" ? Number(value) : NaN;
-  return Number.isFinite(parsed) ? parsed : 0;
-};
 
 /** Count functions by status, with done totals and the code-byte weighted fuzzy match. */
 export function tally(functions: Fn[]): Tally {
@@ -74,8 +70,12 @@ export function unitAddress(name: string): number | null {
   return found ? parseInt(found[1], 16) : null;
 }
 
-function statusOf(kind: Part, complete: boolean, source: string): Fn["status"] {
-  if (kind === "game") return complete ? "pure" : source ? "nonmatching" : "open";
+/**
+ * A game unit is a draft when its C builds and objdiff matches part of it. A unit whose C only
+ * includes the original assembly (INCLUDE_ASM) has a source file too, but measures 0%: not started.
+ */
+function statusOf(kind: Part, complete: boolean, source: string, fuzzy: number): Fn["status"] {
+  if (kind === "game") return complete ? "pure" : source && fuzzy > 0 ? "nonmatching" : "open";
   if (kind === "hand") return complete ? "asm" : "assembly";
   return source ? "object" : "assembly";
 }
@@ -88,15 +88,15 @@ function sdkOrigin(source: string): { library: string; version: string | null; t
     : { library: ASSEMBLY_LIBRARY, version: null, tier: "assembly" };
 }
 
-const category = (report: Report, id: string): ReportCategory => {
+const category = (report: Report, id: string): Report["categories"][number] => {
   const found = report.categories.find((entry) => entry.id === id);
   if (!found) throw new Error(`report.json has no ${id} category`);
   return found;
 };
 
-const measured = (functions: Fn[], source: { measures: Measures }): Tally => ({
+const measured = (functions: Fn[], source: Report["categories"][number]): Tally => ({
   ...tally(functions),
-  fuzzy: num(source.measures.fuzzy_match_percent),
+  fuzzy: source.measures.fuzzy_match_percent ?? 0,
 });
 
 function buildFunction(unit: Report["units"][number], target: string, targetLabel: string): Fn {
@@ -106,12 +106,12 @@ function buildFunction(unit: Report["units"][number], target: string, targetLabe
   const measures = unit.measures;
   const complete = unit.metadata.complete === true;
   const source = unit.metadata.source_path ?? "";
-  const bytes = num(measures.total_code);
-  const matched = num(measures.matched_code);
-  const fuzzy = measures.fuzzy_match_percent === undefined ? (complete ? 100 : 0) : num(measures.fuzzy_match_percent);
+  const bytes = measures.total_code ?? 0;
+  const matched = measures.matched_code ?? 0;
+  const fuzzy = measures.fuzzy_match_percent ?? (complete ? 100 : 0);
   const name = unit.name.slice(target.length + 1);
   const address = unitAddress(unit.name);
-  const status = statusOf(kind, complete, source);
+  const status = statusOf(kind, complete, source, fuzzy);
   const origin = kind === "sdk" ? sdkOrigin(source) : null;
   const fn: Fn = {
     id: unit.name,
@@ -219,9 +219,60 @@ function headlineRow(rows: HistoryRow[], date: string, commit: string, headline:
   };
 }
 
+/** Sum game code. */
+const addCode = (items: Code[]): Code =>
+  items.reduce(
+    (sum, code) => ({
+      functions: sum.functions + code.functions,
+      exact: sum.exact + code.exact,
+      draft: sum.draft + code.draft,
+      bytes: sum.bytes + code.bytes,
+      exactBytes: sum.exactBytes + code.exactBytes,
+    }),
+    { functions: 0, exact: 0, draft: 0, bytes: 0, exactBytes: 0 },
+  );
+
+/** bin/status's count of one target. Its draft count covers every reviewed unit, so it is capped at the game functions not exact. */
+const censusCode = (row: StatusCensusTarget | undefined): Code => {
+  const game = row?.game ?? { exact: 0, total: 0, exact_bytes: 0, bytes: 0 };
+  return { functions: game.total, exact: game.exact, draft: Math.min(row?.non_matching ?? 0, game.total - game.exact), bytes: game.bytes, exactBytes: game.exact_bytes };
+};
+
+/** The report's count of one target, for a status.json without targets. */
+const reportCode = (game: Tally): Code => ({
+  functions: game.count,
+  exact: game.done,
+  draft: game.statuses.nonmatching.functions,
+  bytes: game.bytes,
+  exactBytes: game.doneBytes,
+});
+
+/** The data files as fetched or read; status.json and assets.json are null when not published. */
+export interface DataFiles {
+  report: unknown;
+  data: unknown;
+  history: unknown;
+  census?: unknown;
+  assets?: unknown;
+}
+
+/** The file checked against its schema; the error names the file and the field that failed. */
+function parse<T>(name: string, schema: z.ZodMiniType<T>, value: unknown): T {
+  const result = schema.safeParse(value);
+  if (!result.success) throw new Error(`${name} does not have the expected shape: ${z.prettifyError(result.error)}`);
+  return result.data;
+}
+
+/** Check each file against its schema, then build the model. */
+export const modelFromFiles = (files: DataFiles): Model =>
+  buildModel(parse("report.json", ReportSchema, files.report), parse("status-data.json", StatusDataSchema, files.data), parse("history.json", HistorySchema, files.history), {
+    census: files.census == null ? null : parse("status.json", StatusCensusSchema, files.census),
+    assets: files.assets == null ? null : parse("assets.json", AssetCensusSchema, files.assets),
+  });
+
 export function buildModel(
   report: Report,
-  status: Pick<StatusData, "totals"> & { targets: { target: string; payload: number; data_payload: number; typed: number }[] },
+  status: StatusData,
   history: History,
   extra: { census?: StatusCensus | null; assets?: AssetCensus | null } = {},
 ): Model {
@@ -230,8 +281,15 @@ export function buildModel(
   const sdkSource = category(report, CATEGORY.sdk);
   const handSource = category(report, CATEGORY.hand);
 
+  // bin/status and the data census measure the same target maps; a target only one of them
+  // names still gets a row, so its code is never lost.
+  const census = extra.census?.targets ? new Map(extra.census.targets.map((row) => [row.target, row])) : null;
+  const rows = [...status.targets];
+  const known = new Set(rows.map((row) => row.target));
+  for (const id of census?.keys() ?? []) if (!known.has(id)) rows.push({ target: id, payload: 0, data_payload: 0, typed: 0 });
+
   const archives = new Map<string, number>();
-  for (const { target } of status.targets) {
+  for (const { target } of rows) {
     if (!target.startsWith("emi/")) continue;
     const archive = target.split("/")[2] ?? "";
     archives.set(archive, (archives.get(archive) ?? 0) + 1);
@@ -239,7 +297,7 @@ export function buildModel(
   // The object census sums .rodata/.data from every compiled object; a draft can emit more than
   // the reviewed map counts. start/08's func_801DEEE8.o carries a 44-byte jump table where the map
   // has a 24-byte rodata placement. Cap at the payload so a target never reads above 100%.
-  const targets: Target[] = status.targets.map((row) => {
+  const targets: Target[] = rows.map((row) => {
     const typed = row.data_payload ? Math.min(row.typed, row.data_payload) : 0;
     return {
       id: row.target,
@@ -248,6 +306,7 @@ export function buildModel(
       groupLabel: "",
       size: row.payload,
       data: row.data_payload ? { bytes: row.data_payload, typed } : null,
+      code: censusCode(census?.get(row.target)),
       functions: [],
       game: tally([]),
       all: tally([]),
@@ -271,18 +330,19 @@ export function buildModel(
     });
     target.game = tally(target.functions.filter((fn) => fn.kind === "game"));
     target.all = tally(target.functions);
+    if (!census) target.code = reportCode(target.game);
   }
 
   const functions = targets.flatMap((target) => target.functions);
   const functionById = new Map(functions.map((fn) => [fn.id, fn]));
   // Within a group the biggest target leads; data-only targets, with no game code, close it.
-  const bySize = (a: Target, b: Target) => b.game.bytes - a.game.bytes || (b.data?.bytes ?? 0) - (a.data?.bytes ?? 0) || a.name.localeCompare(b.name);
+  const bySize = (a: Target, b: Target) => b.code.bytes - a.code.bytes || (b.data?.bytes ?? 0) - (a.data?.bytes ?? 0) || a.name.localeCompare(b.name);
   const groups: Group[] = [...new Set(targets.map((target) => target.group))]
     .map((key) => {
       const members = targets.filter((target) => target.group === key).sort(bySize);
       const game = members.flatMap((target) => target.functions.filter((fn) => fn.kind === "game"));
       const data = members.reduce((sum, t) => ({ bytes: sum.bytes + (t.data?.bytes ?? 0), typed: sum.typed + (t.data?.typed ?? 0) }), { bytes: 0, typed: 0 });
-      return { ...describeGroup(key), targets: members, ...tally(game), data: data.bytes ? data : null };
+      return { ...describeGroup(key), targets: members, code: addCode(members.map((t) => t.code)), ...tally(game), data: data.bytes ? data : null };
     })
     .sort(compareGroups);
   for (const group of groups) for (const target of group.targets) target.groupLabel = group.label;
@@ -290,27 +350,29 @@ export function buildModel(
   const game = measured(functions.filter((fn) => fn.kind === "game"), gameSource);
   const sdk = measured(functions.filter((fn) => fn.kind === "sdk"), sdkSource);
   const hand = measured(functions.filter((fn) => fn.kind === "hand"), handSource);
-  const generatedAt = history.generated_at ?? "";
-  const commit = history.commit ?? "";
+  const generatedAt = history.generated_at;
+  const commit = history.commit;
   const data = status.totals.data_payload
     ? { bytes: status.totals.data_payload, typed: Math.min(status.totals.typed, status.totals.data_payload) }
     : null;
   const meta = { version: report.version ?? 0, generatedAt, date: generatedAt.slice(0, 10), commit, shortCommit: commit.slice(0, 12) };
   const headline = buildHeadline(game, data, status.totals, extra.census ?? null, extra.assets ?? null);
-  const rows: HistoryRow[] = [...(history.rows ?? [])];
-  if (meta.date) rows.push(headlineRow(rows, meta.date, meta.commit, headline, sdk));
+  const days: HistoryRow[] = [...history.rows];
+  if (meta.date) days.push(headlineRow(days, meta.date, meta.commit, headline, sdk));
+  const code = addCode(targets.map((target) => target.code));
   return {
     meta,
     headline,
+    code,
     game,
     sdk,
     hand,
     all: tally(functions),
     data,
     quality: {
-      exact: headline.game.exact,
-      inProgress: game.statuses.nonmatching.functions,
-      notStarted: headline.game.functions - headline.game.exact - game.statuses.nonmatching.functions,
+      exact: code.exact,
+      inProgress: code.draft,
+      notStarted: code.functions - code.exact - code.draft,
       hand: hand.count,
       handDone: hand.done,
       fuzzy: game.fuzzy,
@@ -321,6 +383,6 @@ export function buildModel(
     functions,
     functionById,
     libraries: buildLibraries(functions.filter((fn) => fn.kind === "sdk")),
-    history: byDay(rows),
+    history: byDay(days),
   };
 }

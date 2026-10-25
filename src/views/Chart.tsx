@@ -15,7 +15,7 @@ function capture(host: HTMLDivElement): HTMLCanvasElement | null {
   if (!source) return null;
   host.querySelector(".chart-snapshot")?.remove();
   const overlay = document.createElement("canvas");
-  overlay.className = "chart-snapshot";
+  overlay.className = "chart-snapshot pointer-events-none absolute inset-0 size-full transition-opacity duration-180 ease-out";
   overlay.width = source.width;
   overlay.height = source.height;
   const context = overlay.getContext("2d");
@@ -39,8 +39,6 @@ interface Props {
   /** Accessible name; the chart is a picture, so the text next to it carries the numbers. */
   label: string;
   onClick?: (params: ChartClick) => void;
-  /** Receives the instance once it exists, and null when it is disposed. */
-  onChart?: (chart: ECharts | null) => void;
   /** Fade the previous drawing into the new one on an option change (treemap drills). */
   crossfade?: boolean;
   /** Replace the option instead of merging it; for a data swap the crossfade hides the cut. */
@@ -63,8 +61,6 @@ export function Chart(props: Props) {
       chart = echarts.init(host, null, { renderer: "canvas" });
       chart.on("click", (params) => props.onClick?.(params as ChartClick));
       chart.setOption(props.option);
-      // After the first option, so a listener can read the model.
-      props.onChart?.(chart);
     };
     const watcher = new IntersectionObserver((entries) => entries.some((entry) => entry.isIntersecting) && create(), { rootMargin: "300px" });
     watcher.observe(host);
@@ -83,7 +79,6 @@ export function Chart(props: Props) {
       host.querySelector(".chart-snapshot")?.remove();
       chart?.dispose();
       chart = null;
-      props.onChart?.(null);
     });
   });
 
@@ -98,5 +93,5 @@ export function Chart(props: Props) {
     if (overlay) release(overlay);
   });
 
-  return <div ref={host} class="chart" style={{ height: `${props.height}px` }} role="img" aria-label={props.label} />;
+  return <div ref={host} class="relative w-full" style={{ height: `${props.height}px` }} role="img" aria-label={props.label} />;
 }

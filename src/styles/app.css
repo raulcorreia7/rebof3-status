@@ -1,0 +1,64 @@
+/* Tailwind, with the theme tokens as its colours. theme/apply.ts writes the tokens from
+   theme/tokens.ts to custom properties (--bg, --ink, --st-pure, ...) for the light or dark scheme;
+   the dark values here only cover the moment before the script runs. Status colours stay custom
+   properties, set inline by the views. */
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark light;
+  --bg: #0d1117;
+  --card: #161b22;
+  --line: #30363d;
+  --ink: #c9d1d9;
+  --mute: #8b949e;
+  --accent: #58a6ff;
+  --track: #21262d;
+  --danger: #f85149;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-card: var(--card);
+  --color-line: var(--line);
+  --color-ink: var(--ink);
+  --color-mute: var(--mute);
+  --color-accent: var(--accent);
+  --color-track: var(--track);
+  --color-danger: var(--danger);
+  --font-sans: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-padding-top: 0.75rem;
+  }
+  body {
+    @apply bg-bg text-ink font-sans text-base/normal;
+  }
+  a {
+    @apply text-accent hover:underline;
+  }
+  code {
+    @apply font-mono text-[0.88em];
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-accent;
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-md border border-line bg-card px-4 py-3;
+  }
+  /* A bordered button, and a link that is a button. */
+  .btn {
+    @apply inline-block cursor-pointer rounded-md border border-line bg-card px-2.5 py-1 text-sm whitespace-nowrap text-ink hover:border-accent hover:no-underline;
+  }
+  .link {
+    @apply cursor-pointer text-accent hover:underline;
+  }
+  /* A bar split into coloured parts; each part is an <i> with an inline width and colour. */
+  .bar {
+    @apply flex h-3 overflow-hidden rounded-sm bg-track *:block *:h-full;
+  }
+}

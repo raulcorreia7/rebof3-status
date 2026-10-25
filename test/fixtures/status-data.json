@@ -3242,8 +3242,8 @@
    "data": 0,
    "bss": 0,
    "map_bss": 0,
-   "objects": 0,
-   "sources": 0,
+   "objects": 1,
+   "sources": 1,
    "data_payload": 288,
    "in_c": 0,
    "raw_c": 0,
@@ -4167,8 +4167,8 @@
    "data": 1216,
    "bss": 0,
    "map_bss": 0,
-   "objects": 67,
-   "sources": 67,
+   "objects": 68,
+   "sources": 68,
    "data_payload": 1272,
    "in_c": 1272,
    "raw_c": 0,
@@ -5592,8 +5592,8 @@
    "data": 4,
    "bss": 0,
    "map_bss": 0,
-   "objects": 2,
-   "sources": 2,
+   "objects": 3,
+   "sources": 3,
    "data_payload": 4904,
    "in_c": 4,
    "raw_c": 0,
@@ -5621,9 +5621,9 @@
    "sources": 6,
    "data_payload": 5180,
    "in_c": 5180,
-   "raw_c": 5180,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 5176,
+   "typed": 4,
+   "percent": 0.08
   },
   {
    "target": "emi/world00/area002/09",
@@ -5646,9 +5646,9 @@
    "sources": 3,
    "data_payload": 3676,
    "in_c": 3676,
-   "raw_c": 3676,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 3672,
+   "typed": 4,
+   "percent": 0.11
   },
   {
    "target": "emi/world00/area003/13",
@@ -5671,9 +5671,9 @@
    "sources": 10,
    "data_payload": 1396,
    "in_c": 1396,
-   "raw_c": 1396,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 1392,
+   "typed": 4,
+   "percent": 0.29
   },
   {
    "target": "emi/world00/area004/09",
@@ -5696,9 +5696,9 @@
    "sources": 3,
    "data_payload": 3412,
    "in_c": 3412,
-   "raw_c": 3412,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 3408,
+   "typed": 4,
+   "percent": 0.12
   },
   {
    "target": "emi/world00/area005/13",
@@ -5721,9 +5721,9 @@
    "sources": 6,
    "data_payload": 3596,
    "in_c": 3596,
-   "raw_c": 3596,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 3592,
+   "typed": 4,
+   "percent": 0.11
   },
   {
    "target": "emi/world00/area006/13",
@@ -5771,9 +5771,9 @@
    "sources": 11,
    "data_payload": 1644,
    "in_c": 1644,
-   "raw_c": 1644,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 1640,
+   "typed": 4,
+   "percent": 0.24
   },
   {
    "target": "emi/world00/area008/13",
@@ -5846,9 +5846,9 @@
    "sources": 7,
    "data_payload": 2276,
    "in_c": 2276,
-   "raw_c": 2276,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 2272,
+   "typed": 4,
+   "percent": 0.18
   },
   {
    "target": "emi/world00/area011/13",
@@ -5871,9 +5871,9 @@
    "sources": 5,
    "data_payload": 896,
    "in_c": 896,
-   "raw_c": 896,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 892,
+   "typed": 4,
+   "percent": 0.45
   },
   {
    "target": "emi/world00/area012/13",
@@ -5896,9 +5896,9 @@
    "sources": 3,
    "data_payload": 880,
    "in_c": 880,
-   "raw_c": 880,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 876,
+   "typed": 4,
+   "percent": 0.45
   },
   {
    "target": "emi/world00/area013/13",
@@ -5921,9 +5921,9 @@
    "sources": 8,
    "data_payload": 5392,
    "in_c": 5392,
-   "raw_c": 5392,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 5388,
+   "typed": 4,
+   "percent": 0.07
   },
   {
    "target": "emi/world00/area014/13",
@@ -5946,9 +5946,9 @@
    "sources": 3,
    "data_payload": 2720,
    "in_c": 2720,
-   "raw_c": 2720,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 2716,
+   "typed": 4,
+   "percent": 0.15
   },
   {
    "target": "emi/world00/area015/13",
@@ -5971,9 +5971,9 @@
    "sources": 13,
    "data_payload": 4412,
    "in_c": 4412,
-   "raw_c": 4412,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 4408,
+   "typed": 4,
+   "percent": 0.09
   },
   {
    "target": "emi/world00/area016/13",
@@ -6046,9 +6046,9 @@
    "sources": 5,
    "data_payload": 1008,
    "in_c": 1008,
-   "raw_c": 1008,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 1004,
+   "typed": 4,
+   "percent": 0.4
   },
   {
    "target": "emi/world00/area019/13",
@@ -6071,9 +6071,9 @@
    "sources": 10,
    "data_payload": 1268,
    "in_c": 1268,
-   "raw_c": 1268,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 1264,
+   "typed": 4,
+   "percent": 0.32
   },
   {
    "target": "emi/world00/area020/13",
@@ -6096,9 +6096,9 @@
    "sources": 4,
    "data_payload": 212,
    "in_c": 212,
-   "raw_c": 212,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 208,
+   "typed": 4,
+   "percent": 1.89
   },
   {
    "target": "emi/world00/area021/13",
@@ -6121,9 +6121,9 @@
    "sources": 6,
    "data_payload": 1578,
    "in_c": 1578,
-   "raw_c": 1578,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 1574,
+   "typed": 4,
+   "percent": 0.25
   },
   {
    "target": "emi/world00/area022/13",
@@ -6146,9 +6146,9 @@
    "sources": 6,
    "data_payload": 2908,
    "in_c": 2908,
-   "raw_c": 2908,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 2904,
+   "typed": 4,
+   "percent": 0.14
   },
   {
    "target": "emi/world00/area023/13",
@@ -6171,9 +6171,9 @@
    "sources": 9,
    "data_payload": 2424,
    "in_c": 2424,
-   "raw_c": 2424,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 2420,
+   "typed": 4,
+   "percent": 0.17
   },
   {
    "target": "emi/world00/area024/14",
@@ -6221,9 +6221,9 @@
    "sources": 3,
    "data_payload": 3224,
    "in_c": 3224,
-   "raw_c": 3224,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 3220,
+   "typed": 4,
+   "percent": 0.12
   },
   {
    "target": "emi/world00/area026/13",
@@ -6321,9 +6321,9 @@
    "sources": 4,
    "data_payload": 208,
    "in_c": 208,
-   "raw_c": 208,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 204,
+   "typed": 4,
+   "percent": 1.92
   },
   {
    "target": "emi/world00/area030/03",
@@ -6471,9 +6471,9 @@
    "sources": 38,
    "data_payload": 922,
    "in_c": 922,
-   "raw_c": 922,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 918,
+   "typed": 4,
+   "percent": 0.43
   },
   {
    "target": "emi/world00/area034/13",
@@ -6496,9 +6496,9 @@
    "sources": 6,
    "data_payload": 2852,
    "in_c": 2852,
-   "raw_c": 2852,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 2848,
+   "typed": 4,
+   "percent": 0.14
   },
   {
    "target": "emi/world00/area035/13",
@@ -6521,9 +6521,9 @@
    "sources": 6,
    "data_payload": 400,
    "in_c": 400,
-   "raw_c": 400,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 396,
+   "typed": 4,
+   "percent": 1.0
   },
   {
    "target": "emi/world00/area036/13",
@@ -6546,9 +6546,9 @@
    "sources": 9,
    "data_payload": 532,
    "in_c": 532,
-   "raw_c": 532,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 528,
+   "typed": 4,
+   "percent": 0.75
   },
   {
    "target": "emi/world00/area037/13",
@@ -6571,9 +6571,9 @@
    "sources": 27,
    "data_payload": 3964,
    "in_c": 3964,
-   "raw_c": 3964,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 3960,
+   "typed": 4,
+   "percent": 0.1
   },
   {
    "target": "emi/world01/area038/13",
@@ -6596,9 +6596,9 @@
    "sources": 6,
    "data_payload": 3428,
    "in_c": 3428,
-   "raw_c": 3428,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 3424,
+   "typed": 4,
+   "percent": 0.12
   },
   {
    "target": "emi/world01/area039/13",
@@ -6621,9 +6621,9 @@
    "sources": 19,
    "data_payload": 7268,
    "in_c": 7268,
-   "raw_c": 7268,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 7264,
+   "typed": 4,
+   "percent": 0.06
   },
   {
    "target": "emi/world01/area040/13",
@@ -6646,9 +6646,9 @@
    "sources": 21,
    "data_payload": 3472,
    "in_c": 3472,
-   "raw_c": 3472,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 3468,
+   "typed": 4,
+   "percent": 0.12
   },
   {
    "target": "emi/world01/area041/13",
@@ -6671,9 +6671,9 @@
    "sources": 39,
    "data_payload": 5066,
    "in_c": 5066,
-   "raw_c": 5066,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 5062,
+   "typed": 4,
+   "percent": 0.08
   },
   {
    "target": "emi/world01/area042/13",
@@ -6696,9 +6696,9 @@
    "sources": 36,
    "data_payload": 1144,
    "in_c": 1144,
-   "raw_c": 1144,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 1140,
+   "typed": 4,
+   "percent": 0.35
   },
   {
    "target": "emi/world01/area043/13",
@@ -6721,9 +6721,9 @@
    "sources": 8,
    "data_payload": 1880,
    "in_c": 1880,
-   "raw_c": 1880,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 1876,
+   "typed": 4,
+   "percent": 0.21
   },
   {
    "target": "emi/world01/area044/13",
@@ -6746,9 +6746,9 @@
    "sources": 8,
    "data_payload": 1740,
    "in_c": 1740,
-   "raw_c": 1740,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 1736,
+   "typed": 4,
+   "percent": 0.23
   },
   {
    "target": "emi/world01/area045/13",
@@ -6771,9 +6771,9 @@
    "sources": 36,
    "data_payload": 1698,
    "in_c": 1698,
-   "raw_c": 1698,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 1694,
+   "typed": 4,
+   "percent": 0.24
   },
   {
    "target": "emi/world01/area046/13",
@@ -6796,9 +6796,9 @@
    "sources": 6,
    "data_payload": 1896,
    "in_c": 1896,
-   "raw_c": 1896,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 1892,
+   "typed": 4,
+   "percent": 0.21
   },
   {
    "target": "emi/world01/area047/13",
@@ -6821,9 +6821,9 @@
    "sources": 17,
    "data_payload": 1252,
    "in_c": 1252,
-   "raw_c": 1252,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 1248,
+   "typed": 4,
+   "percent": 0.32
   },
   {
    "target": "emi/world01/area048/13",
@@ -6846,9 +6846,9 @@
    "sources": 37,
    "data_payload": 5792,
    "in_c": 5792,
-   "raw_c": 5792,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 5788,
+   "typed": 4,
+   "percent": 0.07
   },
   {
    "target": "emi/world01/area049/13",
@@ -6896,9 +6896,9 @@
    "sources": 30,
    "data_payload": 9080,
    "in_c": 9080,
-   "raw_c": 9080,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 9076,
+   "typed": 4,
+   "percent": 0.04
   },
   {
    "target": "emi/world01/area050/13",
@@ -6921,9 +6921,9 @@
    "sources": 9,
    "data_payload": 4384,
    "in_c": 4384,
-   "raw_c": 4384,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 4380,
+   "typed": 4,
+   "percent": 0.09
   },
   {
    "target": "emi/world01/area051/13",
@@ -6946,9 +6946,9 @@
    "sources": 6,
    "data_payload": 1796,
    "in_c": 1796,
-   "raw_c": 1796,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 1792,
+   "typed": 4,
+   "percent": 0.22
   },
   {
    "target": "emi/world01/area052/13",
@@ -6971,9 +6971,9 @@
    "sources": 28,
    "data_payload": 3380,
    "in_c": 3380,
-   "raw_c": 3380,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 3376,
+   "typed": 4,
+   "percent": 0.12
   },
   {
    "target": "emi/world01/area053/13",
@@ -6996,9 +6996,9 @@
    "sources": 3,
    "data_payload": 2544,
    "in_c": 2544,
-   "raw_c": 2544,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 2540,
+   "typed": 4,
+   "percent": 0.16
   },
   {
    "target": "emi/world01/area054/13",
@@ -7021,9 +7021,9 @@
    "sources": 3,
    "data_payload": 2760,
    "in_c": 2760,
-   "raw_c": 2760,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 2756,
+   "typed": 4,
+   "percent": 0.14
   },
   {
    "target": "emi/world01/area055/13",
@@ -7046,9 +7046,9 @@
    "sources": 8,
    "data_payload": 4712,
    "in_c": 4712,
-   "raw_c": 4712,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 4708,
+   "typed": 4,
+   "percent": 0.08
   },
   {
    "target": "emi/world01/area056/13",
@@ -7071,9 +7071,9 @@
    "sources": 23,
    "data_payload": 972,
    "in_c": 972,
-   "raw_c": 972,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 968,
+   "typed": 4,
+   "percent": 0.41
   },
   {
    "target": "emi/world01/area057/13",
@@ -7096,9 +7096,9 @@
    "sources": 7,
    "data_payload": 7579,
    "in_c": 7579,
-   "raw_c": 7579,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 7575,
+   "typed": 4,
+   "percent": 0.05
   },
   {
    "target": "emi/world01/area058/13",
@@ -7121,9 +7121,9 @@
    "sources": 3,
    "data_payload": 3804,
    "in_c": 3804,
-   "raw_c": 3804,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 3800,
+   "typed": 4,
+   "percent": 0.11
   },
   {
    "target": "emi/world01/area059/13",
@@ -7146,9 +7146,9 @@
    "sources": 17,
    "data_payload": 1148,
    "in_c": 1148,
-   "raw_c": 1148,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 1144,
+   "typed": 4,
+   "percent": 0.35
   },
   {
    "target": "emi/world01/area060/13",
@@ -7171,9 +7171,9 @@
    "sources": 7,
    "data_payload": 348,
    "in_c": 348,
-   "raw_c": 348,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 344,
+   "typed": 4,
+   "percent": 1.15
   },
   {
    "target": "emi/world01/area061/13",
@@ -7196,9 +7196,9 @@
    "sources": 8,
    "data_payload": 724,
    "in_c": 724,
-   "raw_c": 724,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 720,
+   "typed": 4,
+   "percent": 0.55
   },
   {
    "target": "emi/world01/area062/13",
@@ -7221,9 +7221,9 @@
    "sources": 4,
    "data_payload": 288,
    "in_c": 288,
-   "raw_c": 288,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 284,
+   "typed": 4,
+   "percent": 1.39
   },
   {
    "target": "emi/world01/area063/13",
@@ -7246,9 +7246,9 @@
    "sources": 4,
    "data_payload": 208,
    "in_c": 208,
-   "raw_c": 208,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 204,
+   "typed": 4,
+   "percent": 1.92
   },
   {
    "target": "emi/world01/area064/13",
@@ -7271,9 +7271,9 @@
    "sources": 4,
    "data_payload": 208,
    "in_c": 208,
-   "raw_c": 208,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 204,
+   "typed": 4,
+   "percent": 1.92
   },
   {
    "target": "emi/world01/area065/13",
@@ -7296,9 +7296,9 @@
    "sources": 37,
    "data_payload": 1446,
    "in_c": 1446,
-   "raw_c": 1446,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 1442,
+   "typed": 4,
+   "percent": 0.28
   },
   {
    "target": "emi/world01/area066/13",
@@ -7346,9 +7346,9 @@
    "sources": 43,
    "data_payload": 3464,
    "in_c": 3464,
-   "raw_c": 3464,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 3460,
+   "typed": 4,
+   "percent": 0.12
   },
   {
    "target": "emi/world01/area068/13",
@@ -7371,9 +7371,9 @@
    "sources": 52,
    "data_payload": 3640,
    "in_c": 3640,
-   "raw_c": 3640,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 3636,
+   "typed": 4,
+   "percent": 0.11
   },
   {
    "target": "emi/world01/area069/13",
@@ -7396,9 +7396,9 @@
    "sources": 5,
    "data_payload": 4340,
    "in_c": 4340,
-   "raw_c": 4340,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 4336,
+   "typed": 4,
+   "percent": 0.09
   },
   {
    "target": "emi/world01/area070/13",
@@ -7446,9 +7446,9 @@
    "sources": 4,
    "data_payload": 968,
    "in_c": 968,
-   "raw_c": 968,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 964,
+   "typed": 4,
+   "percent": 0.41
   },
   {
    "target": "emi/world01/area072/13",
@@ -7471,9 +7471,9 @@
    "sources": 4,
    "data_payload": 208,
    "in_c": 208,
-   "raw_c": 208,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 204,
+   "typed": 4,
+   "percent": 1.92
   },
   {
    "target": "emi/world01/area073/13",
@@ -7496,9 +7496,9 @@
    "sources": 4,
    "data_payload": 208,
    "in_c": 208,
-   "raw_c": 208,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 204,
+   "typed": 4,
+   "percent": 1.92
   },
   {
    "target": "emi/world01/area074/13",
@@ -7521,9 +7521,9 @@
    "sources": 10,
    "data_payload": 3524,
    "in_c": 3524,
-   "raw_c": 3524,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 3520,
+   "typed": 4,
+   "percent": 0.11
   },
   {
    "target": "emi/world01/area075/13",
@@ -7546,9 +7546,9 @@
    "sources": 39,
    "data_payload": 2472,
    "in_c": 2472,
-   "raw_c": 2472,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 2468,
+   "typed": 4,
+   "percent": 0.16
   },
   {
    "target": "emi/world02/area076/13",
@@ -7571,9 +7571,9 @@
    "sources": 3,
    "data_payload": 192,
    "in_c": 192,
-   "raw_c": 192,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 188,
+   "typed": 4,
+   "percent": 2.08
   },
   {
    "target": "emi/world02/area077/14",
@@ -7596,9 +7596,9 @@
    "sources": 78,
    "data_payload": 2348,
    "in_c": 2348,
-   "raw_c": 2348,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 2344,
+   "typed": 4,
+   "percent": 0.17
   },
   {
    "target": "emi/world02/area078/13",
@@ -7621,9 +7621,9 @@
    "sources": 11,
    "data_payload": 4884,
    "in_c": 4884,
-   "raw_c": 4884,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 4880,
+   "typed": 4,
+   "percent": 0.08
   },
   {
    "target": "emi/world02/area079/13",
@@ -7646,9 +7646,9 @@
    "sources": 11,
    "data_payload": 7568,
    "in_c": 7568,
-   "raw_c": 7568,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 7564,
+   "typed": 4,
+   "percent": 0.05
   },
   {
    "target": "emi/world02/area080/13",
@@ -7671,9 +7671,9 @@
    "sources": 24,
    "data_payload": 1796,
    "in_c": 1796,
-   "raw_c": 1796,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 1792,
+   "typed": 4,
+   "percent": 0.22
   },
   {
    "target": "emi/world02/area081/13",
@@ -7696,9 +7696,9 @@
    "sources": 7,
    "data_payload": 2720,
    "in_c": 2720,
-   "raw_c": 2720,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 2716,
+   "typed": 4,
+   "percent": 0.15
   },
   {
    "target": "emi/world02/area082/13",
@@ -7721,9 +7721,9 @@
    "sources": 57,
    "data_payload": 3004,
    "in_c": 3004,
-   "raw_c": 3004,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 3000,
+   "typed": 4,
+   "percent": 0.13
   },
   {
    "target": "emi/world02/area083/13",
@@ -7771,9 +7771,9 @@
    "sources": 3,
    "data_payload": 1284,
    "in_c": 1284,
-   "raw_c": 1284,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 1280,
+   "typed": 4,
+   "percent": 0.31
   },
   {
    "target": "emi/world02/area085/13",
@@ -7796,9 +7796,9 @@
    "sources": 26,
    "data_payload": 1556,
    "in_c": 1556,
-   "raw_c": 1556,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 1552,
+   "typed": 4,
+   "percent": 0.26
   },
   {
    "target": "emi/world02/area086/13",
@@ -7821,9 +7821,9 @@
    "sources": 11,
    "data_payload": 1724,
    "in_c": 1724,
-   "raw_c": 1724,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 1720,
+   "typed": 4,
+   "percent": 0.23
   },
   {
    "target": "emi/world02/area087/13",
@@ -7846,9 +7846,9 @@
    "sources": 37,
    "data_payload": 2670,
    "in_c": 2670,
-   "raw_c": 2670,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 2666,
+   "typed": 4,
+   "percent": 0.15
   },
   {
    "target": "emi/world02/area088/13",
@@ -7871,9 +7871,9 @@
    "sources": 50,
    "data_payload": 2474,
    "in_c": 2474,
-   "raw_c": 2474,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 2470,
+   "typed": 4,
+   "percent": 0.16
   },
   {
    "target": "emi/world02/area089/03",
@@ -7921,9 +7921,9 @@
    "sources": 3,
    "data_payload": 5348,
    "in_c": 5348,
-   "raw_c": 5348,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 5344,
+   "typed": 4,
+   "percent": 0.07
   },
   {
    "target": "emi/world02/area091/13",
@@ -7946,9 +7946,9 @@
    "sources": 17,
    "data_payload": 435,
    "in_c": 435,
-   "raw_c": 435,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 431,
+   "typed": 4,
+   "percent": 0.92
   },
   {
    "target": "emi/world02/area092/13",
@@ -7971,9 +7971,9 @@
    "sources": 14,
    "data_payload": 1891,
    "in_c": 1891,
-   "raw_c": 1891,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 1887,
+   "typed": 4,
+   "percent": 0.21
   },
   {
    "target": "emi/world02/area093/13",
@@ -7996,9 +7996,9 @@
    "sources": 3,
    "data_payload": 152,
    "in_c": 152,
-   "raw_c": 152,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 148,
+   "typed": 4,
+   "percent": 2.63
   },
   {
    "target": "emi/world02/area094/13",
@@ -8021,9 +8021,9 @@
    "sources": 21,
    "data_payload": 7797,
    "in_c": 7797,
-   "raw_c": 7797,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 7793,
+   "typed": 4,
+   "percent": 0.05
   },
   {
    "target": "emi/world02/area095/13",
@@ -8046,9 +8046,9 @@
    "sources": 16,
    "data_payload": 2076,
    "in_c": 2076,
-   "raw_c": 2076,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 2072,
+   "typed": 4,
+   "percent": 0.19
   },
   {
    "target": "emi/world02/area096/13",
@@ -8071,9 +8071,9 @@
    "sources": 16,
    "data_payload": 2048,
    "in_c": 2048,
-   "raw_c": 2048,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 2044,
+   "typed": 4,
+   "percent": 0.2
   },
   {
    "target": "emi/world02/area097/13",
@@ -8096,9 +8096,9 @@
    "sources": 5,
    "data_payload": 268,
    "in_c": 268,
-   "raw_c": 268,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 264,
+   "typed": 4,
+   "percent": 1.49
   },
   {
    "target": "emi/world02/area098/13",
@@ -8121,9 +8121,9 @@
    "sources": 60,
    "data_payload": 1488,
    "in_c": 1488,
-   "raw_c": 1488,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 1484,
+   "typed": 4,
+   "percent": 0.27
   },
   {
    "target": "emi/world02/area099/13",
@@ -8146,9 +8146,9 @@
    "sources": 13,
    "data_payload": 6244,
    "in_c": 6244,
-   "raw_c": 6244,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 6240,
+   "typed": 4,
+   "percent": 0.06
   },
   {
    "target": "emi/world02/area100/13",
@@ -8171,9 +8171,9 @@
    "sources": 32,
    "data_payload": 3876,
    "in_c": 3876,
-   "raw_c": 3876,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 3872,
+   "typed": 4,
+   "percent": 0.1
   },
   {
    "target": "emi/world02/area101/13",
@@ -8221,9 +8221,9 @@
    "sources": 17,
    "data_payload": 420,
    "in_c": 420,
-   "raw_c": 420,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 416,
+   "typed": 4,
+   "percent": 0.95
   },
   {
    "target": "emi/world02/area103/13",
@@ -8246,9 +8246,9 @@
    "sources": 50,
    "data_payload": 1088,
    "in_c": 1088,
-   "raw_c": 1088,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 1084,
+   "typed": 4,
+   "percent": 0.37
   },
   {
    "target": "emi/world02/area104/14",
@@ -8271,9 +8271,9 @@
    "sources": 61,
    "data_payload": 496,
    "in_c": 496,
-   "raw_c": 496,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 492,
+   "typed": 4,
+   "percent": 0.81
   },
   {
    "target": "emi/world02/area105/13",
@@ -8296,9 +8296,9 @@
    "sources": 12,
    "data_payload": 340,
    "in_c": 340,
-   "raw_c": 340,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 336,
+   "typed": 4,
+   "percent": 1.18
   },
   {
    "target": "emi/world02/area106/13",
@@ -8321,9 +8321,9 @@
    "sources": 17,
    "data_payload": 1544,
    "in_c": 1544,
-   "raw_c": 1544,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 1540,
+   "typed": 4,
+   "percent": 0.26
   },
   {
    "target": "emi/world02/area107/13",
@@ -8346,9 +8346,9 @@
    "sources": 8,
    "data_payload": 200,
    "in_c": 200,
-   "raw_c": 200,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 196,
+   "typed": 4,
+   "percent": 2.0
   },
   {
    "target": "emi/world02/area108/14",
@@ -8371,9 +8371,9 @@
    "sources": 58,
    "data_payload": 3404,
    "in_c": 3404,
-   "raw_c": 3404,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 3400,
+   "typed": 4,
+   "percent": 0.12
   },
   {
    "target": "emi/world02/area109/13",
@@ -8396,9 +8396,9 @@
    "sources": 5,
    "data_payload": 308,
    "in_c": 308,
-   "raw_c": 308,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 304,
+   "typed": 4,
+   "percent": 1.3
   },
   {
    "target": "emi/world02/area110/13",
@@ -8421,9 +8421,9 @@
    "sources": 4,
    "data_payload": 208,
    "in_c": 208,
-   "raw_c": 208,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 204,
+   "typed": 4,
+   "percent": 1.92
   },
   {
    "target": "emi/world02/area111/13",
@@ -8446,9 +8446,9 @@
    "sources": 28,
    "data_payload": 5128,
    "in_c": 5128,
-   "raw_c": 5128,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 5124,
+   "typed": 4,
+   "percent": 0.08
   },
   {
    "target": "emi/world02/area112/13",
@@ -8471,9 +8471,9 @@
    "sources": 23,
    "data_payload": 1892,
    "in_c": 1892,
-   "raw_c": 1892,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 1888,
+   "typed": 4,
+   "percent": 0.21
   },
   {
    "target": "emi/world02/area113/13",
@@ -8496,9 +8496,9 @@
    "sources": 8,
    "data_payload": 148,
    "in_c": 148,
-   "raw_c": 148,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 144,
+   "typed": 4,
+   "percent": 2.7
   },
   {
    "target": "emi/world03/area114/13",
@@ -8521,9 +8521,9 @@
    "sources": 6,
    "data_payload": 332,
    "in_c": 332,
-   "raw_c": 332,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 328,
+   "typed": 4,
+   "percent": 1.2
   },
   {
    "target": "emi/world03/area115/13",
@@ -8546,9 +8546,9 @@
    "sources": 36,
    "data_payload": 690,
    "in_c": 690,
-   "raw_c": 690,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 686,
+   "typed": 4,
+   "percent": 0.58
   },
   {
    "target": "emi/world03/area116/13",
@@ -8571,9 +8571,9 @@
    "sources": 15,
    "data_payload": 624,
    "in_c": 624,
-   "raw_c": 624,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 620,
+   "typed": 4,
+   "percent": 0.64
   },
   {
    "target": "emi/world03/area117/13",
@@ -8596,9 +8596,9 @@
    "sources": 30,
    "data_payload": 4076,
    "in_c": 4076,
-   "raw_c": 4076,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 4072,
+   "typed": 4,
+   "percent": 0.1
   },
   {
    "target": "emi/world03/area118/13",
@@ -8621,9 +8621,9 @@
    "sources": 33,
    "data_payload": 2264,
    "in_c": 2264,
-   "raw_c": 2264,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 2260,
+   "typed": 4,
+   "percent": 0.18
   },
   {
    "target": "emi/world03/area119/13",
@@ -8646,9 +8646,9 @@
    "sources": 45,
    "data_payload": 3488,
    "in_c": 3488,
-   "raw_c": 3488,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 3484,
+   "typed": 4,
+   "percent": 0.11
   },
   {
    "target": "emi/world03/area120/13",
@@ -8671,9 +8671,9 @@
    "sources": 29,
    "data_payload": 3132,
    "in_c": 3132,
-   "raw_c": 3132,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 3128,
+   "typed": 4,
+   "percent": 0.13
   },
   {
    "target": "emi/world03/area121/14",
@@ -8696,9 +8696,9 @@
    "sources": 67,
    "data_payload": 1003,
    "in_c": 1003,
-   "raw_c": 1003,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 999,
+   "typed": 4,
+   "percent": 0.4
   },
   {
    "target": "emi/world03/area122/13",
@@ -8746,9 +8746,9 @@
    "sources": 3,
    "data_payload": 3872,
    "in_c": 3872,
-   "raw_c": 3872,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 3868,
+   "typed": 4,
+   "percent": 0.1
   },
   {
    "target": "emi/world03/area124/13",
@@ -8771,9 +8771,9 @@
    "sources": 4,
    "data_payload": 220,
    "in_c": 220,
-   "raw_c": 220,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 216,
+   "typed": 4,
+   "percent": 1.82
   },
   {
    "target": "emi/world03/area125/13",
@@ -8796,9 +8796,9 @@
    "sources": 20,
    "data_payload": 496,
    "in_c": 496,
-   "raw_c": 496,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 492,
+   "typed": 4,
+   "percent": 0.81
   },
   {
    "target": "emi/world03/area126/13",
@@ -8846,9 +8846,9 @@
    "sources": 3,
    "data_payload": 228,
    "in_c": 228,
-   "raw_c": 228,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 224,
+   "typed": 4,
+   "percent": 1.75
   },
   {
    "target": "emi/world03/area128/13",
@@ -8871,9 +8871,9 @@
    "sources": 10,
    "data_payload": 2832,
    "in_c": 2832,
-   "raw_c": 2832,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 2828,
+   "typed": 4,
+   "percent": 0.14
   },
   {
    "target": "emi/world03/area129/03",
@@ -8921,9 +8921,9 @@
    "sources": 33,
    "data_payload": 4512,
    "in_c": 4512,
-   "raw_c": 4512,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 4508,
+   "typed": 4,
+   "percent": 0.09
   },
   {
    "target": "emi/world03/area131/13",
@@ -8946,9 +8946,9 @@
    "sources": 20,
    "data_payload": 3212,
    "in_c": 3212,
-   "raw_c": 3212,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 3208,
+   "typed": 4,
+   "percent": 0.12
   },
   {
    "target": "emi/world03/area132/13",
@@ -8971,9 +8971,9 @@
    "sources": 30,
    "data_payload": 3260,
    "in_c": 3260,
-   "raw_c": 3260,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 3256,
+   "typed": 4,
+   "percent": 0.12
   },
   {
    "target": "emi/world03/area133/13",
@@ -8996,9 +8996,9 @@
    "sources": 7,
    "data_payload": 4164,
    "in_c": 4164,
-   "raw_c": 4164,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 4160,
+   "typed": 4,
+   "percent": 0.1
   },
   {
    "target": "emi/world03/area134/13",
@@ -9021,9 +9021,9 @@
    "sources": 96,
    "data_payload": 3224,
    "in_c": 3224,
-   "raw_c": 3224,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 3220,
+   "typed": 4,
+   "percent": 0.12
   },
   {
    "target": "emi/world03/area135/14",
@@ -9046,9 +9046,9 @@
    "sources": 75,
    "data_payload": 2648,
    "in_c": 2648,
-   "raw_c": 2648,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 2644,
+   "typed": 4,
+   "percent": 0.15
   },
   {
    "target": "emi/world03/area136/13",
@@ -9071,9 +9071,9 @@
    "sources": 19,
    "data_payload": 4122,
    "in_c": 4122,
-   "raw_c": 4122,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 4118,
+   "typed": 4,
+   "percent": 0.1
   },
   {
    "target": "emi/world03/area137/13",
@@ -9146,9 +9146,9 @@
    "sources": 21,
    "data_payload": 452,
    "in_c": 452,
-   "raw_c": 452,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 448,
+   "typed": 4,
+   "percent": 0.88
   },
   {
    "target": "emi/world03/area140/13",
@@ -9171,9 +9171,9 @@
    "sources": 31,
    "data_payload": 832,
    "in_c": 832,
-   "raw_c": 832,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 828,
+   "typed": 4,
+   "percent": 0.48
   },
   {
    "target": "emi/world03/area141/13",
@@ -9196,9 +9196,9 @@
    "sources": 27,
    "data_payload": 1909,
    "in_c": 1909,
-   "raw_c": 1909,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 1905,
+   "typed": 4,
+   "percent": 0.21
   },
   {
    "target": "emi/world03/area142/13",
@@ -9221,9 +9221,9 @@
    "sources": 10,
    "data_payload": 1588,
    "in_c": 1588,
-   "raw_c": 1588,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 1584,
+   "typed": 4,
+   "percent": 0.25
   },
   {
    "target": "emi/world03/area143/13",
@@ -9246,9 +9246,9 @@
    "sources": 37,
    "data_payload": 4144,
    "in_c": 4144,
-   "raw_c": 4144,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 4140,
+   "typed": 4,
+   "percent": 0.1
   },
   {
    "target": "emi/world03/area144/13",
@@ -9271,9 +9271,9 @@
    "sources": 26,
    "data_payload": 3048,
    "in_c": 3048,
-   "raw_c": 3048,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 3044,
+   "typed": 4,
+   "percent": 0.13
   },
   {
    "target": "emi/world03/area145/14",
@@ -9296,9 +9296,9 @@
    "sources": 44,
    "data_payload": 2440,
    "in_c": 2440,
-   "raw_c": 2440,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 2436,
+   "typed": 4,
+   "percent": 0.16
   },
   {
    "target": "emi/world03/area146/13",
@@ -9321,9 +9321,9 @@
    "sources": 11,
    "data_payload": 2456,
    "in_c": 2456,
-   "raw_c": 2456,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 2452,
+   "typed": 4,
+   "percent": 0.16
   },
   {
    "target": "emi/world03/area147/13",
@@ -9346,9 +9346,9 @@
    "sources": 9,
    "data_payload": 616,
    "in_c": 616,
-   "raw_c": 616,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 612,
+   "typed": 4,
+   "percent": 0.65
   },
   {
    "target": "emi/world03/area148/13",
@@ -9371,9 +9371,9 @@
    "sources": 38,
    "data_payload": 4696,
    "in_c": 4696,
-   "raw_c": 4696,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 4692,
+   "typed": 4,
+   "percent": 0.09
   },
   {
    "target": "emi/world03/area149/13",
@@ -9396,9 +9396,9 @@
    "sources": 18,
    "data_payload": 3524,
    "in_c": 3524,
-   "raw_c": 3524,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 3520,
+   "typed": 4,
+   "percent": 0.11
   },
   {
    "target": "emi/world03/area150/13",
@@ -9421,9 +9421,9 @@
    "sources": 7,
    "data_payload": 2182,
    "in_c": 2182,
-   "raw_c": 2182,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 2178,
+   "typed": 4,
+   "percent": 0.18
   },
   {
    "target": "emi/world03/area151/13",
@@ -9446,9 +9446,9 @@
    "sources": 36,
    "data_payload": 2090,
    "in_c": 2090,
-   "raw_c": 2090,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 2086,
+   "typed": 4,
+   "percent": 0.19
   },
   {
    "target": "emi/world04/area152/13",
@@ -9471,9 +9471,9 @@
    "sources": 37,
    "data_payload": 514,
    "in_c": 514,
-   "raw_c": 514,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 510,
+   "typed": 4,
+   "percent": 0.78
   },
   {
    "target": "emi/world04/area153/13",
@@ -9496,9 +9496,9 @@
    "sources": 3,
    "data_payload": 4012,
    "in_c": 4012,
-   "raw_c": 4012,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 4008,
+   "typed": 4,
+   "percent": 0.1
   },
   {
    "target": "emi/world04/area154/13",
@@ -9521,9 +9521,9 @@
    "sources": 3,
    "data_payload": 1412,
    "in_c": 1412,
-   "raw_c": 1412,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 1408,
+   "typed": 4,
+   "percent": 0.28
   },
   {
    "target": "emi/world04/area155/13",
@@ -9546,9 +9546,9 @@
    "sources": 3,
    "data_payload": 808,
    "in_c": 808,
-   "raw_c": 808,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 804,
+   "typed": 4,
+   "percent": 0.5
   },
   {
    "target": "emi/world04/area156/13",
@@ -9571,9 +9571,9 @@
    "sources": 3,
    "data_payload": 3428,
    "in_c": 3428,
-   "raw_c": 3428,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 3424,
+   "typed": 4,
+   "percent": 0.12
   },
   {
    "target": "emi/world04/area157/13",
@@ -9596,9 +9596,9 @@
    "sources": 15,
    "data_payload": 940,
    "in_c": 940,
-   "raw_c": 940,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 936,
+   "typed": 4,
+   "percent": 0.43
   },
   {
    "target": "emi/world04/area158/13",
@@ -9621,9 +9621,9 @@
    "sources": 9,
    "data_payload": 336,
    "in_c": 336,
-   "raw_c": 336,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 332,
+   "typed": 4,
+   "percent": 1.19
   },
   {
    "target": "emi/world04/area159/13",
@@ -9671,9 +9671,9 @@
    "sources": 9,
    "data_payload": 268,
    "in_c": 268,
-   "raw_c": 268,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 264,
+   "typed": 4,
+   "percent": 1.49
   },
   {
    "target": "emi/world04/area161/13",
@@ -9696,9 +9696,9 @@
    "sources": 9,
    "data_payload": 276,
    "in_c": 276,
-   "raw_c": 276,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 272,
+   "typed": 4,
+   "percent": 1.45
   },
   {
    "target": "emi/world04/area162/13",
@@ -9721,9 +9721,9 @@
    "sources": 9,
    "data_payload": 312,
    "in_c": 312,
-   "raw_c": 312,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 308,
+   "typed": 4,
+   "percent": 1.28
   },
   {
    "target": "emi/world04/area163/13",
@@ -9746,9 +9746,9 @@
    "sources": 9,
    "data_payload": 264,
    "in_c": 264,
-   "raw_c": 264,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 260,
+   "typed": 4,
+   "percent": 1.52
   },
   {
    "target": "emi/world04/area164/13",
@@ -9771,9 +9771,9 @@
    "sources": 9,
    "data_payload": 340,
    "in_c": 340,
-   "raw_c": 340,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 336,
+   "typed": 4,
+   "percent": 1.18
   },
   {
    "target": "emi/world04/area165/13",
@@ -9796,9 +9796,9 @@
    "sources": 13,
    "data_payload": 292,
    "in_c": 292,
-   "raw_c": 292,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 288,
+   "typed": 4,
+   "percent": 1.37
   },
   {
    "target": "emi/world04/area166/13",
@@ -9821,9 +9821,9 @@
    "sources": 15,
    "data_payload": 566,
    "in_c": 566,
-   "raw_c": 566,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 562,
+   "typed": 4,
+   "percent": 0.71
   },
   {
    "target": "emi/world04/area167/13",
@@ -9846,9 +9846,9 @@
    "sources": 36,
    "data_payload": 7896,
    "in_c": 7896,
-   "raw_c": 7896,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 7892,
+   "typed": 4,
+   "percent": 0.05
   },
   {
    "target": "emi/world04/area168/13",
@@ -9871,9 +9871,9 @@
    "sources": 34,
    "data_payload": 1194,
    "in_c": 1194,
-   "raw_c": 1194,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 1190,
+   "typed": 4,
+   "percent": 0.34
   },
   {
    "target": "emi/world04/area169/13",
@@ -9896,9 +9896,9 @@
    "sources": 15,
    "data_payload": 282,
    "in_c": 282,
-   "raw_c": 282,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 278,
+   "typed": 4,
+   "percent": 1.42
   },
   {
    "target": "emi/world04/area170/13",
@@ -9921,9 +9921,9 @@
    "sources": 39,
    "data_payload": 3588,
    "in_c": 3588,
-   "raw_c": 3588,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 3584,
+   "typed": 4,
+   "percent": 0.11
   },
   {
    "target": "emi/world04/area171/13",
@@ -9946,9 +9946,9 @@
    "sources": 20,
    "data_payload": 658,
    "in_c": 658,
-   "raw_c": 658,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 654,
+   "typed": 4,
+   "percent": 0.61
   },
   {
    "target": "emi/world04/area172/13",
@@ -9971,9 +9971,9 @@
    "sources": 54,
    "data_payload": 5924,
    "in_c": 5924,
-   "raw_c": 5924,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 5920,
+   "typed": 4,
+   "percent": 0.07
   },
   {
    "target": "emi/world04/area173/14",
@@ -9996,9 +9996,9 @@
    "sources": 45,
    "data_payload": 2720,
    "in_c": 2720,
-   "raw_c": 2720,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 2716,
+   "typed": 4,
+   "percent": 0.15
   },
   {
    "target": "emi/world04/area174/13",
@@ -10021,9 +10021,9 @@
    "sources": 47,
    "data_payload": 6076,
    "in_c": 6076,
-   "raw_c": 6076,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 6072,
+   "typed": 4,
+   "percent": 0.07
   },
   {
    "target": "emi/world04/area175/13",
@@ -10046,9 +10046,9 @@
    "sources": 64,
    "data_payload": 3516,
    "in_c": 3516,
-   "raw_c": 3516,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 3512,
+   "typed": 4,
+   "percent": 0.11
   },
   {
    "target": "emi/world04/area176/13",
@@ -10071,9 +10071,9 @@
    "sources": 36,
    "data_payload": 852,
    "in_c": 852,
-   "raw_c": 852,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 848,
+   "typed": 4,
+   "percent": 0.47
   },
   {
    "target": "emi/world04/area177/13",
@@ -10096,9 +10096,9 @@
    "sources": 36,
    "data_payload": 876,
    "in_c": 876,
-   "raw_c": 876,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 872,
+   "typed": 4,
+   "percent": 0.46
   },
   {
    "target": "emi/world04/area178/13",
@@ -10121,9 +10121,9 @@
    "sources": 36,
    "data_payload": 876,
    "in_c": 876,
-   "raw_c": 876,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 872,
+   "typed": 4,
+   "percent": 0.46
   },
   {
    "target": "emi/world04/area179/13",
@@ -10146,9 +10146,9 @@
    "sources": 36,
    "data_payload": 876,
    "in_c": 876,
-   "raw_c": 876,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 872,
+   "typed": 4,
+   "percent": 0.46
   },
   {
    "target": "emi/world04/area180/13",
@@ -10171,9 +10171,9 @@
    "sources": 36,
    "data_payload": 876,
    "in_c": 876,
-   "raw_c": 876,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 872,
+   "typed": 4,
+   "percent": 0.46
   },
   {
    "target": "emi/world04/area181/13",
@@ -10196,9 +10196,9 @@
    "sources": 36,
    "data_payload": 876,
    "in_c": 876,
-   "raw_c": 876,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 872,
+   "typed": 4,
+   "percent": 0.46
   },
   {
    "target": "emi/world04/area182/13",
@@ -10221,9 +10221,9 @@
    "sources": 36,
    "data_payload": 876,
    "in_c": 876,
-   "raw_c": 876,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 872,
+   "typed": 4,
+   "percent": 0.46
   },
   {
    "target": "emi/world04/area183/13",
@@ -10246,9 +10246,9 @@
    "sources": 36,
    "data_payload": 900,
    "in_c": 900,
-   "raw_c": 900,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 896,
+   "typed": 4,
+   "percent": 0.44
   },
   {
    "target": "emi/world04/area184/13",
@@ -10271,9 +10271,9 @@
    "sources": 36,
    "data_payload": 900,
    "in_c": 900,
-   "raw_c": 900,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 896,
+   "typed": 4,
+   "percent": 0.44
   },
   {
    "target": "emi/world04/area185/13",
@@ -10296,9 +10296,9 @@
    "sources": 37,
    "data_payload": 908,
    "in_c": 908,
-   "raw_c": 908,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 904,
+   "typed": 4,
+   "percent": 0.44
   },
   {
    "target": "emi/world04/area186/13",
@@ -10321,9 +10321,9 @@
    "sources": 5,
    "data_payload": 3068,
    "in_c": 3068,
-   "raw_c": 3068,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 3064,
+   "typed": 4,
+   "percent": 0.13
   },
   {
    "target": "emi/world04/area187/13",
@@ -10346,9 +10346,9 @@
    "sources": 7,
    "data_payload": 2120,
    "in_c": 2120,
-   "raw_c": 2120,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 2116,
+   "typed": 4,
+   "percent": 0.19
   },
   {
    "target": "emi/world04/area188/13",
@@ -10371,9 +10371,9 @@
    "sources": 47,
    "data_payload": 6896,
    "in_c": 6896,
-   "raw_c": 6896,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 6892,
+   "typed": 4,
+   "percent": 0.06
   },
   {
    "target": "emi/world04/area189/13",
@@ -10396,9 +10396,9 @@
    "sources": 35,
    "data_payload": 650,
    "in_c": 650,
-   "raw_c": 650,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 646,
+   "typed": 4,
+   "percent": 0.62
   },
   {
    "target": "emi/world04/area190/13",
@@ -10446,9 +10446,9 @@
    "sources": 28,
    "data_payload": 2064,
    "in_c": 2064,
-   "raw_c": 2064,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 2060,
+   "typed": 4,
+   "percent": 0.19
   },
   {
    "target": "emi/world04/area192/13",
@@ -10471,9 +10471,9 @@
    "sources": 17,
    "data_payload": 956,
    "in_c": 956,
-   "raw_c": 956,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 952,
+   "typed": 4,
+   "percent": 0.42
   },
   {
    "target": "emi/world04/area193/13",
@@ -10496,9 +10496,9 @@
    "sources": 11,
    "data_payload": 2164,
    "in_c": 2164,
-   "raw_c": 2164,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 2160,
+   "typed": 4,
+   "percent": 0.18
   },
   {
    "target": "emi/world04/area194/13",
@@ -10571,9 +10571,9 @@
    "sources": 15,
    "data_payload": 484,
    "in_c": 484,
-   "raw_c": 484,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 480,
+   "typed": 4,
+   "percent": 0.83
   },
   {
    "target": "emi/world04/area197/13",
@@ -10596,9 +10596,9 @@
    "sources": 33,
    "data_payload": 1920,
    "in_c": 1920,
-   "raw_c": 1920,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 1916,
+   "typed": 4,
+   "percent": 0.21
   },
   {
    "target": "emi/world04/area198/13",
@@ -10621,9 +10621,9 @@
    "sources": 24,
    "data_payload": 1532,
    "in_c": 1532,
-   "raw_c": 1532,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 1528,
+   "typed": 4,
+   "percent": 0.26
   },
   {
    "target": "emi/world04/area199/13",
@@ -10646,9 +10646,9 @@
    "sources": 17,
    "data_payload": 4320,
    "in_c": 4320,
-   "raw_c": 4320,
-   "typed": 0,
-   "percent": 0.0
+   "raw_c": 4316,
+   "typed": 4,
+   "percent": 0.09
   },
   {
    "target": "exe/logo",
@@ -10718,12 +10718,12 @@
   "data": 602760,
   "bss": 0,
   "map_bss": 0,
-  "objects": 7006,
-  "sources": 7006,
+  "objects": 7009,
+  "sources": 7009,
   "data_payload": 696640,
   "in_c": 623036,
-  "raw_c": 455023,
-  "typed": 168013,
-  "percent": 24.12
+  "raw_c": 454331,
+  "typed": 168705,
+  "percent": 24.22
  }
 }
