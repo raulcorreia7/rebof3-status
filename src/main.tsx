@@ -1,12 +1,12 @@
-// Entry point: fetch the report, its data census and the committed history, build the model and
-// draw the page.
+// Entry point: fetch the report, the data census, the game code and asset censuses and the
+// committed history, build the model and draw the page.
 
 import { render } from "solid-js/web";
 import { buildModel } from "./model/report.ts";
 import { SITE } from "./strings.ts";
 import "./styles/theme.css";
 import "./styles/components.css";
-import type { History, Report, StatusData } from "./types.ts";
+import type { AssetCensus, History, Report, StatusCensus, StatusData } from "./types.ts";
 import { App } from "./views/App.tsx";
 
 const host = document.getElementById("page");
@@ -20,13 +20,22 @@ async function load(name: string): Promise<unknown> {
   return response.json();
 }
 
+/** A file the publisher added later: an older gh-pages branch does not have it yet. */
+const optional = (name: string): Promise<unknown> => load(name).catch(() => null);
+
 async function start(): Promise<void> {
   if (!host) return;
   // Fetch the chart chunk while the data downloads; the charts mount as soon as it is in.
   void import("./charts/canvas.ts");
   try {
-    const [report, status, history] = await Promise.all([load(`${dataBase}report.json`), load(`${dataBase}status-data.json`), load(`${dataBase}history.json`)]);
-    const model = buildModel(report as Report, status as StatusData, history as History);
+    const [report, status, history, census, assets] = await Promise.all([
+      load(`${dataBase}report.json`),
+      load(`${dataBase}status-data.json`),
+      load(`${dataBase}history.json`),
+      optional(`${dataBase}status.json`),
+      optional(`${dataBase}assets.json`),
+    ]);
+    const model = buildModel(report as Report, status as StatusData, history as History, { census: census as StatusCensus | null, assets: assets as AssetCensus | null });
     host.replaceChildren();
     render(() => <App model={model} />, host);
   } catch (error) {

@@ -48,12 +48,14 @@ const chart = (id: string, title: string, pick: Measure, color: string, unit: st
   id, title, pick, trim, color, unit, digits,
 });
 
-/** The charts in reading order. The quality counters have no new points after the report switch. */
+/** The charts in reading order. The helper counters have no points from 2026-10-24 to 2026-10-25. */
 export const TREND_CHARTS: TrendChart[] = [
   chart("gameFunctions", TREND.charts.gameFunctions, ratio("game_matched", "game_functions"), "pure", "%", 1, true),
   chart("gameBytes", TREND.charts.gameBytes, ratio("game_matched_bytes", "game_bytes"), "pure", "%", 1, true),
+  chart("gameUnique", TREND.charts.gameUnique, ratio("game_unique_matched", "game_unique"), "pure", "%", 1, true),
   chart("sdk", TREND.charts.sdk, ratio("sdk_done", "sdk_functions"), "object", "%", 1),
   chart("data", TREND.charts.data, ratio("data_typed", "data_bytes"), "asm", "%", 2),
+  chart("assets", TREND.charts.assets, ratio("asset_decoded_bytes", "asset_bytes"), "object", "%", 1),
   chart("benign", TREND.charts.benign, remainder("fakes", "harmful_fakes"), "mute", "", 0),
   chart("harmful", TREND.charts.harmful, count("harmful_fakes"), "nonmatching", "", 0),
   chart("fieldRef", TREND.charts.fieldRef, count("field_ref"), "mute", "", 0),

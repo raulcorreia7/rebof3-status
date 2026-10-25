@@ -3,8 +3,11 @@
 How the page is built, where to change it, and the data files it reads.
 
 `src/model/report.ts` is the one adapter from the data files to the model the views draw
-(`src/types.ts`); no view reads the JSON shapes. Only the game category counts in the headline;
-the SDK and the hand-written assembly are shown apart.
+(`src/types.ts`); no view reads the JSON shapes. The headline (`model.headline`) has three parts:
+game code from `status.json` (the report when that file is missing), game data from
+`status-data.json`, and assets from `assets.json`. The map, the groups and the function list
+draw the report's units, which can be fewer than the headline counts. The SDK and the
+hand-written assembly are shown apart.
 
 ## How the page is built
 
@@ -22,7 +25,7 @@ The page is data. `src/sections.ts` is an ordered list of sections; each has an 
 | Add, remove or reorder a section or block | `src/sections.ts`. Reuse a view kind with a new selector in `src/selectors.ts`. |
 | Add a view kind | A data shape in `src/viewtypes.ts`, a component in `src/views/`, and its entry in `VIEWS` in `src/views/App.tsx`. |
 | Add a status | A row in `STATUS_TABLE` (`src/model/status.ts`), its label in `STATUS_LABEL` (`src/strings.ts`) and its colours in `src/theme/tokens.ts`. The legend, filters, charts, totals and picture follow. |
-| Add or reshape a group | `GROUP_RULES` and `GROUP_ORDER` in `src/model/groups.ts` (target id pattern to group), and its heading and note in `src/strings.ts`. |
+| Add or reshape a group | `GROUP_RULES` in `src/model/groups.ts` (target id pattern to group), and its heading and note in `src/strings.ts`. The executables lead in `PROGRAMS` order; overlay groups and their targets sort by game code bytes. |
 | Change wording | `src/strings.ts`. Section titles and navigation labels are in `src/sections.ts`. |
 | Change the data shape | `src/types.ts` and the adapter in `src/model/report.ts`; update the fixtures. |
 
@@ -35,6 +38,7 @@ Links look like `#fn/exe%2Fslus_004_22%2Ffunc_80164028` (the unit name, URL-enco
 | `test/fixtures/report.json` | The sample report: a trimmed objdiff report v2 (numbers only). |
 | `test/fixtures/status-data.json` | The sample data census from `bin/status --data`. |
 | `test/fixtures/history.json` | The committed history rows and the report's commit and date. |
+| `test/fixtures/status.json`, `test/fixtures/assets.json` | The sample game code and asset censuses. |
 | `index.html`, `vite.config.ts` | Page shell and bundler setup. |
 | `src/types.ts` | The JSON shapes and the model. |
 | `src/model/report.ts` | The adapter from the data files to the model. |
@@ -65,4 +69,6 @@ The adapter maps a unit to a status from that metadata:
 | hand-asm, `complete` | `asm` |
 | hand-asm, not complete | `assembly` |
 
-`status-data.json` has `targets` (`target`, `payload`, `code`, `data_payload`, `typed`, `percent`) and the same fields under `totals`. The adapter caps each target's `typed` at its `data_payload`, so a share never passes 100%: the object census counts every compiled object, and a draft can emit a compiler table larger than the reviewed map placement (START.EMI slot 8: 9,998 raw bytes against a 9,978-byte data payload, a 20-byte jump table in `func_801DEEE8.o` where the map has a 24-byte rodata placement). `history.json` has `commit`, `generated_at` and `rows`, each row holding `date`, `revision`, `source` and the headline numbers; the adapter appends the current report as a row so the last point of every chart matches the headline.
+`status.json` is `bin/status --json`; the page reads only `game_code` (`functions`, `exact`, `bytes`, `exact_bytes` and the same four as `unique_*`, each repeated function body once). `assets.json` has `kinds` (`kind`, `entries`, `bytes`, `handling`: `decoded`, `raw` or `none`, `round_trip_bytes`) and their `totals`. Both are optional: an older `gh-pages` branch lacks them and the page shows "from next run".
+
+`status-data.json` has `targets` (`target`, `payload`, `code`, `data_payload`, `typed`, `percent`) and the same fields under `totals`, plus `raw_c` (bytes in C as byte arrays named by address, not typed) and the bytes left out of `data_payload` (`reserved`, `copied`, `sdk`, `asset`). The adapter caps each target's `typed` at its `data_payload`, so a share never passes 100%: the object census counts every compiled object, and a draft can emit a compiler table larger than the reviewed map placement (START.EMI slot 8: 9,998 raw bytes against a 9,978-byte data payload, a 20-byte jump table in `func_801DEEE8.o` where the map has a 24-byte rodata placement). `history.json` has `commit`, `generated_at` and `rows`, each row holding `date`, `revision`, `source` and the headline numbers; the adapter appends the headline as a row (over that day's published row) so the last point of every chart matches it. A row without `game_unique` is from the older publisher: it took game code from the report and counted byte arrays named by address as typed data.

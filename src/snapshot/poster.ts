@@ -28,22 +28,28 @@ interface Drawn {
 }
 
 const gameBlocks = (model: Model): Block[] =>
-  model.targets
+  model.groups
+    .flatMap((group) => group.targets)
     .map((target) => ({ name: target.name, rows: sorted(target.functions.filter((fn) => fn.kind === "game")) }))
     .filter((block) => block.rows.length);
 
 const sdkBlocks = (model: Model): Block[] => model.libraries.map((lib) => ({ name: lib.name, rows: sorted(lib.functions) }));
 
-// The headline, in the order the numbers matter: game functions rebuilt in C, bytes, fuzzy, data.
+// The headline, in the order the numbers matter: game code, each body once, game data, assets.
 function cards(model: Model, y: number): Drawn {
-  const { game, data } = model;
+  const { game, data, assets } = model.headline;
+  const unique = game.unique;
   const items: [string, string, string, string][] = [
-    [`${percent(game.done, game.count, 1)}%`, SUMMARY.gameFunctions, SUMMARY.of(game.done, game.count), C.status.pure],
-    [`${percent(game.doneBytes, game.bytes, 1)}%`, SUMMARY.gameBytes, SUMMARY.ofBytes(game.doneBytes, game.bytes), C.status.pure],
-    [`${game.fuzzy.toFixed(1)}%`, SUMMARY.fuzzy, SUMMARY.fuzzyNote, C.status.nonmatching],
+    [`${percent(game.exact, game.functions, 1)}%`, SUMMARY.gameFunctions, SUMMARY.of(game.exact, game.functions), C.status.pure],
+    unique
+      ? [`${percent(unique.exact, unique.functions, 1)}%`, SUMMARY.unique, SUMMARY.uniqueNote(unique.exact, unique.functions), C.status.pure]
+      : [`${percent(game.exactBytes, game.bytes, 1)}%`, SUMMARY.gameBytes, SUMMARY.ofBytes(game.exactBytes, game.bytes), C.status.pure],
     data
-      ? [`${percent(data.typed, data.bytes, 2)}%`, SUMMARY.data, SUMMARY.ofBytes(data.typed, data.bytes), C.status.object]
+      ? [`${percent(data.typed, data.bytes, 1)}%`, SUMMARY.data, SUMMARY.ofBytes(data.typed, data.bytes), C.status.object]
       : [SUMMARY.dataPending[0], SUMMARY.data, SUMMARY.dataPending[1], C.mute],
+    assets
+      ? [`${percent(assets.decoded, assets.bytes, 1)}%`, SUMMARY.assetsDecoded, SUMMARY.ofMegabytes(assets.decoded, assets.bytes), C.tier.object]
+      : [SUMMARY.assetsPending[0], SUMMARY.assetsDecoded, SUMMARY.assetsPending[1], C.mute],
   ];
   const width = (WIDTH - 2 * MARGIN - 3 * GAP) / 4;
   const height = 100;
@@ -73,19 +79,18 @@ function legend(model: Model, x: number, y: number): Drawn {
   return { svg, bottom: y + 40 + keys.length * 38 };
 }
 
-// Data panel: per target, the share of data bytes typed and named in C.
+// Data panel: per part of the game, the share of data bytes typed and named in C.
 function dataPanel(model: Model, x: number, y: number, width: number): Drawn {
   const total = model.data;
-  const rows = model.targets.filter((t) => t.data && t.data.bytes).sort((a, b) => b.data!.bytes - a.data!.bytes);
-  let svg = text(x, y, total ? DATA.heading(percent(total.typed, total.bytes), total.typed, total.bytes) : DATA.headingNone, 24, C.ink);
+  const rows = model.groups.flatMap((group) => (group.data ? [{ name: group.label, ...group.data }] : []));
+  let svg = text(x, y, total ? DATA.heading(percent(total.typed, total.bytes, 1), total.typed, total.bytes) : DATA.headingNone, 24, C.ink);
   const nameWidth = 180;
   const barWidth = width - nameWidth - 250 - 16;
-  rows.forEach((t, index) => {
+  rows.forEach((row, index) => {
     const top = y + 40 + index * 22;
-    const data = t.data!;
-    svg += text(x, top, t.name, 13, C.ink);
-    svg += bar(x + nameWidth, top + 1, barWidth, 14, [[data.typed, C.status.pure]], data.bytes);
-    svg += text(x + width, top, `${percent(data.typed, data.bytes, 1)}% · ${number(data.typed)} / ${bytes(data.bytes)}`, 13, C.mute, { anchor: "end" });
+    svg += text(x, top, row.name, 13, C.ink);
+    svg += bar(x + nameWidth, top + 1, barWidth, 14, [[row.typed, C.status.pure]], row.bytes);
+    svg += text(x + width, top, `${percent(row.typed, row.bytes, 1)}% · ${number(row.typed)} / ${bytes(row.bytes)}`, 13, C.mute, { anchor: "end" });
   });
   return { svg, bottom: y + 40 + rows.length * 22 };
 }
@@ -153,7 +158,7 @@ export function renderPoster(model: Model): string {
   const top = cards(model, MARGIN + 70);
   svg += top.svg;
 
-  const gameTitle = MAP.gameTitle(percent(model.game.done, model.game.count), model.game.done, model.game.count);
+  const gameTitle = MAP.gameTitle(model.game.done, model.game.count);
   const sdkTitle = MAP.sdkTitle(percent(model.sdk.done, model.sdk.count), model.sdk.done, model.sdk.count);
   const y = top.bottom + GAP + 6;
   const left = panel(gameTitle, gameBlocks(model), MARGIN, y, GAME_WIDTH, 1);

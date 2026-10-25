@@ -77,16 +77,20 @@ export function Meters(props: Props<"meters">) {
         )}
       </Show>
       <Show
-        when={props.data().rows.some((row) => row.name)}
+        when={props.data().rows.some((row) => row.name || row.label)}
         fallback={<For each={props.data().rows}>{(row) => <Meter row={row} />}</For>}
       >
         <ul class="libs">
           <For each={props.data().rows}>
             {(row) => (
               <li>
-                <Jump class="lib-name" to={row.name!.to} scroll={row.name!.scroll} title={SDK.browse}>
-                  {row.name!.label}
-                </Jump>
+                <Show when={row.name} fallback={<span class="lib-name">{row.label}</span>}>
+                  {(name) => (
+                    <Jump class="lib-name" to={name().to} scroll={name().scroll} title={SDK.browse}>
+                      {name().label}
+                    </Jump>
+                  )}
+                </Show>
                 <div class="lib-bar" style={{ width: `${row.width}%` }} role="img" aria-label={row.aria}>
                   <For each={row.parts}>{(part) => <i style={{ width: `${part.width}%`, background: part.color }} />}</For>
                 </div>

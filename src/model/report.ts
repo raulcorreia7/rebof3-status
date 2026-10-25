@@ -1,13 +1,16 @@
-// The adapter: objdiff's report.json and bin/status's status-data.json in, the model the page
-// and the picture draw (types.ts) out. Pure functions, so node:test covers them.
+// The adapter: objdiff's report.json, bin/status's status-data.json and status.json, and the
+// publisher's assets.json in, the model the page and the picture draw (types.ts) out. Pure
+// functions, so node:test covers them.
 
 import { hex, share } from "./format.ts";
 import { compareGroups, describeGroup, groupKey } from "./groups.ts";
 import { byDay } from "./history.ts";
 import { STATUS, STATUSES, isDone } from "./status.ts";
 import type {
+  AssetCensus,
   Fn,
   Group,
+  Headline,
   History,
   HistoryRow,
   Library,
@@ -16,6 +19,8 @@ import type {
   Part,
   Report,
   ReportCategory,
+  StatusCensus,
+  StatusData,
   Target,
   Tier,
   Tally,
@@ -151,10 +156,74 @@ function buildLibraries(functions: Fn[]): Library[] {
     });
 }
 
+/**
+ * The headline. Game code comes from bin/status's census of every target map when status.json is
+ * published; the report holds only the units whose split asm it finds, so it is the fallback.
+ */
+function buildHeadline(game: Tally, data: Model["data"], totals: StatusData["totals"], census: StatusCensus | null, assets: AssetCensus | null): Headline {
+  const code = census?.game_code;
+  return {
+    game: code
+      ? {
+          functions: code.functions,
+          exact: code.exact,
+          bytes: code.bytes,
+          exactBytes: code.exact_bytes,
+          unique: { functions: code.unique_functions, exact: code.unique_exact, bytes: code.unique_bytes, exactBytes: code.unique_exact_bytes },
+        }
+      : { functions: game.count, exact: game.done, bytes: game.bytes, exactBytes: game.doneBytes, unique: null },
+    data: data
+      ? {
+          ...data,
+          rawC: totals.raw_c ?? null,
+          apart: totals.reserved === undefined ? null : { reserved: totals.reserved, copied: totals.copied ?? 0, sdk: totals.sdk ?? 0, asset: totals.asset ?? 0 },
+        }
+      : null,
+    assets: assets
+      ? {
+          bytes: assets.totals.bytes,
+          extracted: assets.totals.extracted_bytes,
+          decoded: assets.totals.decoded_bytes,
+          roundTrip: assets.totals.round_trip_bytes,
+          kinds: assets.kinds,
+        }
+      : null,
+  };
+}
+
+/** The point the headline adds to the history: today's published row, if any, with the headline numbers over it. */
+function headlineRow(rows: HistoryRow[], date: string, commit: string, headline: Headline, sdk: Tally): HistoryRow {
+  const { game, data, assets } = headline;
+  return {
+    ...rows.filter((row) => row.date === date).pop(),
+    date,
+    revision: commit,
+    source: "report",
+    game_functions: game.functions,
+    game_matched: game.exact,
+    game_bytes: game.bytes,
+    game_matched_bytes: game.exactBytes,
+    game_unique: game.unique?.functions ?? null,
+    game_unique_matched: game.unique?.exact ?? null,
+    game_unique_bytes: game.unique?.bytes ?? null,
+    game_unique_matched_bytes: game.unique?.exactBytes ?? null,
+    sdk_functions: sdk.count,
+    sdk_done: sdk.done,
+    data_bytes: data?.bytes ?? null,
+    data_typed: data?.typed ?? null,
+    data_raw_c: data?.rawC ?? null,
+    asset_bytes: assets?.bytes ?? null,
+    asset_extracted_bytes: assets?.extracted ?? null,
+    asset_decoded_bytes: assets?.decoded ?? null,
+    asset_round_trip_bytes: assets?.roundTrip ?? null,
+  };
+}
+
 export function buildModel(
   report: Report,
-  status: { targets: { target: string; payload: number; data_payload: number; typed: number }[]; totals: { data_payload: number; typed: number } },
+  status: Pick<StatusData, "totals"> & { targets: { target: string; payload: number; data_payload: number; typed: number }[] },
   history: History,
+  extra: { census?: StatusCensus | null; assets?: AssetCensus | null } = {},
 ): Model {
   if (report.version !== undefined && report.version !== 2) throw new Error(`unsupported report.json version ${report.version}`);
   const gameSource = category(report, CATEGORY.game);
@@ -206,11 +275,16 @@ export function buildModel(
 
   const functions = targets.flatMap((target) => target.functions);
   const functionById = new Map(functions.map((fn) => [fn.id, fn]));
-  const groups: Group[] = [...new Set(targets.map((target) => target.group))].sort(compareGroups).map((key) => {
-    const members = targets.filter((target) => target.group === key);
-    const game = members.flatMap((target) => target.functions.filter((fn) => fn.kind === "game"));
-    return { ...describeGroup(key), targets: members, ...tally(game) };
-  });
+  // Within a group the biggest target leads; data-only targets, with no game code, close it.
+  const bySize = (a: Target, b: Target) => b.game.bytes - a.game.bytes || (b.data?.bytes ?? 0) - (a.data?.bytes ?? 0) || a.name.localeCompare(b.name);
+  const groups: Group[] = [...new Set(targets.map((target) => target.group))]
+    .map((key) => {
+      const members = targets.filter((target) => target.group === key).sort(bySize);
+      const game = members.flatMap((target) => target.functions.filter((fn) => fn.kind === "game"));
+      const data = members.reduce((sum, t) => ({ bytes: sum.bytes + (t.data?.bytes ?? 0), typed: sum.typed + (t.data?.typed ?? 0) }), { bytes: 0, typed: 0 });
+      return { ...describeGroup(key), targets: members, ...tally(game), data: data.bytes ? data : null };
+    })
+    .sort(compareGroups);
   for (const group of groups) for (const target of group.targets) target.groupLabel = group.label;
 
   const game = measured(functions.filter((fn) => fn.kind === "game"), gameSource);
@@ -222,33 +296,21 @@ export function buildModel(
     ? { bytes: status.totals.data_payload, typed: Math.min(status.totals.typed, status.totals.data_payload) }
     : null;
   const meta = { version: report.version ?? 0, generatedAt, date: generatedAt.slice(0, 10), commit, shortCommit: commit.slice(0, 12) };
+  const headline = buildHeadline(game, data, status.totals, extra.census ?? null, extra.assets ?? null);
   const rows: HistoryRow[] = [...(history.rows ?? [])];
-  if (meta.date) {
-    rows.push({
-      date: meta.date,
-      revision: meta.commit,
-      source: "report",
-      game_functions: game.count,
-      game_matched: game.done,
-      game_bytes: game.bytes,
-      game_matched_bytes: game.doneBytes,
-      sdk_functions: sdk.count,
-      sdk_done: sdk.done,
-      data_bytes: data?.bytes ?? null,
-      data_typed: data?.typed ?? null,
-    });
-  }
+  if (meta.date) rows.push(headlineRow(rows, meta.date, meta.commit, headline, sdk));
   return {
     meta,
+    headline,
     game,
     sdk,
     hand,
     all: tally(functions),
     data,
     quality: {
-      exact: game.done,
+      exact: headline.game.exact,
       inProgress: game.statuses.nonmatching.functions,
-      notStarted: game.statuses.open.functions,
+      notStarted: headline.game.functions - headline.game.exact - game.statuses.nonmatching.functions,
       hand: hand.count,
       handDone: hand.done,
       fuzzy: game.fuzzy,

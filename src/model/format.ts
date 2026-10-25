@@ -8,6 +8,7 @@ export const share = (done: number, total: number): number => (total ? (100 * do
 export const percent = (done: number, total: number, digits = 2): string => share(done, total).toFixed(digits);
 export const hex = (value: number): string => `0x${value.toString(16).toUpperCase().padStart(8, "0")}`;
 export const bytes = (value: number): string => `${number(value)} B`;
+export const megabytes = (value: number): string => `${(value / 1e6).toFixed(1)} MB`;
 export const round = (value: number): number => Math.round(value * 100) / 100;
 export const escapeText = (text: string | number): string =>
   String(text).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");

@@ -6,12 +6,12 @@ import { latest, trendOption } from "./charts/trend.ts";
 import { treemapTree } from "./charts/treemap.ts";
 import { browse, PAGE_STEP } from "./model/browse.ts";
 import { ASSEMBLY_LIBRARY } from "./model/report.ts";
-import { bytes, number, percent } from "./model/format.ts";
+import { bytes, megabytes, number, percent } from "./model/format.ts";
 import { TREND_CHARTS } from "./model/history.ts";
 import { HOME } from "./model/route.ts";
 import { STATUS, STATUS_TABLE, TIERS } from "./model/status.ts";
 import { BROWSER, DATA, GROUPS, MAP, QUALITY, SDK, SUMMARY, TIER_LABEL, TREND } from "./strings.ts";
-import type { Library, Status, Tally, Target } from "./types.ts";
+import type { Headline, Library, Status, Tally, Target } from "./types.ts";
 import type { Card, Ctx, Link, MeterRow, Part, Views } from "./viewtypes.ts";
 
 // Shared pieces ---------------------------------------------------------------------------
@@ -27,18 +27,93 @@ export function statusMeter(tally: Tally, aria: string): MeterRow {
 
 // Overview and groups ----------------------------------------------------------------------
 
-/** The headline, in the order the numbers matter: game functions rebuilt in C, bytes, fuzzy, data. */
+const pending = (id: string, title: string, [big, sub]: string[]): Card => ({ id, big, title, sub, color: "var(--mute)" });
+
+function dataCard({ data }: Headline): Card {
+  return data
+    ? { id: "data", big: `${percent(data.typed, data.bytes, 1)}%`, title: SUMMARY.data, sub: SUMMARY.ofBytes(data.typed, data.bytes), color: "var(--st-typed)" }
+    : pending("data", SUMMARY.data, SUMMARY.dataPending);
+}
+
+function assetCard({ assets }: Headline): Card {
+  return assets
+    ? { id: "assets", big: `${percent(assets.decoded, assets.bytes, 1)}%`, title: SUMMARY.assetsDecoded, sub: SUMMARY.ofMegabytes(assets.decoded, assets.bytes), color: "var(--tier-object)" }
+    : pending("assets", SUMMARY.assetsDecoded, SUMMARY.assetsPending);
+}
+
+/** The headline: one number for each part, in the order they matter. */
 export function overviewCards({ model }: Ctx): Views["cards"] {
-  const { game, data } = model;
+  const { game } = model.headline;
   const cards: Card[] = [
-    { id: "game", big: `${percent(game.done, game.count, 1)}%`, title: `${SUMMARY.gameFunctions}*`, sub: SUMMARY.of(game.done, game.count), color: STATUS.pure.color },
-    { id: "game-bytes", big: `${percent(game.doneBytes, game.bytes, 1)}%`, title: SUMMARY.gameBytes, sub: SUMMARY.ofBytes(game.doneBytes, game.bytes), color: STATUS.pure.color },
-    { id: "fuzzy", big: `${game.fuzzy.toFixed(1)}%`, title: SUMMARY.fuzzy, sub: SUMMARY.fuzzyNote, color: STATUS.nonmatching.color },
-    data
-      ? { id: "data", big: `${percent(data.typed, data.bytes, 2)}%`, title: SUMMARY.data, sub: SUMMARY.ofBytes(data.typed, data.bytes), color: "var(--st-typed)" }
-      : { id: "data", big: SUMMARY.dataPending[0], title: SUMMARY.data, sub: SUMMARY.dataPending[1], color: "var(--mute)" },
+    { id: "game", big: `${percent(game.exact, game.functions, 1)}%`, title: SUMMARY.gameFunctions, sub: SUMMARY.of(game.exact, game.functions), color: STATUS.pure.color },
+    dataCard(model.headline),
+    assetCard(model.headline),
   ];
   return { grid: "cards", cards };
+}
+
+/** Game code: every copy, each body once, and the report's fuzzy match. */
+export function gameCards({ model }: Ctx): Views["cards"] {
+  const { game } = model.headline;
+  const unique = game.unique;
+  const cards: Card[] = [
+    { id: "game", big: `${percent(game.exact, game.functions, 1)}%`, title: SUMMARY.gameFunctions, sub: SUMMARY.of(game.exact, game.functions), color: STATUS.pure.color },
+    { id: "game-bytes", big: `${percent(game.exactBytes, game.bytes, 1)}%`, title: SUMMARY.gameBytes, sub: SUMMARY.ofBytes(game.exactBytes, game.bytes), color: STATUS.pure.color },
+    unique
+      ? { id: "game-unique", big: `${percent(unique.exact, unique.functions, 1)}%`, title: SUMMARY.unique, sub: SUMMARY.uniqueNote(unique.exact, unique.functions), color: STATUS.pure.color }
+      : pending("game-unique", SUMMARY.unique, SUMMARY.dataPending),
+    { id: "fuzzy", big: `${model.game.fuzzy.toFixed(1)}%`, title: SUMMARY.fuzzy, sub: SUMMARY.fuzzyNote, color: STATUS.nonmatching.color },
+  ];
+  return { grid: "cards", cards };
+}
+
+/** The footnote under the game code cards; it names the report's smaller scope when they differ. */
+export const gameNote = ({ model }: Ctx): string =>
+  model.headline.game.functions === model.game.count ? SUMMARY.footnote : `${SUMMARY.footnote} ${SUMMARY.mapNote(model.game.count, model.headline.game.functions)}`;
+
+export function dataCards({ model }: Ctx): Views["cards"] {
+  const raw = model.headline.data?.rawC;
+  const cards = [dataCard(model.headline)];
+  if (raw && model.headline.data) {
+    cards.push({ id: "data-raw", big: `${percent(raw, model.headline.data.bytes, 1)}%`, title: SUMMARY.dataRaw, sub: `${bytes(raw)}, ${SUMMARY.dataRawNote}`, color: "var(--mute)" });
+  }
+  return { grid: "cards", cards };
+}
+
+export const dataNote = ({ model }: Ctx): string => {
+  const apart = model.headline.data?.apart;
+  return apart ? SUMMARY.dataApart(apart.reserved, apart.copied, apart.sdk, apart.asset) : "";
+};
+
+export function assetCards({ model }: Ctx): Views["cards"] {
+  const { assets } = model.headline;
+  if (!assets) return { grid: "cards", cards: [assetCard(model.headline)] };
+  return {
+    grid: "cards",
+    cards: [
+      assetCard(model.headline),
+      { id: "assets-extracted", big: `${percent(assets.extracted, assets.bytes, 1)}%`, title: SUMMARY.assetsExtracted, sub: SUMMARY.ofMegabytes(assets.extracted, assets.bytes), color: "var(--mute)" },
+      { id: "assets-round-trip", big: `${percent(assets.roundTrip, assets.bytes, 2)}%`, title: SUMMARY.assetsRoundTrip, sub: SUMMARY.assetsRoundTripNote(assets.roundTrip), color: "var(--mute)" },
+    ],
+  };
+}
+
+/** One bar per asset kind, sized by bytes: decoded or copied as stored. */
+export function assetKinds({ model }: Ctx): Views["meters"] {
+  const kinds = [...(model.headline.assets?.kinds ?? [])].sort((a, b) => b.bytes - a.bytes);
+  const peak = Math.max(...kinds.map((kind) => kind.bytes), 1);
+  const color = (handling: string) => (handling === "decoded" ? "var(--tier-object)" : handling === "raw" ? "var(--mute)" : "var(--track)");
+  return {
+    key: ["decoded", "raw"].map((handling) => ({ label: SUMMARY.assetHandling[handling], color: color(handling) })),
+    rows: kinds.map((kind) => ({
+      label: kind.kind,
+      aria: `${kind.kind}: ${SUMMARY.assetHandling[kind.handling] ?? kind.handling}, ${megabytes(kind.bytes)}`,
+      width: Math.max((kind.bytes / peak) * 100, 1),
+      parts: [{ width: "100", color: color(kind.handling) }],
+      count: megabytes(kind.bytes),
+      note: `${number(kind.entries)} ${kind.entries === 1 ? "file" : "files"} · ${SUMMARY.assetHandling[kind.handling] ?? kind.handling}` + (kind.round_trip_bytes ? ` · ${bytes(kind.round_trip_bytes)} round-trip` : ""),
+    })),
+  };
 }
 
 /** The SDK and the hand-written assembly, shown apart from the game totals. */
@@ -53,6 +128,9 @@ export const apart = ({ model }: Ctx): Views["text"] => ({
 
 export const overviewMeter = ({ model }: Ctx): Views["meters"] => ({ rows: [statusMeter(model.game, SUMMARY.statusHeading)] });
 
+/** A group card lists its biggest targets; the group view lists them all. */
+const GROUP_LINKS = 8;
+
 export function groupCards({ model }: Ctx): Views["cards"] {
   const cards = model.groups.map((group): Card => {
     const matched = GROUPS.functions(group.done, group.count);
@@ -63,14 +141,14 @@ export function groupCards({ model }: Ctx): Views["cards"] {
       panel: {
         note: group.note,
         meter: statusMeter(group, `${group.label}: ${matched}`),
-        line: `${matched} · ${GROUPS.targets(group.targets.length)} · ${bytes(group.bytes)}`,
-        links: group.targets.map((target) => ({
+        line: [matched, GROUPS.targets(group.targets.length), bytes(group.bytes), ...(group.data ? [GROUPS.data(group.data.typed, group.data.bytes)] : [])].join(" · "),
+        links: group.targets.slice(0, GROUP_LINKS).map((target) => ({
           label: target.name,
           to: { view: { kind: "target", id: target.id } },
           scroll: "map",
           side: target.game.count ? `${percent(target.game.done, target.game.count, 0)}%` : "data only",
         })),
-        action: { label: GROUPS.open, to: { view: { kind: "group", key: group.key }, map: "tiles" }, scroll: "map" },
+        action: { label: group.targets.length > GROUP_LINKS ? GROUPS.openAll(group.targets.length) : GROUPS.open, to: { view: { kind: "group", key: group.key }, map: "tiles" }, scroll: "map" },
       },
     };
   });
@@ -89,7 +167,7 @@ export const mapTabs = (): Views["tabs"] => ({
 
 export const mapHeading = ({ model, route }: Ctx): string => {
   const { game, sdk } = model;
-  return route.map === "sdk" ? MAP.sdkTitle(percent(sdk.done, sdk.count, 2), sdk.done, sdk.count) : MAP.gameTitle(percent(game.done, game.count, 2), game.done, game.count);
+  return route.map === "sdk" ? MAP.sdkTitle(percent(sdk.done, sdk.count, 2), sdk.done, sdk.count) : MAP.gameTitle(game.done, game.count);
 };
 
 export const mapHelp = ({ route }: Ctx): string => (route.map === "sdk" ? MAP.sdkHelp : MAP.tilesHelp);
@@ -131,7 +209,7 @@ export function mapTreemap({ model, route, tokens }: Ctx): Views["treemap"] {
   // A status of the other scope stays in the route but must not dim this map.
   const scope: readonly Status[] = sdk ? ["object", "assembly"] : ["pure", "nonmatching", "open"];
   const tree = treemapTree(model, sdk ? "sdk" : "game", { tokens, statuses: route.st.filter((key) => scope.includes(key)) });
-  const label = sdk ? MAP.sdkTitle(percent(model.sdk.done, model.sdk.count, 2), model.sdk.done, model.sdk.count) : MAP.gameTitle(percent(model.game.done, model.game.count, 2), model.game.done, model.game.count);
+  const label = sdk ? MAP.sdkTitle(percent(model.sdk.done, model.sdk.count, 2), model.sdk.done, model.sdk.count) : MAP.gameTitle(model.game.done, model.game.count);
   return { tree, scope: sdk ? "sdk" : "game", focus, crumbs, label };
 }
 
@@ -173,21 +251,21 @@ export const sdkKeyLine = ({ model }: Ctx): string => {
 
 export const dataHeading = ({ model }: Ctx): string => {
   const total = model.data;
-  return total ? DATA.heading(percent(total.typed, total.bytes), total.typed, total.bytes) : DATA.headingNone;
+  return total ? DATA.heading(percent(total.typed, total.bytes, 1), total.typed, total.bytes) : DATA.headingNone;
 };
 
 export function dataChart({ model, tokens }: Ctx): Views["chart"] {
-  const rows = model.targets.filter((t) => t.data && t.data.bytes).sort((a, b) => b.data!.bytes - a.data!.bytes);
+  const rows = model.groups.flatMap((group) => (group.data ? [{ label: group.label, ...group.data }] : []));
   if (!rows.length) return null;
   const option = barOption(
     {
-      categories: rows.map((t) => t.name),
+      categories: rows.map((row) => row.label),
       normalize: true,
       series: [
-        { name: DATA.typed, color: tokens.status.pure, values: rows.map((t) => (100 * t.data!.typed) / t.data!.bytes) },
-        { name: DATA.untyped, color: tokens.track, values: rows.map((t) => (100 * (t.data!.bytes - t.data!.typed)) / t.data!.bytes) },
+        { name: DATA.typed, color: tokens.status.pure, values: rows.map((row) => (100 * row.typed) / row.bytes) },
+        { name: DATA.untyped, color: tokens.track, values: rows.map((row) => (100 * (row.bytes - row.typed)) / row.bytes) },
       ],
-      describe: (i) => `<b>${rows[i].name}</b><br>${percent(rows[i].data!.typed, rows[i].data!.bytes, 1)}% · ${number(rows[i].data!.typed)} / ${bytes(rows[i].data!.bytes)}`,
+      describe: (i) => `<b>${rows[i].label}</b><br>${percent(rows[i].typed, rows[i].bytes, 1)}% · ${number(rows[i].typed)} / ${bytes(rows[i].bytes)}`,
     },
     tokens,
   );
@@ -201,21 +279,22 @@ export const qualityCards = ({ model }: Ctx): Views["cards"] => ({
 });
 
 export function rebuildChart({ model, tokens }: Ctx): Views["chart"] {
-  const rows = model.targets.filter((t) => t.game.statuses.nonmatching.functions).sort((a, b) => b.game.statuses.nonmatching.functions - a.game.statuses.nonmatching.functions);
+  const rows = model.groups.filter((group) => group.statuses.nonmatching.functions);
   if (!rows.length) return null;
   const option = barOption(
-    { categories: rows.map((t) => t.name), unit: "functions", series: [{ name: "being rebuilt", color: tokens.status.nonmatching, values: rows.map((t) => t.game.statuses.nonmatching.functions) }] },
+    { categories: rows.map((group) => group.label), unit: "functions", series: [{ name: "being rebuilt", color: tokens.status.nonmatching, values: rows.map((group) => group.statuses.nonmatching.functions) }] },
     tokens,
   );
   return { option, height: rows.length * BAR_HEIGHT + 30, label: QUALITY.perTargetHeading };
 }
 
 export function verification({ model }: Ctx): Views["text"] {
-  const { game, data } = model;
+  const { game, data, assets } = model.headline;
   return {
     paragraphs: [
-      { label: QUALITY.gameScope, text: QUALITY.gameScopeText(game.done, game.count, game.doneBytes, game.bytes) },
-      { label: QUALITY.dataScope, text: QUALITY.dataScopeText(data?.typed ?? null, data?.bytes ?? null) },
+      { label: QUALITY.gameScope, text: QUALITY.gameScopeText(game.exact, game.functions, game.exactBytes, game.bytes) },
+      { label: QUALITY.dataScope, text: QUALITY.dataScopeText(data?.typed ?? null, data?.bytes ?? null, data?.rawC ?? null) },
+      { label: QUALITY.assetScope, text: QUALITY.assetScopeText(assets?.decoded ?? null, assets?.bytes ?? null) },
     ],
   };
 }
@@ -226,7 +305,7 @@ const dataCell = (target: Target): Part[] =>
 export const auditTable = ({ model }: Ctx): Views["table"] => ({
   disclosure: "Match quality of each target",
   columns: [{ label: "Target" }, { label: "Functions", align: "r" }, { label: "Matched", align: "r" }, { label: "Code bytes", align: "r" }, { label: "Fuzzy", align: "r" }, { label: "Data typed" }],
-  rows: model.targets.map((t) => ({
+  rows: model.groups.flatMap((group) => group.targets).map((t) => ({
     id: t.id,
     cells: [
       [{ text: t.name, to: { view: { kind: "target", id: t.id } } }, { text: t.id, code: true, mute: true, br: true }],

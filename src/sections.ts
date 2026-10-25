@@ -1,4 +1,6 @@
 // The page, as data. App draws this list in order: to add, remove or reorder a section, edit it.
+// The order follows the headline, most important first: game code (with its parts and map), game
+// data, assets; then quality and trend; the PsyQ SDK, which is not counted, and the browser last.
 //
 // A section has an id (its anchor), a title and an optional navigation label. Its blocks are
 // drawn top to bottom. Each block names a view kind (cards, meters, text, legend, tabs, treemap,
@@ -15,14 +17,21 @@ export const SECTIONS: Section[] = [
     id: "overview",
     nav: "Overview",
     title: "Overview",
+    blocks: [{ view: "cards", select: pick.overviewCards }],
+  },
+  {
+    id: "game",
+    nav: "Game code",
+    title: SUMMARY.gameHeading,
     blocks: [
-      { view: "cards", select: pick.overviewCards, note: SUMMARY.footnote },
+      { view: "cards", select: pick.gameCards, help: SUMMARY.gameHelp, note: pick.gameNote },
       { view: "text", select: pick.apart },
       { view: "meters", select: pick.overviewMeter, heading: SUMMARY.statusHeading },
     ],
   },
   {
     id: "groups",
+    nav: "Parts",
     title: GROUPS.heading,
     blocks: [{ view: "cards", select: pick.groupCards, help: GROUPS.intro }],
   },
@@ -37,16 +46,22 @@ export const SECTIONS: Section[] = [
     ],
   },
   {
-    id: "sdk",
-    nav: "PsyQ SDK",
-    title: SDK.heading,
-    blocks: [{ view: "meters", select: pick.sdkLibraries, help: SDK.help, note: pick.sdkKeyLine }],
+    id: "data",
+    nav: "Game data",
+    title: pick.dataHeading,
+    blocks: [
+      { view: "cards", select: pick.dataCards, help: SUMMARY.dataHelp, note: pick.dataNote },
+      { view: "chart", select: pick.dataChart, help: DATA.help },
+    ],
   },
   {
-    id: "data",
-    nav: "Data",
-    title: pick.dataHeading,
-    blocks: [{ view: "chart", select: pick.dataChart, help: DATA.help }],
+    id: "assets",
+    nav: "Assets",
+    title: SUMMARY.assetsHeading,
+    blocks: [
+      { view: "cards", select: pick.assetCards, help: SUMMARY.assetsHelp },
+      { view: "meters", select: pick.assetKinds, heading: SUMMARY.assetKinds, help: SUMMARY.assetKindsHelp, when: ({ model }) => !!model.headline.assets },
+    ],
   },
   {
     id: "quality",
@@ -64,6 +79,12 @@ export const SECTIONS: Section[] = [
     nav: "Trend",
     title: TREND.heading,
     blocks: [{ view: "trend", select: pick.trend, help: TREND.help }],
+  },
+  {
+    id: "sdk",
+    nav: "PsyQ SDK",
+    title: SDK.heading,
+    blocks: [{ view: "meters", select: pick.sdkLibraries, help: SDK.help, note: pick.sdkKeyLine }],
   },
   {
     id: "browse",

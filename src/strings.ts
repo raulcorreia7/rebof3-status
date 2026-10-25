@@ -1,7 +1,7 @@
 // Every sentence and label the page and the picture show. Change wording here and nowhere else.
 
 import type { Quality, Status, Tier } from "./types.ts";
-import { bytes, number, plural } from "./model/format.ts";
+import { bytes, megabytes, number, percent, plural } from "./model/format.ts";
 
 // Status key -> legend text. The order of the keys is the order of the legend.
 export const STATUS_LABEL: Record<Status, string> = {
@@ -25,16 +25,22 @@ export const GROUP_LABEL: Record<string, string> = {
   "exe/logo": "Logo executable",
   "emi/etc": "Shared overlays",
   "emi/battle": "Battle overlays",
+  "emi/bmagic": "Battle-effect overlays",
+  "emi/boss": "Boss overlays",
+  "emi/plchar": "Character overlays",
   "emi/scenario": "Scenario overlays",
-  "emi/world00": "World areas",
+  "emi/world": "World areas",
 };
 export const GROUP_NOTE: Record<string, string> = {
   "exe/main": "SLUS_004.22, the game's main program.",
   "exe/logo": "LOGO.EXE, the start-up screen program.",
   "emi/etc": "Overlays loaded by several parts of the game: menus, shops, saving and the title.",
   "emi/battle": "Overlays for fights.",
+  "emi/bmagic": "One small program per battle effect, from the BMAGIC folder.",
+  "emi/boss": "One small program per boss fight, from the BOSS folder.",
+  "emi/plchar": "Character code overlays, from the PLCHAR folder.",
   "emi/scenario": "Overlays for story scenes.",
-  "emi/world00": "Overlays for the places you walk around.",
+  "emi/world": "Code for the places you walk around, from the WORLD00 to WORLD04 folders.",
 };
 export const groupLabel = (key: string): string =>
   GROUP_LABEL[key] ?? `${(key.split("/").pop() ?? key).replace(/^./, (c) => c.toUpperCase())} overlays`;
@@ -42,7 +48,7 @@ export const groupLabel = (key: string): string =>
 export const SITE = {
   title: "Breath of Fire III decompilation status",
   description:
-    "How much of Breath of Fire III (US) has been rebuilt as byte-exact C: game code, the PsyQ SDK, typed data and code quality.",
+    "How much of Breath of Fire III (US) has been rebuilt as byte-exact C, how much of its data is typed, and which disc assets the tools read: game code, game data, assets, the PsyQ SDK and code quality.",
   noscript: "This page needs JavaScript to draw the charts. The same picture is available as",
   repoUrl: "https://github.com/raulcorreia7/rebof3-simple",
   loadFailed: (message: string) => `The status data could not be loaded (${message}).`,
@@ -52,7 +58,7 @@ export const SITE = {
 };
 
 export const HEAD = {
-  title: "Game code rebuilt in C",
+  title: "Breath of Fire III decompilation",
   updated: "Updated",
   from: "from rebof3",
   getThe: "Get the",
@@ -63,39 +69,67 @@ export const HEAD = {
 };
 
 export const SUMMARY = {
-  gameFunctions: "Game code rebuilt in C",
-  gameBytes: "Game code matched by bytes",
+  gameHeading: "Game code",
+  gameHelp:
+    "Every function of the game's programs and overlays. A function counts as rebuilt when its C builds to the exact original bytes.",
+  gameFunctions: "Game functions rebuilt in C",
+  gameBytes: "Game code bytes rebuilt in C",
+  unique: "Unique game code rebuilt in C",
+  uniqueNote: (done: number, total: number) => `${number(done)} of ${number(total)}, each repeat counted once`,
   fuzzy: "Fuzzy match",
-  fuzzyNote: "average weighted by code bytes",
-  data: "Data typed and named",
+  fuzzyNote: "how close the code in the report is, weighted by bytes",
+  data: "Game data typed in C",
   dataPending: ["from next run", "available after the next run"],
+  dataHeading: "Game data",
+  dataHelp:
+    "The data bytes of the game's programs and overlays: tables, text and records. A byte counts as typed when C defines it with a real type.",
+  dataRaw: "Game data still plain bytes in C",
+  dataRawNote: "byte arrays still named by their address",
+  dataApart: (reserved: number, copied: number, sdk: number, asset: number) =>
+    `Not data to type, so left out of the total: ${bytes(reserved)} reserved (work areas that are zero on the disc and filled while the game runs), ` +
+    `${bytes(copied)} copied from another program, ${bytes(sdk)} of PsyQ library data and ${bytes(asset)} of assets kept as the original files.`,
+  assetsHeading: "Assets",
+  assetsHelp:
+    "The other files on the disc: pictures, sound, music, video, maps and tables. The asset tools read them from the original disc files; they are not part of the decompilation and never count in the figures above.",
+  assetsDecoded: "Assets decoded to open formats",
+  assetsExtracted: "Assets extracted from the disc",
+  assetsRoundTrip: "Assets that round-trip",
+  assetsRoundTripNote: (done: number) => `${bytes(done)} export and import back to the same bytes`,
+  assetsPending: ["from next run", "measured by the next published run"],
   of: (done: number, total: number) => `${number(done)} of ${number(total)} functions`,
   ofBytes: (done: number, total: number) => `${number(done)} of ${bytes(total)}`,
+  ofMegabytes: (done: number, total: number) => `${megabytes(done)} of ${megabytes(total)}`,
   footnote:
-    "* Game code means every function outside the PsyQ SDK and the hand-written assembly. A function counts as rebuilt when it builds to the exact original bytes." +
-    " The SDK and the hand-written assembly are shown apart and are not counted in these figures.",
+    "The same function often sits in several overlays, at a different address each time. Unique game code counts each one once, and counts it as rebuilt when any copy is.",
+  mapNote: (shown: number, total: number) =>
+    `The map, the groups and the function list show the ${number(shown)} game functions the objdiff report covers; the headline counts all ${number(total)} in the target maps.`,
   statusHeading: "Status of game code",
   statusLine: (functions: number, share: string, denominator: string) => `${number(functions)} functions · ${share}% of ${denominator}`,
   apartLabel: "Shown apart",
   apart: (sdkDone: number, sdkCount: number, sdkAssembly: number, handDone: number, handCount: number) =>
     `PsyQ SDK: ${number(sdkDone)} of ${number(sdkCount)} units from original objects` +
     (sdkAssembly ? `, ${number(sdkAssembly)} kept as assembly` : "") +
-    `. Hand-written assembly: ${number(handDone)} of ${number(handCount)} exact. Neither is counted above.`,
+    `. Hand-written assembly: ${number(handDone)} of ${number(handCount)} exact. Neither is counted in game code.`,
+  assetKinds: "Assets by kind",
+  assetKindsHelp: "One bar per kind of file, sized by its bytes on the disc. Teal is decoded to an open format, grey is copied as stored.",
+  assetHandling: { decoded: "decoded", raw: "copied as stored", none: "not extracted" } as Record<string, string>,
 };
 
 export const GROUPS = {
-  heading: "Where the work stands",
-  intro: "Game code grouped by the part of the game it belongs to. Open a group to see it on the map.",
+  heading: "Game code by part of the game",
+  intro: "The executables first, then the overlay groups, biggest game code first. Open a group to see its targets, biggest first, and to find it on the map.",
   functions: (done: number, total: number) => `${number(done)} / ${number(total)} matched`,
   targets: (count: number) => plural(count, "target"),
+  data: (typed: number, total: number) => `data ${percent(typed, total, 1)}% typed of ${bytes(total)}`,
   open: "Show on the map",
+  openAll: (count: number) => `Show all ${number(count)} targets on the map`,
 };
 
 export const MAP = {
   heading: "Map",
   tabs: { tiles: "Function map", sdk: "PsyQ SDK" },
   scopes: { game: "Game code", sdk: "PsyQ SDK" },
-  gameTitle: (percent: string, done: number, total: number) => `Game code: ${percent}% matched (${number(done)} / ${number(total)})`,
+  gameTitle: (done: number, total: number) => `Game code in the report: ${number(done)} of ${number(total)} units rebuilt in C`,
   sdkTitle: (percent: string, done: number, total: number) => `PsyQ SDK: ${percent}% objects (${number(done)}/${number(total)})`,
   tilesHelp:
     "Each rectangle is one function and bigger code takes more room. Hover one to see which function it is, click a block to zoom in and click a function to inspect it.",
@@ -119,10 +153,10 @@ export const SDK = {
 };
 
 export const DATA = {
-  heading: (percent: string, typed: number, total: number) => `Data: ${percent}% typed and named (${number(typed)} / ${bytes(total)})`,
-  headingNone: "Data",
-  help: "Each bar is one target's data. The green part is already typed and named in C. A target is capped at its data bytes, so no bar passes 100%.",
-  typed: "typed and named",
+  heading: (percent: string, typed: number, total: number) => `Game data: ${percent}% typed in C (${number(typed)} / ${bytes(total)})`,
+  headingNone: "Game data",
+  help: "One bar per part of the game, executables first. The green part is typed in C; byte arrays still named by their address are not. Each target is capped at its data bytes, so no bar passes 100%. The match quality table lists every target.",
+  typed: "typed in C",
   untyped: "not typed yet",
 };
 
@@ -138,26 +172,37 @@ export const QUALITY = {
   sentence: (q: Quality) =>
     `${number(q.exact)} game functions build to the original bytes, ${number(q.inProgress)} are being rebuilt and ${number(q.notStarted)} are still the original assembly.` +
     ` The fuzzy match is ${q.fuzzy.toFixed(1)}%, and ${number(q.handDone)} of ${plural(q.hand, "hand-written assembly unit")} are exact.`,
-  perTargetHeading: "Functions being rebuilt by target",
-  perTargetHelp: "One bar per target: the game functions with a draft that does not build to the original bytes yet.",
+  perTargetHeading: "Functions being rebuilt by part of the game",
+  perTargetHelp: "One bar per part of the game: the game functions with a draft that does not build to the original bytes yet.",
   verifyHeading: "How the numbers are counted",
   gameScope: "Game code:",
   gameScopeText: (done: number, total: number, doneBytes: number, totalBytes: number) =>
-    `${number(done)} of ${number(total)} functions match, ${number(doneBytes)} of ${bytes(totalBytes)}. The PsyQ SDK and the hand-written assembly are not counted.`,
-  dataScope: "Data:",
-  dataScopeText: (typed: number | null, totalBytes: number | null) =>
-    typed === null || totalBytes === null ? "not measured in this run." : `${number(typed)} of ${bytes(totalBytes)} of data are typed and named in C, from the data census.`,
+    `${number(done)} of ${number(total)} functions match, ${number(doneBytes)} of ${bytes(totalBytes)}, from bin/status over every target map. The PsyQ SDK and the hand-written assembly are not counted.`,
+  dataScope: "Game data:",
+  dataScopeText: (typed: number | null, totalBytes: number | null, rawC: number | null) =>
+    typed === null || totalBytes === null
+      ? "not measured in this run."
+      : `${number(typed)} of ${bytes(totalBytes)} of data are typed in C, from the data census.` +
+        (rawC ? ` Another ${bytes(rawC)} are in C as byte arrays still named by their address, and do not count.` : ""),
+  assetScope: "Assets:",
+  assetScopeText: (decoded: number | null, total: number | null) =>
+    decoded === null || total === null
+      ? "not measured in this run."
+      : `${megabytes(decoded)} of the ${megabytes(total)} of disc files that are not program code decode to open formats, from bin/rebof3 assets. Never counted as decompilation.`,
 };
 
 export const TREND = {
   heading: "Progress over time",
-  help: "One point per day. The number in each title is the latest value. The quality counters stop when the report became the source.",
+  help:
+    "One point per day. The number in each title is the latest value. Since the unique game code chart starts, game code counts every function in the target maps, not only the ones the objdiff report covers, and typed data leaves out byte arrays still named by their address; earlier points use the old counts.",
   empty: "starts with the next published run",
   charts: {
     gameFunctions: "Game functions rebuilt in C over time",
     gameBytes: "Game code bytes rebuilt in C over time",
+    gameUnique: "Unique game code rebuilt in C over time",
     sdk: "PsyQ SDK from original objects over time",
-    data: "Data typed and named over time",
+    data: "Game data typed in C over time",
+    assets: "Asset bytes decoded over time",
     benign: "Benign helper macros over time",
     harmful: "Harmful helper macros over time",
     fieldRef: "Raw offset accesses over time",

@@ -1,6 +1,6 @@
 // The shape of objdiff-cli's report.json (version 2), the data census in
-// status-data.json, the committed history file, and the model built from them
-// (model/report.ts).
+// status-data.json, the game code census in status.json, the asset census in assets.json, the
+// committed history file, and the model built from them (model/report.ts).
 
 export type Status = "pure" | "nonmatching" | "open" | "object" | "assembly" | "asm";
 export type Tier = "object" | "assembly";
@@ -57,8 +57,46 @@ export interface StatusData {
     code: number;
     data_payload: number;
     typed: number;
+    /** Bytes in C as byte arrays still named by address: not typed. Absent from older publishes. */
+    raw_c?: number;
+    /** Payload bytes left out of data_payload: zero-filled reservations, image copies, PsyQ and asset spans. */
+    reserved?: number;
+    copied?: number;
+    sdk?: number;
+    asset?: number;
     percent: number;
   };
+}
+
+/** bin/status --json: the game code census of every target map. Only the headline is read. */
+export interface StatusCensus {
+  game_code: {
+    functions: number;
+    exact: number;
+    bytes: number;
+    exact_bytes: number;
+    unique_functions: number;
+    unique_exact: number;
+    unique_bytes: number;
+    unique_exact_bytes: number;
+  };
+}
+
+/** One disc asset kind as the asset tool handles it. */
+export interface AssetKindRow {
+  kind: string;
+  entries: number;
+  bytes: number;
+  /** `decoded` to an open format, `raw` (the stored bytes) or `none` (not extracted). */
+  handling: string;
+  /** Bytes that export and import back to themselves. */
+  round_trip_bytes: number;
+}
+
+/** assets.json: the disc assets by kind, program code left out. Written by the publisher. */
+export interface AssetCensus {
+  kinds: AssetKindRow[];
+  totals: { entries: number; bytes: number; extracted_bytes: number; decoded_bytes: number; round_trip_bytes: number };
 }
 
 /** One history row; a share is null for days the project did not measure it. */
@@ -130,6 +168,8 @@ export interface Group extends Tally {
   label: string;
   note: string;
   targets: Target[];
+  /** The sum of its targets' data, or null when none has data. */
+  data: { bytes: number; typed: number } | null;
 }
 
 export interface Library extends Tally {
@@ -153,9 +193,25 @@ export interface Quality {
   fuzzy: number;
 }
 
+/** The three headline parts: game code, game data and assets. */
+export interface Headline {
+  game: {
+    functions: number;
+    exact: number;
+    bytes: number;
+    exactBytes: number;
+    /** Each repeated function body once; null when status.json is not published. */
+    unique: { functions: number; exact: number; bytes: number; exactBytes: number } | null;
+  };
+  data: { bytes: number; typed: number; rawC: number | null; apart: { reserved: number; copied: number; sdk: number; asset: number } | null } | null;
+  assets: { bytes: number; extracted: number; decoded: number; roundTrip: number; kinds: AssetKindRow[] } | null;
+}
+
 export interface Model {
   meta: { version: number; generatedAt: string; date: string; commit: string; shortCommit: string };
-  /** Game code sums, the only functions the headline counts. */
+  /** The headline numbers. Game code comes from status.json when it is published, else the report. */
+  headline: Headline;
+  /** Game code in the report: the functions the map, the groups and the browser show. */
   game: Tally;
   /** PsyQ units, shown apart. */
   sdk: Tally;

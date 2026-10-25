@@ -1,0 +1,20 @@
+{
+  "game_code": {
+    "functions": 12319,
+    "exact": 3235,
+    "bytes": 3153784,
+    "exact_bytes": 730564,
+    "unique_functions": 6841,
+    "unique_exact": 2482,
+    "unique_bytes": 2427088,
+    "unique_exact_bytes": 661200
+  },
+  "quality": {
+    "fakes": 525,
+    "harmful_fakes": 272,
+    "field_ref": 1727,
+    "local_externs": 707,
+    "sym_conflicts": 1502,
+    "hand_asm": 5
+  }
+}

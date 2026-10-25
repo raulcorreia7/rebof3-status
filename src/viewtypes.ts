@@ -42,6 +42,8 @@ export interface Part {
 
 export interface MeterRow {
   name?: Link;
+  /** A name that is not a link, for a row with nothing to open. */
+  label?: string;
   aria: string;
   /** Width of the whole bar as a percentage of the track. */
   width?: number;
