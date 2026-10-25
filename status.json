@@ -6876,10 +6876,10 @@
     "unique_exact_bytes": 665160
   },
   "quality": {
-    "fakes": 532,
-    "harmful_fakes": 278,
-    "field_ref": 1730,
-    "local_externs": 684,
+    "fakes": 542,
+    "harmful_fakes": 287,
+    "field_ref": 1725,
+    "local_externs": 670,
     "sym_conflicts": 35,
     "hand_asm": 5
   }
