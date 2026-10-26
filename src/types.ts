@@ -1,8 +1,8 @@
-// The data files' types, derived from their schemas (model/schema.ts), and the model built from
-// them (model/report.ts).
+// The data file's type, derived from its schema (model/schema.ts), and the model built from it
+// (model/report.ts).
 
 import type * as z from "zod/mini";
-import type { AssetCensusSchema, HistorySchema, ReportSchema, StatusCensusSchema, StatusDataSchema } from "./model/schema.ts";
+import type { ReportSchema } from "./model/schema.ts";
 
 export type Status = "pure" | "nonmatching" | "open" | "object" | "assembly" | "asm";
 export type Tier = "object" | "assembly";
@@ -10,13 +10,6 @@ export type Tier = "object" | "assembly";
 export type Part = "game" | "sdk" | "hand";
 
 export type Report = z.output<typeof ReportSchema>;
-export type StatusData = z.output<typeof StatusDataSchema>;
-export type StatusCensus = z.output<typeof StatusCensusSchema>;
-export type StatusCensusTarget = NonNullable<StatusCensus["targets"]>[number];
-export type AssetCensus = z.output<typeof AssetCensusSchema>;
-export type AssetKindRow = AssetCensus["kinds"][number];
-export type History = z.output<typeof HistorySchema>;
-export type HistoryRow = History["rows"][number];
 
 // Model ------------------------------------------------------------------------------------
 
@@ -29,8 +22,6 @@ export interface Fn {
   address: number | null;
   name: string;
   bytes: number;
-  /** Bytes that build to the original. */
-  matched: number;
   /** objdiff's fuzzy match of the unit, 0-100. */
   fuzzy: number;
   /** Whether the report contains a fuzzy-match measurement for this unit. */
@@ -58,11 +49,11 @@ export interface Tally {
   fuzzy: number;
 }
 
-/** Game functions of a target or group as bin/status counts them: the headline's units. */
+/** Game functions of a target or group, from the report's units: the map's counts. */
 export interface Code {
   functions: number;
   exact: number;
-  /** Functions with a NON_MATCHING draft in C. */
+  /** Functions with a draft in C that does not match yet. */
   draft: number;
   bytes: number;
   exactBytes: number;
@@ -73,10 +64,7 @@ export interface Target {
   name: string;
   group: string;
   groupLabel: string;
-  /** Payload bytes. */
-  size: number;
-  data: { bytes: number; typed: number } | null;
-  /** Game functions from bin/status; from the report when status.json lacks targets. */
+  /** Game functions in this target: the report's units. */
   code: Code;
   functions: Fn[];
   /** Game functions in the report only. */
@@ -94,8 +82,6 @@ export interface Group extends Tally {
   /** The sum of its targets' code. */
   code: Code;
   targets: Target[];
-  /** The sum of its targets' data, or null when none has data. */
-  data: { bytes: number; typed: number } | null;
 }
 
 export interface Library extends Tally {
@@ -119,25 +105,21 @@ export interface Quality {
   fuzzy: number;
 }
 
-/** The three headline parts: game code, game data and assets. */
+/** The headline: the game code the report measures. */
 export interface Headline {
   game: {
     functions: number;
     exact: number;
     bytes: number;
     exactBytes: number;
-    /** Each repeated function body once; null when status.json is not published. */
-    unique: { functions: number; exact: number; bytes: number; exactBytes: number } | null;
   };
-  data: { bytes: number; typed: number; rawC: number | null; apart: { reserved: number; copied: number; sdk: number; asset: number } | null } | null;
-  assets: { bytes: number; extracted: number; decoded: number; roundTrip: number; kinds: AssetKindRow[] } | null;
 }
 
 export interface Model {
-  meta: { version: number; generatedAt: string; date: string; commit: string; shortCommit: string };
-  /** The headline numbers. Game code comes from status.json when it is published, else the report. */
+  meta: { version: number };
+  /** The headline numbers: the game code the report measures. */
   headline: Headline;
-  /** Game code by bin/status, the sum of every target's code: what the map and the groups show. */
+  /** Game code from the report, the sum of every target's code: what the map and the groups show. */
   code: Code;
   /** Game code in the report: the functions the browser lists, and the fuzzy match. */
   game: Tally;
@@ -147,7 +129,6 @@ export interface Model {
   hand: Tally;
   /** Every unit, for the map legend. */
   all: Tally;
-  data: { bytes: number; typed: number } | null;
   quality: Quality;
   groups: Group[];
   targets: Target[];
@@ -155,5 +136,4 @@ export interface Model {
   functions: Fn[];
   functionById: Map<string, Fn>;
   libraries: Library[];
-  history: HistoryRow[];
 }

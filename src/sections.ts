@@ -1,16 +1,16 @@
 // The page, as data. App draws this list in order: to add, remove or reorder a section, edit it.
-// The order follows the headline, most important first: game code and its parts of the game, game
-// data, assets; then match quality and progress; the PsyQ SDK, which is not counted; the function
-// list last. Each number has one home: the overview cards are not repeated below.
+// The order follows the headline, most important first: game code and its parts of the game; then
+// match quality and progress; the PsyQ SDK, which is not counted; the function list last. Each
+// number has one home: the overview cards are not repeated below.
 //
 // A section has an id (its anchor, #map), a title (also its link in the page navigation) and
 // blocks drawn top to bottom. Each block names a view kind (cards, meters, text, legend, domains,
-// trend, filters, table, inspector), the selector that feeds it from the model and the route
+// filters, table, inspector), the selector that feeds it from the model and the route
 // (selectors.ts, inspect.ts), and the copy around it, all from strings.ts.
 
 import { inspector } from "./inspect.ts";
 import * as pick from "./selectors.ts";
-import { BROWSER, DATA, MAP, QUALITY, SDK, SUMMARY, TREND } from "./strings.ts";
+import { BROWSER, MAP, QUALITY, SDK, SUMMARY } from "./strings.ts";
 import type { Section } from "./viewtypes.ts";
 
 export const SECTIONS: Section[] = [
@@ -22,28 +22,12 @@ export const SECTIONS: Section[] = [
   {
     id: "game",
     title: SUMMARY.gameHeading,
-    blocks: [{ view: "cards", select: pick.gameCards, help: SUMMARY.gameHelp, note: SUMMARY.footnote }],
+    blocks: [{ view: "cards", select: pick.gameCards, help: SUMMARY.gameHelp }],
   },
   {
     id: "map",
     title: MAP.heading,
     blocks: [{ view: "domains", select: pick.domains, help: MAP.help }],
-  },
-  {
-    id: "data",
-    title: SUMMARY.dataHeading,
-    blocks: [
-      { view: "cards", select: pick.dataCards, help: SUMMARY.dataHelp, note: pick.dataNote },
-      { view: "meters", select: pick.dataMeters, heading: DATA.partsHeading, help: DATA.help },
-    ],
-  },
-  {
-    id: "assets",
-    title: SUMMARY.assetsHeading,
-    blocks: [
-      { view: "cards", select: pick.assetCards, help: SUMMARY.assetsHelp },
-      { view: "meters", select: pick.assetKinds, heading: SUMMARY.assetKinds, help: SUMMARY.assetKindsHelp, when: ({ model }) => !!model.headline.assets },
-    ],
   },
   {
     id: "quality",
@@ -53,11 +37,6 @@ export const SECTIONS: Section[] = [
       { view: "text", select: pick.verification, heading: QUALITY.verifyHeading },
       { view: "table", select: pick.auditTable },
     ],
-  },
-  {
-    id: "trend",
-    title: TREND.heading,
-    blocks: [{ view: "trend", select: pick.trend, help: TREND.help }],
   },
   {
     id: "sdk",
@@ -73,7 +52,7 @@ export const SECTIONS: Section[] = [
     blocks: [
       { view: "filters", select: pick.browserFilters },
       { view: "legend", select: pick.statusChips },
-      { view: "table", select: pick.browserTable, note: pick.browserScope },
+      { view: "table", select: pick.browserTable },
     ],
   },
   {

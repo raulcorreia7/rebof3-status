@@ -12,7 +12,7 @@ import { usePage } from "../state.ts";
 import type { Tokens } from "../theme/tokens.ts";
 import type { GamePage } from "../viewtypes.ts";
 import { Chart, type ChartClick } from "./Chart.tsx";
-import { Jump, Meter, Parts, StatusChip, StatusKey } from "./ui.tsx";
+import { Jump, Meter, StatusChip, StatusKey } from "./ui.tsx";
 
 export function GamePageView(props: { data: Accessor<GamePage> }) {
   let heading: HTMLHeadingElement | undefined;
@@ -34,21 +34,6 @@ export function GamePageView(props: { data: Accessor<GamePage> }) {
       <Show when={props.data().found}>
         <StatusKey items={props.data().key} />
       </Show>
-      <Show when={props.data().facts.length}>
-        <dl class="mt-3 flex flex-wrap gap-x-6 gap-y-1 text-sm">
-          <For each={props.data().facts}>
-            {(fact) => (
-              <div>
-                <dt class="inline text-mute">{fact.label}: </dt>
-                <dd class="inline">
-                  <Parts parts={fact.value} />
-                </dd>
-              </div>
-            )}
-          </For>
-        </dl>
-      </Show>
-      <Show when={props.data().coverage}>{(coverage) => <p class="mt-2 text-sm text-mute">{coverage()}</p>}</Show>
       <Show when={props.data().tree}>{(tree) => <Functions data={props.data} tree={tree} />}</Show>
     </section>
   );

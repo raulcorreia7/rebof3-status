@@ -1,12 +1,11 @@
-// The simple views: cards, meters, text, legend, trend, filters and tables.
+// The simple views: cards, meters, text, legend, filters and tables.
 
-import { createSignal, For, Index, onCleanup, Show, type Accessor } from "solid-js";
+import { createSignal, For, onCleanup, Show, type Accessor } from "solid-js";
 import { BROWSER } from "../strings.ts";
 import { usePage } from "../state.ts";
 import type { SortKey } from "../model/route.ts";
 import type { Status } from "../types.ts";
 import type { Views } from "../viewtypes.ts";
-import { Chart } from "./Chart.tsx";
 import { BarParts, Chip, Jump, Meter, Parts } from "./ui.tsx";
 
 /** How long the search box waits after the last key before the table filters. */
@@ -120,25 +119,6 @@ export function Legend(props: Props<"legend">) {
           );
         }}
       </For>
-    </div>
-  );
-}
-
-export function Trend(props: Props<"trend">) {
-  return (
-    <div class="mt-2.5 grid grid-cols-[repeat(auto-fit,minmax(18rem,1fr))] gap-4">
-      {/* Index, not For: a new selector result must update the eight chart options in place,
-          not dispose and re-create their ECharts instances. */}
-      <Index each={props.data().charts}>
-        {(chart) => (
-          <figure class="card px-2.5 py-2" data-chart={chart().id}>
-            <figcaption class="text-sm">{chart().value ? `${chart().title}: ${chart().value}` : chart().title}</figcaption>
-            <Show when={chart().option} fallback={<p class="py-5 text-sm text-mute">{props.data().empty}</p>}>
-              {(option) => <Chart option={option()} height={170} label={`${chart().title}, latest ${chart().value}`} />}
-            </Show>
-          </figure>
-        )}
-      </Index>
     </div>
   );
 }

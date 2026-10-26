@@ -1,17 +1,13 @@
 // progress.svg: the whole status board as one picture. render/snapshot.ts turns it into progress.png.
 //
-// The cards, the parts of the game, the SDK tiles and the bars are drawn here as SVG strings. The
-// trend charts are the ECharts options the page uses, rendered on the server and nested into the
-// picture.
+// The cards, the parts of the game, the SDK tiles and the bars are drawn here as SVG strings;
+// everything comes from the objdiff report the page reads.
 
-import { renderSvg } from "../charts/ssr.ts";
-import { trendOption } from "../charts/trend.ts";
-import { TREND_CHARTS } from "../model/history.ts";
-import { bytesOf, escapeText, percent, round } from "../model/format.ts";
+import { escapeText, percent, round } from "../model/format.ts";
 import { codeCounts, STATUS, STATUSES } from "../model/status.ts";
 import { textWidth } from "../model/text.ts";
-import { MAP, POSTER, SDK, SUMMARY, TREND } from "../strings.ts";
-import type { Code, Fn, Model } from "../types.ts";
+import { MAP, POSTER, SDK, SUMMARY } from "../strings.ts";
+import type { Code, Model } from "../types.ts";
 import { bar, C, FONT, frame, rect, text } from "./svg.ts";
 import { panel, sorted, weightOf, type Block } from "./tiles.ts";
 
@@ -30,23 +26,15 @@ interface Drawn {
 
 const sdkBlocks = (model: Model): Block[] => model.libraries.map((lib) => ({ name: lib.name, rows: sorted(lib.functions) }));
 
-// The headline, in the order the numbers matter: game code, each body once, game data, assets.
+// The headline, in the order the numbers matter: game functions, their size, the fuzzy match.
 function cards(model: Model, y: number): Drawn {
-  const { game, data, assets } = model.headline;
-  const unique = game.unique;
+  const { game } = model.headline;
   const items: [string, string, string, string][] = [
     [`${percent(game.exact, game.functions, 1)}%`, SUMMARY.gameFunctions, SUMMARY.of(game.exact, game.functions), C.status.pure],
-    unique
-      ? [`${percent(unique.exact, unique.functions, 1)}%`, SUMMARY.unique, SUMMARY.of(unique.exact, unique.functions), C.status.pure]
-      : [`${percent(game.exactBytes, game.bytes, 1)}%`, SUMMARY.gameBytes, SUMMARY.ofBytes(game.exactBytes, game.bytes), C.status.pure],
-    data
-      ? [`${percent(data.typed, data.bytes, 1)}%`, SUMMARY.data, SUMMARY.dataOf(data.typed, data.bytes), C.status.pure]
-      : [SUMMARY.pending[0], SUMMARY.data, SUMMARY.pending[1], C.mute],
-    assets
-      ? [`${percent(assets.decoded, assets.bytes, 1)}%`, SUMMARY.assets, SUMMARY.assetsOf(assets.decoded, assets.bytes), C.status.object]
-      : [SUMMARY.pending[0], SUMMARY.assets, SUMMARY.pending[1], C.mute],
+    [`${percent(game.exactBytes, game.bytes, 1)}%`, SUMMARY.gameBytes, SUMMARY.ofBytes(game.exactBytes, game.bytes), C.status.pure],
+    [`${model.game.fuzzy.toFixed(1)}%`, SUMMARY.fuzzy, SUMMARY.fuzzyNote, C.status.pure],
   ];
-  const width = (WIDTH - 2 * MARGIN - 3 * GAP) / 4;
+  const width = (WIDTH - 2 * MARGIN - (items.length - 1) * GAP) / items.length;
   const height = 100;
   let svg = "";
   items.forEach(([big, title, sub, color], index) => {
@@ -137,22 +125,6 @@ function domainPanel(model: Model, x: number, y: number, width: number): Drawn {
   return { svg, bottom: top - 16 };
 }
 
-// Data panel: per part of the game, the share of data bytes typed and named in C.
-function dataPanel(model: Model, x: number, y: number, width: number): Drawn {
-  const total = model.data;
-  const rows = model.groups.flatMap((group) => (group.data ? [{ name: group.label, ...group.data }] : []));
-  let svg = text(x, y, total ? POSTER.dataHeading(percent(total.typed, total.bytes, 1), total.typed, total.bytes) : SUMMARY.dataHeading, 24, C.ink);
-  const nameWidth = 180;
-  const barWidth = width - nameWidth - 250 - 16;
-  rows.forEach((row, index) => {
-    const top = y + 40 + index * 22;
-    svg += text(x, top, row.name, 13, C.ink);
-    svg += bar(x + nameWidth, top + 1, barWidth, 14, [[row.typed, C.status.pure]], row.bytes);
-    svg += text(x + width, top, `${percent(row.typed, row.bytes, 1)}% · ${bytesOf(row.typed, row.bytes)}`, 13, C.mute, { anchor: "end" });
-  });
-  return { svg, bottom: y + 40 + rows.length * 22 };
-}
-
 // Library panel: per PsyQ library, its units by kind and the versions it links from.
 function libraryPanel(model: Model, x: number, y: number, width: number): Drawn {
   const libs = model.libraries.filter((lib) => lib.count > 2);
@@ -191,29 +163,10 @@ function qualityRow(model: Model, y: number): Drawn {
   return { svg, bottom: y + 40 + 70 };
 }
 
-/** An ECharts SVG placed at (x, y) inside the picture. */
-const nest = (svg: string, x: number, y: number): string => svg.replace(/^<svg /, `<svg x="${round(x)}" y="${round(y)}" `).replace(/^<\?xml[^>]*>/, "");
-
-// The trend charts: the page's options, titled, in a grid of four columns.
-function trends(model: Model, y: number): Drawn {
-  const cols = 4;
-  const width = (WIDTH - 2 * MARGIN - (cols - 1) * GAP) / cols;
-  const height = 190;
-  let svg = text(MARGIN, y, TREND.heading, 24, C.ink);
-  TREND_CHARTS.forEach((chart, index) => {
-    const x = MARGIN + (index % cols) * (width + GAP);
-    const top = y + 40 + Math.floor(index / cols) * (height + 16);
-    svg += rect(x, top, width, height, C.card);
-    const option = trendOption(model.history, chart, C, { titled: true, fontFamily: FONT });
-    svg += option ? nest(renderSvg(option, Math.round(width), height), x, top) : text(x + 12, top + 12, `${chart.title}: ${TREND.empty}`, 13, C.mute);
-  });
-  return { svg, bottom: y + 40 + Math.ceil(TREND_CHARTS.length / cols) * (height + 16) - 16 };
-}
-
 /** The status board as one SVG string. */
 export function renderPoster(model: Model): string {
   let svg = text(MARGIN, MARGIN - 4, POSTER.title, 34, C.ink, { weight: "bold" });
-  svg += text(MARGIN, MARGIN + 38, POSTER.subtitle(model.meta.commit.slice(0, 7), model.meta.date), 15, C.mute);
+  svg += text(MARGIN, MARGIN + 38, POSTER.subtitle, 15, C.mute);
   const top = cards(model, MARGIN + 70);
   svg += top.svg;
 
@@ -226,22 +179,15 @@ export function renderPoster(model: Model): string {
   const key = legend(model, right, side.bottom + GAP);
   svg += key.svg;
 
-  const rowTop = Math.max(left.bottom, key.bottom) + 2 * GAP;
-  const data = dataPanel(model, MARGIN, rowTop, GAME_WIDTH);
-  const libs = libraryPanel(model, right, rowTop, SIDE_WIDTH);
-  svg += data.svg + libs.svg;
-
-  const quality = qualityRow(model, Math.max(data.bottom, libs.bottom) + 2 * GAP);
+  const libs = libraryPanel(model, right, key.bottom + GAP, SIDE_WIDTH);
+  svg += libs.svg;
+  const quality = qualityRow(model, Math.max(left.bottom, libs.bottom) + 2 * GAP);
   svg += quality.svg;
-  const trend = trends(model, quality.bottom + 2 * GAP);
-  svg += trend.svg;
 
-  const height = Math.ceil(trend.bottom + MARGIN);
+  const height = Math.ceil(quality.bottom + MARGIN);
   return (
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${WIDTH} ${height}" width="${WIDTH}" height="${height}"` +
     ` font-family="${FONT}" role="img" aria-label="${escapeText(POSTER.title)}">` +
     `<rect width="${WIDTH}" height="${height}" fill="${C.bg}"/>${svg}</svg>`
   );
 }
-
-export type { Fn };

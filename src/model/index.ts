@@ -1,11 +1,7 @@
-// Model helpers shared by the page and the picture: links into rebof3 and lookup by id.
+// Model helpers shared by the page and the picture: lookup by id and neighbours in a target.
 // The adapter that builds the model from report.json lives in model/report.ts.
 
-import { SITE } from "../strings.ts";
 import type { Fn, Model } from "../types.ts";
-
-export const sourceUrl = (commit: string, path: string): string => `${SITE.repoUrl}/blob/${commit}/${path}`;
-export const commitUrl = (commit: string): string => `${SITE.repoUrl}/commit/${commit}`;
 
 /** The function before and after `fn` in its target, in address order. */
 export function neighbours(model: Model, fn: Fn): { previous: Fn | null; next: Fn | null } {

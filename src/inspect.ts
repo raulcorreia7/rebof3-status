@@ -1,7 +1,7 @@
 // The side panel's selector: the details of the function the route opens.
 
 import { bytes, hex } from "./model/format.ts";
-import { findFunction, neighbours, sourceUrl } from "./model/index.ts";
+import { findFunction, neighbours } from "./model/index.ts";
 import { ASSEMBLY_LIBRARY } from "./model/report.ts";
 import { INSPECT, SDK } from "./strings.ts";
 import type { Fn, Model } from "./types.ts";
@@ -35,7 +35,7 @@ function functionFields(model: Model, fn: Fn): Field[] {
     field(F.image, text(target.name, { to: { view: { kind: "image", id: target.id } } })),
     field(F.group, text(target.groupLabel, { to: { view: { kind: "part", key: target.group } } })),
   );
-  if (fn.source?.endsWith(".c")) fields.push(field(F.source, text(fn.source, { url: sourceUrl(model.meta.commit, fn.source), code: true })));
+  if (fn.source?.endsWith(".c")) fields.push(field(F.source, text(fn.source, { code: true })));
   else if (fn.source) fields.push(field(F.source, text(fn.source, { code: true, mute: true })));
   else fields.push(field(F.source, text(fn.kind === "sdk" ? (fn.tier === "assembly" ? INSPECT.noSourceAssembly : INSPECT.noSourceSdk) : INSPECT.noSource, { mute: true })));
   fields.push(field(F.previous, ...around(previous)), field(F.next, ...around(next)));

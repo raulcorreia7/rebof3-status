@@ -4,12 +4,11 @@ import { createMemo, For, onMount, Show, type Component } from "solid-js";
 import { SECTIONS } from "../sections.ts";
 import { FOOT, HEAD } from "../strings.ts";
 import { HOME } from "../model/route.ts";
-import { commitUrl } from "../model/index.ts";
 import { createPage, PageProvider, usePage } from "../state.ts";
 import type { Mode } from "../theme/apply.ts";
 import type { Model } from "../types.ts";
 import type { Block, Copy, Section, ViewKind, Views } from "../viewtypes.ts";
-import { Cards, Filters, Legend, Meters, Table, Text, Trend } from "./Basic.tsx";
+import { Cards, Filters, Legend, Meters, Table, Text } from "./Basic.tsx";
 import { Domains } from "./Domains.tsx";
 import { Inspector } from "./Inspector.tsx";
 import { scrollToSection } from "./scroll.ts";
@@ -24,7 +23,6 @@ const VIEWS: ViewMap = {
   text: Text,
   legend: Legend,
   domains: Domains,
-  trend: Trend,
   filters: Filters,
   table: Table,
   inspector: Inspector,
@@ -85,11 +83,7 @@ function Header() {
         </button>
       </div>
       <p class="mt-1 text-mute">
-        {HEAD.updated} {page.model.meta.date} {HEAD.from}{" "}
-        <a href={commitUrl(page.model.meta.commit)}>
-          <code>{page.model.meta.shortCommit}</code>
-        </a>
-        . {HEAD.getThe} <a href="report.json">{HEAD.data}</a> {HEAD.or} <a href="progress.png">{HEAD.picture}</a>.
+        {HEAD.getThe} <a href="report.json">{HEAD.data}</a> {HEAD.or} <a href="progress.png">{HEAD.picture}</a>.
       </p>
       <nav class="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm" aria-label={HEAD.sections}>
         <For each={SECTIONS.filter((section) => section.where !== "aside")}>

@@ -40,7 +40,6 @@ export const GROUP_NOTE: Record<string, string> = {
 };
 
 export const SITE = {
-  repoUrl: "https://github.com/raulcorreia7/rebof3-simple",
   loadFailed: (message: string) => `The status data could not be loaded (${message}).`,
   loadFailedReload: "Reload the page",
   loadFailedOpen: " or open ",
@@ -51,8 +50,6 @@ export const HEAD = {
   title: "Breath of Fire III decompilation",
   skip: "Skip to the content",
   sections: "Sections",
-  updated: "Updated",
-  from: "from rebof3",
   getThe: "Get the",
   data: "report",
   or: "or the",
@@ -60,43 +57,16 @@ export const HEAD = {
   theme: { auto: "Theme: automatic", light: "Theme: light", dark: "Theme: dark" },
 };
 
-/** Shown for a figure the published data does not measure yet. */
-const PENDING = ["from next run", "measured by the next published run"];
-
 export const SUMMARY = {
   overviewHeading: "Overview",
   gameHeading: "Game code",
   gameHelp: "Every function of the game's programs and overlays. A function counts as rebuilt when its C builds to the exact original bytes.",
   gameFunctions: "Game functions",
   gameBytes: "Game code by size",
-  unique: "Unique game functions",
   of: (done: number, total: number) => `${number(done)} of ${number(total)} rebuilt in C`,
   ofBytes: (done: number, total: number) => `${bytesOf(done, total)} rebuilt in C`,
   fuzzy: "Fuzzy match",
   fuzzyNote: "how close the game code is to the original, by size",
-  footnote: "Many overlays carry copies of the same function. Unique game functions counts each one once, as rebuilt when any copy is.",
-  pending: PENDING,
-  dataHeading: "Game data",
-  dataHelp: "The data bytes of the game's programs and overlays: tables, text and records. A byte counts as typed when C defines it with a real type.",
-  data: "Game data",
-  dataOf: (typed: number, total: number) => `${bytesOf(typed, total)} typed in C`,
-  dataRaw: "Game data as raw bytes",
-  dataRawOf: (raw: number, total: number) => `${bytesOf(raw, total)} in C, still byte arrays named by their address`,
-  dataApart: (reserved: number, copied: number, sdk: number, asset: number) =>
-    `Left out of the total, as not data to type: ${bytes(reserved)} reserved (work areas that are zero on the disc and filled while the game runs), ` +
-    `${bytes(copied)} copied from another program, ${bytes(sdk)} of PsyQ library data and ${bytes(asset)} of assets kept as the original files.`,
-  assetsHeading: "Assets",
-  assetsHelp:
-    "The other files on the disc: pictures, sound, music, video, models, maps and tables. The game loads them from the original disc files, so they are not part of the decompilation and never count in the figures above. Converted means the asset tools turn a file into a standard format anyone can open: pictures to PNG, sound to WAV, music to MIDI, models to OBJ or glTF, tables and text to JSON.",
-  assets: "Assets",
-  assetsOf: (done: number, total: number) => `${bytesOf(done, total)} converted to standard files`,
-  assetsExtracted: "Assets extracted",
-  assetsExtractedOf: (done: number, total: number) => `${bytesOf(done, total)} extracted from the disc`,
-  assetsRoundTrip: "Assets that convert back exactly",
-  assetsRoundTripOf: (done: number, total: number) => `${bytesOf(done, total)} convert to a standard file and back to the original bytes`,
-  assetKinds: "Assets by kind",
-  assetKindsHelp: "One bar per kind of file, as long as its size on the disc.",
-  assetHandling: { decoded: "converted", raw: "extracted as stored", none: "not extracted" } as Record<string, string>,
 };
 
 export const MAP = {
@@ -110,13 +80,10 @@ export const MAP = {
   imageAria: (name: string, done: number, draft: number, total: number, size: number) =>
     `${name}: ${number(done)} of ${plural(total, "function")} rebuilt in C, ${number(draft)} draft, ${bytes(size)}`,
   crumbs: "Breadcrumb",
-  facts: { size: "Image size", data: "Data typed in C", source: "Source" },
   chartLabel: (title: string, functions: number) => `${title}: treemap of ${plural(functions, "function")}`,
   listHeading: (count: number) => `Functions (${number(count)})`,
   listEmpty: "The report lists no functions here yet.",
   showMore: (count: number) => `Show ${number(count)} more`,
-  coverage: (listed: number, listedBytes: number, counted: number, countedBytes: number) =>
-    `The treemap shows the ${plural(listed, "function")} the report lists (${bytes(listedBytes)}); the counts above have ${number(counted)} (${bytes(countedBytes)}).`,
   partMissing: "This part of the game is not in the data.",
   imageMissing: "This image is not in the data. It may have been renamed since this link was made.",
 };
@@ -135,13 +102,6 @@ export const SDK = {
   assemblyLibrary: "assembly only",
 };
 
-export const DATA = {
-  partsHeading: "By part of the game",
-  help: "Byte arrays still named by their address do not count as typed. Each image is capped at its data bytes, so no bar passes 100%.",
-  typed: "typed in C",
-  untyped: "not typed yet",
-};
-
 export const QUALITY = {
   heading: "Match quality",
   perTargetHeading: "Drafts in C by part of the game",
@@ -149,37 +109,9 @@ export const QUALITY = {
   verifyHeading: "How the numbers are counted",
   gameScope: "Game code:",
   gameScopeText: (done: number, total: number, doneBytes: number, totalBytes: number) =>
-    `${number(done)} of ${number(total)} functions are rebuilt in C (${bytesOf(doneBytes, totalBytes)}), counted over the link map of every image. The PsyQ SDK and the hand-written assembly are not counted.`,
-  dataScope: "Game data:",
-  dataScopeText: (typed: number | null, total: number | null, rawC: number | null) =>
-    typed === null || total === null
-      ? "not measured in this run."
-      : `${bytesOf(typed, total)} of data is typed in C.` + (rawC ? ` Another ${bytes(rawC)} is in C as byte arrays still named by their address, and does not count.` : ""),
-  assetScope: "Assets:",
-  assetScopeText: (decoded: number | null, total: number | null) =>
-    decoded === null || total === null
-      ? "not measured in this run."
-      : `${bytesOf(decoded, total)} of the disc files that are not program code convert to standard files (PNG, WAV, MIDI, OBJ, JSON). Assets never count as decompilation.`,
+    `${number(done)} of ${number(total)} functions are rebuilt in C (${bytesOf(doneBytes, totalBytes)}), counted from the objdiff report. The PsyQ SDK and the hand-written assembly are not counted.`,
   table: "Every image",
-  columns: { image: "Image", functions: "Functions", rebuilt: "Rebuilt in C", drafts: "Drafts in C", size: "Size", fuzzy: "Fuzzy match", data: "Data typed in C" },
-};
-
-export const TREND = {
-  heading: "Progress over time",
-  help: "One point per day; each title ends with the latest value. Earlier points use older counts: game code counted only the functions in the report, and typed data included byte arrays named by their address.",
-  empty: "starts with the next published run",
-  charts: {
-    gameFunctions: "Game functions",
-    gameBytes: "Game code by size",
-    gameUnique: "Unique game functions",
-    sdk: "PsyQ SDK library objects",
-    data: "Game data typed in C",
-    assets: "Assets converted",
-    benign: "Benign helper macros",
-    harmful: "Harmful helper macros",
-    fieldRef: "Raw offset accesses",
-    localExterns: "Declarations inside .c files",
-  },
+  columns: { image: "Image", functions: "Functions", rebuilt: "Rebuilt in C", drafts: "Drafts in C", size: "Size", fuzzy: "Fuzzy match" },
 };
 
 export const BROWSER = {
@@ -200,7 +132,6 @@ export const BROWSER = {
   none: "No function matches. Try fewer words.",
   limited: (shown: number, total: number) => `Showing ${number(shown)} of ${plural(total, "function")}.`,
   shown: (count: number) => `${plural(count, "function")}.`,
-  scope: (listed: number, counted: number) => `The list has the ${number(listed)} game functions the report names; the counts above have ${number(counted)}.`,
   more: (step: number) => `Show ${number(step)} more`,
   share: "Copy link",
   copied: "Link copied",
@@ -234,15 +165,14 @@ export const INSPECT = {
 };
 
 export const FOOT = {
-  text: "Generated by the rebof3 build at the commit above; the report and the picture hold the same numbers.",
+  text: "Generated from the objdiff report; the page and the picture hold the same numbers.",
 };
 
 // Picture only.
 export const POSTER = {
   title: "Breath of Fire III decompilation status",
-  subtitle: (commit: string, date: string) => `rebof3 ${commit} · ${date}`,
+  subtitle: "from the objdiff report",
   statusHeading: "Status of game code",
-  dataHeading: (percent: string, typed: number, total: number) => `Game data: ${percent}% typed in C (${bytesOf(typed, total)})`,
   libraries: "PsyQ libraries and versions",
   libraryKey: (objects: number, assembly: number) => `${number(objects)} PsyQ library objects · ${number(assembly)} assembly only`,
   libraryLinked: "assembly only",

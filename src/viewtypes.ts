@@ -1,7 +1,6 @@
 // The data each kind of view draws. A selector (selectors.ts) turns the model and the route into
 // one of these; a view (views/) draws it. Nothing here knows about the framework.
 
-import type { ChartOption } from "./charts/register.ts";
 import type { MapNode } from "./charts/treemap.ts";
 import type { Route, SortKey } from "./model/route.ts";
 import type { Tokens } from "./theme/tokens.ts";
@@ -92,7 +91,6 @@ export interface Views {
       }[];
     }[];
   };
-  trend: { charts: { id: string; title: string; value: string | null; option: ChartOption | null }[]; empty: string };
   filters: {
     search: { label: string; placeholder: string };
     selects: {
@@ -135,9 +133,6 @@ export interface GamePage {
   meter: MeterRow | null;
   key: { label: string; color: string; sub: string }[];
   note: string;
-  facts: { label: string; value: Part[] }[];
-  /** Says how the report's functions differ from the counts; empty when they agree. */
-  coverage: string;
   tree: MapNode | null;
   /** The report's game functions, the treemap's leaves. */
   functions: Fn[];

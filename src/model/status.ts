@@ -44,7 +44,7 @@ export const STATUSES: readonly Status[] = STATUS_TABLE.map((entry) => entry.key
 export const TIERS: readonly Tier[] = ["object", "assembly"];
 
 export const isStatus = (value: string): value is Status => Object.hasOwn(STATUS, value);
-/** Game functions rebuilt, draft and not started, as bin/status counts them; statuses with none are left out. */
+/** Game functions rebuilt, draft and not started, from the report's units; statuses with none are left out. */
 export const codeCounts = (code: Code): [Status, number][] =>
   ([["pure", code.exact], ["nonmatching", code.draft], ["open", code.functions - code.exact - code.draft]] as [Status, number][]).filter(([, count]) => count);
 

@@ -1,8 +1,6 @@
 name: deploy
-# Builds the page from main's code and the latest numbers on the gh-pages branch, then publishes
-# it. A code push to main rebuilds with the current numbers; the publisher (monorepo
-# scripts/progress) pushes new numbers to gh-pages and starts this run with
-# `gh workflow run deploy.yml`. A pull request only runs the checks.
+# Builds the page from the committed data/report.json and publishes it. A push to main rebuilds
+# and deploys; a pull request only runs the checks.
 on:
   push:
     branches: [main]
@@ -35,31 +33,14 @@ jobs:
             sudo apt-get update -qq
             sudo apt-get install -y --no-install-recommends fonts-dejavu-core
           fi
-      # The numbers live on gh-pages; without them the build uses the test fixtures.
-      - name: Fetch the latest numbers
-        run: |
-          mkdir -p "$RUNNER_TEMP/data"
-          if git fetch --quiet --depth=1 origin gh-pages; then
-            for f in report.json status-data.json history.json; do
-              git show "FETCH_HEAD:$f" > "$RUNNER_TEMP/data/$f" 2>/dev/null || cp "test/fixtures/$f" "$RUNNER_TEMP/data/$f"
-            done
-            # The headline census and the assets: only from the same measurement, never a fixture.
-            for f in status.json assets.json; do
-              git show "FETCH_HEAD:$f" > "$RUNNER_TEMP/data/$f" 2>/dev/null || rm -f "$RUNNER_TEMP/data/$f"
-            done
-          else
-            cp test/fixtures/report.json test/fixtures/status-data.json test/fixtures/history.json "$RUNNER_TEMP/data/"
-          fi
       - run: npm ci --prefer-offline --no-audit --no-fund
       - name: Type check
         run: npm run lint
-      # The tests check the page built from the fixtures; the published page then gets the latest numbers.
-      - name: Build the page and the pictures from the fixtures
+      # The build copies data/report.json into site/ and renders the pictures from it.
+      - name: Build the page and the pictures
         run: npm run build
       - name: Test the model and the built site
         run: npm test
-      - name: Write the latest numbers and pictures into the page
-        run: node render/snapshot.ts site "$RUNNER_TEMP/data"
       - if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v5
         with:
