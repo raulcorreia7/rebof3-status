@@ -14,12 +14,14 @@ the fuzzy match. The SDK and the hand-written assembly are shown apart.
 
 ## How the page is built
 
-The page is data. `src/sections.ts` is an ordered list of sections; each has an `id`, a title, an optional navigation label and a list of blocks. A block names a **view kind** (`cards`, `meters`, `text`, `legend`, `tabs`, `domains`, `treemap`, `chart`, `trend`, `filters`, `table`, `inspector`) and a **selector** that turns the model and the route into the data that view draws. `src/views/App.tsx` draws the list in order, so adding, removing or reordering a section means editing that list.
+The page is data. `src/sections.ts` is an ordered list of sections; each has an `id` (its anchor, `#map`), a title (also its link in the page navigation) and a list of blocks. A block names a **view kind** (`cards`, `meters`, `text`, `legend`, `domains`, `trend`, `filters`, `table`, `inspector`) and a **selector** that turns the model and the route into the data that view draws. `src/views/App.tsx` draws the list in order, so adding, removing or reordering a section means editing that list. Each number has one home: the overview cards are not repeated in the sections below them.
 
-- State lives in `src/state.ts`: a Solid store for the route, which is kept in the URL hash (`src/model/route.ts`) so every view is a link, plus the theme and the table's row limit. Views are thin: they read the data a selector returns and the route.
-- The game code map (`src/views/Domains.tsx`) is plain DOM: per part of the game a heading, a bar, then one labelled bar or tile per image. The heading opens that part's treemap; an image link opens its function treemap.
-- `src/views/Chart.tsx` keeps one ECharts instance per chart for the life of the page. Option updates merge; the PsyQ treemap replaces its focused data and fades the old drawing over the new one for 180 ms (`prefers-reduced-motion` turns the fade off). The chart builders state `animation: false` on the series: the treemap series otherwise defaults to a 900 ms update animation that ignores the top-level flag. ECharts fits treemap labels to their rectangles itself; a label formatter must not read the layout back, or the first paint has no labels. Game treemaps use a canvas for functions and a paged DOM list of the same report rows.
-- `#part/...` and `#image/...` routes use `status.json` for scope totals and `report.json` for per-function rows, sizes, C statuses and fuzzy matches when present. `status.json` has no per-function rows; `report.json` can omit functions counted by the status census, and each scope displays the row and byte differences.
+Navigation has one model. The route names a page (home, a part of the game, or an image) and, apart from it, the function open in the side panel (`src/views/Inspector.tsx`, fed by `src/inspect.ts`), so a function opens the same way from the function list, a treemap or the panel's own links. Links are `Jump` (`src/views/ui.tsx`): a real `href`, and a plain click calls `go`, which pushes the route and starts a new page at the top, or scrolls to the home page section the link names. The section links show on every page.
+
+- State lives in `src/state.ts`: a Solid store for the route (`go` copies what it stores, because the store adopts objects and changes them in place), which is kept in the URL hash (`src/model/route.ts`) so every view is a link, plus the theme and the table's row limit. Views are thin: they read the data a selector returns and the route.
+- The game code map (`src/views/Domains.tsx`) is plain DOM: per part of the game a heading, a bar, then one labelled bar or tile per image. The heading opens that part's page; an image link opens the image's page.
+- A part or image page (`src/views/GamePage.tsx`, selector `gamePage`) shows the same `status.json` counts as the map, then the report's game functions as a treemap and a paged list of links. `status.json` has no per-function rows and `report.json` can list fewer functions or other byte sizes; the page then says both totals in one line.
+- `src/views/Chart.tsx` keeps one ECharts instance per chart for the life of the page. Option updates merge; a treemap replaces its data and fades the old drawing over the new one for 180 ms (`prefers-reduced-motion` turns the fade off). The chart builders state `animation: false` on the series: the treemap series otherwise defaults to a 900 ms update animation that ignores the top-level flag. ECharts fits treemap labels to their rectangles itself; a label formatter must not read the layout back, or the first paint has no labels. The page loads only the treemap, line, grid and tooltip parts; bars are plain DOM (`meters`).
 - Styling is Tailwind CSS v4 (`@tailwindcss/vite`), utilities in the views. `src/styles/app.css` maps the theme tokens into Tailwind's colours (`bg-card`, `text-mute`, `border-line`, ...) and holds the few shared classes (`card`, `btn`, `link`, `bar`). Status colours are custom properties set inline (`var(--st-pure)`).
 - Selectors are pure functions in `src/selectors.ts` and `src/inspect.ts`; the data shapes are in `src/viewtypes.ts`.
 - `src/model/`, `src/charts/` and `src/snapshot/` know nothing about the framework, and the picture and the page share them.
@@ -32,10 +34,10 @@ The page is data. `src/sections.ts` is an ordered list of sections; each has an 
 | Add a view kind | A data shape in `src/viewtypes.ts`, a component in `src/views/`, and its entry in `VIEWS` in `src/views/App.tsx`. |
 | Add a status | A row in `STATUS_TABLE` (`src/model/status.ts`), its label in `STATUS_LABEL` (`src/strings.ts`) and its colours in `src/theme/tokens.ts`. The legend, filters, charts, totals and picture follow. |
 | Add or reshape a part of the game | `GROUP_RULES` in `src/model/groups.ts` (target id pattern to group, and `tiles` for a grid of image tiles), its place in `PAGE_ORDER`, and its heading and note in `GROUP_LABEL` and `GROUP_NOTE` (`src/strings.ts`). A target no rule matches lands in `other`. Images sort by game code bytes. |
-| Change wording | `src/strings.ts`. Section titles and navigation labels are in `src/sections.ts`. |
+| Change wording | `src/strings.ts`, one name per thing: a status, a part of the game, an image and a measure keep the same words in every card, key, list and tooltip. |
 | Change the data shape | The schema in `src/model/schema.ts` and the adapter in `src/model/report.ts`; update the fixtures. |
 
-Links look like `#fn/exe%2Fslus_004_22%2Ffunc_80164028` (the unit name, URL-encoded), `#target/emi%2Fbattle%2Fbattle%2F03`, `#image/emi%2Fworld00%2Farea037%2F13` (an image treemap) and `#part/battle` (a part treemap). Older `#group/battle` links redirect to `#part/battle`. Query parameters include `q`, `st`, `part`, `lib`, `t`, `g`, `sort`, `dir` and `map`.
+Links look like `#fn/exe%2Fslus_004_22%2Ffunc_80164028` (a function, by its URL-encoded unit name, on the home page), `#image/emi%2Fworld00%2Farea037%2F13` (an image page; `?fn=` opens a function beside it), `#part/battle` (a part page) and `#map` (a home page section). Older `#target/...` and `#group/...` links redirect to `#image/...` and `#part/...`. The function list's query parameters are `q`, `st`, `part`, `lib`, `t`, `sort` and `dir`.
 
 ## File layout
 
@@ -54,7 +56,7 @@ Links look like `#fn/exe%2Fslus_004_22%2Ffunc_80164028` (the unit name, URL-enco
 | `src/state.ts` | Route store, hash router, theme. |
 | `src/views/` | Solid views, one per view kind, and the app shell. |
 | `src/strings.ts` | All copy. |
-| `src/charts/` | ECharts option builders (PsyQ treemap, trend, bars), shared by the page and the picture. |
+| `src/charts/` | ECharts option builders (game treemaps, trend), shared by the page and the picture. |
 | `src/snapshot/` | The picture: `progress.svg` poster with the parts of the game, the PsyQ tile map and `badge.svg`. |
 | `src/theme/`, `src/styles/app.css` | Colour tokens, and the Tailwind entry that maps them. |
 | `render/snapshot.ts` | Copies the data files and writes `progress.svg`, `progress.png` and `badge.svg` into `site/`. |

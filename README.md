@@ -15,8 +15,8 @@ This repository holds only the numbers and their renderer: no source code, assem
 
 | File               | Written by                                            | Holds                                                         |
 | ------------------ | ----------------------------------------------------- | ------------------------------------------------------------- |
-| `report.json`      | `objdiff-cli report generate` (rebof3 `make report`) | Units and categories (`game`, `sdk`, `hand-asm`), bytes, fuzzy: the function list and the PsyQ map. |
-| `status.json`      | rebof3 `bin/status --json`                            | Game code (`game_code`, all copies and each body once) and every target's counts: the headline and the map. |
+| `report.json`      | `objdiff-cli report generate` (rebof3 `make report`) | Units and categories (`game`, `sdk`, `hand-asm`), bytes, fuzzy: the function list, the treemaps and the PsyQ libraries. |
+| `status.json`      | rebof3 `bin/status --json`                            | Game code (`game_code`, all copies and each body once) and every target's counts: the headline, the map and the part and image pages. |
 | `status-data.json` | rebof3 `bin/status --data`                            | Typed data per target; `raw_c` byte arrays named by address are not typed.                    |
 | `assets.json`      | the publisher, from `bin/rebof3 assets`               | Disc assets by kind: decoded, copied as stored, round trip. Program code left out.            |
 | `history.json`     | the publisher                                         | One row of headline numbers per day.                                                          |
