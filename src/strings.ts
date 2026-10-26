@@ -253,7 +253,7 @@ export const POSTER = {
     ["Drafts in C", number(q.inProgress), "game functions that do not match yet"],
     ["Not started", number(q.notStarted), "game functions still the original assembly"],
     ["Fuzzy match", `${q.fuzzy.toFixed(1)}%`, "how close the game code is, by size"],
-    ["Hand-written assembly", `${number(q.handDone)} of ${number(q.hand)}`, "units that match exactly"],
+    ["Hand-written", `${number(q.handDone)} of ${number(q.hand)}`, "assembly units that match exactly"],
   ],
   badge: "C match",
 };

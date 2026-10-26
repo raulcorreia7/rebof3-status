@@ -158,7 +158,8 @@ function libraryPanel(model: Model, x: number, y: number, width: number): Drawn 
   const libs = model.libraries.filter((lib) => lib.count > 2);
   let svg = text(x, y, POSTER.libraries, 24, C.ink);
   const peak = Math.max(...libs.map((lib) => weightOf(lib.functions)), 1);
-  const nameWidth = 70;
+  // The column fits the longest name, so a bar never runs under it.
+  const nameWidth = Math.max(...libs.map((lib) => textWidth(lib.name === "assembly" ? SDK.assemblyLibrary : lib.name, 14))) + 12;
   const barWidth = width - nameWidth - 96;
   libs.forEach((lib, index) => {
     const top = y + 40 + index * 36;
