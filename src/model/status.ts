@@ -7,16 +7,12 @@
 import { STATUS_LABEL } from "../strings.ts";
 import type { Code, Fn, Status, Tier } from "../types.ts";
 
-export type Phase = "done" | "in-progress" | "open";
-
 interface StatusRow {
   key: Status;
   /** Legend text, from strings.ts. */
   label: string;
   /** CSS colour reference, defined per theme by theme/tokens.ts. */
   color: string;
-  /** Class name for the state of the work. */
-  phase: Phase;
   /** The parts of the code where this status counts as done. */
   doneIn: readonly Fn["kind"][];
 }
@@ -25,22 +21,21 @@ interface StatusRow {
 export const statusProp = (key: string): string => `--st-${key.replaceAll("_", "-")}`;
 export const statusVar = (key: string): string => `var(${statusProp(key)})`;
 
-const row = (key: Status, phase: Phase, doneIn: readonly Fn["kind"][]): StatusRow => ({
+const row = (key: Status, doneIn: readonly Fn["kind"][]): StatusRow => ({
   key,
   label: STATUS_LABEL[key],
   color: statusVar(key),
-  phase,
   doneIn,
 });
 
 /** All statuses in tile order. */
 export const STATUS_TABLE: readonly StatusRow[] = [
-  row("pure", "done", ["game"]),
-  row("nonmatching", "in-progress", []),
-  row("open", "open", []),
-  row("object", "done", ["sdk"]),
-  row("asm", "done", ["hand"]),
-  row("assembly", "open", []),
+  row("pure", ["game"]),
+  row("nonmatching", []),
+  row("open", []),
+  row("object", ["sdk"]),
+  row("asm", ["hand"]),
+  row("assembly", []),
 ];
 
 export const STATUS = Object.fromEntries(STATUS_TABLE.map((entry) => [entry.key, entry])) as Record<Status, StatusRow>;

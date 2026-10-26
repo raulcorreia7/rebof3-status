@@ -10,7 +10,6 @@ export type Tier = "object" | "assembly";
 export type Part = "game" | "sdk" | "hand";
 
 export type Report = z.output<typeof ReportSchema>;
-export type ReportUnit = Report["units"][number];
 export type StatusData = z.output<typeof StatusDataSchema>;
 export type StatusCensus = z.output<typeof StatusCensusSchema>;
 export type StatusCensusTarget = NonNullable<StatusCensus["targets"]>[number];
