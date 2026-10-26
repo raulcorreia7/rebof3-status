@@ -1,9 +1,9 @@
-// The PsyQ library map and the game-code treemaps. ECharts draws every function on canvas; the
-// game function list is paged so a large part never creates one DOM node per function.
+// The game-code treemaps of a part or an image. ECharts draws every function on canvas; the
+// function list beside it is paged so a large part never creates one DOM node per function.
 
 import { createEffect, createMemo, createSignal, For, on, onCleanup, onMount, Show, type Accessor } from "solid-js";
 import type { ChartOption } from "../charts/register.ts";
-import { findNode, treemapOption, type MapNode, type MapRef } from "../charts/treemap.ts";
+import { treemapOption, type MapNode, type MapRef } from "../charts/treemap.ts";
 import { PAGE_STEP } from "../model/browse.ts";
 import { bytes } from "../model/format.ts";
 import { HOME } from "../model/route.ts";
@@ -16,28 +16,11 @@ import type { Views } from "../viewtypes.ts";
 import { Chart, type ChartClick } from "./Chart.tsx";
 import { Chip, StatusChip } from "./ui.tsx";
 
-type GameView = Extract<Views["treemap"], { kind: "game" }>;
+type GameView = Views["treemap"];
 const GAME_STATUSES = ["pure", "nonmatching", "open"] as const;
 
-export function Treemap(props: { data: Accessor<Views["treemap"]> }) {
-  const game = createMemo(() => {
-    const data = props.data();
-    return data.kind === "game" ? data : null;
-  });
-  return (
-    <Show when={game()} fallback={<SdkTreemap data={props.data} />}>
-      {(data) => <GameTreemap data={data} />}
-    </Show>
-  );
-}
-
-function SdkTreemap(props: { data: Accessor<Views["treemap"]> }) {
-  return (
-    <>
-      <Crumbs data={props.data} />
-      <Canvas data={props.data} />
-    </>
-  );
+export function Treemap(props: { data: Accessor<GameView> }) {
+  return <GameTreemap data={props.data} />;
 }
 
 function GameTreemap(props: { data: Accessor<GameView> }) {
@@ -70,7 +53,7 @@ function GameTreemap(props: { data: Accessor<GameView> }) {
   );
 }
 
-function Crumbs(props: { data: Accessor<Views["treemap"]> }) {
+function Crumbs(props: { data: Accessor<GameView> }) {
   const page = usePage();
   return (
     <nav class="mt-2 mb-1 text-sm" aria-label="Map zoom">
@@ -182,7 +165,7 @@ function FunctionDetails(props: { fn: Fn }) {
   );
 }
 
-function Canvas(props: { data: Accessor<Views["treemap"]>; onFunction?: (id: string) => void }) {
+function Canvas(props: { data: Accessor<GameView>; onFunction: (id: string) => void }) {
   const page = usePage();
   // Honour the system setting, including a change made while the page is open.
   const [calm, setCalm] = createSignal(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
@@ -195,25 +178,16 @@ function Canvas(props: { data: Accessor<Views["treemap"]>; onFunction?: (id: str
   // Keep the option object stable when a route change leaves the map unchanged.
   let built: { view: MapNode; tokens: Tokens; option: ChartOption } | undefined;
   const option = createMemo(() => {
-    const data = props.data();
-    const view = findNode(data.tree, data.focus);
+    const view = props.data().tree;
     const tokens = page.tokens;
     if (built && built.view === view && built.tokens === tokens) return built.option;
     built = { view, tokens, option: treemapOption(view, tokens) };
     return built.option;
   });
   const onClick = (params: ChartClick) => {
-    const current = props.data();
     const ref = params.data?.ref as MapRef | undefined;
-    if (!ref) return;
-    if (ref.kind === "fn") {
-      if (current.kind === "game") props.onFunction?.(ref.id);
-      else page.go({ view: { kind: "fn", id: ref.id } });
-    } else if (ref.kind === "image" && current.kind === "game") {
-      page.go({ ...HOME, view: { kind: "image", id: ref.id } });
-    } else if (ref.kind === "library") {
-      page.go({ lib: ref.id });
-    }
+    if (ref?.kind === "fn") props.onFunction(ref.id);
+    else if (ref?.kind === "image") page.go({ ...HOME, view: { kind: "image", id: ref.id } });
   };
   return <Chart option={option()} height={window.innerWidth < 700 ? 420 : 620} label={props.data().label} onClick={onClick} crossfade={!calm()} replace />;
 }

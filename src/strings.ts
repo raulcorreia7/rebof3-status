@@ -113,8 +113,6 @@ export const SUMMARY = {
 
 export const MAP = {
   heading: "Game code by part of the game",
-  sdkHeading: "PsyQ SDK map",
-  tabs: { tiles: "Game code", sdk: "PsyQ SDK" },
   help: "One block per part of the game, then one bar or tile per program image, biggest first. Click an image or part heading to open its treemap.",
   statusHelp:
     "Draft in C: C that builds but does not match the original yet. Not started: still the original assembly, also when a C file only includes it.",
@@ -145,12 +143,6 @@ export const MAP = {
   detailHeading: "Selected function",
   fields: { name: "Name", address: "Address", size: "Size", status: "Status", fuzzy: "Fuzzy match" },
   showMoreFunctions: (count: number) => `Show ${number(count)} more functions`,
-  scopes: { sdk: "PsyQ SDK" },
-  sdkTitle: (percent: string, done: number, total: number) => `PsyQ SDK: ${percent}% objects (${number(done)}/${number(total)})`,
-  sdkHelp: "One block per PsyQ library. Teal links from original objects and orange is kept as assembly.",
-  filterHelp: "The legend is a filter: choose statuses to light them up and dim the rest.",
-  filterClear: "Show every status",
-  textFallback: "The map is drawn on a canvas. The function browser below lists the same functions with the same filters.",
 };
 
 export const SDK = {
@@ -301,5 +293,6 @@ export const POSTER = {
   libraries: "PsyQ libraries and versions",
   libraryKey: (objects: number, assembly: number) => `${number(objects)} objects · ${number(assembly)} assembly`,
   libraryLinked: "kept as assembly",
+  sdkTitle: (percent: string, done: number, total: number) => `PsyQ SDK: ${percent}% objects (${number(done)}/${number(total)})`,
   badge: "C match",
 };

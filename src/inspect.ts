@@ -67,7 +67,7 @@ function targetBody(model: Model, target: Target): Pick<Inspector, "fields" | "b
     ],
     lists: [],
     buttons: [
-      { label: INSPECT.showOnMap, to: { view: { kind: "target", id: target.id }, map: "tiles" }, scroll: "map" },
+      { label: INSPECT.showOnMap, to: { view: { kind: "image", id: target.id } } },
       { label: INSPECT.browseTarget, to: { target: target.id, group: null, part: "all", lib: null }, scroll: "browse" },
     ],
   };

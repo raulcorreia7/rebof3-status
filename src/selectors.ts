@@ -1,18 +1,17 @@
 // Selectors: each turns the model and the route into the data one kind of view draws
 // (viewtypes.ts). They are pure, so they run in Node as well as in the page.
 
-import { BAR_HEIGHT, barOption } from "./charts/bars.ts";
 import { latest, trendOption } from "./charts/trend.ts";
-import { gameImageTree, gamePartTree, treemapTree } from "./charts/treemap.ts";
+import { gameImageTree, gamePartTree } from "./charts/treemap.ts";
 import { browse, PAGE_STEP } from "./model/browse.ts";
 import { ASSEMBLY_LIBRARY } from "./model/report.ts";
-import { bytes, bytesOf, number, percent } from "./model/format.ts";
+import { bytes, bytesOf, number, percent, plural } from "./model/format.ts";
 import { TREND_CHARTS } from "./model/history.ts";
 import { HOME, type Route } from "./model/route.ts";
 import { codeCounts, STATUS, STATUS_TABLE, TIERS } from "./model/status.ts";
 import { BROWSER, DATA, MAP, QUALITY, SDK, SUMMARY, TIER_LABEL, TREND } from "./strings.ts";
-import type { Code, Headline, Library, Status, Target } from "./types.ts";
-import type { Card, Ctx, Link, MeterRow, Part, Views } from "./viewtypes.ts";
+import type { Code, Headline, Library, Target } from "./types.ts";
+import type { Card, Ctx, MeterRow, Part, Views } from "./viewtypes.ts";
 
 // Shared pieces ---------------------------------------------------------------------------
 
@@ -132,17 +131,8 @@ const gameMapRoute = (view: Extract<Route["view"], { kind: "image" | "part" }>):
   group: null,
   sort: "address",
   dir: "asc",
-  map: "tiles",
 });
 
-
-export const mapTabs = (): Views["tabs"] => ({
-  label: MAP.heading,
-  tabs: [
-    { id: "tiles", label: MAP.tabs.tiles },
-    { id: "sdk", label: MAP.tabs.sdk },
-  ],
-});
 
 /** Game code by part of the game: each group's heading and bar, then its images, biggest first. */
 export function domains({ model }: Ctx): Views["domains"] {
@@ -181,37 +171,14 @@ export function domains({ model }: Ctx): Views["domains"] {
   return { key, keyHelp: MAP.statusHelp, groups };
 }
 
-/** The PsyQ legend; it doubles as the status filter of the SDK map. */
-export function sdkLegend({ model }: Ctx): Views["legend"] {
-  const scope: readonly Status[] = ["object", "assembly"];
-  const items = STATUS_TABLE.filter(({ key }) => scope.includes(key)).map(({ key, label, color, phase }) => {
-    const { functions, bytes: size } = model.sdk.statuses[key];
-    return { key, label, color, phase, sub: SUMMARY.statusLine(functions, percent(size, model.sdk.bytes, 1), "SDK bytes") };
-  });
-  return { variant: "legend", label: MAP.filterHelp, items, help: { text: MAP.filterHelp, clear: MAP.filterClear } };
-}
-
-export const sdkHeading = ({ model }: Ctx): string => MAP.sdkTitle(percent(model.sdk.done, model.sdk.count, 2), model.sdk.done, model.sdk.count);
-
 /** The same statuses as filter chips for the function browser. */
 export const statusChips = (): Views["legend"] => ({
-  variant: "chips",
   label: BROWSER.statusLabel,
-  items: STATUS_TABLE.map(({ key, label, color, phase }) => ({ key, label, color, phase })),
+  items: STATUS_TABLE.map(({ key, label, color }) => ({ key, label, color })),
 });
 
-/** The PsyQ SDK map: libraries, then their functions, zoomed to the library the route names. */
-export function sdkTreemap(ctx: Ctx): Views["treemap"] {
-  const { model, route, tokens } = ctx;
-  const crumbs: Link[] = [{ label: MAP.scopes.sdk, to: { lib: null } }];
-  if (route.lib) crumbs.push({ label: route.lib, to: { lib: route.lib } });
-  // A game status stays in the route but must not dim this map.
-  const statuses = route.st.filter((key) => key === "object" || key === "assembly");
-  return { kind: "sdk", tree: treemapTree(model, { tokens, statuses }), focus: route.lib ? `l:${route.lib}` : null, crumbs, label: sdkHeading(ctx) };
-}
-
 /** The selected game part or image, using report rows for per-function detail and status totals. */
-export function gameTreemap(ctx: Ctx): Views["treemap"] {
+export function gameTreemap(ctx: Ctx): Views["treemap"] | null {
   const { model, route, tokens } = ctx;
   if (route.view.kind === "part") {
     const key = route.view.key;
@@ -224,9 +191,7 @@ export function gameTreemap(ctx: Ctx): Views["treemap"] {
       ? gamePartTree(group, tokens)
       : { id: `part:${key}`, name: title, value: 0, ref: { kind: "part" as const, id: key }, tip: "", children: [] };
     return {
-      kind: "game",
       tree,
-      focus: null,
       crumbs: [{ label: MAP.heading, to: HOME }, { label: title, to: gameMapRoute({ kind: "part", key }) }],
       label: MAP.chartLabel(title, functions.length),
       title,
@@ -249,9 +214,7 @@ export function gameTreemap(ctx: Ctx): Views["treemap"] {
       ? gameImageTree(target, tokens)
       : { id: `image:${id}`, name: title, value: 0, ref: { kind: "image" as const, id }, tip: "", children: [] };
     return {
-      kind: "game",
       tree,
-      focus: null,
       crumbs: [
         { label: MAP.heading, to: HOME },
         ...(group ? [{ label: group.label, to: gameMapRoute({ kind: "part", key: group.key }) }] : []),
@@ -266,7 +229,7 @@ export function gameTreemap(ctx: Ctx): Views["treemap"] {
       reportBytes: functions.reduce((sum, fn) => sum + fn.bytes, 0),
     };
   }
-  return sdkTreemap(ctx);
+  return null;
 }
 
 // PsyQ SDK ---------------------------------------------------------------------------------
@@ -310,22 +273,25 @@ export const dataHeading = ({ model }: Ctx): string => {
   return total ? DATA.heading(percent(total.typed, total.bytes, 1), total.typed, total.bytes) : DATA.headingNone;
 };
 
-export function dataChart({ model, tokens }: Ctx): Views["chart"] {
+/** One bar per part of the game: the share of its data typed in C. */
+export function dataMeters({ model }: Ctx): Views["meters"] {
   const rows = model.groups.flatMap((group) => (group.data ? [{ label: group.label, ...group.data }] : []));
-  if (!rows.length) return null;
-  const option = barOption(
-    {
-      categories: rows.map((row) => row.label),
-      normalize: true,
-      series: [
-        { name: DATA.typed, color: tokens.status.pure, values: rows.map((row) => (100 * row.typed) / row.bytes) },
-        { name: DATA.untyped, color: tokens.track, values: rows.map((row) => (100 * (row.bytes - row.typed)) / row.bytes) },
-      ],
-      describe: (i) => `<b>${rows[i].label}</b><br>${percent(rows[i].typed, rows[i].bytes, 1)}% · ${bytesOf(rows[i].typed, rows[i].bytes)}`,
-    },
-    tokens,
-  );
-  return { option, height: rows.length * BAR_HEIGHT + 30, label: DATA.help };
+  return {
+    key: [
+      { label: DATA.typed, color: STATUS.pure.color },
+      { label: DATA.untyped, color: "var(--track)" },
+    ],
+    rows: rows.map((row) => {
+      const share = `${percent(row.typed, row.bytes, 1)}%`;
+      return {
+        label: row.label,
+        aria: `${row.label}: ${share} ${DATA.typed}, ${bytesOf(row.typed, row.bytes)}`,
+        width: 100,
+        parts: [{ width: percent(row.typed, row.bytes, 3), color: STATUS.pure.color }],
+        count: `${share} · ${bytesOf(row.typed, row.bytes)}`,
+      };
+    }),
+  };
 }
 
 export const qualityCards = ({ model }: Ctx): Views["cards"] => ({
@@ -334,14 +300,19 @@ export const qualityCards = ({ model }: Ctx): Views["cards"] => ({
   cards: QUALITY.cards(model.quality).map(([title, big, sub]) => ({ id: title, title, big, sub })),
 });
 
-export function rebuildChart({ model, tokens }: Ctx): Views["chart"] {
-  const rows = model.groups.filter((group) => group.code.draft);
-  if (!rows.length) return null;
-  const option = barOption(
-    { categories: rows.map((group) => group.label), unit: "functions", series: [{ name: STATUS.nonmatching.label, color: tokens.status.nonmatching, values: rows.map((group) => group.code.draft) }] },
-    tokens,
-  );
-  return { option, height: rows.length * BAR_HEIGHT + 30, label: QUALITY.perTargetHeading };
+/** One bar per part of the game with drafts, as long as its share of the most drafts. */
+export function draftMeters({ model }: Ctx): Views["meters"] {
+  const groups = model.groups.filter((group) => group.code.draft);
+  const peak = Math.max(...groups.map((group) => group.code.draft), 1);
+  return {
+    rows: groups.map((group) => ({
+      label: group.label,
+      aria: `${group.label}: ${plural(group.code.draft, "draft")}`,
+      width: Math.max((100 * group.code.draft) / peak, 1),
+      parts: [{ width: "100", color: STATUS.nonmatching.color }],
+      count: number(group.code.draft),
+    })),
+  };
 }
 
 export function verification({ model }: Ctx): Views["text"] {

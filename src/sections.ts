@@ -4,17 +4,14 @@
 // browser last.
 //
 // A section has an id (its anchor), a title and an optional navigation label. Its blocks are
-// drawn top to bottom. Each block names a view kind (cards, meters, text, legend, tabs, domains,
-// treemap, chart, trend, filters, table, inspector), the selector that feeds it from the model and
+// drawn top to bottom. Each block names a view kind (cards, meters, text, legend, domains, trend,
+// filters, table, inspector), the selector that feeds it from the model and
 // the route (selectors.ts, inspect.ts), and the copy around it, all from strings.ts.
 
 import { inspector } from "./inspect.ts";
 import * as pick from "./selectors.ts";
 import { BROWSER, DATA, MAP, QUALITY, SDK, SUMMARY, TREND } from "./strings.ts";
-import type { Ctx, Section } from "./viewtypes.ts";
-
-const sdkTab = ({ route }: Ctx) => route.map === "sdk";
-const gameTab = (c: Ctx) => !sdkTab(c);
+import type { Section } from "./viewtypes.ts";
 
 export const SECTIONS: Section[] = [
   {
@@ -36,13 +33,8 @@ export const SECTIONS: Section[] = [
   {
     id: "map",
     nav: "Map",
-    title: (c) => (sdkTab(c) ? MAP.sdkHeading : MAP.heading),
-    blocks: [
-      { view: "tabs", select: pick.mapTabs },
-      { view: "domains", select: pick.domains, help: MAP.help, when: gameTab },
-      { view: "legend", select: pick.sdkLegend, heading: pick.sdkHeading, help: MAP.sdkHelp, when: sdkTab },
-      { view: "treemap", select: pick.sdkTreemap, note: MAP.textFallback, when: sdkTab },
-    ],
+    title: MAP.heading,
+    blocks: [{ view: "domains", select: pick.domains, help: MAP.help }],
   },
   {
     id: "data",
@@ -50,7 +42,7 @@ export const SECTIONS: Section[] = [
     title: pick.dataHeading,
     blocks: [
       { view: "cards", select: pick.dataCards, help: SUMMARY.dataHelp, note: pick.dataNote },
-      { view: "chart", select: pick.dataChart, help: DATA.help },
+      { view: "meters", select: pick.dataMeters, help: DATA.help },
     ],
   },
   {
@@ -68,7 +60,7 @@ export const SECTIONS: Section[] = [
     title: QUALITY.heading,
     blocks: [
       { view: "cards", select: pick.qualityCards, note: (c) => QUALITY.sentence(c.model.quality) },
-      { view: "chart", select: pick.rebuildChart, heading: QUALITY.perTargetHeading, help: QUALITY.perTargetHelp },
+      { view: "meters", select: pick.draftMeters, heading: QUALITY.perTargetHeading, help: QUALITY.perTargetHelp },
       { view: "text", select: pick.verification, heading: QUALITY.verifyHeading },
       { view: "table", select: pick.auditTable },
     ],

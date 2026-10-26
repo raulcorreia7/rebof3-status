@@ -19,7 +19,6 @@ export type View =
   | { kind: "part"; key: string };
 
 export type SortKey = "address" | "size" | "name" | "status";
-export type MapTab = "tiles" | "sdk";
 
 export interface Route {
   view: View;
@@ -34,7 +33,6 @@ export interface Route {
   group: string | null;
   sort: SortKey;
   dir: "asc" | "desc";
-  map: MapTab;
 }
 
 export const HOME: Route = {
@@ -47,12 +45,10 @@ export const HOME: Route = {
   group: null,
   sort: "address",
   dir: "asc",
-  map: "tiles",
 };
 
 const SORTS: SortKey[] = ["address", "size", "name", "status"];
 const PARTS: (Part | "all")[] = ["all", "game", "sdk", "hand"];
-const MAPS: MapTab[] = ["tiles", "sdk"];
 const oneOf = <T extends string>(options: readonly T[], value: string | null, fallback: T): T =>
   options.find((option) => option === value) ?? fallback;
 
@@ -79,7 +75,6 @@ export function parseHash(hash: string): Route {
     group: params.get("g"),
     sort: oneOf(SORTS, params.get("sort"), HOME.sort),
     dir: params.get("dir") === "desc" ? "desc" : "asc",
-    map: oneOf(MAPS, params.get("map"), HOME.map),
   };
 }
 
@@ -108,7 +103,6 @@ export function formatHash(route: Route): string {
   if (route.group) params.set("g", route.group);
   if (route.sort !== HOME.sort) params.set("sort", route.sort);
   if (route.dir !== HOME.dir) params.set("dir", route.dir);
-  if (route.map !== HOME.map) params.set("map", route.map);
   const query = params.toString();
   const path = viewPath(route.view);
   return path || query ? `#${path}${query ? `?${query}` : ""}` : "";

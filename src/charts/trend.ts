@@ -70,6 +70,5 @@ export function trendOption(days: HistoryRow[], chart: TrendChart, tokens: Token
         areaStyle: { color, opacity: 0.14 },
       },
     ],
-    aria: { enabled: true, label: { description: `${chart.title}. Latest ${last}.` } },
   };
 }

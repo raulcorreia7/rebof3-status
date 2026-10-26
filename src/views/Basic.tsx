@@ -1,4 +1,4 @@
-// The simple views: cards, meters, text, legend, tabs, trend, filters and tables.
+// The simple views: cards, meters, text, legend, trend, filters and tables.
 
 import { createSignal, For, Index, onCleanup, Show, type Accessor } from "solid-js";
 import { BROWSER, SDK } from "../strings.ts";
@@ -55,7 +55,7 @@ export function Meters(props: Props<"meters">) {
         when={props.data().rows.some((row) => row.name || row.label)}
         fallback={<For each={props.data().rows}>{(row) => <Meter row={row} />}</For>}
       >
-        <ul class="my-2 grid grid-cols-[6rem_1fr_6rem] items-center gap-x-3 gap-y-0.5">
+        <ul class="my-2 grid grid-cols-[6rem_1fr_auto] items-center gap-x-3 gap-y-1 sm:grid-cols-[11rem_1fr_auto]">
           <For each={props.data().rows}>
             {(row) => (
               <li class="contents">
@@ -70,7 +70,9 @@ export function Meters(props: Props<"meters">) {
                   <BarParts parts={row.parts} />
                 </div>
                 <span class="text-right text-sm text-mute tabular-nums">{row.count}</span>
-                <span class="col-span-2 col-start-2 mb-2 text-sm text-mute">{row.note}</span>
+                <Show when={row.note}>
+                  <span class="col-span-2 col-start-2 mb-2 text-sm text-mute">{row.note}</span>
+                </Show>
               </li>
             )}
           </For>
@@ -92,80 +94,31 @@ export function Text(props: Props<"text">) {
   );
 }
 
-/** The status legend: a filter of the map (`legend`) or of the function table (`chips`). */
+/** Status chips that filter the function table. */
 export function Legend(props: Props<"legend">) {
   const page = usePage();
   const toggle = (status: Status) =>
     page.go({ st: page.route.st.includes(status) ? page.route.st.filter((key) => key !== status) : [...page.route.st, status] }, true);
-  const chips = () => props.data().variant === "chips";
-  const look = (on: boolean) => {
-    const shape = chips() ? "items-center rounded-full px-2.5 py-0.5 text-xs" : "items-start rounded-md px-2 py-0.5 text-sm";
-    const state = on ? "border-accent bg-track" : page.route.st.length && !chips() ? "opacity-60" : "";
-    return `inline-flex cursor-pointer border border-line bg-card text-left ${shape} ${state}`;
-  };
   return (
-    <div>
-      <div class={`mt-2.5 flex flex-wrap ${chips() ? "gap-1.5" : "gap-x-2 gap-y-1.5"}`} role="group" aria-label={props.data().label}>
-        <For each={props.data().items}>
-          {(item) => {
-            const on = () => page.route.st.includes(item.key);
-            return (
-              <button type="button" class={look(on())} aria-pressed={on()} onClick={() => toggle(item.key)}>
-                <Chip color={item.color} class={item.sub ? "mt-1.5 mr-1.5" : undefined} />
-                {item.sub ? (
-                  <span>
-                    {item.label}
-                    <small class="block text-xs text-mute">{item.sub}</small>
-                  </span>
-                ) : (
-                  item.label
-                )}
-              </button>
-            );
-          }}
-        </For>
-      </div>
-      <Show when={props.data().help}>
-        {(help) => (
-          <p class="my-1 text-sm text-mute">
-            {help().text}{" "}
-            <Show when={page.route.st.length}>
-              <button type="button" class="link" onClick={() => page.go({ st: [] }, true)}>
-                {help().clear}
-              </button>
-            </Show>
-          </p>
-        )}
-      </Show>
-    </div>
-  );
-}
-
-export function Tabs(props: Props<"tabs">) {
-  const page = usePage();
-  return (
-    <div class="mt-2.5 inline-flex divide-x divide-line overflow-hidden rounded-md border border-line" role="group" aria-label={props.data().label}>
-      <For each={props.data().tabs}>
-        {(tab) => {
-          const on = () => page.route.map === tab.id;
+    <div class="mt-2.5 flex flex-wrap gap-1.5" role="group" aria-label={props.data().label}>
+      <For each={props.data().items}>
+        {(item) => {
+          const on = () => page.route.st.includes(item.key);
           return (
             <button
               type="button"
-              class={`cursor-pointer px-3.5 py-1 ${on() ? "bg-accent font-semibold text-bg" : "bg-card"}`}
+              class={`inline-flex cursor-pointer items-center rounded-full border px-2.5 py-0.5 text-xs ${on() ? "border-accent bg-track" : "border-line bg-card"}`}
               aria-pressed={on()}
-              onClick={() => page.go({ map: tab.id, st: [] }, true)}
+              onClick={() => toggle(item.key)}
             >
-              {tab.label}
+              <Chip color={item.color} />
+              {item.label}
             </button>
           );
         }}
       </For>
     </div>
   );
-}
-
-export function ChartView(props: Props<"chart">) {
-  return <Show when={props.data()}>{(chart) => <Chart option={chart().option} height={chart().height} label={chart().label} />}</Show>;
 }
 
 export function Trend(props: Props<"trend">) {

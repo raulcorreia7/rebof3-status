@@ -3,8 +3,7 @@
 
 import type { ChartOption } from "./charts/register.ts";
 import type { MapNode } from "./charts/treemap.ts";
-import type { MapTab, Route, SortKey } from "./model/route.ts";
-import type { Phase } from "./model/status.ts";
+import type { Route, SortKey } from "./model/route.ts";
 import type { Tokens } from "./theme/tokens.ts";
 import type { Fn, Model, Status } from "./types.ts";
 
@@ -66,28 +65,19 @@ export interface Views {
   cards: { narrow?: boolean; small?: boolean; cards: Card[] };
   meters: { key?: { label: string; color: string }[]; rows: MeterRow[] };
   text: { paragraphs: { label?: string; text: string }[] };
-  legend: {
-    variant: "legend" | "chips";
+  /** Status filter chips. */
+  legend: { label: string; items: { key: Status; label: string; color: string }[] };
+  treemap: {
+    tree: MapNode;
+    crumbs: Link[];
     label: string;
-    items: { key: Status; label: string; color: string; phase: Phase; sub?: string }[];
-    help?: { text: string; clear: string };
+    title: string;
+    scopeId: string;
+    functions: Fn[];
+    censusFunctions: number;
+    censusBytes: number;
+    reportBytes: number;
   };
-  tabs: { label: string; tabs: { id: MapTab; label: string }[] };
-  treemap:
-    | { kind: "sdk"; tree: MapNode; focus: string | null; crumbs: Link[]; label: string }
-    | {
-        kind: "game";
-        tree: MapNode;
-        focus: null;
-        crumbs: Link[];
-        label: string;
-        title: string;
-        scopeId: string;
-        functions: Fn[];
-        censusFunctions: number;
-        censusBytes: number;
-        reportBytes: number;
-      };
   /** Game code by part of the game: a heading and a bar per group, then its images as rows or tiles. */
   domains: {
     key: { label: string; color: string; sub: string }[];
@@ -115,7 +105,6 @@ export interface Views {
       }[];
     }[];
   };
-  chart: { option: ChartOption; height: number; label: string } | null;
   trend: { charts: { id: string; title: string; value: string | null; option: ChartOption | null }[]; empty: string };
   filters: {
     search: { label: string; placeholder: string };

@@ -216,7 +216,7 @@ export function renderPoster(model: Model): string {
   const top = cards(model, MARGIN + 70);
   svg += top.svg;
 
-  const sdkTitle = MAP.sdkTitle(percent(model.sdk.done, model.sdk.count), model.sdk.done, model.sdk.count);
+  const sdkTitle = POSTER.sdkTitle(percent(model.sdk.done, model.sdk.count), model.sdk.done, model.sdk.count);
   const y = top.bottom + GAP + 6;
   const left = domainPanel(model, MARGIN, y, GAME_WIDTH);
   const right = MARGIN + GAME_WIDTH + GAP;
