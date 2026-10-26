@@ -13,7 +13,7 @@ interface StatusRow {
   label: string;
   /** CSS colour reference, defined per theme by theme/tokens.ts. */
   color: string;
-  /** The parts of the code where this status counts as done. */
+  /** The parts of the code where this status can count as done (a function also needs fuzzy 100). */
   doneIn: readonly Fn["kind"][];
 }
 
@@ -35,7 +35,8 @@ export const STATUS_TABLE: readonly StatusRow[] = [
   row("open", []),
   row("object", ["sdk"]),
   row("asm", ["hand"]),
-  row("assembly", []),
+  // An SDK unit kept as assembly is the original PsyQ code, so it is matched too.
+  row("assembly", ["sdk"]),
 ];
 
 export const STATUS = Object.fromEntries(STATUS_TABLE.map((entry) => [entry.key, entry])) as Record<Status, StatusRow>;
@@ -48,5 +49,5 @@ export const isStatus = (value: string): value is Status => Object.hasOwn(STATUS
 export const codeCounts = (code: Code): [Status, number][] =>
   ([["pure", code.exact], ["nonmatching", code.draft], ["open", code.functions - code.exact - code.draft]] as [Status, number][]).filter(([, count]) => count);
 
-/** A unit is done when it builds to the original bytes: game C, a PsyQ object or exact hand assembly. */
-export const isDone = (fn: Pick<Fn, "kind" | "status">): boolean => STATUS[fn.status].doneIn.includes(fn.kind);
+/** A function is done when it builds to the original bytes: its fuzzy match is 100. */
+export const isDone = (fn: Pick<Fn, "kind" | "status" | "fuzzy">): boolean => STATUS[fn.status].doneIn.includes(fn.kind) && fn.fuzzy === 100;

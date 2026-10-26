@@ -1,8 +1,8 @@
 // The page state that a link carries, kept in the URL hash so every view is shareable.
 
-//   #fn/exe%2Fslus_004_22%2Ffunc_8015AD00                 the home page with a function open
+//   #fn/exe%2Fslus_004_22%2Ffunc_8015AD00                 the home page with a source file open
 //   #image/emi%2Fworld00%2Farea037%2F13                   an image page (its treemap)
-//   #image/emi%2Fworld00%2Farea037%2F13?fn=...            the same with a function open
+//   #image/emi%2Fworld00%2Farea037%2F13?fn=...            the same with a source file open
 //   #part/battle                                          a part of the game page
 //   #?q=cure&st=pure,open&sort=size                       function list filters
 //   #map, #browse, ...                                    a section of the home page
@@ -21,7 +21,7 @@ export type SortKey = "address" | "size" | "name" | "status";
 
 export interface Route {
   view: View;
-  /** The function open in the side panel. */
+  /** The unit (source file) open in the side panel, by its objdiff name. */
   fn: string | null;
   /** Search words. */
   q: string;

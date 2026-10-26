@@ -1,12 +1,17 @@
 // The adapter: objdiff's report.json in, the model the page and the picture draw (types.ts) out.
-// Pure functions, so node:test covers them.
+// A report unit is a source file; its functions are what the page counts, draws and lists. Pure
+// functions, so node:test covers them.
 
 import { hex, share } from "./format.ts";
 import { compareGroups, describeGroup, groupKey } from "./groups.ts";
 import * as z from "zod/mini";
 import { ReportSchema } from "./schema.ts";
 import { STATUS, STATUSES, isDone } from "./status.ts";
-import type { Code, Fn, Group, Headline, Library, Model, Part, Report, Target, Tally, Tier } from "../types.ts";
+import type { Code, Fn, Group, Headline, Library, Model, Part, Report, Target, Tally, Tier, Unit } from "../types.ts";
+
+type ReportUnit = Report["units"][number];
+type ReportFunction = ReportUnit["functions"][number];
+type Origin = { library: string; version: string | null; tier: Tier };
 
 const CATEGORY = { game: "game", sdk: "sdk", hand: "hand-asm" } as const;
 export const ASSEMBLY_LIBRARY = "assembly";
@@ -43,8 +48,8 @@ function targetName(id: string, archives: Map<string, number>): string {
   return (archives.get(archive) ?? 1) > 1 && slot ? `${name} slot ${Number(slot)}` : name;
 }
 
-/** The address a unit name carries (`func_801D1014`, `PopMatrix@0x80178BB4`), else null. */
-function unitAddress(name: string): number | null {
+/** The absolute address a name carries (`func_801D1014`, `PopMatrix@0x80178BB4`), else null. */
+function addressOf(name: string): number | null {
   const stem = name.slice(name.lastIndexOf("/") + 1);
   const found = /^func_([0-9A-F]{8})$/.exec(stem) ?? /@0x([0-9A-Fa-f]{1,8})$/.exec(stem);
   return found ? parseInt(found[1], 16) : null;
@@ -61,22 +66,24 @@ export function unitTarget(name: string): string {
   return parts.slice(0, -1).join("/");
 }
 
-/**
- * A game unit is a draft when its C builds and objdiff matches part of it. A unit whose C only
- * includes the original assembly (INCLUDE_ASM) has a source file too, but measures 0%: not started.
- */
-function statusOf(kind: Part, complete: boolean, source: string, fuzzy: number): Fn["status"] {
-  if (kind === "game") return complete ? "pure" : source && fuzzy > 0 ? "nonmatching" : "open";
-  if (kind === "hand") return complete ? "asm" : "assembly";
-  return source ? "object" : "assembly";
+/** A function's status from its fuzzy match; a fuzzy match of 100 is the only match. */
+function statusOf(kind: Part, tier: Tier | null, fuzzy: number): Fn["status"] {
+  if (kind === "game") return fuzzy === 100 ? "pure" : fuzzy > 0 ? "nonmatching" : "open";
+  if (kind === "hand") return fuzzy === 100 ? "asm" : "assembly";
+  return tier === "object" ? "object" : "assembly";
+}
+
+/** The file's status: all functions matched, some matched, or none. */
+function unitStatus(kind: Part, functions: Fn[], matched: number, tier: Tier | null): Fn["status"] {
+  if (kind === "game") return functions.length > 0 && matched === functions.length ? "pure" : matched > 0 || functions.some((fn) => fn.status === "nonmatching") ? "nonmatching" : "open";
+  if (kind === "hand") return functions.length > 0 && matched === functions.length ? "asm" : "assembly";
+  return tier === "object" ? "object" : "assembly";
 }
 
 /** The PsyQ library and version an SDK object path names. */
-function sdkOrigin(source: string): { library: string; version: string | null; tier: Tier } {
+function sdkOrigin(source: string): Origin {
   const found = PSYQ_OBJECT.exec(source);
-  return found
-    ? { library: found[2], version: found[1], tier: "object" }
-    : { library: ASSEMBLY_LIBRARY, version: null, tier: "assembly" };
+  return found ? { library: found[2], version: found[1], tier: "object" } : { library: ASSEMBLY_LIBRARY, version: null, tier: "assembly" };
 }
 
 const category = (report: Report, id: string): Report["categories"][number] => {
@@ -91,38 +98,74 @@ const measured = (functions: Fn[], source: Report["categories"][number]): Tally 
   fuzzy: source.measures.fuzzy_match_percent ?? 0,
 });
 
-function buildFunction(unit: Report["units"][number], target: Target): Fn {
-  const part = unit.metadata.progress_categories?.[0] ?? "";
-  const kind = (Object.keys(CATEGORY) as (keyof typeof CATEGORY)[]).find((key) => CATEGORY[key] === part);
-  if (!kind) throw new Error(`report unit ${unit.name} has unknown category ${part || "(none)"}`);
-  const measures = unit.measures;
-  const complete = unit.metadata.complete === true;
-  const source = unit.metadata.source_path ?? "";
-  const bytes = measures.total_code ?? 0;
-  const fuzzy = measures.fuzzy_match_percent ?? (complete ? 100 : 0);
-  const address = unitAddress(unit.name);
-  const status = statusOf(kind, complete, source, fuzzy);
-  const origin = kind === "sdk" ? sdkOrigin(source) : null;
-  const name = unit.name.slice(target.id.length + 1);
-  const fn: Fn = {
-    id: unit.name,
+function buildFunction(fn: ReportFunction, unit: Unit, target: Target, kind: Part, origin: Origin | null): Fn {
+  const address = addressOf(fn.name);
+  const fuzzy = fn.fuzzy_match_percent ?? 0;
+  const status = statusOf(kind, origin?.tier ?? null, fuzzy);
+  const result: Fn = {
+    id: `${unit.id}#${fn.name}`,
+    unit: unit.id,
     target: target.id,
     addr: address === null ? "" : hex(address),
     address,
-    name,
-    bytes,
+    offset: Number(fn.address ?? 0),
+    name: fn.name,
+    bytes: fn.size ?? 0,
     fuzzy,
-    fuzzyReported: measures.fuzzy_match_percent !== undefined,
+    fuzzyReported: fn.fuzzy_match_percent !== undefined,
     status,
     kind,
     key: "",
-    source: source || null,
     library: origin?.library,
     tier: origin?.tier,
     version: origin?.version ?? null,
   };
-  fn.key = [fn.id, name, status, STATUS[status].label, target.name, kind, origin?.library ?? "", origin?.version ?? ""].join(" ").toLowerCase();
-  return fn;
+  result.key = [result.id, fn.name, status, STATUS[status].label, target.name, kind, unit.name, origin?.library ?? "", origin?.version ?? ""].join(" ").toLowerCase();
+  return result;
+}
+
+function buildUnit(unit: ReportUnit, target: Target): Unit {
+  const part = unit.metadata.progress_categories?.[0] ?? "";
+  const kind = (Object.keys(CATEGORY) as (keyof typeof CATEGORY)[]).find((key) => CATEGORY[key] === part);
+  if (!kind) throw new Error(`report unit ${unit.name} has unknown category ${part || "(none)"}`);
+  const source = unit.metadata.source_path ?? "";
+  const origin = kind === "sdk" ? sdkOrigin(source) : null;
+  const stem = unit.name.slice(target.id.length + 1);
+  const result: Unit = {
+    id: unit.name,
+    target: target.id,
+    name: kind === "sdk" ? stem : source || stem,
+    source: source || null,
+    kind,
+    addr: "",
+    address: null,
+    bytes: 0,
+    matched: 0,
+    matchedBytes: 0,
+    fuzzy: 0,
+    fuzzyReported: false,
+    status: "open",
+    functions: [],
+    library: origin?.library,
+    tier: origin?.tier,
+    version: origin?.version ?? null,
+  };
+  result.functions = unit.functions.map((fn) => buildFunction(fn, result, target, kind, origin));
+  result.functions.sort((a, b) => a.offset - b.offset || (a.address ?? 0) - (b.address ?? 0) || a.name.localeCompare(b.name));
+  result.bytes = result.functions.reduce((sum, fn) => sum + fn.bytes, 0);
+  result.matched = result.functions.filter(isDone).length;
+  result.matchedBytes = result.functions.filter(isDone).reduce((sum, fn) => sum + fn.bytes, 0);
+  result.fuzzy = share(result.functions.reduce((sum, fn) => sum + (fn.fuzzy * fn.bytes) / 100, 0), result.bytes);
+  result.fuzzyReported = result.functions.some((fn) => fn.fuzzyReported);
+  let address = addressOf(unit.name);
+  if (address === null) {
+    const named = result.functions.find((fn) => fn.address !== null);
+    if (named && named.address !== null) address = named.address - named.offset;
+  }
+  result.address = address;
+  result.addr = address === null ? "" : hex(address);
+  result.status = unitStatus(kind, result.functions, result.matched, origin?.tier ?? null);
+  return result;
 }
 
 function buildLibraries(functions: Fn[]): Library[] {
@@ -192,6 +235,7 @@ function buildModel(report: Report): Model {
       groupLabel: describeGroup(group).label,
       code: { functions: 0, exact: 0, draft: 0, bytes: 0, exactBytes: 0 },
       functions: [],
+      units: [],
       game: tally([]),
       all: tally([]),
     };
@@ -201,14 +245,21 @@ function buildModel(report: Report): Model {
   for (const unit of report.units) {
     const target = targetById.get(unitTarget(unit.name));
     if (!target) throw new Error(`report unit ${unit.name} does not belong to a known target`);
-    target.functions.push(buildFunction(unit, target));
+    const built = buildUnit(unit, target);
+    target.units.push(built);
+    target.functions.push(...built.functions);
   }
 
   for (const target of targets) {
     target.functions.sort((a, b) => {
-      if (a.address === null) return b.address === null ? 0 : 1;
+      if (a.address === null) return b.address === null ? a.unit.localeCompare(b.unit) || a.offset - b.offset : 1;
       if (b.address === null) return -1;
-      return a.address - b.address;
+      return a.address - b.address || a.offset - b.offset;
+    });
+    target.units.sort((a, b) => {
+      if (a.address === null) return b.address === null ? a.name.localeCompare(b.name) : 1;
+      if (b.address === null) return -1;
+      return a.address - b.address || a.name.localeCompare(b.name);
     });
     target.game = tally(target.functions.filter((fn) => fn.kind === "game"));
     target.all = tally(target.functions);
@@ -222,7 +273,8 @@ function buildModel(report: Report): Model {
   }
 
   const functions = targets.flatMap((target) => target.functions);
-  const functionById = new Map(functions.map((fn) => [fn.id, fn]));
+  const units = targets.flatMap((target) => target.units);
+  const unitById = new Map(units.map((unit) => [unit.id, unit]));
   // Within a group the biggest target leads.
   const bySize = (a: Target, b: Target) => b.code.bytes - a.code.bytes || a.name.localeCompare(b.name);
   const groups: Group[] = [...new Set(targets.map((target) => target.group))]
@@ -258,8 +310,9 @@ function buildModel(report: Report): Model {
     groups,
     targets,
     targetById,
+    units,
+    unitById,
     functions,
-    functionById,
     libraries: buildLibraries(functions.filter((fn) => fn.kind === "sdk")),
   };
 }

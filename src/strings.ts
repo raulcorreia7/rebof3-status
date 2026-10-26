@@ -91,9 +91,9 @@ export const MAP = {
 export const SDK = {
   heading: "PsyQ SDK",
   sdkText: (done: number, total: number, assembly: number) =>
-    `${number(done)} of ${number(total)} units link from original PsyQ library objects` + (assembly ? `; ${number(assembly)} are assembly only.` : "."),
+    `${number(done)} of ${number(total)} SDK functions match the original bytes` + (assembly ? `; ${number(assembly)} are assembly only.` : "."),
   handLabel: "Hand-written assembly:",
-  handText: (done: number, total: number) => `${number(done)} of ${number(total)} units match exactly. Neither counts in the game code figures.`,
+  handText: (done: number, total: number) => `${number(done)} of ${number(total)} functions match exactly. Neither counts in the game code figures.`,
   librariesHeading: "Libraries",
   help: "One bar per library. Open a library to list its functions.",
   versions: (text: string) => `from PsyQ ${text}`,
@@ -138,15 +138,17 @@ export const BROWSER = {
 };
 
 export const INSPECT = {
-  kind: "Function",
+  kind: "File",
   close: "Close",
   copyLink: "Copy link",
   copied: "Link copied",
+  match: (matched: number, total: number) => `${number(matched)} of ${number(total)} match`,
   fields: {
     address: "Address",
     ends: "Ends at",
     size: "Size",
     status: "Status",
+    functions: "Functions",
     fuzzy: "Fuzzy match",
     code: "Code",
     library: "Library",
@@ -154,14 +156,14 @@ export const INSPECT = {
     image: "Image",
     group: "Part of the game",
     source: "Source file",
-    previous: "Previous function",
-    next: "Next function",
+    previous: "Previous file",
+    next: "Next file",
   },
   code: { game: "Game code", sdk: "PsyQ SDK", hand: "Hand-written assembly" },
   noSource: "None yet: this function is still the original assembly.",
   noSourceSdk: "None: it links from the original PsyQ library.",
   noSourceAssembly: "None: it is kept as assembly.",
-  notFound: "This function is not in the data. It may have been renamed since this link was made.",
+  notFound: "This file is not in the data. It may have been renamed since this link was made.",
 };
 
 export const FOOT = {

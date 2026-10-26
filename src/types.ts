@@ -13,25 +13,56 @@ export type Report = z.output<typeof ReportSchema>;
 
 // Model ------------------------------------------------------------------------------------
 
+/** One function: the unit the page counts, draws and lists. */
 export interface Fn {
-  /** The objdiff unit name, unique. */
+  /** Unique in the model: the unit and the function name. */
   id: string;
+  /** The report unit (source file) the function belongs to; the inspector opens it. */
+  unit: string;
   target: string;
-  /** `0x` address from the unit name, or "" when the name carries none. */
+  /** `0x` absolute address from the function name, or "" when the name carries none. */
   addr: string;
   address: number | null;
+  /** Offset inside the unit, from the report. */
+  offset: number;
   name: string;
   bytes: number;
-  /** objdiff's fuzzy match of the unit, 0-100. */
+  /** objdiff's fuzzy match of the function, 0-100. A function is matched at 100. */
   fuzzy: number;
-  /** Whether the report contains a fuzzy-match measurement for this unit. */
+  /** Whether the report contains a fuzzy-match measurement for this function. */
   fuzzyReported: boolean;
   status: Status;
   kind: Part;
   /** Lower-case text the search matches. */
   key: string;
-  /** The C source or PsyQ object the unit was built from, when the report names one. */
+  library?: string;
+  tier?: Tier;
+  version?: string | null;
+}
+
+/** One report unit: a source file, the level the inspector shows. */
+export interface Unit {
+  /** The objdiff unit name, unique: the source file. */
+  id: string;
+  target: string;
+  /** The file's label: its source path for game and hand code, its symbol for the SDK. */
+  name: string;
   source: string | null;
+  kind: Part;
+  /** `0x` absolute address when the unit or one of its functions names one. */
+  addr: string;
+  address: number | null;
+  /** Sum of the function sizes: the file's code bytes. */
+  bytes: number;
+  /** Functions with a fuzzy match of 100. */
+  matched: number;
+  matchedBytes: number;
+  /** Code-byte weighted fuzzy match of the file, 0-100. */
+  fuzzy: number;
+  fuzzyReported: boolean;
+  /** What the file as a whole shows: all functions matched, some, or none. */
+  status: Status;
+  functions: Fn[];
   library?: string;
   tier?: Tier;
   version?: string | null;
@@ -49,7 +80,7 @@ export interface Tally {
   fuzzy: number;
 }
 
-/** Game functions of a target or group, from the report's units: the map's counts. */
+/** Game functions of a target or group, from the report's functions: the map's counts. */
 export interface Code {
   functions: number;
   exact: number;
@@ -64,12 +95,15 @@ export interface Target {
   name: string;
   group: string;
   groupLabel: string;
-  /** Game functions in this target: the report's units. */
+  /** Game functions in this target: the report's functions. */
   code: Code;
+  /** Every function in the target: game, PsyQ and hand-written assembly. */
   functions: Fn[];
+  /** The report units (source files) in the target. */
+  units: Unit[];
   /** Game functions in the report only. */
   game: Tally;
-  /** Every unit in the target: game, PsyQ and hand-written assembly. */
+  /** Every function in the target: game, PsyQ and hand-written assembly. */
   all: Tally;
 }
 
@@ -121,19 +155,20 @@ export interface Model {
   headline: Headline;
   /** Game code from the report, the sum of every target's code: what the map and the groups show. */
   code: Code;
-  /** Game code in the report: the functions the browser lists, and the fuzzy match. */
+  /** Game functions in the report: the functions the browser lists, and the fuzzy match. */
   game: Tally;
-  /** PsyQ units, shown apart. */
+  /** PsyQ functions, shown apart. */
   sdk: Tally;
-  /** Hand-written assembly units, shown apart. */
+  /** Hand-written assembly functions, shown apart. */
   hand: Tally;
-  /** Every unit, for the map legend. */
+  /** Every function, for the map legend. */
   all: Tally;
   quality: Quality;
   groups: Group[];
   targets: Target[];
   targetById: Map<string, Target>;
+  units: Unit[];
+  unitById: Map<string, Unit>;
   functions: Fn[];
-  functionById: Map<string, Fn>;
   libraries: Library[];
 }

@@ -81,9 +81,9 @@ function Functions(props: { data: Accessor<GamePage>; tree: Accessor<MapNode> })
               {(fn) => (
                 <li>
                   <Jump
-                    to={{ fn: fn.id }}
-                    class={`block rounded border px-2 py-1.5 text-ink hover:border-accent hover:no-underline ${page.route.fn === fn.id ? "border-accent bg-track" : "border-line bg-card"}`}
-                    aria-current={page.route.fn === fn.id}
+                    to={{ fn: fn.unit }}
+                    class={`block rounded border px-2 py-1.5 text-ink hover:border-accent hover:no-underline ${page.route.fn === fn.unit ? "border-accent bg-track" : "border-line bg-card"}`}
+                    aria-current={page.route.fn === fn.unit}
                   >
                     <span class="flex justify-between gap-2">
                       <b class="min-w-0 truncate">{fn.name}</b>
@@ -91,7 +91,7 @@ function Functions(props: { data: Accessor<GamePage>; tree: Accessor<MapNode> })
                     </span>
                     <span class="flex flex-wrap items-center justify-between gap-x-2 text-xs text-mute">
                       <span>
-                        <code>{fn.addr}</code>
+                        <code>{fn.addr || "-"}</code>
                         <Show when={props.data().inPart}> · {page.model.targetById.get(fn.target)?.name}</Show>
                       </span>
                       <StatusChip status={fn.status} />

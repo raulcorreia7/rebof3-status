@@ -37,7 +37,7 @@ const fnNode = (fn: Fn, tokens: Tokens): MapNode => ({
   id: `f:${fn.id}`,
   name: fn.name,
   value: Math.max(fn.bytes, MIN_WEIGHT),
-  ref: { kind: "fn", id: fn.id },
+  ref: { kind: "fn", id: fn.unit },
   tip: fnTip(fn),
   itemStyle: { color: tokens.status[fn.status] },
 });

@@ -13,9 +13,9 @@ game data.
 ## Data
 
 `data/report.json` is the only input: the objdiff report that rebof3 `make report` writes to
-`rebof3/build/report.json`. It carries the units and the `game`, `sdk` and `hand-asm` progress
-categories, with each unit's code bytes and fuzzy match. The page and the picture are built from
-that one file.
+`rebof3/build/report.json`. It carries source-file units with their functions, and the `game`,
+`sdk` and `hand-asm` progress categories; each function has its code bytes and fuzzy match. The
+page and the picture are built from that one file.
 
 ## Run
 

@@ -250,9 +250,9 @@ export function browserTable({ model, route, limit }: Ctx): Views["table"] {
       { label: BROWSER.columns.address, sort: "address" },
     ],
     rows: found.slice(0, limit).map((fn) => ({
-      id: fn.id,
+      id: fn.unit,
       cells: [
-        [{ text: fn.name, to: { fn: fn.id } }],
+        [{ text: fn.name, to: { fn: fn.unit } }],
         [{ text: "", status: fn.status }],
         [{ text: bytes(fn.bytes) }],
         [{ text: model.targetById.get(fn.target)?.name ?? "", to: gameMapRoute({ kind: "image", id: fn.target }) }],

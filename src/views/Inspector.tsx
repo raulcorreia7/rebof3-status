@@ -1,4 +1,4 @@
-// The side panel: the details of the function the route opens, beside any page.
+// The side panel: the details of the source file (unit) the route opens, beside any page.
 
 import { createEffect, createSignal, For, on, onCleanup, Show, type Accessor } from "solid-js";
 import { INSPECT } from "../strings.ts";

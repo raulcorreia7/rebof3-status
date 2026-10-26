@@ -90,7 +90,7 @@ const weightOf = (rows: Fn[]): number => rows.reduce((sum, row) => sum + Math.ma
 export const sorted = (rows: Fn[]): Fn[] =>
   [...rows].sort((a, b) => STATUSES.indexOf(a.status) - STATUSES.indexOf(b.status) || a.target.localeCompare(b.target) || (a.address ?? Number.MAX_SAFE_INTEGER) - (b.address ?? Number.MAX_SAFE_INTEGER));
 
-const tip = (fn: Fn): string => `${fn.id} ${fn.name} · ${STATUS[fn.status].label} · ${bytes(fn.bytes)}`;
+const tip = (fn: Fn): string => `${fn.name} · ${STATUS[fn.status].label} · ${bytes(fn.bytes)}`;
 
 function block(rows: Fn[], name: string, box: number[]): { svg: string; fitted: boolean } {
   const x = box[0] + INSET;
