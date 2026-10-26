@@ -6,7 +6,7 @@ import type { MapNode } from "./charts/treemap.ts";
 import type { MapTab, Route, SortKey } from "./model/route.ts";
 import type { Phase } from "./model/status.ts";
 import type { Tokens } from "./theme/tokens.ts";
-import type { Model, Status } from "./types.ts";
+import type { Fn, Model, Status } from "./types.ts";
 
 /** What a selector reads. The page state satisfies it. */
 export interface Ctx {
@@ -73,7 +73,21 @@ export interface Views {
     help?: { text: string; clear: string };
   };
   tabs: { label: string; tabs: { id: MapTab; label: string }[] };
-  treemap: { tree: MapNode; focus: string | null; crumbs: Link[]; label: string };
+  treemap:
+    | { kind: "sdk"; tree: MapNode; focus: string | null; crumbs: Link[]; label: string }
+    | {
+        kind: "game";
+        tree: MapNode;
+        focus: null;
+        crumbs: Link[];
+        label: string;
+        title: string;
+        scopeId: string;
+        functions: Fn[];
+        censusFunctions: number;
+        censusBytes: number;
+        reportBytes: number;
+      };
   /** Game code by part of the game: a heading and a bar per group, then its images as rows or tiles. */
   domains: {
     key: { label: string; color: string; sub: string }[];

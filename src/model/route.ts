@@ -1,10 +1,11 @@
-// The page state that a link carries, kept in the URL hash so a view can be shared.
-//
+// The page state that a link carries, kept in the URL hash so every view is shareable.
+
 //   #fn/exe%2Fslus_004_22%2Ffunc_8015AD00   open a function in the inspector
-//   #target/emi%2Fworld00%2Farea030%2F04     open a target and zoom the map to it
-//   #group/emi%2Fbattle                      zoom the map to a group
+//   #image/emi%2Fworld00%2Farea037%2F13     open an image treemap
+//   #part/battle                             open a part treemap
+//   #group/battle                            older part link, redirected to #part/battle
 //   #?q=cure&st=pure,open&sort=size          function browser filters
-//
+
 // A parameter that holds its default value is left out of the hash.
 
 import type { Part, Status } from "../types.ts";
@@ -14,7 +15,8 @@ export type View =
   | { kind: "home" }
   | { kind: "fn"; id: string }
   | { kind: "target"; id: string }
-  | { kind: "group"; key: string };
+  | { kind: "image"; id: string }
+  | { kind: "part"; key: string };
 
 export type SortKey = "address" | "size" | "name" | "status";
 export type MapTab = "tiles" | "sdk";
@@ -59,7 +61,8 @@ function parseView(path: string): View {
   const [kind, ...rest] = parts;
   if (kind === "fn" && rest.length) return { kind: "fn", id: rest.join("/") };
   if (kind === "target" && rest.length) return { kind: "target", id: rest.join("/") };
-  if (kind === "group" && rest.length) return { kind: "group", key: rest.join("/") };
+  if (kind === "image" && rest.length) return { kind: "image", id: rest.join("/") };
+  if ((kind === "part" || kind === "group") && rest.length) return { kind: "part", key: rest.join("/") };
   return { kind: "home" };
 }
 
@@ -86,8 +89,10 @@ function viewPath(view: View): string {
       return `fn/${encodeURIComponent(view.id)}`;
     case "target":
       return `target/${encodeURIComponent(view.id)}`;
-    case "group":
-      return `group/${encodeURIComponent(view.key)}`;
+    case "image":
+      return `image/${encodeURIComponent(view.id)}`;
+    case "part":
+      return `part/${encodeURIComponent(view.key)}`;
     default:
       return "";
   }

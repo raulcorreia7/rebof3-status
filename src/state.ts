@@ -34,8 +34,16 @@ export function usePage(): Page {
 
 export function createPage(model: Model): Page {
   // Route ---------------------------------------------------------------------------------
-  const [route, setRoute] = createStore<Route>(parseHash(window.location.hash));
-  const sync = () => setRoute(reconcile(parseHash(window.location.hash)));
+  const routeFromLocation = () => {
+    const current = window.location.hash;
+    const next = parseHash(current);
+    if (current.startsWith("#group/")) {
+      window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}${formatHash(next)}`);
+    }
+    return next;
+  };
+  const [route, setRoute] = createStore<Route>(routeFromLocation());
+  const sync = () => setRoute(reconcile(routeFromLocation()));
   window.addEventListener("hashchange", sync);
   window.addEventListener("popstate", sync);
   onCleanup(() => {

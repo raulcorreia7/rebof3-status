@@ -34,6 +34,8 @@ export interface Fn {
   matched: number;
   /** objdiff's fuzzy match of the unit, 0-100. */
   fuzzy: number;
+  /** Whether the report contains a fuzzy-match measurement for this unit. */
+  fuzzyReported: boolean;
   status: Status;
   kind: Part;
   /** Lower-case text the search matches. */

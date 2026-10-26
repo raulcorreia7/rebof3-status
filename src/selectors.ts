@@ -3,12 +3,12 @@
 
 import { BAR_HEIGHT, barOption } from "./charts/bars.ts";
 import { latest, trendOption } from "./charts/trend.ts";
-import { treemapTree } from "./charts/treemap.ts";
+import { gameImageTree, gamePartTree, treemapTree } from "./charts/treemap.ts";
 import { browse, PAGE_STEP } from "./model/browse.ts";
 import { ASSEMBLY_LIBRARY } from "./model/report.ts";
 import { bytes, bytesOf, number, percent } from "./model/format.ts";
 import { TREND_CHARTS } from "./model/history.ts";
-import { HOME } from "./model/route.ts";
+import { HOME, type Route } from "./model/route.ts";
 import { codeCounts, STATUS, STATUS_TABLE, TIERS } from "./model/status.ts";
 import { BROWSER, DATA, MAP, QUALITY, SDK, SUMMARY, TIER_LABEL, TREND } from "./strings.ts";
 import type { Code, Headline, Library, Status, Target } from "./types.ts";
@@ -122,6 +122,19 @@ export const apart = ({ model }: Ctx): Views["text"] => ({
 export const overviewMeter = ({ model }: Ctx): Views["meters"] => ({ rows: [codeMeter(model.code, SUMMARY.statusHeading)] });
 
 // Map --------------------------------------------------------------------------------------
+const gameMapRoute = (view: Extract<Route["view"], { kind: "image" | "part" }>): Partial<Route> => ({
+  view,
+  q: "",
+  st: [],
+  part: "all",
+  lib: null,
+  target: null,
+  group: null,
+  sort: "address",
+  dir: "asc",
+  map: "tiles",
+});
+
 
 export const mapTabs = (): Views["tabs"] => ({
   label: MAP.heading,
@@ -147,7 +160,7 @@ export function domains({ model }: Ctx): Views["domains"] {
       const line = MAP.group(group.code.exact, group.code.functions, group.code.bytes, images.length);
       return {
         key: group.key,
-        title: { label: group.label, to: { view: { kind: "group" as const, key: group.key } } },
+        title: { label: group.label, to: gameMapRoute({ kind: "part", key: group.key }) },
         note: group.note,
         percent: `${percent(group.code.exact, group.code.functions, 1)}%`,
         line,
@@ -161,7 +174,7 @@ export function domains({ model }: Ctx): Views["domains"] {
           aria: MAP.imageAria(target.name, target.code.exact, target.code.draft, target.code.functions, target.code.bytes),
           width: Math.max((100 * target.code.bytes) / peak, 2),
           parts: codeMeter(target.code, target.name).parts,
-          to: { view: { kind: "target" as const, id: target.id }, target: target.id, group: null, lib: null, part: "all" as const },
+          to: gameMapRoute({ kind: "image", id: target.id }),
         })),
       };
     });
@@ -194,7 +207,66 @@ export function sdkTreemap(ctx: Ctx): Views["treemap"] {
   if (route.lib) crumbs.push({ label: route.lib, to: { lib: route.lib } });
   // A game status stays in the route but must not dim this map.
   const statuses = route.st.filter((key) => key === "object" || key === "assembly");
-  return { tree: treemapTree(model, { tokens, statuses }), focus: route.lib ? `l:${route.lib}` : null, crumbs, label: sdkHeading(ctx) };
+  return { kind: "sdk", tree: treemapTree(model, { tokens, statuses }), focus: route.lib ? `l:${route.lib}` : null, crumbs, label: sdkHeading(ctx) };
+}
+
+/** The selected game part or image, using report rows for per-function detail and status totals. */
+export function gameTreemap(ctx: Ctx): Views["treemap"] {
+  const { model, route, tokens } = ctx;
+  if (route.view.kind === "part") {
+    const key = route.view.key;
+    const group = model.groups.find((item) => item.key === key);
+    const title = group?.label ?? key;
+    const functions = group?.targets.flatMap((target) => target.functions.filter((fn) => fn.kind === "game")) ?? [];
+    const censusFunctions = group?.code.functions ?? 0;
+    const censusBytes = group?.code.bytes ?? 0;
+    const tree = group
+      ? gamePartTree(group, tokens)
+      : { id: `part:${key}`, name: title, value: 0, ref: { kind: "part" as const, id: key }, tip: "", children: [] };
+    return {
+      kind: "game",
+      tree,
+      focus: null,
+      crumbs: [{ label: MAP.heading, to: HOME }, { label: title, to: gameMapRoute({ kind: "part", key }) }],
+      label: MAP.chartLabel(title, functions.length),
+      title,
+      scopeId: `part:${key}`,
+      functions,
+      censusFunctions,
+      censusBytes,
+      reportBytes: functions.reduce((sum, fn) => sum + fn.bytes, 0),
+    };
+  }
+  if (route.view.kind === "image") {
+    const id = route.view.id;
+    const target = model.targetById.get(id);
+    const group = target && model.groups.find((item) => item.key === target.group);
+    const title = target?.name ?? id;
+    const functions = target?.functions.filter((fn) => fn.kind === "game") ?? [];
+    const censusFunctions = target?.code.functions ?? 0;
+    const censusBytes = target?.code.bytes ?? 0;
+    const tree = target
+      ? gameImageTree(target, tokens)
+      : { id: `image:${id}`, name: title, value: 0, ref: { kind: "image" as const, id }, tip: "", children: [] };
+    return {
+      kind: "game",
+      tree,
+      focus: null,
+      crumbs: [
+        { label: MAP.heading, to: HOME },
+        ...(group ? [{ label: group.label, to: gameMapRoute({ kind: "part", key: group.key }) }] : []),
+        { label: title, to: gameMapRoute({ kind: "image", id }) },
+      ],
+      label: MAP.chartLabel(title, functions.length),
+      title,
+      scopeId: `image:${id}`,
+      functions,
+      censusFunctions,
+      censusBytes,
+      reportBytes: functions.reduce((sum, fn) => sum + fn.bytes, 0),
+    };
+  }
+  return sdkTreemap(ctx);
 }
 
 // PsyQ SDK ---------------------------------------------------------------------------------

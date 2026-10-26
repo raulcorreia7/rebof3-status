@@ -2,7 +2,9 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { test } from "node:test";
 import { modelFromFiles } from "../src/model/report.ts";
+import { gameImageTree } from "../src/charts/treemap.ts";
 import { AssetCensusSchema, ReportSchema, StatusCensusSchema, StatusDataSchema } from "../src/model/schema.ts";
+import { DARK } from "../src/theme/tokens.ts";
 import { STATUSES } from "../src/model/status.ts";
 
 const read = (name: string): unknown => JSON.parse(readFileSync(new URL(`./fixtures/${name}`, import.meta.url), "utf8"));
@@ -78,3 +80,9 @@ test("a target never reports more typed bytes than its data payload", () => {
   for (const target of model.targets) if (target.data) assert.ok(target.data.typed <= target.data.bytes, target.id);
 });
 
+test("zero-byte game functions keep a one-byte treemap weight", () => {
+  const fn = model.functions.find((row) => row.kind === "game")!;
+  const target = model.targetById.get(fn.target)!;
+  const tree = gameImageTree({ ...target, functions: [{ ...fn, bytes: 0 }] }, DARK);
+  assert.equal(tree.children?.[0]?.value, 1);
+});

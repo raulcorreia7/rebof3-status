@@ -1,17 +1,20 @@
-// The PsyQ SDK map: a treemap of libraries > functions, sized by code bytes and coloured by
-// status. Pure option builders; views/Treemap.tsx draws them.
+// The PsyQ SDK and the game: treemaps of libraries or game functions, sized by code bytes.
+// Pure option builders; views/Treemap.tsx draws them.
 
 import { TIER_LABEL } from "../strings.ts";
 import { STATUS } from "../model/status.ts";
-import type { Fn, Model, Status } from "../types.ts";
+import type { Fn, Group, Model, Status, Target } from "../types.ts";
 import { bytes, escapeText, number, percent } from "../model/format.ts";
 import type { Tokens } from "../theme/tokens.ts";
 import type { ChartOption } from "./register.ts";
 
-/** A function counts for at least this many bytes so a stub still gets a visible rectangle. */
-const MIN_BYTES = 64;
 
-export type MapRef = { kind: "library" | "fn"; id: string };
+/** SDK stubs keep a small visible area; game functions use one byte only for zero-sized rows. */
+const MIN_BYTES = 64;
+const MIN_GAME_WEIGHT = 1;
+
+export type MapRef = { kind: "library" | "part" | "image" | "fn"; id: string };
+
 
 export interface MapNode {
   id: string;
@@ -32,20 +35,66 @@ interface MapStyle {
   statuses: Status[];
 }
 
-const fnTip = (fn: Fn): string => {
-  const tier = fn.tier ? ` · ${escapeText(TIER_LABEL[fn.tier])}${fn.version ? ` (PsyQ ${escapeText(fn.version)})` : ""}` : "";
-  return `<b>${escapeText(fn.name)}</b><br>${escapeText(fn.id)}<br>${escapeText(STATUS[fn.status].label)}${tier} · ${bytes(fn.bytes)}`;
-};
+const fnTip = (fn: Fn): string =>
+  [
+    `<b>${escapeText(fn.name)}</b>`,
+    `Address: ${escapeText(fn.addr || "not in unit name")}`,
+    `Size: ${escapeText(bytes(fn.bytes))}`,
+    `Status: ${escapeText(STATUS[fn.status].label)}`,
+    fn.fuzzyReported ? `Fuzzy match: ${escapeText(`${fn.fuzzy.toFixed(1)}%`)}` : "",
+  ]
+    .filter(Boolean)
+    .join("<br>");
 
-function fnNode(fn: Fn, { tokens, statuses }: MapStyle): MapNode {
+function fnNode(fn: Fn, { tokens, statuses }: MapStyle, minimumWeight = MIN_BYTES): MapNode {
   const lit = !statuses.length || statuses.includes(fn.status);
   return {
     id: nodeId({ kind: "fn", id: fn.id }),
     name: fn.name,
-    value: Math.max(fn.bytes, MIN_BYTES),
+    value: Math.max(fn.bytes, minimumWeight),
     ref: { kind: "fn", id: fn.id },
     tip: fnTip(fn),
     itemStyle: { color: lit ? tokens.status[fn.status] : tokens.track },
+  };
+}
+/** A part's game functions, grouped into images. */
+export function gamePartTree(group: Group, tokens: Tokens): MapNode {
+  const images = group.targets
+    .map((target) => {
+      const children = target.functions
+        .filter((fn) => fn.kind === "game")
+        .map((fn) => fnNode(fn, { tokens, statuses: [] }, MIN_GAME_WEIGHT));
+      return {
+        id: nodeId({ kind: "image", id: target.id }),
+        name: target.name,
+        value: children.reduce((sum, child) => sum + child.value, 0),
+        ref: { kind: "image" as const, id: target.id },
+        tip: `<b>${escapeText(target.name)}</b><br>${number(target.code.functions)} game functions · ${escapeText(bytes(target.code.bytes))} from status.json`,
+        children,
+      };
+    })
+    .filter((image) => image.children.length);
+  return {
+    id: `part:${group.key}`,
+    name: group.label,
+    value: images.reduce((sum, image) => sum + image.value, 0),
+    ref: { kind: "part", id: group.key },
+    tip: "",
+    children: images,
+  };
+}
+
+export function gameImageTree(target: Target, tokens: Tokens): MapNode {
+  const children = target.functions
+    .filter((fn) => fn.kind === "game")
+    .map((fn) => fnNode(fn, { tokens, statuses: [] }, MIN_GAME_WEIGHT));
+  return {
+    id: `image:${target.id}`,
+    name: target.name,
+    value: children.reduce((sum, child) => sum + child.value, 0),
+    ref: { kind: "image", id: target.id },
+    tip: `<b>${escapeText(target.name)}</b><br>${number(target.code.functions)} game functions · ${escapeText(bytes(target.code.bytes))} from status.json`,
+    children,
   };
 }
 
@@ -124,7 +173,7 @@ export function treemapOption(view: MapNode, tokens: Tokens): ChartOption {
         upperLabel: upper,
         // Depth 0 is the hidden root. At the top each library frames its functions, which are too
         // small to name; zoomed into one library, the functions are named.
-        levels: view.id === ROOT_ID ? [hidden, parent, leaf(false)] : [hidden, leaf(true)],
+        levels: view.ref.kind === "part" ? [hidden, parent, leaf(true)] : view.id === ROOT_ID ? [hidden, parent, leaf(false)] : [hidden, leaf(true)],
         data: view.children,
       },
     ],

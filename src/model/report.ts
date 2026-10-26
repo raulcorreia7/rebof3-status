@@ -109,10 +109,10 @@ function buildFunction(unit: Report["units"][number], target: string, targetLabe
   const bytes = measures.total_code ?? 0;
   const matched = measures.matched_code ?? 0;
   const fuzzy = measures.fuzzy_match_percent ?? (complete ? 100 : 0);
-  const name = unit.name.slice(target.length + 1);
   const address = unitAddress(unit.name);
   const status = statusOf(kind, complete, source, fuzzy);
   const origin = kind === "sdk" ? sdkOrigin(source) : null;
+  const name = unit.name.slice(target.length + 1);
   const fn: Fn = {
     id: unit.name,
     target,
@@ -122,6 +122,7 @@ function buildFunction(unit: Report["units"][number], target: string, targetLabe
     bytes,
     matched: matched || (complete ? bytes : 0),
     fuzzy,
+    fuzzyReported: measures.fuzzy_match_percent !== undefined,
     status,
     kind,
     key: "",

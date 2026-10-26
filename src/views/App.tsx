@@ -12,6 +12,7 @@ import { ChartView, Cards, Filters, Legend, Meters, Table, Tabs, Text, Trend } f
 import { Domains } from "./Domains.tsx";
 import { Inspector } from "./Inspector.tsx";
 import { scrollToSection } from "./scroll.ts";
+import { gameTreemap } from "../selectors.ts";
 import { Treemap } from "./Treemap.tsx";
 
 type ViewMap = { [K in ViewKind]: Component<{ data: () => Views[K] }> };
@@ -43,6 +44,11 @@ export function App(props: { model: Model }) {
 
 function Layout() {
   const page = usePage();
+  const gameMap = createMemo(() => {
+    const kind = page.route.view.kind;
+    return kind === "part" || kind === "image" ? gameTreemap(page) : null;
+  });
+  const inspectorOpen = () => page.route.view.kind === "fn" || page.route.view.kind === "target";
   return (
     <>
       <a
@@ -56,16 +62,19 @@ function Layout() {
         Skip to the overview
       </a>
       <div class="flex items-start">
-        {/* Below xl the inspector is a sheet over the bottom of the page; leave room to scroll past it. */}
-        <main id="content" class={`mx-auto max-w-5xl min-w-0 flex-1 px-4 pt-5 pb-16 ${page.route.view.kind !== "home" ? "max-xl:pb-[64vh]" : ""}`}>
+        <main id="content" class={`mx-auto max-w-5xl min-w-0 flex-1 px-4 pt-5 pb-16 ${inspectorOpen() ? "max-xl:pb-[64vh]" : ""}`}>
           <Header />
-          <For each={SECTIONS.filter((section) => section.where !== "aside")}>{(section) => <SectionView section={section} />}</For>
+          <Show when={gameMap()} fallback={<For each={SECTIONS.filter((section) => section.where !== "aside")}>{(section) => <SectionView section={section} />}</For>}>
+            {(data) => <Treemap data={data} />}
+          </Show>
           <p class="mt-10 text-sm text-mute">
             {FOOT.generated} <a href="report.json">report.json</a>
             {FOOT.doNotEdit}
           </p>
         </main>
-        <For each={SECTIONS.filter((section) => section.where === "aside")}>{(section) => <For each={section.blocks}>{(block) => <BlockView block={block} />}</For>}</For>
+        <Show when={!gameMap()}>
+          <For each={SECTIONS.filter((section) => section.where === "aside")}>{(section) => <For each={section.blocks}>{(block) => <BlockView block={block} />}</For>}</For>
+        </Show>
       </div>
     </>
   );
@@ -88,21 +97,23 @@ function Header() {
         </a>
         . {HEAD.getThe} <a href="report.json">{HEAD.data}</a> {HEAD.or} <a href="progress.png">{HEAD.picture}</a>.
       </p>
-      <nav class="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm" aria-label="Sections">
-        <For each={SECTIONS.filter((section) => section.nav)}>
-          {(section) => (
-            <a
-              href={`#${section.id}`}
-              onClick={(event) => {
-                event.preventDefault();
-                scrollToSection(section.id);
-              }}
-            >
-              {section.nav}
-            </a>
-          )}
-        </For>
-      </nav>
+      <Show when={page.route.view.kind !== "part" && page.route.view.kind !== "image"}>
+        <nav class="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm" aria-label="Sections">
+          <For each={SECTIONS.filter((section) => section.nav)}>
+            {(section) => (
+              <a
+                href={`#${section.id}`}
+                onClick={(event) => {
+                  event.preventDefault();
+                  scrollToSection(section.id);
+                }}
+              >
+                {section.nav}
+              </a>
+            )}
+          </For>
+        </nav>
+      </Show>
     </header>
   );
 }

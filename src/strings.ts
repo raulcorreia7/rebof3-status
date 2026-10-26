@@ -115,8 +115,7 @@ export const MAP = {
   heading: "Game code by part of the game",
   sdkHeading: "PsyQ SDK map",
   tabs: { tiles: "Game code", sdk: "PsyQ SDK" },
-  help:
-    "One block per part of the game, then one bar or tile per program image, biggest first. Each bar counts functions. Choose an image to see its functions.",
+  help: "One block per part of the game, then one bar or tile per program image, biggest first. Click an image or part heading to open its treemap.",
   statusHelp:
     "Draft in C: C that builds but does not match the original yet. Not started: still the original assembly, also when a C file only includes it.",
   key: (functions: number, size: number | null) => (size === null ? plural(functions, "function") : `${plural(functions, "function")} · ${bytes(size)}`),
@@ -124,6 +123,28 @@ export const MAP = {
   image: (done: number, total: number) => `${number(done)} of ${number(total)}`,
   imageAria: (name: string, done: number, draft: number, total: number, size: number) =>
     `${name}: ${number(done)} of ${plural(total, "function")} rebuilt in C, ${number(draft)} draft, ${bytes(size)}`,
+  back: "Back to sections",
+  chartLabel: (title: string, functions: number) => `${title}: treemap of ${number(functions)} report function rows`,
+  functionHeading: (count: number) => `Functions in report.json (${number(count)})`,
+  functionSource: "status.json has no per-function rows. report.json supplies names, addresses, code-byte sizes, C status and fuzzy match when present; the treemap and list use the same rows. Zero-byte rows get a 1-byte display weight.",
+  scopeSummary: (statusFunctions: number, statusBytes: number, reportFunctions: number, reportBytes: number) =>
+    `${number(statusFunctions)} game functions · ${bytes(statusBytes)} from status.json; ${number(reportFunctions)} report rows · ${bytes(reportBytes)} from report.json.`,
+  coverage: (reportFunctions: number, statusFunctions: number, reportBytes: number, statusBytes: number) => {
+    const functionNote =
+      reportFunctions < statusFunctions
+        ? `${number(statusFunctions - reportFunctions)} fewer per-function rows in report.json than game functions counted by status.json.`
+        : reportFunctions > statusFunctions
+          ? `${number(reportFunctions - statusFunctions)} more per-function rows in report.json than game functions counted by status.json.`
+          : `report.json and status.json count the same number of game functions.`;
+    if (reportBytes === statusBytes) return functionNote;
+    const difference = reportBytes > statusBytes ? reportBytes - statusBytes : statusBytes - reportBytes;
+    const direction = reportBytes > statusBytes ? "more" : "less";
+    return `${functionNote} Report rows sum to ${bytes(reportBytes)}, ${bytes(difference)} ${direction} than status.json's ${bytes(statusBytes)}.`;
+  },
+  listEmpty: "No per-function rows in report.json.",
+  detailHeading: "Selected function",
+  fields: { name: "Name", address: "Address", size: "Size", status: "Status", fuzzy: "Fuzzy match" },
+  showMoreFunctions: (count: number) => `Show ${number(count)} more functions`,
   scopes: { sdk: "PsyQ SDK" },
   sdkTitle: (percent: string, done: number, total: number) => `PsyQ SDK: ${percent}% objects (${number(done)}/${number(total)})`,
   sdkHelp: "One block per PsyQ library. Teal links from original objects and orange is kept as assembly.",
@@ -234,7 +255,6 @@ export const INSPECT = {
   copied: "Link copied",
   function: "Function",
   target: "Image",
-  group: "Part of the game",
   fields: {
     name: "Name",
     address: "Address",

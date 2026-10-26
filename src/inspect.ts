@@ -1,5 +1,4 @@
-// The inspector's selector: everything the report knows about the function, target or group
-// the route names.
+// The inspector's selector: details for the function or target named by the route.
 
 import { bytes, hex, number, percent } from "./model/format.ts";
 import { findFunction, neighbours, sourceUrl } from "./model/index.ts";
@@ -7,8 +6,8 @@ import { ASSEMBLY_LIBRARY } from "./model/report.ts";
 import { codeCounts } from "./model/status.ts";
 import { codeMeter } from "./selectors.ts";
 import { INSPECT, SDK, SITE, SUMMARY, TIER_LABEL } from "./strings.ts";
-import type { Code, Fn, Group, Model, Target } from "./types.ts";
-import type { Ctx, Link, Part, Views } from "./viewtypes.ts";
+import type { Code, Fn, Model, Target } from "./types.ts";
+import type { Ctx, Part, Views } from "./viewtypes.ts";
 
 const F = INSPECT.fields;
 type Inspector = NonNullable<Views["inspector"]>;
@@ -74,25 +73,10 @@ function targetBody(model: Model, target: Target): Pick<Inspector, "fields" | "b
   };
 }
 
-function groupBody(group: Group): Pick<Inspector, "fields" | "buttons" | "lists" | "meter" | "note" | "statuses"> {
-  const items: (Link & { side: string })[] = group.targets.map((target) => ({
-    label: target.name,
-    to: { view: { kind: "target", id: target.id }, target: target.id, group: null, lib: null, part: "all" },
-    side: target.code.functions ? `${number(target.code.exact)} / ${number(target.code.functions)}` : "data only",
-  }));
-  return {
-    note: group.note,
-    meter: codeMeter(group.code, group.label),
-    statuses: codeStatuses(group.code),
-    fields: [field(F.functions, text(INSPECT.functions(group.code.exact, group.code.functions, percent(group.code.exact, group.code.functions, 1)))), field(F.bytes, text(SUMMARY.ofBytes(group.code.exactBytes, group.code.bytes)))],
-    lists: [{ heading: F.targets, items }],
-    buttons: [{ label: INSPECT.browseTarget, to: { group: group.key, target: null, lib: null, part: "game" }, scroll: "browse" }],
-  };
-}
 
 export function inspector({ model, route }: Ctx): Views["inspector"] {
   const view = route.view;
-  if (view.kind === "home") return null;
+  if (view.kind === "home" || view.kind === "image" || view.kind === "part") return null;
   const empty = { fields: [], lists: [], buttons: [] };
   if (view.kind === "fn") {
     const fn = findFunction(model, view.id);
@@ -101,12 +85,7 @@ export function inspector({ model, route }: Ctx): Views["inspector"] {
       ? { ...base, title: fn.name, ...functionBody(model, fn) }
       : { ...base, title: view.id, ...empty, message: INSPECT.notFound };
   }
-  if (view.kind === "target") {
-    const target = model.targetById.get(view.id);
-    const base = { view: "target", kind: INSPECT.target };
-    return target ? { ...base, title: target.name, ...targetBody(model, target) } : { ...base, title: view.id, ...empty, message: INSPECT.notFound };
-  }
-  const group = model.groups.find((g) => g.key === view.key);
-  const base = { view: "group", kind: INSPECT.group };
-  return group ? { ...base, title: group.label, ...groupBody(group) } : { ...base, title: view.key, ...empty, message: INSPECT.notFound };
+  const target = model.targetById.get(view.id);
+  const base = { view: "target", kind: INSPECT.target };
+  return target ? { ...base, title: target.name, ...targetBody(model, target) } : { ...base, title: view.id, ...empty, message: INSPECT.notFound };
 }
