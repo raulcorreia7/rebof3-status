@@ -3,29 +3,16 @@
 // overlays). Plain DOM, one element per image, so every name is real text.
 
 import { For, Show, type Accessor } from "solid-js";
-import { usePage } from "../state.ts";
 import type { Views } from "../viewtypes.ts";
-import { BarParts, Chip, Jump, Meter } from "./ui.tsx";
+import { BarParts, Jump, Meter, StatusKey } from "./ui.tsx";
 
 type Group = Views["domains"]["groups"][number];
-type Image = Group["images"][number];
 
 export function Domains(props: { data: Accessor<Views["domains"]> }) {
   return (
     <>
-      <ul class="mt-3 flex flex-wrap gap-x-6 gap-y-2">
-        <For each={props.data().key}>
-          {(item) => (
-            <li class="flex items-start">
-              <Chip color={item.color} class="mt-1.5 mr-2" />
-              <span>
-                {item.label}
-                <span class="block text-sm text-mute">{item.sub}</span>
-              </span>
-            </li>
-          )}
-        </For>
-      </ul>
+      <StatusKey items={props.data().key} />
+      <Meter row={props.data().meter} class="my-3 h-3.5" />
       <p class="mt-2 text-sm text-mute">{props.data().keyHelp}</p>
       <For each={props.data().groups}>{(group) => <GroupBlock group={group} />}</For>
     </>
@@ -33,8 +20,6 @@ export function Domains(props: { data: Accessor<Views["domains"]> }) {
 }
 
 function GroupBlock(props: { group: Group }) {
-  const page = usePage();
-  const current = (image: Image) => page.route.view.kind === "target" && page.route.view.id === image.id;
   return (
     <div class="mt-8" data-group={props.group.key}>
       <div class="flex flex-wrap items-baseline gap-x-3">
@@ -53,7 +38,7 @@ function GroupBlock(props: { group: Group }) {
             <For each={props.group.images}>
               {(image) => (
                 <li class="contents">
-                  <Jump to={image.to} class="truncate aria-current:font-semibold" title={image.id} aria-current={current(image)}>
+                  <Jump to={image.to} class="truncate" title={image.id}>
                     {image.label}
                   </Jump>
                   <div class="bar h-3" style={{ width: `${image.width}%` }} role="img" aria-label={image.aria}>
@@ -74,10 +59,10 @@ function GroupBlock(props: { group: Group }) {
               <li>
                 <Jump
                   to={image.to}
-                  class="block h-full rounded-md border border-line bg-card px-2 py-1.5 text-ink hover:border-accent hover:no-underline aria-current:border-accent"
+                  class="block h-full rounded-md border border-line bg-card px-2 py-1.5 text-ink hover:border-accent hover:no-underline"
                   title={image.id}
                   aria-label={image.aria}
-                  aria-current={current(image)}
+                 
                 >
                   <span class="block text-xs/tight font-medium break-words">{image.label}</span>
                   <span class="bar my-1 h-1.5" aria-hidden="true">

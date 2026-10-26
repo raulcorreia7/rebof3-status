@@ -1,12 +1,12 @@
 // The page, as data. App draws this list in order: to add, remove or reorder a section, edit it.
-// The order follows the headline, most important first: game code (with its map by part of the
-// game), game data, assets; then quality and trend; the PsyQ SDK, which is not counted, and the
-// browser last.
+// The order follows the headline, most important first: game code and its parts of the game, game
+// data, assets; then match quality and progress; the PsyQ SDK, which is not counted; the function
+// list last. Each number has one home: the overview cards are not repeated below.
 //
-// A section has an id (its anchor), a title and an optional navigation label. Its blocks are
-// drawn top to bottom. Each block names a view kind (cards, meters, text, legend, domains, trend,
-// filters, table, inspector), the selector that feeds it from the model and
-// the route (selectors.ts, inspect.ts), and the copy around it, all from strings.ts.
+// A section has an id (its anchor, #map), a title (also its link in the page navigation) and
+// blocks drawn top to bottom. Each block names a view kind (cards, meters, text, legend, domains,
+// trend, filters, table, inspector), the selector that feeds it from the model and the route
+// (selectors.ts, inspect.ts), and the copy around it, all from strings.ts.
 
 import { inspector } from "./inspect.ts";
 import * as pick from "./selectors.ts";
@@ -16,38 +16,29 @@ import type { Section } from "./viewtypes.ts";
 export const SECTIONS: Section[] = [
   {
     id: "overview",
-    nav: "Overview",
-    title: "Overview",
+    title: SUMMARY.overviewHeading,
     blocks: [{ view: "cards", select: pick.overviewCards }],
   },
   {
     id: "game",
-    nav: "Game code",
     title: SUMMARY.gameHeading,
-    blocks: [
-      { view: "cards", select: pick.gameCards, help: SUMMARY.gameHelp, note: SUMMARY.footnote },
-      { view: "text", select: pick.apart },
-      { view: "meters", select: pick.overviewMeter, heading: SUMMARY.statusHeading },
-    ],
+    blocks: [{ view: "cards", select: pick.gameCards, help: SUMMARY.gameHelp, note: SUMMARY.footnote }],
   },
   {
     id: "map",
-    nav: "Map",
     title: MAP.heading,
     blocks: [{ view: "domains", select: pick.domains, help: MAP.help }],
   },
   {
     id: "data",
-    nav: "Game data",
-    title: pick.dataHeading,
+    title: SUMMARY.dataHeading,
     blocks: [
       { view: "cards", select: pick.dataCards, help: SUMMARY.dataHelp, note: pick.dataNote },
-      { view: "meters", select: pick.dataMeters, help: DATA.help },
+      { view: "meters", select: pick.dataMeters, heading: DATA.partsHeading, help: DATA.help },
     ],
   },
   {
     id: "assets",
-    nav: "Assets",
     title: SUMMARY.assetsHeading,
     blocks: [
       { view: "cards", select: pick.assetCards, help: SUMMARY.assetsHelp },
@@ -56,10 +47,8 @@ export const SECTIONS: Section[] = [
   },
   {
     id: "quality",
-    nav: "Quality",
     title: QUALITY.heading,
     blocks: [
-      { view: "cards", select: pick.qualityCards, note: (c) => QUALITY.sentence(c.model.quality) },
       { view: "meters", select: pick.draftMeters, heading: QUALITY.perTargetHeading, help: QUALITY.perTargetHelp },
       { view: "text", select: pick.verification, heading: QUALITY.verifyHeading },
       { view: "table", select: pick.auditTable },
@@ -67,19 +56,19 @@ export const SECTIONS: Section[] = [
   },
   {
     id: "trend",
-    nav: "Trend",
     title: TREND.heading,
     blocks: [{ view: "trend", select: pick.trend, help: TREND.help }],
   },
   {
     id: "sdk",
-    nav: "PsyQ SDK",
     title: SDK.heading,
-    blocks: [{ view: "meters", select: pick.sdkLibraries, help: SDK.help, note: pick.sdkKeyLine }],
+    blocks: [
+      { view: "text", select: pick.apart },
+      { view: "meters", select: pick.sdkLibraries, heading: SDK.librariesHeading, help: SDK.help },
+    ],
   },
   {
     id: "browse",
-    nav: "Functions",
     title: BROWSER.heading,
     blocks: [
       { view: "filters", select: pick.browserFilters },
@@ -89,7 +78,7 @@ export const SECTIONS: Section[] = [
   },
   {
     id: "inspector",
-    title: "Details",
+    title: "",
     where: "aside",
     blocks: [{ view: "inspector", select: inspector }],
   },

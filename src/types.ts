@@ -45,7 +45,6 @@ export interface Fn {
   library?: string;
   tier?: Tier;
   version?: string | null;
-  score?: number | null;
 }
 
 export interface Tally {

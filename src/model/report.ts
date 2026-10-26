@@ -130,7 +130,6 @@ function buildFunction(unit: Report["units"][number], target: string, targetLabe
     library: origin?.library,
     tier: origin?.tier,
     version: origin?.version ?? null,
-    score: kind === "sdk" ? fuzzy : null,
   };
   fn.key = [fn.id, name, status, STATUS[status].label, targetLabel, kind, origin?.library ?? "", origin?.version ?? ""].join(" ").toLowerCase();
   return fn;

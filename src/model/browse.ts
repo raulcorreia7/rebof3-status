@@ -13,14 +13,12 @@ const words = (query: string): string[] => query.toLowerCase().split(/\s+/).filt
 export function browse(model: Model, route: Route): Fn[] {
   const needed = words(route.q);
   const targetOrder = new Map(model.targets.map((target, index) => [target.id, index]));
-  const groupOf = (fn: Fn) => model.targetById.get(fn.target)?.group;
   const found = model.functions.filter(
     (fn) =>
       (route.part === "all" || fn.kind === route.part) &&
       (!route.st.length || route.st.includes(fn.status)) &&
       (!route.lib || fn.library === route.lib) &&
       (!route.target || fn.target === route.target) &&
-      (!route.group || groupOf(fn) === route.group) &&
       needed.every((word) => fn.key.includes(word)),
   );
   const byAddress = (a: Fn, b: Fn) =>

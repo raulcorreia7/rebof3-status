@@ -13,7 +13,6 @@
   --mute: #8b949e;
   --accent: #58a6ff;
   --track: #21262d;
-  --danger: #f85149;
 }
 
 @theme inline {
@@ -24,7 +23,6 @@
   --color-mute: var(--mute);
   --color-accent: var(--accent);
   --color-track: var(--track);
-  --color-danger: var(--danger);
   --font-sans: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 

@@ -31,9 +31,6 @@ export interface Part {
   url?: string;
   code?: boolean;
   mute?: boolean;
-  /** Draw as a muted line of its own. */
-  small?: boolean;
-  pill?: "ok" | "bad";
   status?: Status;
   /** Start on a new line. */
   br?: boolean;
@@ -61,28 +58,18 @@ export interface Card {
 }
 
 export interface Views {
-  /** `narrow` fits more cards to a row; `small` draws smaller numbers. */
-  cards: { narrow?: boolean; small?: boolean; cards: Card[] };
+  cards: { cards: Card[] };
   meters: { key?: { label: string; color: string }[]; rows: MeterRow[] };
   text: { paragraphs: { label?: string; text: string }[] };
   /** Status filter chips. */
   legend: { label: string; items: { key: Status; label: string; color: string }[] };
-  treemap: {
-    tree: MapNode;
-    crumbs: Link[];
-    label: string;
-    title: string;
-    scopeId: string;
-    functions: Fn[];
-    censusFunctions: number;
-    censusBytes: number;
-    reportBytes: number;
-  };
   /** Game code by part of the game: a heading and a bar per group, then its images as rows or tiles. */
   domains: {
     key: { label: string; color: string; sub: string }[];
     /** What the statuses mean, under the key. */
     keyHelp: string;
+    /** All game code, under the key. */
+    meter: MeterRow;
     groups: {
       key: string;
       title: Link;
@@ -130,21 +117,33 @@ export interface Views {
     /** Wrap the table in a closed disclosure with this summary. */
     disclosure?: string;
   };
-  inspector: {
-    view: string;
-    kind: string;
-    title: string;
-    note?: string;
-    meter?: MeterRow;
-    statuses?: { status: Status; count: string }[];
-    fields: { label: string; value: Part[] }[];
-    lists: { heading: string; items: (Link & { side: string })[] }[];
-    buttons: Link[];
-    message?: string;
-  } | null;
+  inspector: { title: string; fields: { label: string; value: Part[] }[]; message?: string } | null;
 }
 
 export type ViewKind = keyof Views;
+
+/** A part of the game or an image page: its counts, then its functions as a treemap and a list. */
+export interface GamePage {
+  title: string;
+  /** From the map down to this page; the last one is the page itself. */
+  crumbs: Link[];
+  found: boolean;
+  /** Why the page is empty. */
+  message?: string;
+  percent: string;
+  line: string;
+  meter: MeterRow | null;
+  key: { label: string; color: string; sub: string }[];
+  note: string;
+  facts: { label: string; value: Part[] }[];
+  /** Says how the report's functions differ from the counts; empty when they agree. */
+  coverage: string;
+  tree: MapNode | null;
+  /** The report's game functions, the treemap's leaves. */
+  functions: Fn[];
+  /** The page holds several images, so each function names its image. */
+  inPart: boolean;
+}
 export type Copy = string | ((c: Ctx) => string);
 
 /** One block of a section: a view, the selector that feeds it, and the text around it. */
@@ -163,9 +162,8 @@ export type Block = {
 
 export interface Section {
   id: string;
-  /** Label in the page's navigation; sections without one stay out of it. */
-  nav?: string;
-  title: Copy;
+  /** The heading, and the section's link in the page navigation. */
+  title: string;
   /** `aside` sections sit beside the page instead of in it. */
   where?: "main" | "aside";
   blocks: Block[];

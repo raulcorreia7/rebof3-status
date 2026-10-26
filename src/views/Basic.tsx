@@ -1,7 +1,7 @@
 // The simple views: cards, meters, text, legend, trend, filters and tables.
 
 import { createSignal, For, Index, onCleanup, Show, type Accessor } from "solid-js";
-import { BROWSER, SDK } from "../strings.ts";
+import { BROWSER } from "../strings.ts";
 import { usePage } from "../state.ts";
 import type { SortKey } from "../model/route.ts";
 import type { Status } from "../types.ts";
@@ -18,12 +18,12 @@ const input = "rounded-md border border-line bg-card px-2.5 py-1.5 text-ink";
 
 export function Cards(props: Props<"cards">) {
   return (
-    <div class={`mt-2.5 grid gap-4 ${props.data().narrow ? "grid-cols-[repeat(auto-fit,minmax(11rem,1fr))]" : "grid-cols-[repeat(auto-fit,minmax(13rem,1fr))]"}`}>
+    <div class="mt-2.5 grid grid-cols-[repeat(auto-fit,minmax(13rem,1fr))] gap-4">
       <For each={props.data().cards}>
         {(card) => (
           <div class="card" data-card={card.id}>
             <div class="text-sm">{card.title}</div>
-            <div class={`font-bold leading-tight tabular-nums ${props.data().small ? "text-2xl" : "text-4xl"}`} style={{ color: card.color }}>
+            <div class="text-4xl leading-tight font-bold tabular-nums" style={{ color: card.color }}>
               {card.big}
             </div>
             <div class="text-sm text-mute">{card.sub}</div>
@@ -61,7 +61,7 @@ export function Meters(props: Props<"meters">) {
               <li class="contents">
                 <Show when={row.name} fallback={<span class="break-words">{row.label}</span>}>
                   {(name) => (
-                    <Jump class="break-words" to={name().to} scroll={name().scroll} title={SDK.browse}>
+                    <Jump class="break-words" to={name().to} scroll={name().scroll}>
                       {name().label}
                     </Jump>
                   )}
@@ -198,7 +198,7 @@ export function Filters(props: Props<"filters">) {
 export function Table(props: Props<"table">) {
   const page = usePage();
   const [copied, setCopied] = createSignal(false);
-  const selected = () => (page.route.view.kind === "fn" ? page.route.view.id : "");
+  const selected = () => page.route.fn;
   const sortBy = (sort: SortKey) => page.go(page.route.sort === sort ? { dir: page.route.dir === "asc" ? "desc" : "asc" } : { sort, dir: sort === "size" ? "desc" : "asc" }, true);
   const arrow = (sort?: SortKey) => (sort && page.route.sort === sort ? (page.route.dir === "asc" ? " ▲" : " ▼") : "");
   const ariaSort = (sort?: SortKey) => (sort ? (page.route.sort === sort ? (page.route.dir === "asc" ? "ascending" : "descending") : "none") : undefined);
@@ -262,7 +262,7 @@ export function Table(props: Props<"table">) {
             {(actions) => (
               <span class="flex gap-3.5 text-sm">
                 <Show when={actions().canReset}>
-                  <button type="button" class="link" onClick={() => page.go({ q: "", st: [], part: "all", lib: null, target: null, group: null, sort: "address", dir: "asc" }, true)}>
+                  <button type="button" class="link" onClick={() => page.go({ q: "", st: [], part: "all", lib: null, target: null, sort: "address", dir: "asc" }, true)}>
                     {BROWSER.reset}
                   </button>
                 </Show>

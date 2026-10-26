@@ -10,7 +10,7 @@ import { TREND_CHARTS } from "../model/history.ts";
 import { bytesOf, escapeText, percent, round } from "../model/format.ts";
 import { codeCounts, STATUS, STATUSES } from "../model/status.ts";
 import { textWidth } from "../model/text.ts";
-import { DATA, MAP, POSTER, QUALITY, SDK, SUMMARY, TREND } from "../strings.ts";
+import { MAP, POSTER, SDK, SUMMARY, TREND } from "../strings.ts";
 import type { Code, Fn, Model } from "../types.ts";
 import { bar, C, FONT, frame, rect, text } from "./svg.ts";
 import { panel, sorted, weightOf, type Block } from "./tiles.ts";
@@ -37,14 +37,14 @@ function cards(model: Model, y: number): Drawn {
   const items: [string, string, string, string][] = [
     [`${percent(game.exact, game.functions, 1)}%`, SUMMARY.gameFunctions, SUMMARY.of(game.exact, game.functions), C.status.pure],
     unique
-      ? [`${percent(unique.exact, unique.functions, 1)}%`, SUMMARY.unique, SUMMARY.uniqueNote(unique.exact, unique.functions), C.status.pure]
+      ? [`${percent(unique.exact, unique.functions, 1)}%`, SUMMARY.unique, SUMMARY.of(unique.exact, unique.functions), C.status.pure]
       : [`${percent(game.exactBytes, game.bytes, 1)}%`, SUMMARY.gameBytes, SUMMARY.ofBytes(game.exactBytes, game.bytes), C.status.pure],
     data
-      ? [`${percent(data.typed, data.bytes, 1)}%`, SUMMARY.data, SUMMARY.ofBytes(data.typed, data.bytes), C.status.object]
-      : [SUMMARY.dataPending[0], SUMMARY.data, SUMMARY.dataPending[1], C.mute],
+      ? [`${percent(data.typed, data.bytes, 1)}%`, SUMMARY.data, SUMMARY.dataOf(data.typed, data.bytes), C.status.pure]
+      : [SUMMARY.pending[0], SUMMARY.data, SUMMARY.pending[1], C.mute],
     assets
-      ? [`${percent(assets.decoded, assets.bytes, 1)}%`, SUMMARY.assetsDecoded, SUMMARY.ofMegabytes(assets.decoded, assets.bytes), C.tier.object]
-      : [SUMMARY.assetsPending[0], SUMMARY.assetsDecoded, SUMMARY.assetsPending[1], C.mute],
+      ? [`${percent(assets.decoded, assets.bytes, 1)}%`, SUMMARY.assets, SUMMARY.assetsOf(assets.decoded, assets.bytes), C.status.object]
+      : [SUMMARY.pending[0], SUMMARY.assets, SUMMARY.pending[1], C.mute],
   ];
   const width = (WIDTH - 2 * MARGIN - 3 * GAP) / 4;
   const height = 100;
@@ -67,7 +67,7 @@ function legend(model: Model, x: number, y: number): Drawn {
     ["nonmatching", MAP.key(code.draft, null)],
     ["open", MAP.key(code.functions - code.exact - code.draft, null)],
   ];
-  let svg = text(x, y, SUMMARY.statusHeading, 24, C.ink);
+  let svg = text(x, y, POSTER.statusHeading, 24, C.ink);
   rows.forEach(([key, sub], index) => {
     const top = y + 40 + index * 38;
     svg += rect(x, top + 2, 20, 20, C.status[key]);
@@ -141,7 +141,7 @@ function domainPanel(model: Model, x: number, y: number, width: number): Drawn {
 function dataPanel(model: Model, x: number, y: number, width: number): Drawn {
   const total = model.data;
   const rows = model.groups.flatMap((group) => (group.data ? [{ name: group.label, ...group.data }] : []));
-  let svg = text(x, y, total ? DATA.heading(percent(total.typed, total.bytes, 1), total.typed, total.bytes) : DATA.headingNone, 24, C.ink);
+  let svg = text(x, y, total ? POSTER.dataHeading(percent(total.typed, total.bytes, 1), total.typed, total.bytes) : SUMMARY.dataHeading, 24, C.ink);
   const nameWidth = 180;
   const barWidth = width - nameWidth - 250 - 16;
   rows.forEach((row, index) => {
@@ -177,9 +177,9 @@ function libraryPanel(model: Model, x: number, y: number, width: number): Drawn 
 
 // Quality row: the counters the report proves.
 function qualityRow(model: Model, y: number): Drawn {
-  let svg = text(MARGIN, y, QUALITY.heading, 24, C.ink);
+  let svg = text(MARGIN, y, POSTER.qualityHeading, 24, C.ink);
   const width = (WIDTH - 2 * MARGIN - 4 * GAP) / 5;
-  QUALITY.cards(model.quality).forEach(([name, value, sub], index) => {
+  POSTER.qualityCards(model.quality).forEach(([name, value, sub], index) => {
     const x = MARGIN + index * (width + GAP);
     const top = y + 40;
     svg += rect(x, top, width, 70, C.card) + frame(x + 0.5, top + 0.5, width - 1, 69, C.line);

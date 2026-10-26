@@ -9,9 +9,9 @@ import { bytes, bytesOf, number, percent, plural } from "./model/format.ts";
 import { TREND_CHARTS } from "./model/history.ts";
 import { HOME, type Route } from "./model/route.ts";
 import { codeCounts, STATUS, STATUS_TABLE, TIERS } from "./model/status.ts";
-import { BROWSER, DATA, MAP, QUALITY, SDK, SUMMARY, TIER_LABEL, TREND } from "./strings.ts";
-import type { Code, Headline, Library, Target } from "./types.ts";
-import type { Card, Ctx, MeterRow, Part, Views } from "./viewtypes.ts";
+import { BROWSER, DATA, MAP, QUALITY, SDK, SITE, SUMMARY, TREND } from "./strings.ts";
+import type { Code, Fn, Library, Target } from "./types.ts";
+import type { Card, Ctx, GamePage, Link, MeterRow, Part, Views } from "./viewtypes.ts";
 
 // Shared pieces ---------------------------------------------------------------------------
 
@@ -21,56 +21,45 @@ export const codeMeter = (code: Code, aria: string): MeterRow => ({
   parts: codeCounts(code).map(([key, count]) => ({ width: percent(count, code.functions, 3), color: STATUS[key].color })),
 });
 
-// Overview ----------------------------------------------------------------------
+// Overview and the sections below it -----------------------------------------------------
 
-const pending = (id: string, title: string, [big, sub]: string[]): Card => ({ id, big, title, sub, color: "var(--mute)" });
-
-function dataCard({ data }: Headline): Card {
-  return data
-    ? { id: "data", big: `${percent(data.typed, data.bytes, 1)}%`, title: SUMMARY.data, sub: SUMMARY.ofBytes(data.typed, data.bytes), color: "var(--st-typed)" }
-    : pending("data", SUMMARY.data, SUMMARY.dataPending);
-}
-
-function assetCard({ assets }: Headline): Card {
-  return assets
-    ? { id: "assets", big: `${percent(assets.decoded, assets.bytes, 1)}%`, title: SUMMARY.assetsDecoded, sub: SUMMARY.ofMegabytes(assets.decoded, assets.bytes), color: "var(--tier-object)" }
-    : pending("assets", SUMMARY.assetsDecoded, SUMMARY.assetsPending);
-}
+const pending = (id: string, title: string): Card => ({ id, big: SUMMARY.pending[0], title, sub: SUMMARY.pending[1], color: "var(--mute)" });
+const share = (done: number, total: number, digits = 1) => `${percent(done, total, digits)}%`;
 
 /** The headline: one number for each part, in the order they matter. */
 export function overviewCards({ model }: Ctx): Views["cards"] {
-  const { game } = model.headline;
+  const { game, data, assets } = model.headline;
   const cards: Card[] = [
-    { id: "game", big: `${percent(game.exact, game.functions, 1)}%`, title: SUMMARY.gameFunctions, sub: SUMMARY.of(game.exact, game.functions), color: STATUS.pure.color },
-    dataCard(model.headline),
-    assetCard(model.headline),
+    { id: "game", big: share(game.exact, game.functions), title: SUMMARY.gameFunctions, sub: SUMMARY.of(game.exact, game.functions), color: STATUS.pure.color },
+    data
+      ? { id: "data", big: share(data.typed, data.bytes), title: SUMMARY.data, sub: SUMMARY.dataOf(data.typed, data.bytes), color: STATUS.pure.color }
+      : pending("data", SUMMARY.data),
+    assets
+      ? { id: "assets", big: share(assets.decoded, assets.bytes), title: SUMMARY.assets, sub: SUMMARY.assetsOf(assets.decoded, assets.bytes), color: STATUS.object.color }
+      : pending("assets", SUMMARY.assets),
   ];
   return { cards };
 }
 
-/** Game code: every copy, each body once, and the report's fuzzy match. */
+/** Game code beyond the headline: by size, each body once, and the report's fuzzy match. */
 export function gameCards({ model }: Ctx): Views["cards"] {
   const { game } = model.headline;
   const unique = game.unique;
   const cards: Card[] = [
-    { id: "game", big: `${percent(game.exact, game.functions, 1)}%`, title: SUMMARY.gameFunctions, sub: SUMMARY.of(game.exact, game.functions), color: STATUS.pure.color },
-    { id: "game-bytes", big: `${percent(game.exactBytes, game.bytes, 1)}%`, title: SUMMARY.gameBytes, sub: SUMMARY.ofBytes(game.exactBytes, game.bytes), color: STATUS.pure.color },
+    { id: "game-bytes", big: share(game.exactBytes, game.bytes), title: SUMMARY.gameBytes, sub: SUMMARY.ofBytes(game.exactBytes, game.bytes), color: STATUS.pure.color },
     unique
-      ? { id: "game-unique", big: `${percent(unique.exact, unique.functions, 1)}%`, title: SUMMARY.unique, sub: SUMMARY.uniqueNote(unique.exact, unique.functions), color: STATUS.pure.color }
-      : pending("game-unique", SUMMARY.unique, SUMMARY.dataPending),
-    { id: "fuzzy", big: `${model.game.fuzzy.toFixed(1)}%`, title: SUMMARY.fuzzy, sub: SUMMARY.fuzzyNote, color: STATUS.nonmatching.color },
+      ? { id: "game-unique", big: share(unique.exact, unique.functions), title: SUMMARY.unique, sub: SUMMARY.of(unique.exact, unique.functions), color: STATUS.pure.color }
+      : pending("game-unique", SUMMARY.unique),
+    { id: "fuzzy", big: `${model.game.fuzzy.toFixed(1)}%`, title: SUMMARY.fuzzy, sub: SUMMARY.fuzzyNote },
   ];
   return { cards };
 }
 
-
+/** Game data beyond the headline: the bytes in C that are not typed yet. */
 export function dataCards({ model }: Ctx): Views["cards"] {
-  const raw = model.headline.data?.rawC;
-  const cards = [dataCard(model.headline)];
-  if (raw && model.headline.data) {
-    cards.push({ id: "data-raw", big: `${percent(raw, model.headline.data.bytes, 1)}%`, title: SUMMARY.dataRaw, sub: `${bytes(raw)}, ${SUMMARY.dataRawNote}`, color: "var(--mute)" });
-  }
-  return { cards };
+  const data = model.headline.data;
+  if (!data?.rawC) return { cards: [] };
+  return { cards: [{ id: "data-raw", big: share(data.rawC, data.bytes), title: SUMMARY.dataRaw, sub: SUMMARY.dataRawOf(data.rawC, data.bytes), color: "var(--mute)" }] };
 }
 
 export const dataNote = ({ model }: Ctx): string => {
@@ -78,32 +67,33 @@ export const dataNote = ({ model }: Ctx): string => {
   return apart ? SUMMARY.dataApart(apart.reserved, apart.copied, apart.sdk, apart.asset) : "";
 };
 
+/** Assets beyond the headline: extracted and converted back exactly. */
 export function assetCards({ model }: Ctx): Views["cards"] {
   const { assets } = model.headline;
-  if (!assets) return { cards: [assetCard(model.headline)] };
+  if (!assets) return { cards: [] };
   return {
-        cards: [
-      assetCard(model.headline),
-      { id: "assets-extracted", big: `${percent(assets.extracted, assets.bytes, 1)}%`, title: SUMMARY.assetsExtracted, sub: SUMMARY.ofMegabytes(assets.extracted, assets.bytes), color: "var(--mute)" },
-      { id: "assets-round-trip", big: `${percent(assets.roundTrip, assets.bytes, 2)}%`, title: SUMMARY.assetsRoundTrip, sub: SUMMARY.assetsRoundTripNote(assets.roundTrip), color: "var(--mute)" },
+    cards: [
+      { id: "assets-extracted", big: share(assets.extracted, assets.bytes), title: SUMMARY.assetsExtracted, sub: SUMMARY.assetsExtractedOf(assets.extracted, assets.bytes), color: "var(--mute)" },
+      { id: "assets-round-trip", big: share(assets.roundTrip, assets.bytes, 2), title: SUMMARY.assetsRoundTrip, sub: SUMMARY.assetsRoundTripOf(assets.roundTrip, assets.bytes), color: "var(--mute)" },
     ],
   };
 }
 
-/** One bar per asset kind, sized by bytes: decoded or copied as stored. */
+/** One bar per asset kind, sized by bytes: converted or extracted as stored. */
 export function assetKinds({ model }: Ctx): Views["meters"] {
   const kinds = [...(model.headline.assets?.kinds ?? [])].sort((a, b) => b.bytes - a.bytes);
   const peak = Math.max(...kinds.map((kind) => kind.bytes), 1);
-  const color = (handling: string) => (handling === "decoded" ? "var(--tier-object)" : handling === "raw" ? "var(--mute)" : "var(--track)");
+  const color = (handling: string) => (handling === "decoded" ? STATUS.object.color : handling === "raw" ? "var(--mute)" : "var(--track)");
+  const handling = (key: string) => SUMMARY.assetHandling[key] ?? key;
   return {
-    key: ["decoded", "raw"].map((handling) => ({ label: SUMMARY.assetHandling[handling], color: color(handling) })),
+    key: ["decoded", "raw"].map((key) => ({ label: handling(key), color: color(key) })),
     rows: kinds.map((kind) => ({
       label: kind.kind,
-      aria: `${kind.kind}: ${SUMMARY.assetHandling[kind.handling] ?? kind.handling}, ${bytes(kind.bytes)}`,
+      aria: `${kind.kind}: ${handling(kind.handling)}, ${bytes(kind.bytes)}`,
       width: Math.max((kind.bytes / peak) * 100, 1),
       parts: [{ width: "100", color: color(kind.handling) }],
       count: bytes(kind.bytes),
-      note: `${number(kind.entries)} ${kind.entries === 1 ? "file" : "files"} · ${SUMMARY.assetHandling[kind.handling] ?? kind.handling}` + (kind.round_trip_bytes ? ` · ${bytes(kind.round_trip_bytes)} round-trip` : ""),
+      note: [plural(kind.entries, "file"), handling(kind.handling), kind.round_trip_bytes ? `${bytes(kind.round_trip_bytes)} convert back exactly` : ""].filter(Boolean).join(" · "),
     })),
   };
 }
@@ -111,28 +101,23 @@ export function assetKinds({ model }: Ctx): Views["meters"] {
 /** The SDK and the hand-written assembly, shown apart from the game totals. */
 export const apart = ({ model }: Ctx): Views["text"] => ({
   paragraphs: [
-    {
-      label: SUMMARY.apartLabel,
-      text: SUMMARY.apart(model.sdk.done, model.sdk.count, model.sdk.statuses.assembly.functions, model.hand.done, model.hand.count),
-    },
+    { label: SDK.sdkLabel, text: SDK.sdkText(model.sdk.done, model.sdk.count, model.sdk.statuses.assembly.functions) },
+    { label: SDK.handLabel, text: SDK.handText(model.hand.done, model.hand.count) },
   ],
 });
-
-export const overviewMeter = ({ model }: Ctx): Views["meters"] => ({ rows: [codeMeter(model.code, SUMMARY.statusHeading)] });
 
 // Map --------------------------------------------------------------------------------------
 const gameMapRoute = (view: Extract<Route["view"], { kind: "image" | "part" }>): Partial<Route> => ({
   view,
+  fn: null,
   q: "",
   st: [],
   part: "all",
   lib: null,
   target: null,
-  group: null,
   sort: "address",
   dir: "asc",
 });
-
 
 /** Game code by part of the game: each group's heading and bar, then its images, biggest first. */
 export function domains({ model }: Ctx): Views["domains"] {
@@ -142,6 +127,7 @@ export function domains({ model }: Ctx): Views["domains"] {
     { label: STATUS.nonmatching.label, color: STATUS.nonmatching.color, sub: MAP.key(code.draft, null) },
     { label: STATUS.open.label, color: STATUS.open.color, sub: MAP.key(code.functions - code.exact - code.draft, null) },
   ];
+  const total = codeMeter(code, `${SUMMARY.gameHeading}: ${SUMMARY.of(code.exact, code.functions)}`);
   const groups = model.groups
     .filter((group) => group.code.functions)
     .map((group) => {
@@ -168,7 +154,7 @@ export function domains({ model }: Ctx): Views["domains"] {
         })),
       };
     });
-  return { key, keyHelp: MAP.statusHelp, groups };
+  return { key, keyHelp: MAP.statusHelp, meter: total, groups };
 }
 
 /** The same statuses as filter chips for the function browser. */
@@ -177,56 +163,57 @@ export const statusChips = (): Views["legend"] => ({
   items: STATUS_TABLE.map(({ key, label, color }) => ({ key, label, color })),
 });
 
-/** The selected game part or image, using report rows for per-function detail and status totals. */
-export function gameTreemap(ctx: Ctx): Views["treemap"] | null {
-  const { model, route, tokens } = ctx;
+const statusKey = (code: Code): GamePage["key"] =>
+  codeCounts(code).map(([key, count]) => ({ label: STATUS[key].label, color: STATUS[key].color, sub: plural(count, "function") }));
+
+/** A part of the game or an image: bin/status's counts, and the report's functions as a treemap and a list. */
+export function gamePage({ model, route, tokens }: Ctx): GamePage | null {
+  const home: Link = { label: MAP.heading, to: { view: HOME.view }, scroll: "map" };
+  const empty = { found: false, percent: "", line: "", meter: null, key: [], note: "", facts: [], coverage: "", tree: null, functions: [], inPart: false };
+  const page = (code: Code, functions: Fn[], line: string) => {
+    const listed = functions.reduce((sum, fn) => sum + fn.bytes, 0);
+    return {
+      found: true,
+      percent: `${percent(code.exact, code.functions, 1)}%`,
+      line,
+      meter: codeMeter(code, line),
+      key: statusKey(code),
+      functions,
+      coverage: functions.length === code.functions && listed === code.bytes ? "" : MAP.coverage(functions.length, listed, code.functions, code.bytes),
+    };
+  };
   if (route.view.kind === "part") {
     const key = route.view.key;
     const group = model.groups.find((item) => item.key === key);
-    const title = group?.label ?? key;
-    const functions = group?.targets.flatMap((target) => target.functions.filter((fn) => fn.kind === "game")) ?? [];
-    const censusFunctions = group?.code.functions ?? 0;
-    const censusBytes = group?.code.bytes ?? 0;
-    const tree = group
-      ? gamePartTree(group, tokens)
-      : { id: `part:${key}`, name: title, value: 0, ref: { kind: "part" as const, id: key }, tip: "", children: [] };
+    if (!group) return { ...empty, title: key, crumbs: [home, { label: key, to: {} }], message: MAP.partMissing };
+    const images = group.targets.filter((target) => target.code.functions);
     return {
-      tree,
-      crumbs: [{ label: MAP.heading, to: HOME }, { label: title, to: gameMapRoute({ kind: "part", key }) }],
-      label: MAP.chartLabel(title, functions.length),
-      title,
-      scopeId: `part:${key}`,
-      functions,
-      censusFunctions,
-      censusBytes,
-      reportBytes: functions.reduce((sum, fn) => sum + fn.bytes, 0),
+      ...page(group.code, group.targets.flatMap((target) => target.functions.filter((fn) => fn.kind === "game")), MAP.group(group.code.exact, group.code.functions, group.code.bytes, images.length)),
+      title: group.label,
+      crumbs: [home, { label: group.label, to: {} }],
+      note: group.note,
+      facts: [],
+      tree: gamePartTree(group, tokens),
+      inPart: true,
     };
   }
   if (route.view.kind === "image") {
     const id = route.view.id;
     const target = model.targetById.get(id);
-    const group = target && model.groups.find((item) => item.key === target.group);
-    const title = target?.name ?? id;
-    const functions = target?.functions.filter((fn) => fn.kind === "game") ?? [];
-    const censusFunctions = target?.code.functions ?? 0;
-    const censusBytes = target?.code.bytes ?? 0;
-    const tree = target
-      ? gameImageTree(target, tokens)
-      : { id: `image:${id}`, name: title, value: 0, ref: { kind: "image" as const, id }, tip: "", children: [] };
+    if (!target) return { ...empty, title: id, crumbs: [home, { label: id, to: {} }], message: MAP.imageMissing };
+    const { code, data } = target;
     return {
-      tree,
-      crumbs: [
-        { label: MAP.heading, to: HOME },
-        ...(group ? [{ label: group.label, to: gameMapRoute({ kind: "part", key: group.key }) }] : []),
-        { label: title, to: gameMapRoute({ kind: "image", id }) },
+      ...page(code, target.functions.filter((fn) => fn.kind === "game"), MAP.imageLine(code.exact, code.functions, code.bytes)),
+      title: target.name,
+      crumbs: [home, { label: target.groupLabel, to: { view: { kind: "part", key: target.group } } }, { label: target.name, to: {} }],
+      note: "",
+      facts: [
+        { label: MAP.facts.size, value: [{ text: bytes(target.size) }] },
+        { label: MAP.facts.data, value: [{ text: data ? `${percent(data.typed, data.bytes, 1)}% · ${bytesOf(data.typed, data.bytes)}` : "-" }] },
+        { label: MAP.facts.source, value: [{ text: `src/${target.id}`, url: `${SITE.repoUrl}/tree/${model.meta.commit}/src/${target.id}`, code: true }] },
       ],
-      label: MAP.chartLabel(title, functions.length),
-      title,
-      scopeId: `image:${id}`,
-      functions,
-      censusFunctions,
-      censusBytes,
-      reportBytes: functions.reduce((sum, fn) => sum + fn.bytes, 0),
+      tree: gameImageTree(target, tokens),
+      inPart: false,
     };
   }
   return null;
@@ -235,43 +222,32 @@ export function gameTreemap(ctx: Ctx): Views["treemap"] | null {
 // PsyQ SDK ---------------------------------------------------------------------------------
 
 function libNote(lib: Library): string {
-  const parts: string[] = [];
   const versions = Object.entries(lib.versions).map(([version, units]) => `${version} ×${units}`).join(" · ");
-  if (versions) parts.push(SDK.versions(versions));
-  if (lib.tiers.assembly) parts.push(SDK.assemblyOnly(lib.tiers.assembly));
-  return parts.join(" · ");
+  return [versions ? SDK.versions(versions) : "", lib.tiers.assembly ? SDK.assemblyOnly(lib.tiers.assembly) : ""].filter(Boolean).join(" · ");
 }
 
+/** One bar per library, split into PsyQ library objects and assembly only. */
 export function sdkLibraries({ model }: Ctx): Views["meters"] {
   const peak = Math.max(...model.libraries.map((lib) => lib.count), 1);
   return {
-    key: TIERS.map((tier) => ({ label: TIER_LABEL[tier], color: `var(--tier-${tier})` })),
+    key: TIERS.map((tier) => ({ label: STATUS[tier].label, color: STATUS[tier].color })),
     rows: model.libraries.map((lib) => {
       const assembly = lib.name === ASSEMBLY_LIBRARY;
-      const done = SDK.done(lib.tiers.object, lib.count);
+      const label = assembly ? SDK.assemblyLibrary : lib.name;
+      const count = assembly ? number(lib.count) : SDK.done(lib.tiers.object, lib.count);
       return {
-        name: { label: assembly ? SDK.assemblyLibrary : lib.name, to: { lib: lib.name, part: "sdk" }, scroll: "browse" },
-        aria: assembly ? `${SDK.assemblyLibrary}: ${SDK.assemblyNote}` : `${lib.name}: ${done}`,
+        name: { label, to: { lib: lib.name, part: "sdk" }, scroll: "browse" },
+        aria: `${label}: ${count}`,
         width: Math.max((lib.count / peak) * 100, 1),
-        parts: TIERS.filter((tier) => lib.tiers[tier]).map((tier) => ({ width: percent(lib.tiers[tier], lib.count, 3), color: `var(--tier-${tier})` })),
-        count: assembly ? number(lib.count) : done,
-        note: assembly ? SDK.assemblyNote : libNote(lib),
+        parts: TIERS.filter((tier) => lib.tiers[tier]).map((tier) => ({ width: percent(lib.tiers[tier], lib.count, 3), color: STATUS[tier].color })),
+        count,
+        note: assembly ? "" : libNote(lib),
       };
     }),
   };
 }
 
-export const sdkKeyLine = ({ model }: Ctx): string => {
-  const { statuses } = model.sdk;
-  return SDK.keyLine(statuses.object.functions, statuses.assembly.functions);
-};
-
 // Data and quality -------------------------------------------------------------------------
-
-export const dataHeading = ({ model }: Ctx): string => {
-  const total = model.data;
-  return total ? DATA.heading(percent(total.typed, total.bytes, 1), total.typed, total.bytes) : DATA.headingNone;
-};
 
 /** One bar per part of the game: the share of its data typed in C. */
 export function dataMeters({ model }: Ctx): Views["meters"] {
@@ -293,12 +269,6 @@ export function dataMeters({ model }: Ctx): Views["meters"] {
     }),
   };
 }
-
-export const qualityCards = ({ model }: Ctx): Views["cards"] => ({
-  narrow: true,
-  small: true,
-  cards: QUALITY.cards(model.quality).map(([title, big, sub]) => ({ id: title, title, big, sub })),
-});
 
 /** One bar per part of the game with drafts, as long as its share of the most drafts. */
 export function draftMeters({ model }: Ctx): Views["meters"] {
@@ -329,13 +299,14 @@ export function verification({ model }: Ctx): Views["text"] {
 const dataCell = (target: Target): Part[] =>
   target.data ? [{ text: `${percent(target.data.typed, target.data.bytes, 1)}% · ${bytesOf(target.data.typed, target.data.bytes)}` }] : [{ text: "-", mute: true }];
 
+const Q = QUALITY.columns;
 export const auditTable = ({ model }: Ctx): Views["table"] => ({
-  disclosure: "Match quality of each image",
-  columns: [{ label: "Image" }, { label: "Functions", align: "r" }, { label: "Rebuilt", align: "r" }, { label: "Drafts", align: "r" }, { label: "Code size", align: "r" }, { label: "Fuzzy", align: "r" }, { label: "Data typed" }],
+  disclosure: QUALITY.table,
+  columns: [{ label: Q.image }, { label: Q.functions, align: "r" }, { label: Q.rebuilt, align: "r" }, { label: Q.drafts, align: "r" }, { label: Q.size, align: "r" }, { label: Q.fuzzy, align: "r" }, { label: Q.data }],
   rows: model.groups.flatMap((group) => group.targets).map((t) => ({
     id: t.id,
     cells: [
-      [{ text: t.name, to: { view: { kind: "target", id: t.id } } }, { text: t.id, code: true, mute: true, br: true }],
+      [{ text: t.name, to: gameMapRoute({ kind: "image", id: t.id }) }, { text: t.id, code: true, mute: true, br: true }],
       [{ text: number(t.code.functions) }],
       [{ text: number(t.code.exact) }],
       [{ text: number(t.code.draft) }],
@@ -366,7 +337,6 @@ export function browserFilters({ model }: Ctx): Views["filters"] {
         label: BROWSER.targetLabel,
         field: "target",
         any: true,
-        also: { group: null },
         options: [{ value: "", label: BROWSER.allTargets }, ...model.groups.flatMap((group) => group.targets.map((t) => ({ value: t.id, label: t.name, group: group.label })))],
       },
       { label: BROWSER.libraryLabel, field: "lib", any: true, options: [{ value: "", label: BROWSER.allLibraries }, ...model.libraries.map((lib) => ({ value: lib.name, label: lib.name === ASSEMBLY_LIBRARY ? SDK.assemblyLibrary : lib.name }))] },
@@ -375,28 +345,28 @@ export function browserFilters({ model }: Ctx): Views["filters"] {
   };
 }
 
-/** Says that the list holds the report's functions when bin/status counts a different number. */
+/** Says that the list holds the report's functions when bin/status counts more. */
 export const browserScope = ({ model }: Ctx): string => (model.game.count === model.code.functions ? "" : BROWSER.scope(model.game.count, model.code.functions));
 
 export function browserTable({ model, route, limit }: Ctx): Views["table"] {
   const found = browse(model, route);
-  const canReset = !!(route.q || route.st.length || route.part !== HOME.part || route.lib || route.target || route.group || route.sort !== HOME.sort || route.dir !== HOME.dir);
+  const canReset = !!(route.q || route.st.length || route.part !== HOME.part || route.lib || route.target || route.sort !== HOME.sort || route.dir !== HOME.dir);
   return {
     columns: [
       { label: BROWSER.columns.function, sort: "name" },
+      { label: BROWSER.columns.status, sort: "status" },
+      { label: BROWSER.columns.size, align: "r", sort: "size" },
       { label: BROWSER.columns.target },
       { label: BROWSER.columns.address, sort: "address" },
-      { label: BROWSER.columns.status, sort: "status" },
-      { label: BROWSER.columns.bytes, align: "r", sort: "size" },
     ],
     rows: found.slice(0, limit).map((fn) => ({
       id: fn.id,
       cells: [
-        [{ text: fn.name, to: { view: { kind: "fn", id: fn.id } } }],
-        [{ text: model.targetById.get(fn.target)?.name ?? "", mute: true }],
-        [{ text: fn.addr || "-", code: true }],
+        [{ text: fn.name, to: { fn: fn.id } }],
         [{ text: "", status: fn.status }],
-        [{ text: number(fn.bytes) }],
+        [{ text: bytes(fn.bytes) }],
+        [{ text: model.targetById.get(fn.target)?.name ?? "", to: gameMapRoute({ kind: "image", id: fn.target }) }],
+        [{ text: fn.addr || "-", code: true }],
       ],
     })),
     message: !found.length ? BROWSER.none : found.length > limit ? BROWSER.limited(limit, found.length) : BROWSER.shown(found.length),
