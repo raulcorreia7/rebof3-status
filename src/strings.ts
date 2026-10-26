@@ -123,7 +123,6 @@ export const MAP = {
 
 export const SDK = {
   heading: "PsyQ SDK",
-  sdkLabel: "PsyQ SDK:",
   sdkText: (done: number, total: number, assembly: number) =>
     `${number(done)} of ${number(total)} units link from original PsyQ library objects` + (assembly ? `; ${number(assembly)} are assembly only.` : "."),
   handLabel: "Hand-written assembly:",

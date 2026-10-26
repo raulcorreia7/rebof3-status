@@ -54,7 +54,7 @@ export const TREND_CHARTS: TrendChart[] = [
   chart("gameBytes", TREND.charts.gameBytes, ratio("game_matched_bytes", "game_bytes"), "pure", "%", 1, true),
   chart("gameUnique", TREND.charts.gameUnique, ratio("game_unique_matched", "game_unique"), "pure", "%", 1, true),
   chart("sdk", TREND.charts.sdk, ratio("sdk_done", "sdk_functions"), "object", "%", 1),
-  chart("data", TREND.charts.data, ratio("data_typed", "data_bytes"), "asm", "%", 2),
+  chart("data", TREND.charts.data, ratio("data_typed", "data_bytes"), "pure", "%", 2),
   chart("assets", TREND.charts.assets, ratio("asset_decoded_bytes", "asset_bytes"), "object", "%", 1),
   chart("benign", TREND.charts.benign, remainder("fakes", "harmful_fakes"), "mute", "", 0),
   chart("harmful", TREND.charts.harmful, count("harmful_fakes"), "nonmatching", "", 0),

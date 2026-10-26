@@ -101,7 +101,7 @@ export function assetKinds({ model }: Ctx): Views["meters"] {
 /** The SDK and the hand-written assembly, shown apart from the game totals. */
 export const apart = ({ model }: Ctx): Views["text"] => ({
   paragraphs: [
-    { label: SDK.sdkLabel, text: SDK.sdkText(model.sdk.done, model.sdk.count, model.sdk.statuses.assembly.functions) },
+    { text: SDK.sdkText(model.sdk.done, model.sdk.count, model.sdk.statuses.assembly.functions) },
     { label: SDK.handLabel, text: SDK.handText(model.hand.done, model.hand.count) },
   ],
 });
@@ -222,7 +222,9 @@ export function gamePage({ model, route, tokens }: Ctx): GamePage | null {
 // PsyQ SDK ---------------------------------------------------------------------------------
 
 function libNote(lib: Library): string {
-  const versions = Object.entries(lib.versions).map(([version, units]) => `${version} ×${units}`).join(" · ");
+  // One version needs no count: the bar's count already says how many units link from it.
+  const entries = Object.entries(lib.versions);
+  const versions = entries.map(([version, units]) => (entries.length > 1 ? `${version} ×${units}` : version)).join(" · ");
   return [versions ? SDK.versions(versions) : "", lib.tiers.assembly ? SDK.assemblyOnly(lib.tiers.assembly) : ""].filter(Boolean).join(" · ");
 }
 

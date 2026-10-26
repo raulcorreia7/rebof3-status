@@ -34,17 +34,18 @@ function GroupBlock(props: { group: Group }) {
       <Show
         when={props.group.tiles}
         fallback={
-          <ul class="mt-3 grid grid-cols-[minmax(7rem,13rem)_1fr_auto] items-center gap-x-3 gap-y-1.5 text-sm">
+          <ul class="mt-3 grid grid-cols-[1fr_auto] gap-x-3 gap-y-2 text-sm sm:grid-cols-[minmax(7rem,13rem)_1fr_auto] sm:gap-y-1.5">
             <For each={props.group.images}>
               {(image) => (
-                <li class="contents">
+                // On a phone the name and the numbers share a line and the bar goes under them.
+                <li class="col-span-full grid grid-cols-subgrid items-center gap-y-1">
                   <Jump to={image.to} class="truncate" title={image.id}>
                     {image.label}
                   </Jump>
-                  <div class="bar h-3" style={{ width: `${image.width}%` }} role="img" aria-label={image.aria}>
+                  <div class="bar col-span-2 row-start-2 h-3 sm:col-span-1 sm:col-start-2 sm:row-start-1" style={{ width: `${image.width}%` }} role="img" aria-label={image.aria}>
                     <BarParts parts={image.parts} />
                   </div>
-                  <span class="text-right text-mute tabular-nums">
+                  <span class="text-right whitespace-nowrap text-mute tabular-nums">
                     {image.line} · {image.size}
                   </span>
                 </li>

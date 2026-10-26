@@ -15,9 +15,8 @@ const inUnit = (value: number, unit: number): string => {
   return unit === 0 ? number(value) : scaled.toFixed(scaled >= 100 ? 0 : 1);
 };
 export const bytes = (value: number): string => `${inUnit(value, unitOf(value))} ${UNITS[unitOf(value)]}`;
-// "168 KB of 697 KB": both sides in the total's unit, so they compare at a glance.
-export const bytesOf = (done: number, total: number): string =>
-  `${inUnit(done, unitOf(total))} ${UNITS[unitOf(total)]} of ${bytes(total)}`;
+// "731 KB of 3.0 MB": each side in its own unit, so a size reads the same in every view.
+export const bytesOf = (done: number, total: number): string => `${bytes(done)} of ${bytes(total)}`;
 export const round = (value: number): number => Math.round(value * 100) / 100;
 export const escapeText = (text: string | number): string =>
   String(text).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");

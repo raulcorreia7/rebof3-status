@@ -87,7 +87,10 @@ export function Text(props: Props<"text">) {
     <For each={props.data().paragraphs}>
       {(paragraph) => (
         <p class="my-1 text-sm">
-          <b>{paragraph.label}</b> {paragraph.text}
+          <Show when={paragraph.label}>
+            <b>{paragraph.label}</b>{" "}
+          </Show>
+          {paragraph.text}
         </p>
       )}
     </For>
