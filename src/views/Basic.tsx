@@ -69,7 +69,7 @@ export function Meters(props: Props<"meters">) {
                 <div class="bar h-3.5 min-w-1" style={{ width: `${row.width}%` }} role="img" aria-label={row.aria}>
                   <BarParts parts={row.parts} />
                 </div>
-                <span class="text-right text-sm text-mute tabular-nums">{row.count}</span>
+                <span class="text-right text-sm text-mute tabular-nums max-sm:max-w-24">{row.count}</span>
                 <Show when={row.note}>
                   <span class="col-span-2 col-start-2 mb-2 text-sm text-mute">{row.note}</span>
                 </Show>
