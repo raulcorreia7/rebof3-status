@@ -11,7 +11,7 @@
     "lint": "tsc -p .",
     "format": "dprint fmt",
     "format:check": "dprint check",
-    "licenses": "npx --yes license-checker-rseidelsohn@4.4.2 --onlyAllow \"MIT;ISC;Apache-2.0;BSD-2-Clause;BSD-3-Clause;0BSD;BlueOak-1.0.0\" --excludePackages \"@resvg/resvg-js@2.6.2;@resvg/resvg-js-linux-x64-gnu@2.6.2;lightningcss@1.32.0;lightningcss@1.33.0;lightningcss-linux-x64-gnu@1.32.0;lightningcss-linux-x64-gnu@1.33.0;caniuse-lite@1.0.30001818\" --summary"
+    "licenses": "license-checker-rseidelsohn --onlyAllow \"MIT;ISC;Apache-2.0;BSD-2-Clause;BSD-3-Clause;0BSD;BlueOak-1.0.0\" --excludePackages \"@resvg/resvg-js@2.6.2;@resvg/resvg-js-linux-x64-gnu@2.6.2;lightningcss@1.32.0;lightningcss@1.33.0;lightningcss-linux-x64-gnu@1.32.0;lightningcss-linux-x64-gnu@1.33.0;caniuse-lite@1.0.30001818;spdx-exceptions@2.5.0;spdx-ranges@2.1.1;spdx-license-ids@3.0.24\" --summary"
   },
   "devDependencies": {
     "@resvg/resvg-js": "2.6.2",
@@ -19,6 +19,7 @@
     "@types/node": "22.20.5",
     "dprint": "0.64.3",
     "echarts": "6.1.0",
+    "license-checker-rseidelsohn": "4.4.2",
     "solid-js": "1.9.17",
     "tailwindcss": "4.3.3",
     "typescript": "5.9.3",
