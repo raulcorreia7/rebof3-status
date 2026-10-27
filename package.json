@@ -1,6 +1,7 @@
 {
   "name": "rebof3-status",
   "private": true,
+  "license": "MIT",
   "type": "module",
   "description": "Status page and picture renderer for the Breath of Fire III decompilation.",
   "engines": {

@@ -5,10 +5,13 @@
 
 Progress of the Breath of Fire III decompilation: **<https://raulcorreia7.github.io/rebof3-status/>**
 
-The page shows the game code rebuilt in C: the totals, the map of the game's parts and images, the
-and a search for any function. Open a part or an image to list its functions. The PsyQ SDK and the hand-written assembly are
-shown apart. This repository holds only the numbers and their renderer: no source code, assembly or
-game data.
+The page shows the game code rebuilt in C: the totals, the map of the game's parts and images, and
+a search for any function. Open a part or an image to list its functions. The PsyQ SDK and the
+hand-written assembly are shown apart. This repository holds only the numbers and their renderer:
+no source code, assembly or game data.
+
+A fan project, not affiliated with or endorsed by Capcom. Breath of Fire is a Capcom trademark. No
+game data is included; bring your own disc.
 
 ## Data
 
@@ -20,10 +23,9 @@ page and the picture are built from that one file.
 ## Run
 
 ```sh
-npm ci
+npm ci && npm run build && npm test   # clean-clone build and test; `make check` adds the type check
 npm run dev      # dev server on data/report.json
 npm run build    # site/ plus the pictures; needs the DejaVu Sans font (fonts-dejavu-core)
-npm test         # after a build; `make test` runs both
 node render/snapshot.ts site data/report.json   # render the pictures for another report
 ```
 
@@ -39,6 +41,10 @@ git push
 
 ## Deploy
 
-`deploy.yml` runs on every push to `main`, pull request and manual dispatch: lint, build, test,
+`deploy.yml` runs on every push to `main`, pull request and manual dispatch: type check, build, test,
 then publish the built `site/` (pull requests only check). The numbers are the committed
 `data/report.json`, so a new report is a commit. Change the page: [docs/site.md](docs/site.md).
+
+## License
+
+[MIT](LICENSE).
