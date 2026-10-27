@@ -1,21 +1,16 @@
-// Game code by part of the game: the status key, then one block per group with its heading, its
+// Game code by part of the game: one block per group with its heading, its
 // bar and its images, as labelled bars (few images) or a grid of tiles (many near-identical
 // overlays). Plain DOM, one element per image, so every name is real text.
 
 import { For, Show, type Accessor } from "solid-js";
 import type { Views } from "../viewtypes.ts";
-import { BarParts, Jump, Meter, StatusKey } from "./ui.tsx";
+import { BarParts, Jump, Meter } from "./ui.tsx";
 
 type Group = Views["domains"]["groups"][number];
 
 export function Domains(props: { data: Accessor<Views["domains"]> }) {
   return (
-    <>
-      <StatusKey items={props.data().key} />
-      <Meter row={props.data().meter} class="my-3 h-3.5" />
-      <p class="mt-2 text-sm text-mute">{props.data().keyHelp}</p>
-      <For each={props.data().groups}>{(group) => <GroupBlock group={group} />}</For>
-    </>
+    <For each={props.data().groups}>{(group) => <GroupBlock group={group} />}</For>
   );
 }
 

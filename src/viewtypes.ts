@@ -36,16 +36,9 @@ export interface Part {
 }
 
 export interface MeterRow {
-  name?: Link;
-  /** A name that is not a link, for a row with nothing to open. */
-  label?: string;
   aria: string;
-  /** Width of the whole bar as a percentage of the track. */
-  width?: number;
   /** Segments in order; `width` is a percentage of the bar. */
   parts: { width: string; color: string }[];
-  count?: string;
-  note?: string;
 }
 
 export interface Card {
@@ -58,17 +51,10 @@ export interface Card {
 
 export interface Views {
   cards: { cards: Card[] };
-  meters: { key?: { label: string; color: string }[]; rows: MeterRow[] };
+  meters: { key?: { label: string; color: string; sub: string }[]; rows: MeterRow[] };
   text: { paragraphs: { label?: string; text: string }[] };
-  /** Status filter chips. */
-  legend: { label: string; items: { key: Status; label: string; color: string }[] };
   /** Game code by part of the game: a heading and a bar per group, then its images as rows or tiles. */
   domains: {
-    key: { label: string; color: string; sub: string }[];
-    /** What the statuses mean, under the key. */
-    keyHelp: string;
-    /** All game code, under the key. */
-    meter: MeterRow;
     groups: {
       key: string;
       title: Link;
@@ -91,18 +77,7 @@ export interface Views {
       }[];
     }[];
   };
-  filters: {
-    search: { label: string; placeholder: string };
-    selects: {
-      label: string;
-      field: "part" | "target" | "lib" | "sort";
-      options: { value: string; label: string; group?: string }[];
-      /** The value of the first option means "no filter" (null in the route). */
-      any: boolean;
-      /** Route changes that go with a new value. */
-      also?: Partial<Route>;
-    }[];
-  };
+  filters: { search: { label: string; placeholder: string } };
   table: {
     columns: { label: string; align?: "r"; sort?: SortKey }[];
     rows: { id: string; cells: Part[][] }[];

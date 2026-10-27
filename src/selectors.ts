@@ -3,12 +3,11 @@
 
 import { gameImageTree, gamePartTree } from "./charts/treemap.ts";
 import { browse, PAGE_STEP } from "./model/browse.ts";
-import { ASSEMBLY_LIBRARY } from "./model/report.ts";
-import { bytes, number, percent, plural } from "./model/format.ts";
+import { bytes, percent, plural } from "./model/format.ts";
 import { HOME, type Route } from "./model/route.ts";
-import { codeCounts, STATUS, STATUS_TABLE, TIERS } from "./model/status.ts";
-import { BROWSER, MAP, QUALITY, SDK, SUMMARY } from "./strings.ts";
-import type { Code, Fn, Library } from "./types.ts";
+import { codeCounts, STATUS } from "./model/status.ts";
+import { BROWSER, MAP, SDK, SUMMARY } from "./strings.ts";
+import type { Code, Fn } from "./types.ts";
 import type { Ctx, GamePage, Link, MeterRow, Views } from "./viewtypes.ts";
 
 // Shared pieces ---------------------------------------------------------------------------
@@ -23,21 +22,23 @@ export const codeMeter = (code: Code, aria: string): MeterRow => ({
 
 const share = (done: number, total: number, digits = 1) => `${percent(done, total, digits)}%`;
 
-/** The headline: game functions rebuilt in C. */
+/** The headline: game code rebuilt in C, by functions and by size. */
 export function overviewCards({ model }: Ctx): Views["cards"] {
-  const { game } = model.headline;
-  return { cards: [{ id: "game", big: share(game.exact, game.functions), title: SUMMARY.gameFunctions, sub: SUMMARY.of(game.exact, game.functions), color: STATUS.pure.color }] };
-}
-
-/** Game code beyond the headline: by size and the report's fuzzy match. */
-export function gameCards({ model }: Ctx): Views["cards"] {
   const { game } = model.headline;
   return {
     cards: [
+      { id: "game", big: share(game.exact, game.functions), title: SUMMARY.gameFunctions, sub: SUMMARY.of(game.exact, game.functions), color: STATUS.pure.color },
       { id: "game-bytes", big: share(game.exactBytes, game.bytes), title: SUMMARY.gameBytes, sub: SUMMARY.ofBytes(game.exactBytes, game.bytes), color: STATUS.pure.color },
-      { id: "fuzzy", big: `${model.game.fuzzy.toFixed(1)}%`, title: SUMMARY.fuzzy, sub: SUMMARY.fuzzyNote },
     ],
   };
+}
+
+/** One bar of all game code, with the rebuilt, draft and open counts as its key. */
+export function overviewMeter({ model }: Ctx): Views["meters"] {
+  const { code } = model;
+  const count = (status: "pure" | "nonmatching" | "open", functions: number, size: number | null) => ({ label: STATUS[status].label, color: STATUS[status].color, sub: MAP.key(functions, size) });
+  const key = [count("pure", code.exact, code.exactBytes), count("nonmatching", code.draft, null), count("open", code.functions - code.exact - code.draft, null)];
+  return { key, rows: [codeMeter(code, `${SUMMARY.gameHeading}: ${SUMMARY.of(code.exact, code.functions)}`)] };
 }
 
 /** The SDK and the hand-written assembly, shown apart from the game totals. */
@@ -64,12 +65,6 @@ const gameMapRoute = (view: Extract<Route["view"], { kind: "image" | "part" }>):
 /** Game code by part of the game: each group's heading and bar, then its images, biggest first. */
 export function domains({ model }: Ctx): Views["domains"] {
   const { code } = model;
-  const key = [
-    { label: STATUS.pure.label, color: STATUS.pure.color, sub: MAP.key(code.exact, code.exactBytes) },
-    { label: STATUS.nonmatching.label, color: STATUS.nonmatching.color, sub: MAP.key(code.draft, null) },
-    { label: STATUS.open.label, color: STATUS.open.color, sub: MAP.key(code.functions - code.exact - code.draft, null) },
-  ];
-  const total = codeMeter(code, `${SUMMARY.gameHeading}: ${SUMMARY.of(code.exact, code.functions)}`);
   const groups = model.groups
     .filter((group) => group.code.functions)
     .map((group) => {
@@ -96,14 +91,8 @@ export function domains({ model }: Ctx): Views["domains"] {
         })),
       };
     });
-  return { key, keyHelp: MAP.statusHelp, meter: total, groups };
+  return { groups };
 }
-
-/** The same statuses as filter chips for the function browser. */
-export const statusChips = (): Views["legend"] => ({
-  label: BROWSER.statusLabel,
-  items: STATUS_TABLE.map(({ key, label, color }) => ({ key, label, color })),
-});
 
 const statusKey = (code: Code): GamePage["key"] =>
   codeCounts(code).map(([key, count]) => ({ label: STATUS[key].label, color: STATUS[key].color, sub: plural(count, "function") }));
@@ -150,95 +139,11 @@ export function gamePage({ model, route, tokens }: Ctx): GamePage | null {
   return null;
 }
 
-// PsyQ SDK ---------------------------------------------------------------------------------
+// Search -------------------------------------------------------------------------
 
-function libNote(lib: Library): string {
-  // One version needs no count: the bar's count already says how many units link from it.
-  const entries = Object.entries(lib.versions);
-  const versions = entries.map(([version, units]) => (entries.length > 1 ? `${version} ×${units}` : version)).join(" · ");
-  return [versions ? SDK.versions(versions) : "", lib.tiers.assembly ? SDK.assemblyOnly(lib.tiers.assembly) : ""].filter(Boolean).join(" · ");
-}
+export const search = (): Views["filters"] => ({ search: { label: BROWSER.searchLabel, placeholder: BROWSER.searchPlaceholder } });
 
-/** One bar per library, split into PsyQ library objects and assembly only. */
-export function sdkLibraries({ model }: Ctx): Views["meters"] {
-  const peak = Math.max(...model.libraries.map((lib) => lib.count), 1);
-  return {
-    key: TIERS.map((tier) => ({ label: STATUS[tier].label, color: STATUS[tier].color })),
-    rows: model.libraries.map((lib) => {
-      const assembly = lib.name === ASSEMBLY_LIBRARY;
-      const label = assembly ? SDK.assemblyLibrary : lib.name;
-      const count = assembly ? number(lib.count) : SDK.done(lib.tiers.object, lib.count);
-      return {
-        name: { label, to: { lib: lib.name, part: "sdk" }, scroll: "browse" },
-        aria: `${label}: ${count}`,
-        width: Math.max((lib.count / peak) * 100, 1),
-        parts: TIERS.filter((tier) => lib.tiers[tier]).map((tier) => ({ width: percent(lib.tiers[tier], lib.count, 3), color: STATUS[tier].color })),
-        count,
-        note: assembly ? "" : libNote(lib),
-      };
-    }),
-  };
-}
-
-// Quality ----------------------------------------------------------------------------------
-
-/** One bar per part of the game with drafts, as long as its share of the most drafts. */
-export function draftMeters({ model }: Ctx): Views["meters"] {
-  const groups = model.groups.filter((group) => group.code.draft);
-  const peak = Math.max(...groups.map((group) => group.code.draft), 1);
-  return {
-    rows: groups.map((group) => ({
-      label: group.label,
-      aria: `${group.label}: ${plural(group.code.draft, "draft")}`,
-      width: Math.max((100 * group.code.draft) / peak, 1),
-      parts: [{ width: "100", color: STATUS.nonmatching.color }],
-      count: number(group.code.draft),
-    })),
-  };
-}
-
-export function verification({ model }: Ctx): Views["text"] {
-  const { game } = model.headline;
-  return { paragraphs: [{ label: QUALITY.gameScope, text: QUALITY.gameScopeText(game.exact, game.functions, game.exactBytes, game.bytes) }] };
-}
-
-const Q = QUALITY.columns;
-export const auditTable = ({ model }: Ctx): Views["table"] => ({
-  disclosure: QUALITY.table,
-  columns: [{ label: Q.image }, { label: Q.functions, align: "r" }, { label: Q.rebuilt, align: "r" }, { label: Q.drafts, align: "r" }, { label: Q.size, align: "r" }, { label: Q.fuzzy, align: "r" }],
-  rows: model.groups.flatMap((group) => group.targets).map((t) => ({
-    id: t.id,
-    cells: [
-      [{ text: t.name, to: gameMapRoute({ kind: "image", id: t.id }) }, { text: t.id, code: true, mute: true, br: true }],
-      [{ text: number(t.code.functions) }],
-      [{ text: number(t.code.exact) }],
-      [{ text: number(t.code.draft) }],
-      [{ text: bytes(t.code.bytes) }],
-      [{ text: `${t.game.fuzzy.toFixed(1)}%` }],
-    ],
-  })),
-});
-
-// Function browser -------------------------------------------------------------------------
-
-export function browserFilters({ model }: Ctx): Views["filters"] {
-  return {
-    search: { label: BROWSER.searchLabel, placeholder: BROWSER.searchPlaceholder },
-    selects: [
-      { label: BROWSER.scopeLabel, field: "part", any: false, also: { lib: null }, options: (["all", "game", "sdk", "hand"] as const).map((value) => ({ value, label: BROWSER.scopes[value] })) },
-      {
-        label: BROWSER.targetLabel,
-        field: "target",
-        any: true,
-        options: [{ value: "", label: BROWSER.allTargets }, ...model.groups.flatMap((group) => group.targets.map((t) => ({ value: t.id, label: t.name, group: group.label })))],
-      },
-      { label: BROWSER.libraryLabel, field: "lib", any: true, options: [{ value: "", label: BROWSER.allLibraries }, ...model.libraries.map((lib) => ({ value: lib.name, label: lib.name === ASSEMBLY_LIBRARY ? SDK.assemblyLibrary : lib.name }))] },
-      { label: BROWSER.sortLabel, field: "sort", any: false, options: (Object.keys(BROWSER.sorts) as (keyof typeof BROWSER.sorts)[]).map((value) => ({ value, label: BROWSER.sorts[value] })) },
-    ],
-  };
-}
-
-export function browserTable({ model, route, limit }: Ctx): Views["table"] {
+export function searchTable({ model, route, limit }: Ctx): Views["table"] {
   const found = browse(model, route);
   const canReset = !!(route.q || route.st.length || route.part !== HOME.part || route.lib || route.target || route.sort !== HOME.sort || route.dir !== HOME.dir);
   return {

@@ -1,12 +1,11 @@
-// The simple views: cards, meters, text, legend, filters and tables.
+// The simple views: cards, meters, text, search and tables.
 
 import { createSignal, For, onCleanup, Show, type Accessor } from "solid-js";
 import { BROWSER } from "../strings.ts";
 import { usePage } from "../state.ts";
 import type { SortKey } from "../model/route.ts";
-import type { Status } from "../types.ts";
 import type { Views } from "../viewtypes.ts";
-import { BarParts, Chip, Jump, Meter, Parts } from "./ui.tsx";
+import { Meter, Parts, StatusKey } from "./ui.tsx";
 
 /** How long the search box waits after the last key before the table filters. */
 const SEARCH_PAUSE_MS = 150;
@@ -36,47 +35,8 @@ export function Cards(props: Props<"cards">) {
 export function Meters(props: Props<"meters">) {
   return (
     <>
-      <Show when={props.data().key}>
-        {(key) => (
-          <div class="mt-2.5 flex flex-wrap gap-x-4 gap-y-1 text-sm" aria-hidden="true">
-            <For each={key()}>
-              {(item) => (
-                <span class="inline-flex items-center">
-                  <Chip color={item.color} />
-                  {item.label}
-                </span>
-              )}
-            </For>
-          </div>
-        )}
-      </Show>
-      <Show
-        when={props.data().rows.some((row) => row.name || row.label)}
-        fallback={<For each={props.data().rows}>{(row) => <Meter row={row} />}</For>}
-      >
-        <ul class="my-2 grid grid-cols-[6rem_1fr_auto] items-center gap-x-3 gap-y-1 sm:grid-cols-[11rem_1fr_auto]">
-          <For each={props.data().rows}>
-            {(row) => (
-              <li class="contents">
-                <Show when={row.name} fallback={<span class="break-words">{row.label}</span>}>
-                  {(name) => (
-                    <Jump class="break-words" to={name().to} scroll={name().scroll}>
-                      {name().label}
-                    </Jump>
-                  )}
-                </Show>
-                <div class="bar h-3.5 min-w-1" style={{ width: `${row.width}%` }} role="img" aria-label={row.aria}>
-                  <BarParts parts={row.parts} />
-                </div>
-                <span class="text-right text-sm text-mute tabular-nums max-sm:max-w-24">{row.count}</span>
-                <Show when={row.note}>
-                  <span class="col-span-2 col-start-2 mb-2 text-sm text-mute">{row.note}</span>
-                </Show>
-              </li>
-            )}
-          </For>
-        </ul>
-      </Show>
+      <Show when={props.data().key}>{(key) => <StatusKey items={key()} />}</Show>
+      <For each={props.data().rows}>{(row) => <Meter row={row} class="my-3 h-3.5" />}</For>
     </>
   );
 }
@@ -96,36 +56,8 @@ export function Text(props: Props<"text">) {
   );
 }
 
-/** Status chips that filter the function table. */
-export function Legend(props: Props<"legend">) {
-  const page = usePage();
-  const toggle = (status: Status) =>
-    page.go({ st: page.route.st.includes(status) ? page.route.st.filter((key) => key !== status) : [...page.route.st, status] }, true);
-  return (
-    <div class="mt-2.5 flex flex-wrap gap-1.5" role="group" aria-label={props.data().label}>
-      <For each={props.data().items}>
-        {(item) => {
-          const on = () => page.route.st.includes(item.key);
-          return (
-            <button
-              type="button"
-              class={`inline-flex cursor-pointer items-center rounded-full border px-2.5 py-0.5 text-xs ${on() ? "border-accent bg-track" : "border-line bg-card"}`}
-              aria-pressed={on()}
-              onClick={() => toggle(item.key)}
-            >
-              <Chip color={item.color} />
-              {item.label}
-            </button>
-          );
-        }}
-      </For>
-    </div>
-  );
-}
-
 export function Filters(props: Props<"filters">) {
   const page = usePage();
-  const current = (field: "part" | "target" | "lib" | "sort") => page.route[field] ?? "";
   // The table follows the typing after a short pause, not at every key.
   let pause = 0;
   const search = (text: string) => {
@@ -134,46 +66,16 @@ export function Filters(props: Props<"filters">) {
   };
   onCleanup(() => window.clearTimeout(pause));
   return (
-    <div class="mt-2.5 flex flex-wrap items-end gap-x-3 gap-y-2">
+    <div class="mt-2.5">
       <input
         type="search"
-        class={`${input} max-w-90 flex-[1_1_15rem]`}
+        class={`${input} w-full max-w-90`}
         placeholder={props.data().search.placeholder}
         aria-label={props.data().search.label}
         autocomplete="off"
         value={page.route.q}
         onInput={(event) => search(event.currentTarget.value)}
       />
-      <For each={props.data().selects}>
-        {(select) => {
-          const groups: { group?: string; items: typeof select.options }[] = [];
-          for (const option of select.options) {
-            const last = groups[groups.length - 1];
-            if (last && last.group === option.group) last.items.push(option);
-            else groups.push({ group: option.group, items: [option] });
-          }
-          const options = (items: typeof select.options) => (
-            <For each={items}>
-              {(option) => (
-                <option value={option.value} selected={option.value === current(select.field)}>
-                  {option.label}
-                </option>
-              )}
-            </For>
-          );
-          return (
-            <label class="flex flex-col gap-0.5 text-xs text-mute">
-              {select.label}
-              <select
-                class={`${input} text-base`}
-                onChange={(event) => page.go({ [select.field]: select.any ? event.currentTarget.value || null : event.currentTarget.value, ...select.also }, true)}
-              >
-                <For each={groups}>{(entry) => (entry.group ? <optgroup label={entry.group}>{options(entry.items)}</optgroup> : options(entry.items))}</For>
-              </select>
-            </label>
-          );
-        }}
-      </For>
     </div>
   );
 }

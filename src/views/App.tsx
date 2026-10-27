@@ -8,7 +8,7 @@ import { createPage, PageProvider, usePage } from "../state.ts";
 import type { Mode } from "../theme/apply.ts";
 import type { Model } from "../types.ts";
 import type { Block, Copy, Section, ViewKind, Views } from "../viewtypes.ts";
-import { Cards, Filters, Legend, Meters, Table, Text } from "./Basic.tsx";
+import { Cards, Filters, Meters, Table, Text } from "./Basic.tsx";
 import { Domains } from "./Domains.tsx";
 import { Inspector } from "./Inspector.tsx";
 import { scrollToSection } from "./scroll.ts";
@@ -21,7 +21,6 @@ const VIEWS: ViewMap = {
   cards: Cards,
   meters: Meters,
   text: Text,
-  legend: Legend,
   domains: Domains,
   filters: Filters,
   table: Table,

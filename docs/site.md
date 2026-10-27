@@ -10,13 +10,13 @@ the game code, the PsyQ SDK and the hand-written assembly, each from its report 
 
 The report does not carry the game-data census, disc assets, a per-day history or unique-function
 counts, so those views are gone: the **Game data** and **Assets** sections, the **Progress over
-time** charts and the **Unique game functions** card. The page keeps the report-backed views: the
-overview and game cards, the map of parts and images, match quality, the PsyQ SDK and the function
-browser.
+time** charts and the **Unique game functions** card. The page keeps three sections: the overview
+(game code rebuilt in C by functions and by size, with the draft and open counts), the map of parts
+and images, and the PsyQ SDK line. A search box finds a function by name, address or status.
 
 ## How the page is built
 
-The page is data. `src/sections.ts` is an ordered list of sections; each has an `id` (its anchor, `#map`), a title (also its link in the page navigation) and a list of blocks. A block names a **view kind** (`cards`, `meters`, `text`, `legend`, `domains`, `filters`, `table`, `inspector`) and a **selector** that turns the model and the route into the data that view draws. `src/views/App.tsx` draws the list in order, so adding, removing or reordering a section means editing that list. Each number has one home: the overview cards are not repeated in the sections below them.
+The page is data. `src/sections.ts` is an ordered list of sections; each has an `id` (its anchor, `#map`), a title (also its link in the page navigation) and a list of blocks. A block names a **view kind** (`cards`, `meters`, `text`, `domains`, `filters`, `table`, `inspector`) and a **selector** that turns the model and the route into the data that view draws. `src/views/App.tsx` draws the list in order, so adding, removing or reordering a section means editing that list.
 
 Navigation has one model. The route names a page (home, a part of the game, or an image) and, apart from it, the source file open in the side panel (`src/views/Inspector.tsx`, fed by `src/inspect.ts`), so a file opens the same way from the function list, a treemap or the panel's own links. The panel shows the unit (source file), its size, its matched functions and its address; the function list and treemap tiles are functions and open their file. Links are `Jump` (`src/views/ui.tsx`): a real `href`, and a plain click calls `go`, which pushes the route and starts a new page at the top, or scrolls to the home page section the link names. The section links show on every page.
 
@@ -34,7 +34,7 @@ Navigation has one model. The route names a page (home, a part of the game, or a
 | --- | --- |
 | Add, remove or reorder a section or block | `src/sections.ts`. Reuse a view kind with a new selector in `src/selectors.ts`. |
 | Add a view kind | A data shape in `src/viewtypes.ts`, a component in `src/views/`, and its entry in `VIEWS` in `src/views/App.tsx`. |
-| Add a status | A row in `STATUS_TABLE` (`src/model/status.ts`), its label in `STATUS_LABEL` (`src/strings.ts`) and its colours in `src/theme/tokens.ts`. The legend, filters, charts, totals and picture follow. |
+| Add a status | A row in `STATUS_TABLE` (`src/model/status.ts`), its label in `STATUS_LABEL` (`src/strings.ts`) and its colours in `src/theme/tokens.ts`. The key, charts, totals and picture follow. |
 | Add or reshape a part of the game | `GROUP_RULES` in `src/model/groups.ts` (target id pattern to group, and `tiles` for a grid of image tiles), its place in `PAGE_ORDER`, and its heading and note in `GROUP_LABEL` and `GROUP_NOTE` (`src/strings.ts`). A target no rule matches lands in `other`. Images sort by game code bytes. |
 | Change wording | `src/strings.ts`, one name per thing: a status, a part of the game, an image and a measure keep the same words in every card, key, list and tooltip. |
 | Change the data shape | The schema in `src/model/schema.ts` and the adapter in `src/model/report.ts`; then publish a matching `data/report.json`. |

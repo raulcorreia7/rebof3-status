@@ -60,7 +60,6 @@ export const HEAD = {
 export const SUMMARY = {
   overviewHeading: "Overview",
   gameHeading: "Game code",
-  gameHelp: "Every function of the game's programs and overlays. A function counts as rebuilt when its C builds to the exact original bytes.",
   gameFunctions: "Game functions",
   gameBytes: "Game code by size",
   of: (done: number, total: number) => `${number(done)} of ${number(total)} rebuilt in C`,
@@ -71,8 +70,7 @@ export const SUMMARY = {
 
 export const MAP = {
   heading: "Parts of the game",
-  help: "One block per part of the game, then one bar or tile per image, biggest first. Open a part or an image to see its functions.",
-  statusHelp: "Draft in C: C that builds but does not match the original yet. Not started: still the original assembly.",
+  help: "Pick a part of the game or an image to see its functions.",
   key: (functions: number, size: number | null) => (size === null ? plural(functions, "function") : `${plural(functions, "function")} · ${bytes(size)}`),
   group: (done: number, total: number, size: number, images: number) => `${number(done)} of ${plural(total, "function")} · ${bytes(size)} · ${plural(images, "image")}`,
   image: (done: number, total: number) => `${number(done)} of ${number(total)}`,
@@ -94,39 +92,16 @@ export const SDK = {
     `${number(done)} of ${number(total)} SDK functions match the original bytes` + (assembly ? `; ${number(assembly)} are assembly only.` : "."),
   handLabel: "Hand-written assembly:",
   handText: (done: number, total: number) => `${number(done)} of ${number(total)} functions match exactly. Neither counts in the game code figures.`,
-  librariesHeading: "Libraries",
-  help: "One bar per library. Open a library to list its functions.",
   versions: (text: string) => `from PsyQ ${text}`,
   assemblyOnly: (count: number) => `${number(count)} assembly only`,
   done: (objects: number, total: number) => `${number(objects)} of ${number(total)}`,
   assemblyLibrary: "assembly only",
 };
 
-export const QUALITY = {
-  heading: "Match quality",
-  perTargetHeading: "Drafts in C by part of the game",
-  perTargetHelp: "Game functions in C that do not build to the original bytes yet.",
-  verifyHeading: "How the numbers are counted",
-  gameScope: "Game code:",
-  gameScopeText: (done: number, total: number, doneBytes: number, totalBytes: number) =>
-    `${number(done)} of ${number(total)} functions are rebuilt in C (${bytesOf(doneBytes, totalBytes)}), counted from the objdiff report. The PsyQ SDK and the hand-written assembly are not counted.`,
-  table: "Every image",
-  columns: { image: "Image", functions: "Functions", rebuilt: "Rebuilt in C", drafts: "Drafts in C", size: "Size", fuzzy: "Fuzzy match" },
-};
-
 export const BROWSER = {
   heading: "Functions",
   searchPlaceholder: "Name, address or status",
   searchLabel: "Search functions",
-  statusLabel: "Status",
-  targetLabel: "Image",
-  allTargets: "All images",
-  scopeLabel: "Code",
-  scopes: { all: "All code", game: "Game code", sdk: "PsyQ SDK", hand: "Hand-written assembly" },
-  libraryLabel: "Library",
-  allLibraries: "All libraries",
-  sortLabel: "Sort by",
-  sorts: { address: "Address", size: "Size", name: "Name", status: "Status" },
   columns: { function: "Function", status: "Status", size: "Size", target: "Image", address: "Address" },
   reset: "Clear filters",
   none: "No function matches. Try fewer words.",

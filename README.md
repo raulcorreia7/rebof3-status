@@ -6,7 +6,7 @@
 Progress of the Breath of Fire III decompilation: **<https://raulcorreia7.github.io/rebof3-status/>**
 
 The page shows the game code rebuilt in C: the totals, the map of the game's parts and images, the
-match quality, and the functions the report lists. The PsyQ SDK and the hand-written assembly are
+and a search for any function. Open a part or an image to list its functions. The PsyQ SDK and the hand-written assembly are
 shown apart. This repository holds only the numbers and their renderer: no source code, assembly or
 game data.
 
