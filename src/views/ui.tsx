@@ -92,10 +92,5 @@ function PartView(props: { part: Part }) {
   ) : (
     inner
   );
-  return (
-    <>
-      {part.br ? <br /> : null}
-      {body}
-    </>
-  );
+  return body;
 }

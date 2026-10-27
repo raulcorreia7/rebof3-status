@@ -31,11 +31,11 @@ export interface Part {
   code?: boolean;
   mute?: boolean;
   status?: Status;
-  /** Start on a new line. */
-  br?: boolean;
 }
 
 export interface MeterRow {
+  /** Visible caption above the bar. */
+  label?: string;
   aria: string;
   /** Segments in order; `width` is a percentage of the bar. */
   parts: { width: string; color: string }[];
@@ -77,23 +77,17 @@ export interface Views {
       }[];
     }[];
   };
-  filters: { search: { label: string; placeholder: string } };
+  filters: { search: { label: string; hint: string; placeholder: string } };
   table: {
     columns: { label: string; align?: "r"; sort?: SortKey }[];
     rows: { id: string; cells: Part[][] }[];
-    /** Text for the line above the table. */
-    message?: string;
-    /** Show the clear-filters and copy-link actions. */
-    actions?: { canReset: boolean };
+    /** Text for the line above the table; empty while there is no search. */
+    message: string;
     /** More rows can be shown. */
     more?: string;
-    /** Wrap the table in a closed disclosure with this summary. */
-    disclosure?: string;
   };
   inspector: { title: string; fields: { label: string; value: Part[] }[]; message?: string } | null;
 }
-
-export type ViewKind = keyof Views;
 
 /** A part of the game or an image page: its counts, then its functions as a treemap and a list. */
 export interface GamePage {
@@ -113,28 +107,4 @@ export interface GamePage {
   functions: Fn[];
   /** The page holds several images, so each function names its image. */
   inPart: boolean;
-}
-export type Copy = string | ((c: Ctx) => string);
-
-/** One block of a section: a view, the selector that feeds it, and the text around it. */
-export type Block = {
-  [K in ViewKind]: {
-    view: K;
-    select: (c: Ctx) => Views[K];
-    /** Small heading, help text before the view, and a muted note after it. */
-    heading?: Copy;
-    help?: Copy;
-    note?: Copy;
-    /** The block is skipped when this returns false. */
-    when?: (c: Ctx) => boolean;
-  };
-}[ViewKind];
-
-export interface Section {
-  id: string;
-  /** The heading, and the section's link in the page navigation. */
-  title: string;
-  /** `aside` sections sit beside the page instead of in it. */
-  where?: "main" | "aside";
-  blocks: Block[];
 }

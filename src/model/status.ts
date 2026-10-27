@@ -49,5 +49,9 @@ export const isStatus = (value: string): value is Status => Object.hasOwn(STATUS
 export const codeCounts = (code: Code): [Status, number][] =>
   ([["pure", code.exact], ["nonmatching", code.draft], ["open", code.functions - code.exact - code.draft]] as [Status, number][]).filter(([, count]) => count);
 
+/** The same split by code bytes. */
+export const codeSizes = (code: Code): [Status, number][] =>
+  ([["pure", code.exactBytes], ["nonmatching", code.draftBytes], ["open", code.bytes - code.exactBytes - code.draftBytes]] as [Status, number][]).filter(([, size]) => size);
+
 /** A function is done when it builds to the original bytes: its fuzzy match is 100. */
 export const isDone = (fn: Pick<Fn, "kind" | "status" | "fuzzy">): boolean => STATUS[fn.status].doneIn.includes(fn.kind) && fn.fuzzy === 100;

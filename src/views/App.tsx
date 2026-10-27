@@ -1,31 +1,27 @@
-// The page: the header, then the section registry drawn in order.
+// The page: the header, then the home page sections or one part or image page.
 
-import { createMemo, For, onMount, Show, type Component } from "solid-js";
-import { SECTIONS } from "../sections.ts";
-import { FOOT, HEAD } from "../strings.ts";
+import { createMemo, For, onMount, Show, type JSX } from "solid-js";
+import { inspector } from "../inspect.ts";
+import { BROWSER, FOOT, HEAD, MAP, SDK, SUMMARY } from "../strings.ts";
 import { HOME } from "../model/route.ts";
 import { createPage, PageProvider, usePage } from "../state.ts";
 import type { Mode } from "../theme/apply.ts";
 import type { Model } from "../types.ts";
-import type { Block, Copy, Section, ViewKind, Views } from "../viewtypes.ts";
 import { Cards, Filters, Meters, Table, Text } from "./Basic.tsx";
 import { Domains } from "./Domains.tsx";
 import { Inspector } from "./Inspector.tsx";
 import { scrollToSection } from "./scroll.ts";
-import { gamePage } from "../selectors.ts";
+import { apart, domains, gamePage, overviewCards, overviewMeter, search, searchTable } from "../selectors.ts";
 import { GamePageView } from "./GamePage.tsx";
 import { Jump } from "./ui.tsx";
 
-type ViewMap = { [K in ViewKind]: Component<{ data: () => Views[K] }> };
-const VIEWS: ViewMap = {
-  cards: Cards,
-  meters: Meters,
-  text: Text,
-  domains: Domains,
-  filters: Filters,
-  table: Table,
-  inspector: Inspector,
-};
+/** The sections of the home page, in order: the anchor (#map) and the title, also the navigation link. */
+const NAV = [
+  { id: "overview", title: SUMMARY.overviewHeading },
+  { id: "find", title: BROWSER.heading },
+  { id: "map", title: MAP.heading },
+  { id: "sdk", title: SDK.heading },
+];
 
 const NEXT: Record<Mode, Mode> = { auto: "light", light: "dark", dark: "auto" };
 
@@ -42,11 +38,11 @@ function Layout() {
   const page = usePage();
   const gamePageData = createMemo(() => gamePage(page));
   const inspectorOpen = () => !!page.route.fn;
-  const main = SECTIONS.filter((section) => section.where !== "aside");
-  // A link to a section (#map, #browse) opens the home page at that section.
+  const inspectorData = createMemo(() => inspector(page));
+  // A link to a section (#map, #find) opens the home page at that section.
   onMount(() => {
     const id = window.location.hash.slice(1);
-    if (main.some((section) => section.id === id)) requestAnimationFrame(() => scrollToSection(id, false));
+    if (NAV.some((section) => section.id === id)) requestAnimationFrame(() => scrollToSection(id, false));
   });
   return (
     <>
@@ -56,12 +52,12 @@ function Layout() {
       <div class="flex items-start">
         <main id="content" tabIndex={-1} class={`mx-auto max-w-5xl min-w-0 flex-1 px-4 pt-5 pb-16 focus:outline-none ${inspectorOpen() ? "max-xl:pb-[64vh]" : ""}`}>
           <Header />
-          <Show when={gamePageData()} fallback={<For each={main}>{(section) => <SectionView section={section} />}</For>}>
+          <Show when={gamePageData()} fallback={<Sections />}>
             {(data) => <GamePageView data={data} />}
           </Show>
           <p class="mt-10 text-sm text-mute">{FOOT.text}</p>
         </main>
-        <For each={SECTIONS.filter((section) => section.where === "aside")}>{(section) => <For each={section.blocks}>{(block) => <BlockView block={block} />}</For>}</For>
+        <Inspector data={inspectorData} />
       </div>
     </>
   );
@@ -85,7 +81,7 @@ function Header() {
         {HEAD.getThe} <a href="report.json">{HEAD.data}</a> {HEAD.or} <a href="progress.png">{HEAD.picture}</a>.
       </p>
       <nav class="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm" aria-label={HEAD.sections}>
-        <For each={SECTIONS.filter((section) => section.where !== "aside")}>
+        <For each={NAV}>
           {(section) => (
             <Jump to={{ view: HOME.view }} scroll={section.id}>
               {section.title}
@@ -97,41 +93,42 @@ function Header() {
   );
 }
 
-const copy = (value: Copy | undefined, page: ReturnType<typeof usePage>) => (typeof value === "function" ? value(page) : value);
-
-function SectionView(props: { section: Section }) {
-  const id = props.section.id;
-  return (
-    <section id={id} class="mt-10 scroll-mt-3 focus:outline-none" aria-labelledby={`${id}-title`} tabindex="-1">
-      <h2 id={`${id}-title`} class="mb-1 text-xl font-semibold">
-        {props.section.title}
-      </h2>
-      <For each={props.section.blocks}>{(block) => <BlockView block={block} />}</For>
-    </section>
-  );
-}
-
-function BlockView(props: { block: Block }) {
+function Sections() {
   const page = usePage();
-  const block = props.block;
-  return (
-    <Show when={!block.when || block.when(page)}>
-      <Body block={block} />
-    </Show>
-  );
-}
-
-function Body(props: { block: Block }) {
-  const page = usePage();
-  const block = props.block;
-  const data = createMemo(() => block.select(page));
-  const View = VIEWS[block.view] as Component<{ data: () => unknown }>;
+  const cards = createMemo(() => overviewCards(page));
+  const meters = createMemo(() => overviewMeter(page));
+  const filters = createMemo(() => search());
+  const table = createMemo(() => searchTable(page));
+  const map = createMemo(() => domains(page));
+  const sdk = createMemo(() => apart(page));
   return (
     <>
-      <Show when={copy(block.heading, page)}>{(heading) => <h3 class="mt-5 mb-1 font-semibold">{heading()}</h3>}</Show>
-      <Show when={copy(block.help, page)}>{(help) => <p class="my-1 text-sm text-mute">{help()}</p>}</Show>
-      <View data={data} />
-      <Show when={copy(block.note, page)}>{(note) => <p class="my-1 text-sm text-mute">{note()}</p>}</Show>
+      <Section id="overview" title={SUMMARY.overviewHeading}>
+        <Cards data={cards} />
+        <Meters data={meters} />
+      </Section>
+      <Section id="find" title={BROWSER.heading}>
+        <Filters data={filters} />
+        <Table data={table} />
+      </Section>
+      <Section id="map" title={MAP.heading}>
+        <p class="my-1 text-sm text-mute">{MAP.help}</p>
+        <Domains data={map} />
+      </Section>
+      <Section id="sdk" title={SDK.heading}>
+        <Text data={sdk} />
+      </Section>
     </>
+  );
+}
+
+function Section(props: { id: string; title: string; children: JSX.Element }) {
+  return (
+    <section id={props.id} class="mt-10 scroll-mt-3 focus:outline-none" aria-labelledby={`${props.id}-title`} tabindex="-1">
+      <h2 id={`${props.id}-title`} class="mb-1 text-xl font-semibold">
+        {props.title}
+      </h2>
+      {props.children}
+    </section>
   );
 }

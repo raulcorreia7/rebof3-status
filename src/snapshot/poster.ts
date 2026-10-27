@@ -28,7 +28,7 @@ const sdkBlocks = (model: Model): Block[] => model.libraries.map((lib) => ({ nam
 
 // The headline, in the order the numbers matter: game functions, their size, the fuzzy match.
 function cards(model: Model, y: number): Drawn {
-  const { game } = model.headline;
+  const game = model.code;
   const items: [string, string, string, string][] = [
     [`${percent(game.exact, game.functions, 1)}%`, SUMMARY.gameFunctions, SUMMARY.of(game.exact, game.functions), C.status.pure],
     [`${percent(game.exactBytes, game.bytes, 1)}%`, SUMMARY.gameBytes, SUMMARY.ofBytes(game.exactBytes, game.bytes), C.status.pure],

@@ -7,7 +7,7 @@ import type { Model } from "../types.ts";
 import { FONT } from "./svg.ts";
 
 export function badge(model: Model): string {
-  const { game } = model.headline;
+  const game = model.code;
   const value = `${percent(game.exact, game.functions, 1)}%`;
   const key = POSTER.badge;
   const [kw, vw] = [textWidth(key, 11) + 14, textWidth(value, 11) + 14];

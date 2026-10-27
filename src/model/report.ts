@@ -7,7 +7,7 @@ import { compareGroups, describeGroup, groupKey } from "./groups.ts";
 import * as z from "zod/mini";
 import { ReportSchema } from "./schema.ts";
 import { STATUS, STATUSES, isDone } from "./status.ts";
-import type { Code, Fn, Group, Headline, Library, Model, Part, Report, Target, Tally, Tier, Unit } from "../types.ts";
+import type { Code, Fn, Group, Library, Model, Part, Report, Target, Tally, Tier, Unit } from "../types.ts";
 
 type ReportUnit = Report["units"][number];
 type ReportFunction = ReportUnit["functions"][number];
@@ -198,8 +198,9 @@ const addCode = (items: Code[]): Code =>
       draft: sum.draft + code.draft,
       bytes: sum.bytes + code.bytes,
       exactBytes: sum.exactBytes + code.exactBytes,
+      draftBytes: sum.draftBytes + code.draftBytes,
     }),
-    { functions: 0, exact: 0, draft: 0, bytes: 0, exactBytes: 0 },
+    { functions: 0, exact: 0, draft: 0, bytes: 0, exactBytes: 0, draftBytes: 0 },
   );
 
 /** The file checked against its schema; the error names the file and the field that failed. */
@@ -233,7 +234,7 @@ function buildModel(report: Report): Model {
       name: targetName(id, archives),
       group,
       groupLabel: describeGroup(group).label,
-      code: { functions: 0, exact: 0, draft: 0, bytes: 0, exactBytes: 0 },
+      code: { functions: 0, exact: 0, draft: 0, bytes: 0, exactBytes: 0, draftBytes: 0 },
       functions: [],
       units: [],
       game: tally([]),
@@ -269,6 +270,7 @@ function buildModel(report: Report): Model {
       draft: target.game.statuses.nonmatching.functions,
       bytes: target.game.bytes,
       exactBytes: target.game.doneBytes,
+      draftBytes: target.game.statuses.nonmatching.bytes,
     };
   }
 
@@ -290,15 +292,11 @@ function buildModel(report: Report): Model {
   const sdk = measured(functions.filter((fn) => fn.kind === "sdk"), sdkSource);
   const hand = measured(functions.filter((fn) => fn.kind === "hand"), handSource);
   const code = addCode(targets.map((target) => target.code));
-  const headline: Headline = { game: { functions: game.count, exact: game.done, bytes: game.bytes, exactBytes: game.doneBytes } };
   return {
-    meta: { version: report.version ?? 0 },
-    headline,
     code,
     game,
     sdk,
     hand,
-    all: tally(functions),
     quality: {
       exact: code.exact,
       inProgress: code.draft,
@@ -310,7 +308,6 @@ function buildModel(report: Report): Model {
     groups,
     targets,
     targetById,
-    units,
     unitById,
     functions,
     libraries: buildLibraries(functions.filter((fn) => fn.kind === "sdk")),

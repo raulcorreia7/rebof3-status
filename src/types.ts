@@ -88,6 +88,7 @@ export interface Code {
   draft: number;
   bytes: number;
   exactBytes: number;
+  draftBytes: number;
 }
 
 export interface Target {
@@ -139,20 +140,7 @@ export interface Quality {
   fuzzy: number;
 }
 
-/** The headline: the game code the report measures. */
-export interface Headline {
-  game: {
-    functions: number;
-    exact: number;
-    bytes: number;
-    exactBytes: number;
-  };
-}
-
 export interface Model {
-  meta: { version: number };
-  /** The headline numbers: the game code the report measures. */
-  headline: Headline;
   /** Game code from the report, the sum of every target's code: what the map and the groups show. */
   code: Code;
   /** Game functions in the report: the functions the browser lists, and the fuzzy match. */
@@ -161,13 +149,10 @@ export interface Model {
   sdk: Tally;
   /** Hand-written assembly functions, shown apart. */
   hand: Tally;
-  /** Every function, for the map legend. */
-  all: Tally;
   quality: Quality;
   groups: Group[];
   targets: Target[];
   targetById: Map<string, Target>;
-  units: Unit[];
   unitById: Map<string, Unit>;
   functions: Fn[];
   libraries: Library[];

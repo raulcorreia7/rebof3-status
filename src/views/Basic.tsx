@@ -36,7 +36,16 @@ export function Meters(props: Props<"meters">) {
   return (
     <>
       <Show when={props.data().key}>{(key) => <StatusKey items={key()} />}</Show>
-      <For each={props.data().rows}>{(row) => <Meter row={row} class="my-3 h-3.5" />}</For>
+      <For each={props.data().rows}>
+        {(row) => (
+          <>
+            <Show when={row.label}>
+              <div class="mt-3 text-sm text-mute">{row.label}</div>
+            </Show>
+            <Meter row={row} class="mt-1 mb-3 h-3.5" />
+          </>
+        )}
+      </For>
     </>
   );
 }
@@ -66,7 +75,8 @@ export function Filters(props: Props<"filters">) {
   };
   onCleanup(() => window.clearTimeout(pause));
   return (
-    <div class="mt-2.5">
+    <div class="mt-1">
+      <p class="mb-2 text-sm text-mute">{props.data().search.hint}</p>
       <input
         type="search"
         class={`${input} w-full max-w-90`}
@@ -97,75 +107,56 @@ export function Table(props: Props<"table">) {
       /* clipboard blocked: the address bar still holds the link */
     }
   };
-  const table = () => (
-    <div class="mt-2 max-h-[70vh] overflow-auto rounded-md border border-line bg-card">
-      <table class="w-full border-collapse text-sm tabular-nums">
-        <thead>
-          <tr>
-            <For each={props.data().columns}>
-              {(column) => (
-                <th class={`sticky top-0 border-b border-line bg-card px-3 py-1.5 text-xs font-semibold whitespace-nowrap text-mute ${align(column)}`} aria-sort={ariaSort(column.sort)}>
-                  {column.sort ? (
-                    <button type="button" class="cursor-pointer" onClick={() => sortBy(column.sort!)}>
-                      {column.label}
-                      {arrow(column.sort)}
-                    </button>
-                  ) : (
-                    column.label
-                  )}
-                </th>
-              )}
-            </For>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-line">
-          <For each={props.data().rows}>
-            {(row) => (
-              <tr class={row.id === selected() ? "bg-track" : ""} data-fn={row.id}>
-                <For each={row.cells}>
-                  {(cell, index) => (
-                    <td class={`px-3 py-1.5 whitespace-nowrap ${align(props.data().columns[index()])}`}>
-                      <Parts parts={cell} />
-                    </td>
+  return (
+    <>
+      <div class="mt-2 flex flex-wrap justify-between gap-x-4 gap-y-1">
+        <p class="text-sm text-mute" id="count" aria-live="polite">
+          {props.data().message}
+        </p>
+        <Show when={props.data().rows.length}>
+          <button type="button" class="link text-sm" onClick={copy}>
+            {copied() ? BROWSER.copied : BROWSER.share}
+          </button>
+        </Show>
+      </div>
+      <Show when={props.data().rows.length}>
+        <div class="mt-2 max-h-[70vh] overflow-auto rounded-md border border-line bg-card">
+          <table class="w-full border-collapse text-sm tabular-nums">
+            <thead>
+              <tr>
+                <For each={props.data().columns}>
+                  {(column) => (
+                    <th class={`sticky top-0 border-b border-line bg-card px-3 py-1.5 text-xs font-semibold whitespace-nowrap text-mute ${align(column)}`} aria-sort={ariaSort(column.sort)}>
+                      {column.sort ? (
+                        <button type="button" class="cursor-pointer" onClick={() => sortBy(column.sort!)}>
+                          {column.label}
+                          {arrow(column.sort)}
+                        </button>
+                      ) : (
+                        column.label
+                      )}
+                    </th>
                   )}
                 </For>
               </tr>
-            )}
-          </For>
-        </tbody>
-      </table>
-    </div>
-  );
-  return (
-    <>
-      <Show when={props.data().message !== undefined}>
-        <div class="mt-2 flex flex-wrap justify-between gap-x-4 gap-y-1">
-          <p class="text-sm text-mute" id="count" aria-live="polite">
-            {props.data().message}
-          </p>
-          <Show when={props.data().actions}>
-            {(actions) => (
-              <span class="flex gap-3.5 text-sm">
-                <Show when={actions().canReset}>
-                  <button type="button" class="link" onClick={() => page.go({ q: "", st: [], part: "all", lib: null, target: null, sort: "address", dir: "asc" }, true)}>
-                    {BROWSER.reset}
-                  </button>
-                </Show>
-                <button type="button" class="link" onClick={copy}>
-                  {copied() ? BROWSER.copied : BROWSER.share}
-                </button>
-              </span>
-            )}
-          </Show>
+            </thead>
+            <tbody class="divide-y divide-line">
+              <For each={props.data().rows}>
+                {(row) => (
+                  <tr class={row.id === selected() ? "bg-track" : ""} data-fn={row.id}>
+                    <For each={row.cells}>
+                      {(cell, index) => (
+                        <td class={`px-3 py-1.5 whitespace-nowrap ${align(props.data().columns[index()])}`}>
+                          <Parts parts={cell} />
+                        </td>
+                      )}
+                    </For>
+                  </tr>
+                )}
+              </For>
+            </tbody>
+          </table>
         </div>
-      </Show>
-      <Show when={props.data().disclosure} fallback={table()}>
-        {(summary) => (
-          <details class="mt-5 text-sm">
-            <summary class="cursor-pointer text-mute hover:text-ink">{summary()}</summary>
-            {table()}
-          </details>
-        )}
       </Show>
       <Show when={props.data().more}>
         {(more) => (

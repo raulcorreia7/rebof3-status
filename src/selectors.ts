@@ -5,18 +5,23 @@ import { gameImageTree, gamePartTree } from "./charts/treemap.ts";
 import { browse, PAGE_STEP } from "./model/browse.ts";
 import { bytes, percent, plural } from "./model/format.ts";
 import { HOME, type Route } from "./model/route.ts";
-import { codeCounts, STATUS } from "./model/status.ts";
+import { codeCounts, codeSizes, STATUS } from "./model/status.ts";
 import { BROWSER, MAP, SDK, SUMMARY } from "./strings.ts";
 import type { Code, Fn } from "./types.ts";
 import type { Ctx, GamePage, Link, MeterRow, Views } from "./viewtypes.ts";
 
 // Shared pieces ---------------------------------------------------------------------------
 
-/** One bar of game code split by status, by function count. */
-export const codeMeter = (code: Code, aria: string): MeterRow => ({
-  aria,
-  parts: codeCounts(code).map(([key, count]) => ({ width: percent(count, code.functions, 3), color: STATUS[key].color })),
-});
+/** One bar of game code split by status, by function count or by code bytes. */
+export const codeMeter = (code: Code, aria: string, by: "functions" | "bytes" = "functions"): MeterRow => {
+  const split = by === "bytes" ? codeSizes(code) : codeCounts(code);
+  const total = by === "bytes" ? code.bytes : code.functions;
+  return { aria, parts: split.map(([key, amount]) => ({ width: percent(amount, total, 3), color: STATUS[key].color })) };
+};
+
+/** The key of a game code bar: each status with its function count. */
+export const statusKey = (code: Code): GamePage["key"] =>
+  codeCounts(code).map(([key, count]) => ({ label: STATUS[key].label, color: STATUS[key].color, sub: plural(count, "function") }));
 
 // Overview and the sections below it -----------------------------------------------------
 
@@ -24,7 +29,7 @@ const share = (done: number, total: number, digits = 1) => `${percent(done, tota
 
 /** The headline: game code rebuilt in C, by functions and by size. */
 export function overviewCards({ model }: Ctx): Views["cards"] {
-  const { game } = model.headline;
+  const game = model.code;
   return {
     cards: [
       { id: "game", big: share(game.exact, game.functions), title: SUMMARY.gameFunctions, sub: SUMMARY.of(game.exact, game.functions), color: STATUS.pure.color },
@@ -33,12 +38,17 @@ export function overviewCards({ model }: Ctx): Views["cards"] {
   };
 }
 
-/** One bar of all game code, with the rebuilt, draft and open counts as its key. */
+/** Two bars of all game code, by functions and by code bytes, with the status key. */
 export function overviewMeter({ model }: Ctx): Views["meters"] {
   const { code } = model;
-  const count = (status: "pure" | "nonmatching" | "open", functions: number, size: number | null) => ({ label: STATUS[status].label, color: STATUS[status].color, sub: MAP.key(functions, size) });
-  const key = [count("pure", code.exact, code.exactBytes), count("nonmatching", code.draft, null), count("open", code.functions - code.exact - code.draft, null)];
-  return { key, rows: [codeMeter(code, `${SUMMARY.gameHeading}: ${SUMMARY.of(code.exact, code.functions)}`)] };
+  const heading = SUMMARY.gameHeading;
+  return {
+    key: statusKey(code),
+    rows: [
+      { ...codeMeter(code, `${heading}, ${SUMMARY.byFunctions}: ${SUMMARY.of(code.exact, code.functions)}`), label: SUMMARY.byFunctions },
+      { ...codeMeter(code, `${heading}, ${SUMMARY.byBytes}: ${SUMMARY.ofBytes(code.exactBytes, code.bytes)}`, "bytes"), label: SUMMARY.byBytes },
+    ],
+  };
 }
 
 /** The SDK and the hand-written assembly, shown apart from the game totals. */
@@ -54,10 +64,6 @@ const gameMapRoute = (view: Extract<Route["view"], { kind: "image" | "part" }>):
   view,
   fn: null,
   q: "",
-  st: [],
-  part: "all",
-  lib: null,
-  target: null,
   sort: "address",
   dir: "asc",
 });
@@ -93,9 +99,6 @@ export function domains({ model }: Ctx): Views["domains"] {
     });
   return { groups };
 }
-
-const statusKey = (code: Code): GamePage["key"] =>
-  codeCounts(code).map(([key, count]) => ({ label: STATUS[key].label, color: STATUS[key].color, sub: plural(count, "function") }));
 
 /** A part of the game or an image: the report's counts, then its functions as a treemap and a list. */
 export function gamePage({ model, route, tokens }: Ctx): GamePage | null {
@@ -141,11 +144,10 @@ export function gamePage({ model, route, tokens }: Ctx): GamePage | null {
 
 // Search -------------------------------------------------------------------------
 
-export const search = (): Views["filters"] => ({ search: { label: BROWSER.searchLabel, placeholder: BROWSER.searchPlaceholder } });
+export const search = (): Views["filters"] => ({ search: { label: BROWSER.searchLabel, hint: BROWSER.hint, placeholder: BROWSER.searchPlaceholder } });
 
 export function searchTable({ model, route, limit }: Ctx): Views["table"] {
-  const found = browse(model, route);
-  const canReset = !!(route.q || route.st.length || route.part !== HOME.part || route.lib || route.target || route.sort !== HOME.sort || route.dir !== HOME.dir);
+  const found = route.q ? browse(model, route) : [];
   return {
     columns: [
       { label: BROWSER.columns.function, sort: "name" },
@@ -164,8 +166,7 @@ export function searchTable({ model, route, limit }: Ctx): Views["table"] {
         [{ text: fn.addr || "-", code: true }],
       ],
     })),
-    message: !found.length ? BROWSER.none : found.length > limit ? BROWSER.limited(limit, found.length) : BROWSER.shown(found.length),
-    actions: { canReset },
+    message: !route.q ? "" : !found.length ? BROWSER.none : found.length > limit ? BROWSER.limited(limit, found.length) : BROWSER.shown(found.length),
     more: found.length > limit ? BROWSER.more(PAGE_STEP) : undefined,
   };
 }

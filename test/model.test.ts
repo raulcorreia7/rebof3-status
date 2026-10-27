@@ -49,7 +49,7 @@ test("the headline counts functions, matched functions and their bytes", () => {
   assert.equal(model.game.done, game.matched_functions);
   assert.equal(model.game.bytes, Number(game.total_code));
   assert.equal(model.game.doneBytes, Number(game.matched_code));
-  assert.deepEqual(model.headline.game, { functions: game.total_functions, exact: game.matched_functions, bytes: Number(game.total_code), exactBytes: Number(game.matched_code) });
+  assert.deepEqual(model.code, { functions: game.total_functions, exact: game.matched_functions, draft: model.code.draft, bytes: Number(game.total_code), exactBytes: Number(game.matched_code), draftBytes: model.code.draftBytes });
 });
 
 test("the SDK and hand-written assembly agree with their categories", () => {
@@ -64,11 +64,11 @@ test("the SDK and hand-written assembly agree with their categories", () => {
 });
 
 test("every unit function is counted once, in one file and one target", () => {
-  assert.equal(model.units.length, file.units.length);
+  const units = model.targets.flatMap((target) => target.units);
+  assert.equal(units.length, file.units.length);
   assert.equal(model.functions.length, functions.length);
-  assert.equal(model.all.count, functions.length);
   assert.equal(model.game.count + model.sdk.count + model.hand.count, functions.length);
-  for (const unit of model.units) {
+  for (const unit of units) {
     assert.ok(unit.functions.length, unit.id);
     assert.equal(unit.bytes, sum(unit.functions.map((fn) => fn.bytes)), unit.id);
     assert.ok(unit.functions.every((fn) => fn.unit === unit.id && fn.target === unit.target), unit.id);
@@ -84,13 +84,13 @@ test("every unit function is counted once, in one file and one target", () => {
 });
 
 test("every status counts its functions and bytes exactly once", () => {
-  for (const tally of [model.game, model.sdk, model.hand, model.all]) {
+  for (const tally of [model.game, model.sdk, model.hand]) {
     assert.equal(sum(STATUSES.map((key) => tally.statuses[key].functions)), tally.count);
     assert.equal(sum(STATUSES.map((key) => tally.statuses[key].bytes)), tally.bytes);
   }
   assert.equal(model.game.statuses.pure.functions, model.game.done);
   assert.equal(model.game.statuses.nonmatching.functions + model.game.statuses.open.functions, model.game.count - model.game.done);
-  assert.equal(model.all.done, sum(file.categories.map((entry) => entry.measures.matched_functions)));
+  assert.equal(model.game.done + model.sdk.done + model.hand.done, sum(file.categories.map((entry) => entry.measures.matched_functions)));
 });
 
 test("the SDK assembly-only functions still count as matched", () => {

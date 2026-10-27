@@ -34,7 +34,7 @@ function GroupBlock(props: { group: Group }) {
               {(image) => (
                 // On a phone the name and the numbers share a line and the bar goes under them.
                 <li class="col-span-full grid grid-cols-subgrid items-center gap-y-1">
-                  <Jump to={image.to} class="truncate" title={image.id}>
+                  <Jump to={image.to} class="break-words" title={image.id}>
                     {image.label}
                   </Jump>
                   <div class="bar col-span-2 row-start-2 h-3 sm:col-span-1 sm:col-start-2 sm:row-start-1" style={{ width: `${image.width}%` }} role="img" aria-label={image.aria}>
@@ -58,7 +58,6 @@ function GroupBlock(props: { group: Group }) {
                   class="block h-full rounded-md border border-line bg-card px-2 py-1.5 text-ink hover:border-accent hover:no-underline"
                   title={image.id}
                   aria-label={image.aria}
-                 
                 >
                   <span class="block text-xs/tight font-medium break-words">{image.label}</span>
                   <span class="bar my-1 h-1.5" aria-hidden="true">

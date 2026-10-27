@@ -4,15 +4,12 @@
 //   #image/emi%2Fworld00%2Farea037%2F13                   an image page (its treemap)
 //   #image/emi%2Fworld00%2Farea037%2F13?fn=...            the same with a source file open
 //   #part/battle                                          a part of the game page
-//   #?q=cure&st=pure,open&sort=size                       function list filters
-//   #map, #browse, ...                                    a section of the home page
+//   #?q=cure&sort=size                                    the function search
+//   #map, #find, ...                                      a section of the home page
 //
 // Older links still open: #target/<id> is the image page, #group/<key> the part page.
 
 // A parameter that holds its default value is left out of the hash.
-
-import type { Part, Status } from "../types.ts";
-import { isStatus } from "./status.ts";
 
 /** The page: home (the sections), one part of the game, or one image. */
 export type View = { kind: "home" } | { kind: "image"; id: string } | { kind: "part"; key: string };
@@ -25,12 +22,6 @@ export interface Route {
   fn: string | null;
   /** Search words. */
   q: string;
-  /** Statuses to show; none means all. */
-  st: Status[];
-  part: Part | "all";
-  /** Function list filters on one library or one image. */
-  lib: string | null;
-  target: string | null;
   sort: SortKey;
   dir: "asc" | "desc";
 }
@@ -39,16 +30,11 @@ export const HOME: Route = {
   view: { kind: "home" },
   fn: null,
   q: "",
-  st: [],
-  part: "all",
-  lib: null,
-  target: null,
   sort: "address",
   dir: "asc",
 };
 
 const SORTS: SortKey[] = ["address", "size", "name", "status"];
-const PARTS: (Part | "all")[] = ["all", "game", "sdk", "hand"];
 const oneOf = <T extends string>(options: readonly T[], value: string | null, fallback: T): T =>
   options.find((option) => option === value) ?? fallback;
 
@@ -66,10 +52,6 @@ export function parseHash(hash: string): Route {
     view,
     fn: kind === "fn" && id ? id : params.get("fn"),
     q: params.get("q") ?? "",
-    st: (params.get("st") ?? "").split(",").filter(isStatus),
-    part: oneOf(PARTS, params.get("part"), HOME.part),
-    lib: params.get("lib"),
-    target: params.get("t"),
     sort: oneOf(SORTS, params.get("sort"), HOME.sort),
     dir: params.get("dir") === "desc" ? "desc" : "asc",
   };
@@ -89,10 +71,6 @@ export function formatHash(route: Route): string {
   const path = page || (route.fn ? `fn/${encodeURIComponent(route.fn)}` : "");
   if (page && route.fn) params.set("fn", route.fn);
   if (route.q) params.set("q", route.q);
-  if (route.st.length) params.set("st", route.st.join(","));
-  if (route.part !== HOME.part) params.set("part", route.part);
-  if (route.lib) params.set("lib", route.lib);
-  if (route.target) params.set("t", route.target);
   if (route.sort !== HOME.sort) params.set("sort", route.sort);
   if (route.dir !== HOME.dir) params.set("dir", route.dir);
   const query = params.toString();

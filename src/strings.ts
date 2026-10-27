@@ -62,6 +62,8 @@ export const SUMMARY = {
   gameHeading: "Game code",
   gameFunctions: "Game functions",
   gameBytes: "Game code by size",
+  byFunctions: "By functions",
+  byBytes: "By code bytes",
   of: (done: number, total: number) => `${number(done)} of ${number(total)} rebuilt in C`,
   ofBytes: (done: number, total: number) => `${bytesOf(done, total)} rebuilt in C`,
   fuzzy: "Fuzzy match",
@@ -70,7 +72,7 @@ export const SUMMARY = {
 
 export const MAP = {
   heading: "Parts of the game",
-  help: "Pick a part of the game or an image to see its functions.",
+  help: "Pick a part of the game or an image to see its functions. The function list on each page is the way to move through them by keyboard.",
   key: (functions: number, size: number | null) => (size === null ? plural(functions, "function") : `${plural(functions, "function")} · ${bytes(size)}`),
   group: (done: number, total: number, size: number, images: number) => `${number(done)} of ${plural(total, "function")} · ${bytes(size)} · ${plural(images, "image")}`,
   image: (done: number, total: number) => `${number(done)} of ${number(total)}`,
@@ -99,11 +101,11 @@ export const SDK = {
 };
 
 export const BROWSER = {
-  heading: "Functions",
+  heading: "Find a function",
+  hint: "Searches game functions by name, address or status.",
   searchPlaceholder: "Name, address or status",
-  searchLabel: "Search functions",
+  searchLabel: "Search game functions",
   columns: { function: "Function", status: "Status", size: "Size", target: "Image", address: "Address" },
-  reset: "Clear filters",
   none: "No function matches. Try fewer words.",
   limited: (shown: number, total: number) => `Showing ${number(shown)} of ${plural(total, "function")}.`,
   shown: (count: number) => `${plural(count, "function")}.`,
