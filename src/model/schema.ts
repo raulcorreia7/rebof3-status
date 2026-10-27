@@ -9,7 +9,9 @@ const measure = z.optional(z.coerce.number());
 /** report.json: objdiff-cli report version 2. A unit is a source file holding one or more functions. */
 export const ReportSchema = z.object({
   version: z.optional(z.number()),
-  categories: z.array(z.object({ id: z.string(), measures: z.object({ fuzzy_match_percent: measure }) })),
+  categories: z.array(
+    z.object({ id: z.string(), measures: z.object({ fuzzy_match_percent: measure }) }),
+  ),
   units: z.array(
     z.object({
       name: z.string(),

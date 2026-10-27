@@ -37,14 +37,28 @@ const GROUP_RULES: readonly Rule[] = [
 ];
 export const OTHER = "other";
 /** The groups in page order; `other` closes it. */
-const PAGE_ORDER = ["main", "system", "battle", "magic", "bosses", "characters", "world", "scenario", OTHER];
+const PAGE_ORDER = [
+  "main",
+  "system",
+  "battle",
+  "magic",
+  "bosses",
+  "characters",
+  "world",
+  "scenario",
+  OTHER,
+];
 
-export const groupKey = (targetId: string): string => GROUP_RULES.find((rule) => rule.pattern.test(targetId))?.key ?? OTHER;
+export const groupKey = (targetId: string): string =>
+  GROUP_RULES.find((rule) => rule.pattern.test(targetId))?.key ?? OTHER;
 
 /** Groups in page order. */
-export const compareGroups = (a: { key: string }, b: { key: string }): number => PAGE_ORDER.indexOf(a.key) - PAGE_ORDER.indexOf(b.key);
+export const compareGroups = (a: { key: string }, b: { key: string }): number =>
+  PAGE_ORDER.indexOf(a.key) - PAGE_ORDER.indexOf(b.key);
 
-export const describeGroup = (key: string): { key: string; label: string; note: string; tiles: boolean } => ({
+export const describeGroup = (
+  key: string,
+): { key: string; label: string; note: string; tiles: boolean } => ({
   key,
   label: GROUP_LABEL[key] ?? GROUP_LABEL[OTHER],
   note: GROUP_NOTE[key] ?? "",

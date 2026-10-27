@@ -15,7 +15,9 @@ async function start(): Promise<void> {
   try {
     // Vite serves data/report.json in dev and copies it next to the page in the build.
     const response = await fetch("report.json");
-    if (!response.ok) throw new Error(`report.json: ${response.status} ${response.statusText}`.trim());
+    if (!response.ok) {
+      throw new Error(`report.json: ${response.status} ${response.statusText}`.trim());
+    }
     const model = modelFromReport(await response.json());
     host.replaceChildren();
     render(() => <App model={model} />, host);

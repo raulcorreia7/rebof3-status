@@ -11,11 +11,14 @@ export interface ChartClick {
 
 /** Copy the drawn canvas over the chart, so an option swap fades instead of cutting. */
 function capture(host: HTMLDivElement): HTMLCanvasElement | null {
-  const source = [...host.querySelectorAll("canvas")].find((canvas) => !canvas.classList.contains("chart-snapshot"));
+  const source = [...host.querySelectorAll("canvas")].find((canvas) =>
+    !canvas.classList.contains("chart-snapshot")
+  );
   if (!source) return null;
   host.querySelector(".chart-snapshot")?.remove();
   const overlay = document.createElement("canvas");
-  overlay.className = "chart-snapshot pointer-events-none absolute inset-0 size-full transition-opacity duration-180 ease-out";
+  overlay.className =
+    "chart-snapshot pointer-events-none absolute inset-0 size-full transition-opacity duration-180 ease-out";
   overlay.width = source.width;
   overlay.height = source.height;
   const context = overlay.getContext("2d");
@@ -62,7 +65,10 @@ export function Chart(props: Props) {
       chart.on("click", (params) => props.onClick?.(params as ChartClick));
       chart.setOption(props.option);
     };
-    const watcher = new IntersectionObserver((entries) => entries.some((entry) => entry.isIntersecting) && create(), { rootMargin: "300px" });
+    const watcher = new IntersectionObserver(
+      (entries) => entries.some((entry) => entry.isIntersecting) && create(),
+      { rootMargin: "300px" },
+    );
     watcher.observe(host);
     // Resize on the next frame, once per frame, so a drag of the window does not redraw per event.
     let frame = 0;
@@ -93,5 +99,13 @@ export function Chart(props: Props) {
     if (overlay) release(overlay);
   });
 
-  return <div ref={host} class="relative w-full" style={{ height: `${props.height}px` }} role="img" aria-label={props.label} />;
+  return (
+    <div
+      ref={host}
+      class="relative w-full"
+      style={{ height: `${props.height}px` }}
+      role="img"
+      aria-label={props.label}
+    />
+  );
 }

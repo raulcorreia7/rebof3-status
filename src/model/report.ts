@@ -2,12 +2,24 @@
 // A report unit is a source file; its functions are what the page counts, draws and lists. Pure
 // functions, so node:test covers them.
 
+import * as z from "zod/mini";
+import type {
+  Code,
+  Fn,
+  Group,
+  Library,
+  Model,
+  Part,
+  Report,
+  Tally,
+  Target,
+  Tier,
+  Unit,
+} from "../types.ts";
 import { hex, share } from "./format.ts";
 import { compareGroups, describeGroup, groupKey } from "./groups.ts";
-import * as z from "zod/mini";
 import { ReportSchema } from "./schema.ts";
-import { STATUS, STATUSES, isDone } from "./status.ts";
-import type { Code, Fn, Group, Library, Model, Part, Report, Target, Tally, Tier, Unit } from "../types.ts";
+import { isDone, STATUS, STATUSES } from "./status.ts";
 
 type ReportUnit = Report["units"][number];
 type ReportFunction = ReportUnit["functions"][number];
@@ -20,7 +32,9 @@ const EXE_NAME: Record<string, string> = { slus_004_22: "SLUS_004.22", logo: "LO
 
 /** Count functions by status, with done totals and the code-byte weighted fuzzy match. */
 function tally(functions: Fn[]): Tally {
-  const statuses = Object.fromEntries(STATUSES.map((key) => [key, { functions: 0, bytes: 0 }])) as Tally["statuses"];
+  const statuses = Object.fromEntries(
+    STATUSES.map((key) => [key, { functions: 0, bytes: 0 }]),
+  ) as Tally["statuses"];
   let bytes = 0;
   let done = 0;
   let doneBytes = 0;
@@ -35,7 +49,15 @@ function tally(functions: Fn[]): Tally {
       doneBytes += fn.bytes;
     }
   }
-  return { count: functions.length, bytes, done, doneBytes, statuses, percent: share(done, functions.length), fuzzy: share(fuzzyBytes, bytes) };
+  return {
+    count: functions.length,
+    bytes,
+    done,
+    doneBytes,
+    statuses,
+    percent: share(done, functions.length),
+    fuzzy: share(fuzzyBytes, bytes),
+  };
 }
 
 /** The display name of a target, derived from its id (`BATTLE.EMI slot 3`). */
@@ -75,15 +97,27 @@ function statusOf(kind: Part, tier: Tier | null, fuzzy: number): Fn["status"] {
 
 /** The file's status: all functions matched, some matched, or none. */
 function unitStatus(kind: Part, functions: Fn[], matched: number, tier: Tier | null): Fn["status"] {
-  if (kind === "game") return functions.length > 0 && matched === functions.length ? "pure" : matched > 0 || functions.some((fn) => fn.status === "nonmatching") ? "nonmatching" : "open";
-  if (kind === "hand") return functions.length > 0 && matched === functions.length ? "asm" : "assembly";
+  if (kind === "game") {
+    return functions.length > 0 && matched === functions.length
+      ? "pure"
+      : matched > 0 || functions.some((fn) => fn.status === "nonmatching")
+      ? "nonmatching"
+      : "open";
+  }
+  if (kind === "hand") {
+    return functions.length > 0 && matched === functions.length
+      ? "asm"
+      : "assembly";
+  }
   return tier === "object" ? "object" : "assembly";
 }
 
 /** The PsyQ library and version an SDK object path names. */
 function sdkOrigin(source: string): Origin {
   const found = PSYQ_OBJECT.exec(source);
-  return found ? { library: found[2], version: found[1], tier: "object" } : { library: ASSEMBLY_LIBRARY, version: null, tier: "assembly" };
+  return found
+    ? { library: found[2], version: found[1], tier: "object" }
+    : { library: ASSEMBLY_LIBRARY, version: null, tier: "assembly" };
 }
 
 const category = (report: Report, id: string): Report["categories"][number] => {
@@ -98,7 +132,13 @@ const measured = (functions: Fn[], source: Report["categories"][number]): Tally 
   fuzzy: source.measures.fuzzy_match_percent ?? 0,
 });
 
-function buildFunction(fn: ReportFunction, unit: Unit, target: Target, kind: Part, origin: Origin | null): Fn {
+function buildFunction(
+  fn: ReportFunction,
+  unit: Unit,
+  target: Target,
+  kind: Part,
+  origin: Origin | null,
+): Fn {
   const address = addressOf(fn.name);
   const fuzzy = fn.fuzzy_match_percent ?? 0;
   const status = statusOf(kind, origin?.tier ?? null, fuzzy);
@@ -120,13 +160,25 @@ function buildFunction(fn: ReportFunction, unit: Unit, target: Target, kind: Par
     tier: origin?.tier,
     version: origin?.version ?? null,
   };
-  result.key = [result.id, fn.name, status, STATUS[status].label, target.name, kind, unit.name, origin?.library ?? "", origin?.version ?? ""].join(" ").toLowerCase();
+  result.key = [
+    result.id,
+    fn.name,
+    status,
+    STATUS[status].label,
+    target.name,
+    kind,
+    unit.name,
+    origin?.library ?? "",
+    origin?.version ?? "",
+  ].join(" ").toLowerCase();
   return result;
 }
 
 function buildUnit(unit: ReportUnit, target: Target): Unit {
   const part = unit.metadata.progress_categories?.[0] ?? "";
-  const kind = (Object.keys(CATEGORY) as (keyof typeof CATEGORY)[]).find((key) => CATEGORY[key] === part);
+  const kind = (Object.keys(CATEGORY) as (keyof typeof CATEGORY)[]).find((key) =>
+    CATEGORY[key] === part
+  );
   if (!kind) throw new Error(`report unit ${unit.name} has unknown category ${part || "(none)"}`);
   const source = unit.metadata.source_path ?? "";
   const origin = kind === "sdk" ? sdkOrigin(source) : null;
@@ -151,11 +203,16 @@ function buildUnit(unit: ReportUnit, target: Target): Unit {
     version: origin?.version ?? null,
   };
   result.functions = unit.functions.map((fn) => buildFunction(fn, result, target, kind, origin));
-  result.functions.sort((a, b) => a.offset - b.offset || (a.address ?? 0) - (b.address ?? 0) || a.name.localeCompare(b.name));
+  result.functions.sort((a, b) =>
+    a.offset - b.offset || (a.address ?? 0) - (b.address ?? 0) || a.name.localeCompare(b.name)
+  );
   result.bytes = result.functions.reduce((sum, fn) => sum + fn.bytes, 0);
   result.matched = result.functions.filter(isDone).length;
   result.matchedBytes = result.functions.filter(isDone).reduce((sum, fn) => sum + fn.bytes, 0);
-  result.fuzzy = share(result.functions.reduce((sum, fn) => sum + (fn.fuzzy * fn.bytes) / 100, 0), result.bytes);
+  result.fuzzy = share(
+    result.functions.reduce((sum, fn) => sum + (fn.fuzzy * fn.bytes) / 100, 0),
+    result.bytes,
+  );
   result.fuzzyReported = result.functions.some((fn) => fn.fuzzyReported);
   let address = addressOf(unit.name);
   if (address === null) {
@@ -177,7 +234,10 @@ function buildLibraries(functions: Fn[]): Library[] {
     else groups.set(key, [fn]);
   }
   return [...groups.entries()]
-    .sort(([a], [b]) => (a === ASSEMBLY_LIBRARY ? 1 : b === ASSEMBLY_LIBRARY ? -1 : a.localeCompare(b)))
+    .sort((
+      [a],
+      [b],
+    ) => (a === ASSEMBLY_LIBRARY ? 1 : b === ASSEMBLY_LIBRARY ? -1 : a.localeCompare(b)))
     .map(([name, units]) => {
       const versions: Record<string, number> = {};
       const tiers: Record<Tier, number> = { object: 0, assembly: 0 };
@@ -185,7 +245,13 @@ function buildLibraries(functions: Fn[]): Library[] {
         if (fn.version) versions[fn.version] = (versions[fn.version] ?? 0) + 1;
         if (fn.tier) tiers[fn.tier] += 1;
       }
-      return { name, versions, tiers, functions: [...units].sort((a, b) => a.name.localeCompare(b.name)), ...tally(units) };
+      return {
+        name,
+        versions,
+        tiers,
+        functions: [...units].sort((a, b) => a.name.localeCompare(b.name)),
+        ...tally(units),
+      };
     });
 }
 
@@ -206,21 +272,28 @@ const addCode = (items: Code[]): Code =>
 /** The file checked against its schema; the error names the file and the field that failed. */
 function parse<T>(name: string, schema: z.ZodMiniType<T>, value: unknown): T {
   const result = schema.safeParse(value);
-  if (!result.success) throw new Error(`${name} does not have the expected shape: ${z.prettifyError(result.error)}`);
+  if (!result.success) {
+    throw new Error(`${name} does not have the expected shape: ${z.prettifyError(result.error)}`);
+  }
   return result.data;
 }
 
 /** Check report.json against its schema, then build the model. */
-export const modelFromReport = (file: unknown): Model => buildModel(parse("report.json", ReportSchema, file));
+export const modelFromReport = (file: unknown): Model =>
+  buildModel(parse("report.json", ReportSchema, file));
 
 function buildModel(report: Report): Model {
-  if (report.version !== undefined && report.version !== 2) throw new Error(`unsupported report.json version ${report.version}`);
+  if (report.version !== undefined && report.version !== 2) {
+    throw new Error(`unsupported report.json version ${report.version}`);
+  }
   const gameSource = category(report, CATEGORY.game);
   const sdkSource = category(report, CATEGORY.sdk);
   const handSource = category(report, CATEGORY.hand);
 
   // The report has no target list: every unit names its image, and the image names its group.
-  const ids = [...new Set(report.units.map((unit) => unitTarget(unit.name)))].sort((a, b) => a.localeCompare(b));
+  const ids = [...new Set(report.units.map((unit) => unitTarget(unit.name)))].sort((a, b) =>
+    a.localeCompare(b)
+  );
   const archives = new Map<string, number>();
   for (const id of ids) {
     if (!id.startsWith("emi/")) continue;
@@ -253,7 +326,11 @@ function buildModel(report: Report): Model {
 
   for (const target of targets) {
     target.functions.sort((a, b) => {
-      if (a.address === null) return b.address === null ? a.unit.localeCompare(b.unit) || a.offset - b.offset : 1;
+      if (a.address === null) {
+        return b.address === null
+          ? a.unit.localeCompare(b.unit) || a.offset - b.offset
+          : 1;
+      }
       if (b.address === null) return -1;
       return a.address - b.address || a.offset - b.offset;
     });
@@ -278,12 +355,18 @@ function buildModel(report: Report): Model {
   const units = targets.flatMap((target) => target.units);
   const unitById = new Map(units.map((unit) => [unit.id, unit]));
   // Within a group the biggest target leads.
-  const bySize = (a: Target, b: Target) => b.code.bytes - a.code.bytes || a.name.localeCompare(b.name);
+  const bySize = (a: Target, b: Target) =>
+    b.code.bytes - a.code.bytes || a.name.localeCompare(b.name);
   const groups: Group[] = [...new Set(targets.map((target) => target.group))]
     .map((key) => {
       const members = targets.filter((target) => target.group === key).sort(bySize);
       const game = members.flatMap((target) => target.functions.filter((fn) => fn.kind === "game"));
-      return { ...describeGroup(key), targets: members, code: addCode(members.map((target) => target.code)), ...tally(game) };
+      return {
+        ...describeGroup(key),
+        targets: members,
+        code: addCode(members.map((target) => target.code)),
+        ...tally(game),
+      };
     })
     .sort(compareGroups);
   for (const group of groups) for (const target of group.targets) target.groupLabel = group.label;

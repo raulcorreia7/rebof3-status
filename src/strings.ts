@@ -2,8 +2,8 @@
 // One name per thing: a status, a part of the game, an image and a measure keep the same words in
 // every card, key, list and tooltip.
 
-import type { Quality, Status } from "./types.ts";
 import { bytes, bytesOf, number, plural } from "./model/format.ts";
+import type { Quality, Status } from "./types.ts";
 
 // Status key -> legend text. The order of the keys is the order of the legend.
 export const STATUS_LABEL: Record<Status, string> = {
@@ -72,15 +72,26 @@ export const SUMMARY = {
 
 export const MAP = {
   heading: "Parts of the game",
-  help: "Pick a part of the game or an image to see its functions. The function list on each page is the way to move through them by keyboard.",
-  key: (functions: number, size: number | null) => (size === null ? plural(functions, "function") : `${plural(functions, "function")} · ${bytes(size)}`),
-  group: (done: number, total: number, size: number, images: number) => `${number(done)} of ${plural(total, "function")} · ${bytes(size)} · ${plural(images, "image")}`,
+  help:
+    "Pick a part of the game or an image to see its functions. The function list on each page is the way to move through them by keyboard.",
+  key: (
+    functions: number,
+    size: number | null,
+  ) => (size === null
+    ? plural(functions, "function")
+    : `${plural(functions, "function")} · ${bytes(size)}`),
+  group: (done: number, total: number, size: number, images: number) =>
+    `${number(done)} of ${plural(total, "function")} · ${bytes(size)} · ${plural(images, "image")}`,
   image: (done: number, total: number) => `${number(done)} of ${number(total)}`,
-  imageLine: (done: number, total: number, size: number) => `${number(done)} of ${plural(total, "function")} · ${bytes(size)}`,
+  imageLine: (done: number, total: number, size: number) =>
+    `${number(done)} of ${plural(total, "function")} · ${bytes(size)}`,
   imageAria: (name: string, done: number, draft: number, total: number, size: number) =>
-    `${name}: ${number(done)} of ${plural(total, "function")} rebuilt in C, ${number(draft)} draft, ${bytes(size)}`,
+    `${name}: ${number(done)} of ${plural(total, "function")} rebuilt in C, ${
+      number(draft)
+    } draft, ${bytes(size)}`,
   crumbs: "Breadcrumb",
-  chartLabel: (title: string, functions: number) => `${title}: treemap of ${plural(functions, "function")}`,
+  chartLabel: (title: string, functions: number) =>
+    `${title}: treemap of ${plural(functions, "function")}`,
   listHeading: (count: number) => `Functions (${number(count)})`,
   listEmpty: "The report lists no functions here yet.",
   showMore: (count: number) => `Show ${number(count)} more`,
@@ -91,9 +102,13 @@ export const MAP = {
 export const SDK = {
   heading: "PsyQ SDK",
   sdkText: (done: number, total: number, assembly: number) =>
-    `${number(done)} of ${number(total)} SDK functions match the original bytes` + (assembly ? `; ${number(assembly)} are assembly only.` : "."),
+    `${number(done)} of ${number(total)} SDK functions match the original bytes`
+    + (assembly ? `; ${number(assembly)} are assembly only.` : "."),
   handLabel: "Hand-written assembly:",
-  handText: (done: number, total: number) => `${number(done)} of ${number(total)} functions match exactly. Neither counts in the game code figures.`,
+  handText: (done: number, total: number) =>
+    `${number(done)} of ${
+      number(total)
+    } functions match exactly. Neither counts in the game code figures.`,
   versions: (text: string) => `from PsyQ ${text}`,
   assemblyOnly: (count: number) => `${number(count)} assembly only`,
   done: (objects: number, total: number) => `${number(objects)} of ${number(total)}`,
@@ -105,9 +120,16 @@ export const BROWSER = {
   hint: "Searches game functions by name, address or status.",
   searchPlaceholder: "Name, address or status",
   searchLabel: "Search game functions",
-  columns: { function: "Function", status: "Status", size: "Size", target: "Image", address: "Address" },
+  columns: {
+    function: "Function",
+    status: "Status",
+    size: "Size",
+    target: "Image",
+    address: "Address",
+  },
   none: "No function matches. Try fewer words.",
-  limited: (shown: number, total: number) => `Showing ${number(shown)} of ${plural(total, "function")}.`,
+  limited: (shown: number, total: number) =>
+    `Showing ${number(shown)} of ${plural(total, "function")}.`,
   shown: (count: number) => `${plural(count, "function")}.`,
   more: (step: number) => `Show ${number(step)} more`,
   share: "Copy link",
@@ -153,16 +175,22 @@ export const POSTER = {
   subtitle: "from the objdiff report",
   statusHeading: "Status of game code",
   libraries: "PsyQ libraries and versions",
-  libraryKey: (objects: number, assembly: number) => `${number(objects)} PsyQ library objects · ${number(assembly)} assembly only`,
+  libraryKey: (objects: number, assembly: number) =>
+    `${number(objects)} PsyQ library objects · ${number(assembly)} assembly only`,
   libraryLinked: "assembly only",
-  sdkTitle: (percent: string, done: number, total: number) => `PsyQ SDK: ${percent}% library objects (${number(done)} of ${number(total)})`,
+  sdkTitle: (percent: string, done: number, total: number) =>
+    `PsyQ SDK: ${percent}% library objects (${number(done)} of ${number(total)})`,
   qualityHeading: "Match quality",
   qualityCards: (q: Quality): [string, string, string][] => [
     ["Rebuilt in C", number(q.exact), "game functions, byte for byte"],
     ["Drafts in C", number(q.inProgress), "game functions that do not match yet"],
     ["Not started", number(q.notStarted), "game functions still the original assembly"],
     ["Fuzzy match", `${q.fuzzy.toFixed(1)}%`, "how close the game code is, by size"],
-    ["Hand-written", `${number(q.handDone)} of ${number(q.hand)}`, "assembly units that match exactly"],
+    [
+      "Hand-written",
+      `${number(q.handDone)} of ${number(q.hand)}`,
+      "assembly units that match exactly",
+    ],
   ],
   badge: "C match",
 };

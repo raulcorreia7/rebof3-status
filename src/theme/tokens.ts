@@ -58,7 +58,9 @@ export const tokensFor = (scheme: Scheme): Tokens => (scheme === "dark" ? DARK :
 export function cssVars(tokens: Tokens): Record<string, string> {
   const vars: Record<string, string> = {};
   for (const [key, value] of Object.entries(tokens)) {
-    if (typeof value === "string") vars[`--${key.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`)}`] = value;
+    if (typeof value === "string") {
+      vars[`--${key.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`)}`] = value;
+    }
   }
   for (const [key, value] of Object.entries(tokens.status)) vars[statusProp(key)] = value;
   return vars;

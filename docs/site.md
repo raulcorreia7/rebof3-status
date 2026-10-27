@@ -26,36 +26,36 @@ Navigation has one model. The route names a page (home, a part of the game, or a
 
 ## Add or change things
 
-| Task | Edit |
-| --- | --- |
-| Add, remove or reorder a section | `NAV` and `Sections` in `src/views/App.tsx`. Reuse a view with a new selector in `src/selectors.ts`. |
-| Add a view | A data shape in `src/viewtypes.ts`, a component in `src/views/`, and its use in `Sections` in `src/views/App.tsx`. |
-| Add a status | A row in `STATUS_TABLE` (`src/model/status.ts`), its label in `STATUS_LABEL` (`src/strings.ts`) and its colours in `src/theme/tokens.ts`. The key, charts, totals and picture follow. |
+| Task                              | Edit                                                                                                                                                                                                                                                                                             |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Add, remove or reorder a section  | `NAV` and `Sections` in `src/views/App.tsx`. Reuse a view with a new selector in `src/selectors.ts`.                                                                                                                                                                                             |
+| Add a view                        | A data shape in `src/viewtypes.ts`, a component in `src/views/`, and its use in `Sections` in `src/views/App.tsx`.                                                                                                                                                                               |
+| Add a status                      | A row in `STATUS_TABLE` (`src/model/status.ts`), its label in `STATUS_LABEL` (`src/strings.ts`) and its colours in `src/theme/tokens.ts`. The key, charts, totals and picture follow.                                                                                                            |
 | Add or reshape a part of the game | `GROUP_RULES` in `src/model/groups.ts` (target id pattern to group, and `tiles` for a grid of image tiles), its place in `PAGE_ORDER`, and its heading and note in `GROUP_LABEL` and `GROUP_NOTE` (`src/strings.ts`). A target no rule matches lands in `other`. Images sort by game code bytes. |
-| Change wording | `src/strings.ts`, one name per thing: a status, a part of the game, an image and a measure keep the same words in every card, key, list and tooltip. |
-| Change the data shape | The schema in `src/model/schema.ts` and the adapter in `src/model/report.ts`; then publish a matching `data/report.json`. |
+| Change wording                    | `src/strings.ts`, one name per thing: a status, a part of the game, an image and a measure keep the same words in every card, key, list and tooltip.                                                                                                                                             |
+| Change the data shape             | The schema in `src/model/schema.ts` and the adapter in `src/model/report.ts`; then publish a matching `data/report.json`.                                                                                                                                                                        |
 
 Links look like `#fn/exe%2Fslus_004_22%2Ffunc_80164028` (a source file, by its URL-encoded unit name, on the home page), `#image/emi%2Fworld00%2Farea037%2F13` (an image page; `?fn=` opens a file beside it), `#part/battle` (a part page) and `#map` (a home page section). Old `#target/...` and `#group/...` links redirect to `#image/...` and `#part/...`. The function list's query parameters are `q`, `st`, `part`, `lib`, `t`, `sort` and `dir`.
 
 ## File layout
 
-| Path | Role |
-| --- | --- |
-| `data/report.json` | The published objdiff report: the only data input. Vite serves it in dev and copies it into `site/`. |
-| `index.html`, `vite.config.ts` | Page shell and bundler setup. |
-| `src/model/schema.ts` | The report's Zod schema: the fields the page reads. |
-| `src/types.ts` | The input type (from the schema) and the model. |
-| `src/model/report.ts` | The adapter from report.json to the model. |
-| `src/model/` | Status table, parts of the game, route, browser filters, links. |
-| `src/selectors.ts`, `src/inspect.ts`, `src/viewtypes.ts` | The selectors and the data shapes they return. |
-| `src/state.ts` | Route store, hash router, theme. |
-| `src/views/` | Solid views and the app shell. |
-| `src/strings.ts` | All copy. |
-| `src/charts/` | The ECharts option builder for the game treemaps, shared by the page and the picture. |
-| `src/snapshot/` | The picture: `progress.svg` poster with the parts of the game, the PsyQ tile map and `badge.svg`. |
-| `src/theme/`, `src/styles/app.css` | Colour tokens, and the Tailwind entry that maps them. |
-| `render/snapshot.ts` | Reads `data/report.json` and writes `progress.svg`, `progress.png` and `badge.svg` into `site/`. |
-| `test/` | `node:test`: model totals from `data/report.json`. |
+| Path                                                     | Role                                                                                                 |
+| -------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `data/report.json`                                       | The published objdiff report: the only data input. Vite serves it in dev and copies it into `site/`. |
+| `index.html`, `vite.config.ts`                           | Page shell and bundler setup.                                                                        |
+| `src/model/schema.ts`                                    | The report's Zod schema: the fields the page reads.                                                  |
+| `src/types.ts`                                           | The input type (from the schema) and the model.                                                      |
+| `src/model/report.ts`                                    | The adapter from report.json to the model.                                                           |
+| `src/model/`                                             | Status table, parts of the game, route, browser filters, links.                                      |
+| `src/selectors.ts`, `src/inspect.ts`, `src/viewtypes.ts` | The selectors and the data shapes they return.                                                       |
+| `src/state.ts`                                           | Route store, hash router, theme.                                                                     |
+| `src/views/`                                             | Solid views and the app shell.                                                                       |
+| `src/strings.ts`                                         | All copy.                                                                                            |
+| `src/charts/`                                            | The ECharts option builder for the game treemaps, shared by the page and the picture.                |
+| `src/snapshot/`                                          | The picture: `progress.svg` poster with the parts of the game, the PsyQ tile map and `badge.svg`.    |
+| `src/theme/`, `src/styles/app.css`                       | Colour tokens, and the Tailwind entry that maps them.                                                |
+| `render/snapshot.ts`                                     | Reads `data/report.json` and writes `progress.svg`, `progress.png` and `badge.svg` into `site/`.     |
+| `test/`                                                  | `node:test`: model totals from `data/report.json`.                                                   |
 
 ## Data file
 
@@ -65,15 +65,15 @@ The report has no separate target list. The adapter takes the image from the uni
 
 The adapter maps a function to a status from its fuzzy match:
 
-| Function | Status |
-| --- | --- |
-| game, fuzzy 100 | `pure` (rebuilt in C) |
-| game, fuzzy above 0 but below 100 | `nonmatching` (draft in C) |
-| game, no fuzzy match | `open` (not started: original assembly, also a C file that only includes it with `INCLUDE_ASM`) |
-| sdk, unit source is `toolchains/psyq/<version>/<library>/<object>` | `object` |
-| sdk, no such source | `assembly` (matched when its fuzzy match is 100) |
-| hand-asm, fuzzy 100 | `asm` |
-| hand-asm, otherwise | `assembly` |
+| Function                                                           | Status                                                                                          |
+| ------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------- |
+| game, fuzzy 100                                                    | `pure` (rebuilt in C)                                                                           |
+| game, fuzzy above 0 but below 100                                  | `nonmatching` (draft in C)                                                                      |
+| game, no fuzzy match                                               | `open` (not started: original assembly, also a C file that only includes it with `INCLUDE_ASM`) |
+| sdk, unit source is `toolchains/psyq/<version>/<library>/<object>` | `object`                                                                                        |
+| sdk, no such source                                                | `assembly` (matched when its fuzzy match is 100)                                                |
+| hand-asm, fuzzy 100                                                | `asm`                                                                                           |
+| hand-asm, otherwise                                                | `assembly`                                                                                      |
 
 A function is matched only when its `fuzzy_match_percent` is 100; a complete unit can still hold a function below 100. The adapter counts functions, matched functions and both byte totals from `units[].functions`, so the headline, images, parts and treemap agree with the category measures (`total_functions`, `matched_functions`, `total_code`, `matched_code`). The unit stays the file level: the inspector opens it, and its Functions field counts how many of its functions match.
 

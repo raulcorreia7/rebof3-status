@@ -13,25 +13,51 @@ export function text(
   content: string,
   size: number,
   fill: string,
-  { anchor = "start", weight = "normal", outline = false }: { anchor?: string; weight?: string; outline?: boolean } = {},
+  { anchor = "start", weight = "normal", outline = false }: {
+    anchor?: string;
+    weight?: string;
+    outline?: boolean;
+  } = {},
 ): string {
-  const halo = outline ? ` stroke="${C.bg}" stroke-width="3" stroke-linejoin="round" paint-order="stroke"` : "";
+  const halo = outline
+    ? ` stroke="${C.bg}" stroke-width="3" stroke-linejoin="round" paint-order="stroke"`
+    : "";
   return (
-    `<text x="${round(x)}" y="${round(y + size * 0.8)}" font-size="${size}" fill="${fill}"` +
-    ` text-anchor="${anchor}" font-weight="${weight}"${halo} pointer-events="none">${escapeText(content)}</text>`
+    `<text x="${round(x)}" y="${round(y + size * 0.8)}" font-size="${size}" fill="${fill}"`
+    + ` text-anchor="${anchor}" font-weight="${weight}"${halo} pointer-events="none">${
+      escapeText(content)
+    }</text>`
   );
 }
 
-export const rect = (x: number, y: number, w: number, h: number, fill: string, inner = ""): string => {
-  const box = `<rect x="${round(x)}" y="${round(y)}" width="${round(w)}" height="${round(h)}" fill="${fill}"`;
+export const rect = (
+  x: number,
+  y: number,
+  w: number,
+  h: number,
+  fill: string,
+  inner = "",
+): string => {
+  const box = `<rect x="${round(x)}" y="${round(y)}" width="${round(w)}" height="${
+    round(h)
+  }" fill="${fill}"`;
   return inner ? `${box}>${inner}</rect>` : `${box}/>`;
 };
 
 export const frame = (x: number, y: number, w: number, h: number, color: string): string =>
-  `<rect x="${round(x)}" y="${round(y)}" width="${round(w)}" height="${round(h)}" fill="none" stroke="${color}" pointer-events="none"/>`;
+  `<rect x="${round(x)}" y="${round(y)}" width="${round(w)}" height="${
+    round(h)
+  }" fill="none" stroke="${color}" pointer-events="none"/>`;
 
 /** A horizontal bar of parts [value, colour] against a total. */
-export function bar(x: number, y: number, width: number, height: number, parts: [number, string][], total: number): string {
+export function bar(
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  parts: [number, string][],
+  total: number,
+): string {
   let svg = rect(x, y, width, height, C.track);
   let at = x;
   for (const [value, color] of parts) {

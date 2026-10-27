@@ -23,7 +23,9 @@ if (process.argv.includes("--help") || process.argv.includes("-h")) {
   process.exit(0);
 }
 const out = process.argv[2] ?? "site";
-const report = resolve(process.argv[3] ?? fileURLToPath(new URL("../data/report.json", import.meta.url)));
+const report = resolve(
+  process.argv[3] ?? fileURLToPath(new URL("../data/report.json", import.meta.url)),
+);
 
 mkdirSync(out, { recursive: true });
 const model = modelFromReport(JSON.parse(readFileSync(report, "utf8")));

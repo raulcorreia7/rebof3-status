@@ -2,16 +2,14 @@
 // bar and its images, as labelled bars (few images) or a grid of tiles (many near-identical
 // overlays). Plain DOM, one element per image, so every name is real text.
 
-import { For, Show, type Accessor } from "solid-js";
+import { type Accessor, For, Show } from "solid-js";
 import type { Views } from "../viewtypes.ts";
 import { BarParts, Jump, Meter } from "./ui.tsx";
 
 type Group = Views["domains"]["groups"][number];
 
 export function Domains(props: { data: Accessor<Views["domains"]> }) {
-  return (
-    <For each={props.data().groups}>{(group) => <GroupBlock group={group} />}</For>
-  );
+  return <For each={props.data().groups}>{(group) => <GroupBlock group={group} />}</For>;
 }
 
 function GroupBlock(props: { group: Group }) {
@@ -37,7 +35,12 @@ function GroupBlock(props: { group: Group }) {
                   <Jump to={image.to} class="break-words" title={image.id}>
                     {image.label}
                   </Jump>
-                  <div class="bar col-span-2 row-start-2 h-3 sm:col-span-1 sm:col-start-2 sm:row-start-1" style={{ width: `${image.width}%` }} role="img" aria-label={image.aria}>
+                  <div
+                    class="bar col-span-2 row-start-2 h-3 sm:col-span-1 sm:col-start-2 sm:row-start-1"
+                    style={{ width: `${image.width}%` }}
+                    role="img"
+                    aria-label={image.aria}
+                  >
                     <BarParts parts={image.parts} />
                   </div>
                   <span class="text-right whitespace-nowrap text-mute tabular-nums">

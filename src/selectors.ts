@@ -13,15 +13,29 @@ import type { Ctx, GamePage, Link, MeterRow, Views } from "./viewtypes.ts";
 // Shared pieces ---------------------------------------------------------------------------
 
 /** One bar of game code split by status, by function count or by code bytes. */
-export const codeMeter = (code: Code, aria: string, by: "functions" | "bytes" = "functions"): MeterRow => {
+export const codeMeter = (
+  code: Code,
+  aria: string,
+  by: "functions" | "bytes" = "functions",
+): MeterRow => {
   const split = by === "bytes" ? codeSizes(code) : codeCounts(code);
   const total = by === "bytes" ? code.bytes : code.functions;
-  return { aria, parts: split.map(([key, amount]) => ({ width: percent(amount, total, 3), color: STATUS[key].color })) };
+  return {
+    aria,
+    parts: split.map(([key, amount]) => ({
+      width: percent(amount, total, 3),
+      color: STATUS[key].color,
+    })),
+  };
 };
 
 /** The key of a game code bar: each status with its function count. */
 export const statusKey = (code: Code): GamePage["key"] =>
-  codeCounts(code).map(([key, count]) => ({ label: STATUS[key].label, color: STATUS[key].color, sub: plural(count, "function") }));
+  codeCounts(code).map(([key, count]) => ({
+    label: STATUS[key].label,
+    color: STATUS[key].color,
+    sub: plural(count, "function"),
+  }));
 
 // Overview and the sections below it -----------------------------------------------------
 
@@ -32,8 +46,20 @@ export function overviewCards({ model }: Ctx): Views["cards"] {
   const game = model.code;
   return {
     cards: [
-      { id: "game", big: share(game.exact, game.functions), title: SUMMARY.gameFunctions, sub: SUMMARY.of(game.exact, game.functions), color: STATUS.pure.color },
-      { id: "game-bytes", big: share(game.exactBytes, game.bytes), title: SUMMARY.gameBytes, sub: SUMMARY.ofBytes(game.exactBytes, game.bytes), color: STATUS.pure.color },
+      {
+        id: "game",
+        big: share(game.exact, game.functions),
+        title: SUMMARY.gameFunctions,
+        sub: SUMMARY.of(game.exact, game.functions),
+        color: STATUS.pure.color,
+      },
+      {
+        id: "game-bytes",
+        big: share(game.exactBytes, game.bytes),
+        title: SUMMARY.gameBytes,
+        sub: SUMMARY.ofBytes(game.exactBytes, game.bytes),
+        color: STATUS.pure.color,
+      },
     ],
   };
 }
@@ -45,8 +71,21 @@ export function overviewMeter({ model }: Ctx): Views["meters"] {
   return {
     key: statusKey(code),
     rows: [
-      { ...codeMeter(code, `${heading}, ${SUMMARY.byFunctions}: ${SUMMARY.of(code.exact, code.functions)}`), label: SUMMARY.byFunctions },
-      { ...codeMeter(code, `${heading}, ${SUMMARY.byBytes}: ${SUMMARY.ofBytes(code.exactBytes, code.bytes)}`, "bytes"), label: SUMMARY.byBytes },
+      {
+        ...codeMeter(
+          code,
+          `${heading}, ${SUMMARY.byFunctions}: ${SUMMARY.of(code.exact, code.functions)}`,
+        ),
+        label: SUMMARY.byFunctions,
+      },
+      {
+        ...codeMeter(
+          code,
+          `${heading}, ${SUMMARY.byBytes}: ${SUMMARY.ofBytes(code.exactBytes, code.bytes)}`,
+          "bytes",
+        ),
+        label: SUMMARY.byBytes,
+      },
     ],
   };
 }
@@ -60,7 +99,9 @@ export const apart = ({ model }: Ctx): Views["text"] => ({
 });
 
 // Map --------------------------------------------------------------------------------------
-const gameMapRoute = (view: Extract<Route["view"], { kind: "image" | "part" }>): Partial<Route> => ({
+const gameMapRoute = (
+  view: Extract<Route["view"], { kind: "image" | "part" }>,
+): Partial<Route> => ({
   view,
   fn: null,
   q: "",
@@ -76,7 +117,12 @@ export function domains({ model }: Ctx): Views["domains"] {
     .map((group) => {
       const images = group.targets.filter((target) => target.code.functions);
       const peak = Math.max(...images.map((target) => target.code.bytes), 1);
-      const line = MAP.group(group.code.exact, group.code.functions, group.code.bytes, images.length);
+      const line = MAP.group(
+        group.code.exact,
+        group.code.functions,
+        group.code.bytes,
+        images.length,
+      );
       return {
         key: group.key,
         title: { label: group.label, to: gameMapRoute({ kind: "part", key: group.key }) },
@@ -90,7 +136,13 @@ export function domains({ model }: Ctx): Views["domains"] {
           label: target.name,
           line: MAP.image(target.code.exact, target.code.functions),
           size: bytes(target.code.bytes),
-          aria: MAP.imageAria(target.name, target.code.exact, target.code.draft, target.code.functions, target.code.bytes),
+          aria: MAP.imageAria(
+            target.name,
+            target.code.exact,
+            target.code.draft,
+            target.code.functions,
+            target.code.bytes,
+          ),
           width: Math.max((100 * target.code.bytes) / peak, 2),
           parts: codeMeter(target.code, target.name).parts,
           to: gameMapRoute({ kind: "image", id: target.id }),
@@ -103,7 +155,17 @@ export function domains({ model }: Ctx): Views["domains"] {
 /** A part of the game or an image: the report's counts, then its functions as a treemap and a list. */
 export function gamePage({ model, route, tokens }: Ctx): GamePage | null {
   const home: Link = { label: MAP.heading, to: { view: HOME.view }, scroll: "map" };
-  const empty = { found: false, percent: "", line: "", meter: null, key: [], note: "", tree: null, functions: [], inPart: false };
+  const empty = {
+    found: false,
+    percent: "",
+    line: "",
+    meter: null,
+    key: [],
+    note: "",
+    tree: null,
+    functions: [],
+    inPart: false,
+  };
   const page = (code: Code, functions: Fn[], line: string) => ({
     found: true,
     percent: `${percent(code.exact, code.functions, 1)}%`,
@@ -115,10 +177,21 @@ export function gamePage({ model, route, tokens }: Ctx): GamePage | null {
   if (route.view.kind === "part") {
     const key = route.view.key;
     const group = model.groups.find((item) => item.key === key);
-    if (!group) return { ...empty, title: key, crumbs: [home, { label: key, to: {} }], message: MAP.partMissing };
+    if (!group) {
+      return {
+        ...empty,
+        title: key,
+        crumbs: [home, { label: key, to: {} }],
+        message: MAP.partMissing,
+      };
+    }
     const images = group.targets.filter((target) => target.code.functions);
     return {
-      ...page(group.code, group.targets.flatMap((target) => target.functions.filter((fn) => fn.kind === "game")), MAP.group(group.code.exact, group.code.functions, group.code.bytes, images.length)),
+      ...page(
+        group.code,
+        group.targets.flatMap((target) => target.functions.filter((fn) => fn.kind === "game")),
+        MAP.group(group.code.exact, group.code.functions, group.code.bytes, images.length),
+      ),
       title: group.label,
       crumbs: [home, { label: group.label, to: {} }],
       note: group.note,
@@ -129,11 +202,25 @@ export function gamePage({ model, route, tokens }: Ctx): GamePage | null {
   if (route.view.kind === "image") {
     const id = route.view.id;
     const target = model.targetById.get(id);
-    if (!target) return { ...empty, title: id, crumbs: [home, { label: id, to: {} }], message: MAP.imageMissing };
+    if (!target) {
+      return {
+        ...empty,
+        title: id,
+        crumbs: [home, { label: id, to: {} }],
+        message: MAP.imageMissing,
+      };
+    }
     return {
-      ...page(target.code, target.functions.filter((fn) => fn.kind === "game"), MAP.imageLine(target.code.exact, target.code.functions, target.code.bytes)),
+      ...page(
+        target.code,
+        target.functions.filter((fn) => fn.kind === "game"),
+        MAP.imageLine(target.code.exact, target.code.functions, target.code.bytes),
+      ),
       title: target.name,
-      crumbs: [home, { label: target.groupLabel, to: { view: { kind: "part", key: target.group } } }, { label: target.name, to: {} }],
+      crumbs: [home, {
+        label: target.groupLabel,
+        to: { view: { kind: "part", key: target.group } },
+      }, { label: target.name, to: {} }],
       note: "",
       tree: gameImageTree(target, tokens),
       inPart: false,
@@ -144,7 +231,13 @@ export function gamePage({ model, route, tokens }: Ctx): GamePage | null {
 
 // Search -------------------------------------------------------------------------
 
-export const search = (): Views["filters"] => ({ search: { label: BROWSER.searchLabel, hint: BROWSER.hint, placeholder: BROWSER.searchPlaceholder } });
+export const search = (): Views["filters"] => ({
+  search: {
+    label: BROWSER.searchLabel,
+    hint: BROWSER.hint,
+    placeholder: BROWSER.searchPlaceholder,
+  },
+});
 
 export function searchTable({ model, route, limit }: Ctx): Views["table"] {
   const found = route.q ? browse(model, route) : [];
@@ -162,11 +255,20 @@ export function searchTable({ model, route, limit }: Ctx): Views["table"] {
         [{ text: fn.name, to: { fn: fn.unit } }],
         [{ text: "", status: fn.status }],
         [{ text: bytes(fn.bytes) }],
-        [{ text: model.targetById.get(fn.target)?.name ?? "", to: gameMapRoute({ kind: "image", id: fn.target }) }],
+        [{
+          text: model.targetById.get(fn.target)?.name ?? "",
+          to: gameMapRoute({ kind: "image", id: fn.target }),
+        }],
         [{ text: fn.addr || "-", code: true }],
       ],
     })),
-    message: !route.q ? "" : !found.length ? BROWSER.none : found.length > limit ? BROWSER.limited(limit, found.length) : BROWSER.shown(found.length),
+    message: !route.q
+      ? ""
+      : !found.length
+      ? BROWSER.none
+      : found.length > limit
+      ? BROWSER.limited(limit, found.length)
+      : BROWSER.shown(found.length),
     more: found.length > limit ? BROWSER.more(PAGE_STEP) : undefined,
   };
 }

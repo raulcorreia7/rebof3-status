@@ -1,7 +1,7 @@
 // Theme selection: automatic (follow the system), light or dark. The choice is kept in
 // localStorage when the browser allows it; the page works without.
 
-import { cssVars, tokensFor, type Scheme, type Tokens } from "./tokens.ts";
+import { cssVars, type Scheme, type Tokens, tokensFor } from "./tokens.ts";
 
 export type Mode = "auto" | "light" | "dark";
 const STORAGE_KEY = "rebof3-status-theme";
@@ -25,7 +25,9 @@ export function saveMode(mode: Mode): void {
   }
 }
 
-const schemeOf = (mode: Mode): Scheme => (mode === "auto" ? (dark().matches ? "dark" : "light") : mode);
+const schemeOf = (
+  mode: Mode,
+): Scheme => (mode === "auto" ? (dark().matches ? "dark" : "light") : mode);
 
 /** Write the tokens of the mode's scheme to the page and return them. */
 export function applyMode(mode: Mode): { scheme: Scheme; tokens: Tokens } {

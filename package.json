@@ -1,12 +1,9 @@
 {
   "name": "rebof3-status",
   "private": true,
+  "description": "Status page and picture renderer for the Breath of Fire III decompilation.",
   "license": "MIT",
   "type": "module",
-  "description": "Status page and picture renderer for the Breath of Fire III decompilation.",
-  "engines": {
-    "node": ">=22"
-  },
   "scripts": {
     "dev": "vite",
     "build": "vite build && node render/snapshot.ts site",
@@ -28,5 +25,8 @@
     "vite": "8.3.5",
     "vite-plugin-solid": "2.11.14",
     "zod": "4.6.6"
+  },
+  "engines": {
+    "node": ">=22"
   }
 }

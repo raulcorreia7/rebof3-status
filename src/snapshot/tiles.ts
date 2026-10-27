@@ -22,10 +22,20 @@ export interface Block {
 }
 
 /** Squarified treemap (Bruls, Huizing and van Wijk, 2000): one [x, y, w, h] per weight. */
-function squarify(weights: number[], x: number, y: number, w: number, h: number): [number, number, number, number][] {
+function squarify(
+  weights: number[],
+  x: number,
+  y: number,
+  w: number,
+  h: number,
+): [number, number, number, number][] {
   const worst = (row: number[], side: number) => {
     const total = row.reduce((a, b) => a + b, 0);
-    return Math.max(...row.map((item) => Math.max((side * side * item) / (total * total), (total * total) / (side * side * item))));
+    return Math.max(
+      ...row.map((item) =>
+        Math.max((side * side * item) / (total * total), (total * total) / (side * side * item))
+      ),
+    );
   };
   const order = weights.map((_, index) => index).sort((a, b) => weights[b] - weights[a]);
   const total = weights.reduce((a, b) => a + b, 0);
@@ -36,13 +46,18 @@ function squarify(weights: number[], x: number, y: number, w: number, h: number)
   while (start < areas.length) {
     const side = Math.min(w, h);
     let end = start + 1;
-    while (end < areas.length && worst(areas.slice(start, end + 1), side) <= worst(areas.slice(start, end), side)) end++;
+    while (
+      end < areas.length
+      && worst(areas.slice(start, end + 1), side) <= worst(areas.slice(start, end), side)
+    ) end++;
     const row = areas.slice(start, end);
     const thickness = row.reduce((a, b) => a + b, 0) / side;
     let offset = 0;
     row.forEach((area, k) => {
       const length = area / thickness;
-      out[order[start + k]] = w >= h ? [x, y + offset, thickness, length] : [x + offset, y, length, thickness];
+      out[order[start + k]] = w >= h
+        ? [x, y + offset, thickness, length]
+        : [x + offset, y, length, thickness];
       offset += length;
     });
     if (w >= h) [x, w] = [x + thickness, w - thickness];
@@ -68,27 +83,44 @@ function label(name: string, w: number, h: number): { lines: string[]; size: num
   const [head, slot] = short.split(" slot ");
   const two = slot === undefined ? null : [head, `slot ${slot}`];
   const [stem, ext] = short.split(".");
-  const halves = ext !== undefined ? [stem, ext] : short.includes(" ") ? null : [short.slice(0, short.length >> 1), short.slice(short.length >> 1)];
+  const halves = ext !== undefined
+    ? [stem, ext]
+    : short.includes(" ")
+    ? null
+    : [short.slice(0, short.length >> 1), short.slice(short.length >> 1)];
   const [lead, rest] = short.split(": ");
   const listed = rest === undefined ? null : [`${lead}:`, ...rest.split(", ")];
   const tries: [string[] | null, number][] = [
-    [[name], LABEL_SIZE], [[short], LABEL_SIZE], [[short], LABEL_SIZE - 3], [two, LABEL_SIZE - 3],
-    [[short], LABEL_SIZE - 5], [two, LABEL_SIZE - 5], [listed, LABEL_SIZE - 3], [listed, LABEL_SIZE - 5],
-    [halves, LABEL_SIZE - 5], [halves, LABEL_SIZE - 7],
+    [[name], LABEL_SIZE],
+    [[short], LABEL_SIZE],
+    [[short], LABEL_SIZE - 3],
+    [two, LABEL_SIZE - 3],
+    [[short], LABEL_SIZE - 5],
+    [two, LABEL_SIZE - 5],
+    [listed, LABEL_SIZE - 3],
+    [listed, LABEL_SIZE - 5],
+    [halves, LABEL_SIZE - 5],
+    [halves, LABEL_SIZE - 7],
   ];
   for (const [lines, size] of tries) {
     if (!lines) continue;
     const tall = lines.length * (size + 2) + 3;
-    if (tall <= h && Math.max(...lines.map((line) => textWidth(line, size))) <= w - 8) return { lines, size };
+    if (tall <= h && Math.max(...lines.map((line) => textWidth(line, size))) <= w - 8) {
+      return { lines, size };
+    }
   }
   return null;
 }
 
-const weightOf = (rows: Fn[]): number => rows.reduce((sum, row) => sum + Math.max(row.bytes, MIN_BYTES), 0);
+const weightOf = (rows: Fn[]): number =>
+  rows.reduce((sum, row) => sum + Math.max(row.bytes, MIN_BYTES), 0);
 
 /** Rows in tile order: by status, then target, then address. */
 export const sorted = (rows: Fn[]): Fn[] =>
-  [...rows].sort((a, b) => STATUSES.indexOf(a.status) - STATUSES.indexOf(b.status) || a.target.localeCompare(b.target) || (a.address ?? Number.MAX_SAFE_INTEGER) - (b.address ?? Number.MAX_SAFE_INTEGER));
+  [...rows].sort((a, b) =>
+    STATUSES.indexOf(a.status) - STATUSES.indexOf(b.status) || a.target.localeCompare(b.target)
+    || (a.address ?? Number.MAX_SAFE_INTEGER) - (b.address ?? Number.MAX_SAFE_INTEGER)
+  );
 
 const tip = (fn: Fn): string => `${fn.name} · ${STATUS[fn.status].label} · ${bytes(fn.bytes)}`;
 
@@ -103,10 +135,24 @@ function block(rows: Fn[], name: string, box: number[]): { svg: string; fitted: 
   let svg = "";
   rows.forEach((row, index) => {
     const [line, col] = [Math.floor(index / cols), index % cols];
-    svg += rect(x + col * pitch, y + line * pitch, edge, edge, C.status[row.status], `<title>${escapeText(tip(row))}</title>`);
+    svg += rect(
+      x + col * pitch,
+      y + line * pitch,
+      edge,
+      edge,
+      C.status[row.status],
+      `<title>${escapeText(tip(row))}</title>`,
+    );
   });
   const fit = label(name, w, h);
-  if (fit) fit.lines.forEach((line, n) => (svg += text(x + 4, y + 2 + n * (fit.size + 2), line, fit.size, "#ffffff", { outline: true })));
+  if (fit) {
+    fit.lines.forEach((
+      line,
+      n,
+    ) => (svg += text(x + 4, y + 2 + n * (fit.size + 2), line, fit.size, "#ffffff", {
+      outline: true,
+    })));
+  }
   return { svg, fitted: fit !== null };
 }
 
@@ -115,11 +161,21 @@ function mergeSmall(blocks: Block[], scale: number): Block[] {
   const small = blocks.filter((b) => weightOf(b.rows) * AREA_PER_BYTE * scale < MERGE_AREA);
   if (small.length < 2) return blocks;
   const kept = blocks.filter((b) => !small.includes(b));
-  return [...kept, { name: `other: ${small.map((b) => b.name).join(", ")}`, rows: sorted(small.flatMap((b) => b.rows)) }];
+  return [...kept, {
+    name: `other: ${small.map((b) => b.name).join(", ")}`,
+    rows: sorted(small.flatMap((b) => b.rows)),
+  }];
 }
 
 /** A panel: heading, then blocks by code bytes. Returns the SVG and the y below it. */
-export function panel(title: string, blocks: Block[], x: number, y: number, width: number, scale: number): { svg: string; bottom: number } {
+export function panel(
+  title: string,
+  blocks: Block[],
+  x: number,
+  y: number,
+  width: number,
+  scale: number,
+): { svg: string; bottom: number } {
   const merged = mergeSmall(blocks, scale);
   const area = merged.reduce((sum, b) => sum + weightOf(b.rows), 0) * AREA_PER_BYTE * scale;
   const height = area / width;
@@ -137,7 +193,9 @@ export function panel(title: string, blocks: Block[], x: number, y: number, widt
   let bottom = top + height;
   for (const [b, box] of leaders) {
     const cx = box[0] + box[2] / 2;
-    svg += `<path d="M${round(cx)} ${round(box[1] + box[3] / 2)}V${round(bottom + 8)}" stroke="${C.mute}" fill="none"/>`;
+    svg += `<path d="M${round(cx)} ${round(box[1] + box[3] / 2)}V${
+      round(bottom + 8)
+    }" stroke="${C.mute}" fill="none"/>`;
     svg += text(x + width, bottom + 10, shorten(b.name, 14, width), 14, C.ink, { anchor: "end" });
     bottom += 20;
   }

@@ -1,8 +1,8 @@
 // The side panel: the details of the source file (unit) the route opens, beside any page.
 
-import { createEffect, createSignal, For, on, onCleanup, Show, type Accessor } from "solid-js";
-import { INSPECT } from "../strings.ts";
+import { type Accessor, createEffect, createSignal, For, on, onCleanup, Show } from "solid-js";
 import { usePage } from "../state.ts";
+import { INSPECT } from "../strings.ts";
 import type { Views } from "../viewtypes.ts";
 import { Parts } from "./ui.tsx";
 

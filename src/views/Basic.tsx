@@ -1,9 +1,9 @@
 // The simple views: cards, meters, text, search and tables.
 
-import { createSignal, For, onCleanup, Show, type Accessor } from "solid-js";
-import { BROWSER } from "../strings.ts";
-import { usePage } from "../state.ts";
+import { type Accessor, createSignal, For, onCleanup, Show } from "solid-js";
 import type { SortKey } from "../model/route.ts";
+import { usePage } from "../state.ts";
+import { BROWSER } from "../strings.ts";
 import type { Views } from "../viewtypes.ts";
 import { Meter, Parts, StatusKey } from "./ui.tsx";
 
@@ -21,7 +21,10 @@ export function Cards(props: Props<"cards">) {
         {(card) => (
           <div class="card" data-card={card.id}>
             <div class="text-sm">{card.title}</div>
-            <div class="text-4xl leading-tight font-bold tabular-nums" style={{ color: card.color }}>
+            <div
+              class="text-4xl leading-tight font-bold tabular-nums"
+              style={{ color: card.color }}
+            >
               {card.big}
             </div>
             <div class="text-sm text-mute">{card.sub}</div>
@@ -56,7 +59,8 @@ export function Text(props: Props<"text">) {
       {(paragraph) => (
         <p class="my-1 text-sm">
           <Show when={paragraph.label}>
-            <b>{paragraph.label}</b>{" "}
+            <b>{paragraph.label}</b>
+            {" "}
           </Show>
           {paragraph.text}
         </p>
@@ -94,9 +98,21 @@ export function Table(props: Props<"table">) {
   const page = usePage();
   const [copied, setCopied] = createSignal(false);
   const selected = () => page.route.fn;
-  const sortBy = (sort: SortKey) => page.go(page.route.sort === sort ? { dir: page.route.dir === "asc" ? "desc" : "asc" } : { sort, dir: sort === "size" ? "desc" : "asc" }, true);
-  const arrow = (sort?: SortKey) => (sort && page.route.sort === sort ? (page.route.dir === "asc" ? " ▲" : " ▼") : "");
-  const ariaSort = (sort?: SortKey) => (sort ? (page.route.sort === sort ? (page.route.dir === "asc" ? "ascending" : "descending") : "none") : undefined);
+  const sortBy = (sort: SortKey) =>
+    page.go(
+      page.route.sort === sort
+        ? { dir: page.route.dir === "asc" ? "desc" : "asc" }
+        : { sort, dir: sort === "size" ? "desc" : "asc" },
+      true,
+    );
+  const arrow = (
+    sort?: SortKey,
+  ) => (sort && page.route.sort === sort ? (page.route.dir === "asc" ? " ▲" : " ▼") : "");
+  const ariaSort = (
+    sort?: SortKey,
+  ) => (sort
+    ? (page.route.sort === sort ? (page.route.dir === "asc" ? "ascending" : "descending") : "none")
+    : undefined);
   const align = (column: { align?: "r" }) => (column.align ? "text-right" : "text-left");
   const copy = async () => {
     try {
@@ -126,15 +142,26 @@ export function Table(props: Props<"table">) {
               <tr>
                 <For each={props.data().columns}>
                   {(column) => (
-                    <th class={`sticky top-0 border-b border-line bg-card px-3 py-1.5 text-xs font-semibold whitespace-nowrap text-mute ${align(column)}`} aria-sort={ariaSort(column.sort)}>
-                      {column.sort ? (
-                        <button type="button" class="cursor-pointer" onClick={() => sortBy(column.sort!)}>
-                          {column.label}
-                          {arrow(column.sort)}
-                        </button>
-                      ) : (
-                        column.label
-                      )}
+                    <th
+                      class={`sticky top-0 border-b border-line bg-card px-3 py-1.5 text-xs font-semibold whitespace-nowrap text-mute ${
+                        align(column)
+                      }`}
+                      aria-sort={ariaSort(column.sort)}
+                    >
+                      {column.sort
+                        ? (
+                          <button
+                            type="button"
+                            class="cursor-pointer"
+                            onClick={() => sortBy(column.sort!)}
+                          >
+                            {column.label}
+                            {arrow(column.sort)}
+                          </button>
+                        )
+                        : (
+                          column.label
+                        )}
                     </th>
                   )}
                 </For>
@@ -146,7 +173,11 @@ export function Table(props: Props<"table">) {
                   <tr class={row.id === selected() ? "bg-track" : ""} data-fn={row.id}>
                     <For each={row.cells}>
                       {(cell, index) => (
-                        <td class={`px-3 py-1.5 whitespace-nowrap ${align(props.data().columns[index()])}`}>
+                        <td
+                          class={`px-3 py-1.5 whitespace-nowrap ${
+                            align(props.data().columns[index()])
+                          }`}
+                        >
                           <Parts parts={cell} />
                         </td>
                       )}

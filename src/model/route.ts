@@ -46,8 +46,11 @@ export function parseHash(hash: string): Route {
   const params = new URLSearchParams(query);
   const [kind, ...rest] = path.split("/").filter(Boolean).map(decodeURIComponent);
   const id = rest.join("/");
-  const view: View =
-    id && (kind === "image" || kind === "target") ? { kind: "image", id } : id && (kind === "part" || kind === "group") ? { kind: "part", key: id } : { kind: "home" };
+  const view: View = id && (kind === "image" || kind === "target")
+    ? { kind: "image", id }
+    : id && (kind === "part" || kind === "group")
+    ? { kind: "part", key: id }
+    : { kind: "home" };
   return {
     view,
     fn: kind === "fn" && id ? id : params.get("fn"),

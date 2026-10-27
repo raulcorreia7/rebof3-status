@@ -9,7 +9,7 @@ import { textWidth } from "../model/text.ts";
 import { MAP, POSTER, SDK, SUMMARY } from "../strings.ts";
 import type { Code, Model } from "../types.ts";
 import { bar, C, FONT, frame, rect, text } from "./svg.ts";
-import { panel, sorted, weightOf, type Block } from "./tiles.ts";
+import { type Block, panel, sorted, weightOf } from "./tiles.ts";
 
 const WIDTH = 1600;
 const MARGIN = 24;
@@ -24,14 +24,25 @@ interface Drawn {
   bottom: number;
 }
 
-const sdkBlocks = (model: Model): Block[] => model.libraries.map((lib) => ({ name: lib.name, rows: sorted(lib.functions) }));
+const sdkBlocks = (model: Model): Block[] =>
+  model.libraries.map((lib) => ({ name: lib.name, rows: sorted(lib.functions) }));
 
 // The headline, in the order the numbers matter: game functions, their size, the fuzzy match.
 function cards(model: Model, y: number): Drawn {
   const game = model.code;
   const items: [string, string, string, string][] = [
-    [`${percent(game.exact, game.functions, 1)}%`, SUMMARY.gameFunctions, SUMMARY.of(game.exact, game.functions), C.status.pure],
-    [`${percent(game.exactBytes, game.bytes, 1)}%`, SUMMARY.gameBytes, SUMMARY.ofBytes(game.exactBytes, game.bytes), C.status.pure],
+    [
+      `${percent(game.exact, game.functions, 1)}%`,
+      SUMMARY.gameFunctions,
+      SUMMARY.of(game.exact, game.functions),
+      C.status.pure,
+    ],
+    [
+      `${percent(game.exactBytes, game.bytes, 1)}%`,
+      SUMMARY.gameBytes,
+      SUMMARY.ofBytes(game.exactBytes, game.bytes),
+      C.status.pure,
+    ],
     [`${model.game.fuzzy.toFixed(1)}%`, SUMMARY.fuzzy, SUMMARY.fuzzyNote, C.status.pure],
   ];
   const width = (WIDTH - 2 * MARGIN - (items.length - 1) * GAP) / items.length;
@@ -39,7 +50,8 @@ function cards(model: Model, y: number): Drawn {
   let svg = "";
   items.forEach(([big, title, sub, color], index) => {
     const x = MARGIN + index * (width + GAP);
-    svg += rect(x, y, width, height, C.card) + frame(x + 0.5, y + 0.5, width - 1, height - 1, C.line);
+    svg += rect(x, y, width, height, C.card)
+      + frame(x + 0.5, y + 0.5, width - 1, height - 1, C.line);
     svg += text(x + 16, y + 9, title, 15, C.ink);
     svg += text(x + 16, y + 34, big, 44, color, { weight: "bold" });
     svg += text(x + 16, y + 76, sub, 14, C.mute);
@@ -67,7 +79,14 @@ function legend(model: Model, x: number, y: number): Drawn {
 
 /** One bar split by status, by function count. */
 const codeBar = (x: number, y: number, width: number, height: number, code: Code): string =>
-  bar(x, y, width, height, codeCounts(code).map(([key, count]) => [count, C.status[key]]), code.functions);
+  bar(
+    x,
+    y,
+    width,
+    height,
+    codeCounts(code).map(([key, count]) => [count, C.status[key]]),
+    code.functions,
+  );
 
 // Image rows: name, a bar as long as the image's share of the group's biggest, and its count.
 const ROW = 20;
@@ -86,7 +105,14 @@ function domainPanel(model: Model, x: number, y: number, width: number): Drawn {
     svg += text(x, top, group.label, 17, C.ink, { weight: "bold" });
     const after = x + textWidth(group.label, 17) * 1.06 + 12;
     svg += text(after, top, share, 17, C.status.pure, { weight: "bold" });
-    svg += text(width + x, top + 3, MAP.group(group.code.exact, group.code.functions, group.code.bytes, images.length), 13, C.mute, { anchor: "end" });
+    svg += text(
+      width + x,
+      top + 3,
+      MAP.group(group.code.exact, group.code.functions, group.code.bytes, images.length),
+      13,
+      C.mute,
+      { anchor: "end" },
+    );
     svg += codeBar(x, top + 26, width, 10, group.code);
     top += 46;
     if (group.tiles) {
@@ -116,8 +142,21 @@ function domainPanel(model: Model, x: number, y: number, width: number): Drawn {
         const cx = x + Math.floor(index / lines) * (columnWidth + GAP);
         const cy = top + (index % lines) * ROW;
         svg += text(cx, cy, target.name, 12, C.ink);
-        svg += codeBar(cx + nameWidth, cy + 2, Math.max((target.code.bytes / peak) * barRoom, 2), 11, target.code);
-        svg += text(cx + columnWidth, cy, MAP.image(target.code.exact, target.code.functions), 12, C.mute, { anchor: "end" });
+        svg += codeBar(
+          cx + nameWidth,
+          cy + 2,
+          Math.max((target.code.bytes / peak) * barRoom, 2),
+          11,
+          target.code,
+        );
+        svg += text(
+          cx + columnWidth,
+          cy,
+          MAP.image(target.code.exact, target.code.functions),
+          12,
+          C.mute,
+          { anchor: "end" },
+        );
       });
       top += lines * ROW + 16;
     }
@@ -131,20 +170,49 @@ function libraryPanel(model: Model, x: number, y: number, width: number): Drawn 
   let svg = text(x, y, POSTER.libraries, 24, C.ink);
   const peak = Math.max(...libs.map((lib) => weightOf(lib.functions)), 1);
   // The column fits the longest name, so a bar never runs under it.
-  const nameWidth = Math.max(...libs.map((lib) => textWidth(lib.name === "assembly" ? SDK.assemblyLibrary : lib.name, 14))) + 12;
+  const nameWidth = Math.max(
+    ...libs.map((lib) => textWidth(lib.name === "assembly" ? SDK.assemblyLibrary : lib.name, 14)),
+  ) + 12;
   const barWidth = width - nameWidth - 96;
   libs.forEach((lib, index) => {
     const top = y + 40 + index * 36;
     const length = Math.max((weightOf(lib.functions) / peak) * barWidth, 2);
     const assembly = lib.name === "assembly";
     svg += text(x, top, assembly ? SDK.assemblyLibrary : lib.name, 14, C.ink);
-    svg += bar(x + nameWidth, top + 1, length, 14, STATUSES.map((key) => [lib.statuses[key].functions, C.status[key]]), lib.count);
-    svg += text(x + width, top, assembly ? SDK.assemblyOnly(lib.count) : SDK.done(lib.tiers.object, lib.count), 13, C.mute, { anchor: "end" });
-    const versions = Object.entries(lib.versions).map(([version, units]) => `${version} ×${units}`).join(" · ");
-    svg += text(x + nameWidth, top + 18, assembly ? "" : versions ? SDK.versions(versions) : POSTER.libraryLinked, 11, C.mute);
+    svg += bar(
+      x + nameWidth,
+      top + 1,
+      length,
+      14,
+      STATUSES.map((key) => [lib.statuses[key].functions, C.status[key]]),
+      lib.count,
+    );
+    svg += text(
+      x + width,
+      top,
+      assembly ? SDK.assemblyOnly(lib.count) : SDK.done(lib.tiers.object, lib.count),
+      13,
+      C.mute,
+      { anchor: "end" },
+    );
+    const versions = Object.entries(lib.versions).map(([version, units]) => `${version} ×${units}`)
+      .join(" · ");
+    svg += text(
+      x + nameWidth,
+      top + 18,
+      assembly ? "" : versions ? SDK.versions(versions) : POSTER.libraryLinked,
+      11,
+      C.mute,
+    );
   });
   const s = model.sdk.statuses;
-  svg += text(x, y + 40 + libs.length * 36, POSTER.libraryKey(s.object.functions, s.assembly.functions), 13, C.mute);
+  svg += text(
+    x,
+    y + 40 + libs.length * 36,
+    POSTER.libraryKey(s.object.functions, s.assembly.functions),
+    13,
+    C.mute,
+  );
   return { svg, bottom: y + 40 + libs.length * 36 + 22 };
 }
 
@@ -170,7 +238,11 @@ export function renderPoster(model: Model): string {
   const top = cards(model, MARGIN + 70);
   svg += top.svg;
 
-  const sdkTitle = POSTER.sdkTitle(percent(model.sdk.done, model.sdk.count), model.sdk.done, model.sdk.count);
+  const sdkTitle = POSTER.sdkTitle(
+    percent(model.sdk.done, model.sdk.count),
+    model.sdk.done,
+    model.sdk.count,
+  );
   const y = top.bottom + GAP + 6;
   const left = domainPanel(model, MARGIN, y, GAME_WIDTH);
   const right = MARGIN + GAME_WIDTH + GAP;
@@ -186,8 +258,8 @@ export function renderPoster(model: Model): string {
 
   const height = Math.ceil(quality.bottom + MARGIN);
   return (
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${WIDTH} ${height}" width="${WIDTH}" height="${height}"` +
-    ` font-family="${FONT}" role="img" aria-label="${escapeText(POSTER.title)}">` +
-    `<rect width="${WIDTH}" height="${height}" fill="${C.bg}"/>${svg}</svg>`
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${WIDTH} ${height}" width="${WIDTH}" height="${height}"`
+    + ` font-family="${FONT}" role="img" aria-label="${escapeText(POSTER.title)}">`
+    + `<rect width="${WIDTH}" height="${height}" fill="${C.bg}"/>${svg}</svg>`
   );
 }

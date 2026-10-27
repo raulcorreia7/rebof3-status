@@ -2,13 +2,23 @@
 // ECharts draws every function on canvas; the list beside it holds the same functions as links,
 // paged so a large part never creates one DOM node per function.
 
-import { createEffect, createMemo, createSignal, For, on, onCleanup, onMount, Show, type Accessor } from "solid-js";
+import {
+  type Accessor,
+  createEffect,
+  createMemo,
+  createSignal,
+  For,
+  on,
+  onCleanup,
+  onMount,
+  Show,
+} from "solid-js";
 import type { ChartOption } from "../charts/register.ts";
-import { treemapOption, type MapNode, type MapRef } from "../charts/treemap.ts";
+import { type MapNode, type MapRef, treemapOption } from "../charts/treemap.ts";
 import { PAGE_STEP } from "../model/browse.ts";
 import { bytes } from "../model/format.ts";
-import { MAP } from "../strings.ts";
 import { usePage } from "../state.ts";
+import { MAP } from "../strings.ts";
 import type { Tokens } from "../theme/tokens.ts";
 import type { GamePage } from "../viewtypes.ts";
 import { Chart, type ChartClick } from "./Chart.tsx";
@@ -22,7 +32,12 @@ export function GamePageView(props: { data: Accessor<GamePage> }) {
     <section class="mt-6" aria-labelledby="page-title">
       <Crumbs data={props.data} />
       <div class="mt-1 flex flex-wrap items-baseline gap-x-3">
-        <h2 id="page-title" ref={heading} tabIndex={-1} class="text-xl font-semibold break-words focus:outline-none">
+        <h2
+          id="page-title"
+          ref={heading}
+          tabIndex={-1}
+          class="text-xl font-semibold break-words focus:outline-none"
+        >
           {props.data().title}
         </h2>
         <span class="text-2xl font-bold tabular-nums">{props.data().percent}</span>
@@ -46,14 +61,14 @@ function Crumbs(props: { data: Accessor<GamePage> }) {
       <For each={props.data().crumbs}>
         {(crumb, index) => (
           <>
-            {index() > 0 ? <span class="text-mute" aria-hidden="true"> › </span> : null}
-            {index() < last() ? (
-              <Jump to={crumb.to} scroll={crumb.scroll}>
-                {crumb.label}
-              </Jump>
-            ) : (
-              <span aria-current="page">{crumb.label}</span>
-            )}
+            {index() > 0 ? <span class="text-mute" aria-hidden="true">›</span> : null}
+            {index() < last()
+              ? (
+                <Jump to={crumb.to} scroll={crumb.scroll}>
+                  {crumb.label}
+                </Jump>
+              )
+              : <span aria-current="page">{crumb.label}</span>}
           </>
         )}
       </For>
@@ -71,18 +86,26 @@ function Functions(props: { data: Accessor<GamePage>; tree: Accessor<MapNode> })
   return (
     <div class="mt-4 grid min-w-0 gap-4 lg:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)]">
       <div class="min-w-0">
-        <Canvas tree={props.tree} label={MAP.chartLabel(props.data().title, props.data().functions.length)} />
+        <Canvas
+          tree={props.tree}
+          label={MAP.chartLabel(props.data().title, props.data().functions.length)}
+        />
       </div>
       <section class="card min-w-0 p-3" aria-label={heading()}>
         <h3 class="font-semibold">{heading()}</h3>
-        <Show when={props.data().functions.length} fallback={<p class="mt-2 text-sm text-mute">{MAP.listEmpty}</p>}>
+        <Show
+          when={props.data().functions.length}
+          fallback={<p class="mt-2 text-sm text-mute">{MAP.listEmpty}</p>}
+        >
           <ul class="mt-2 max-h-[32rem] space-y-1 overflow-y-auto">
             <For each={visible()}>
               {(fn) => (
                 <li>
                   <Jump
                     to={{ fn: fn.unit }}
-                    class={`block rounded border px-2 py-1.5 text-ink hover:border-accent hover:no-underline ${page.route.fn === fn.unit ? "border-accent bg-track" : "border-line bg-card"}`}
+                    class={`block rounded border px-2 py-1.5 text-ink hover:border-accent hover:no-underline ${
+                      page.route.fn === fn.unit ? "border-accent bg-track" : "border-line bg-card"
+                    }`}
                     aria-current={page.route.fn === fn.unit}
                   >
                     <span class="flex justify-between gap-2">
@@ -92,7 +115,9 @@ function Functions(props: { data: Accessor<GamePage>; tree: Accessor<MapNode> })
                     <span class="flex flex-wrap items-center justify-between gap-x-2 text-xs text-mute">
                       <span>
                         <code>{fn.addr || "-"}</code>
-                        <Show when={props.data().inPart}> · {page.model.targetById.get(fn.target)?.name}</Show>
+                        <Show when={props.data().inPart}>
+                          · {page.model.targetById.get(fn.target)?.name}
+                        </Show>
                       </span>
                       <StatusChip status={fn.status} />
                     </span>
@@ -115,7 +140,9 @@ function Functions(props: { data: Accessor<GamePage>; tree: Accessor<MapNode> })
 function Canvas(props: { tree: Accessor<MapNode>; label: string }) {
   const page = usePage();
   // Honour the system setting, including a change made while the page is open.
-  const [calm, setCalm] = createSignal(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  const [calm, setCalm] = createSignal(
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+  );
   onMount(() => {
     const query = window.matchMedia("(prefers-reduced-motion: reduce)");
     const update = () => setCalm(query.matches);
@@ -136,5 +163,14 @@ function Canvas(props: { tree: Accessor<MapNode>; label: string }) {
     if (ref?.kind === "fn") page.go({ fn: ref.id });
     else if (ref?.kind === "image") page.go({ view: { kind: "image", id: ref.id }, fn: null });
   };
-  return <Chart option={option()} height={window.innerWidth < 700 ? 420 : 620} label={props.label} onClick={onClick} crossfade={!calm()} replace />;
+  return (
+    <Chart
+      option={option()}
+      height={window.innerWidth < 700 ? 420 : 620}
+      label={props.label}
+      onClick={onClick}
+      crossfade={!calm()}
+      replace
+    />
+  );
 }

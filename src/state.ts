@@ -1,15 +1,23 @@
 // The page state in one place: the route (kept in the URL hash, so every view is a link), the
 // theme and how many table rows are shown. Views read it through usePage().
 
-import { createContext, createEffect, createMemo, createSignal, on, onCleanup, useContext } from "solid-js";
+import {
+  createContext,
+  createEffect,
+  createMemo,
+  createSignal,
+  on,
+  onCleanup,
+  useContext,
+} from "solid-js";
 import { createStore, reconcile, unwrap } from "solid-js/store";
 import { PAGE_STEP } from "./model/browse.ts";
 import { formatHash, isLegacyPath, pagePath, parseHash, type Route } from "./model/route.ts";
-import { applyMode, saveMode, storedMode, watchSystemScheme, type Mode } from "./theme/apply.ts";
+import { applyMode, type Mode, saveMode, storedMode, watchSystemScheme } from "./theme/apply.ts";
 import type { Scheme, Tokens } from "./theme/tokens.ts";
 import type { Model } from "./types.ts";
-import type { Ctx } from "./viewtypes.ts";
 import { scrollToSection } from "./views/scroll.ts";
+import type { Ctx } from "./viewtypes.ts";
 
 /**
  * Change part of the route. `replace` edits the current history entry (typing, toggles). A new
@@ -42,7 +50,11 @@ export function createPage(model: Model): Page {
     const current = window.location.hash;
     const next = parseHash(current);
     if (isLegacyPath(current)) {
-      window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}${formatHash(next)}`);
+      window.history.replaceState(
+        null,
+        "",
+        `${window.location.pathname}${window.location.search}${formatHash(next)}`,
+      );
     }
     return next;
   };

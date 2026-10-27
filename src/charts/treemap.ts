@@ -1,10 +1,10 @@
 // Game function treemaps of one part of the game or one image, sized by code bytes. Pure option
 // builders; views/Treemap.tsx draws them.
 
-import { STATUS } from "../model/status.ts";
-import type { Fn, Group, Target } from "../types.ts";
 import { bytes, escapeText, number } from "../model/format.ts";
+import { STATUS } from "../model/status.ts";
 import type { Tokens } from "../theme/tokens.ts";
+import type { Fn, Group, Target } from "../types.ts";
 import type { ChartOption } from "./register.ts";
 
 /** A zero-byte function keeps one byte of area, so it stays in the map. */
@@ -44,20 +44,26 @@ const fnNode = (fn: Fn, tokens: Tokens): MapNode => ({
 
 /** One image's game functions. */
 export function gameImageTree(target: Target, tokens: Tokens): MapNode {
-  const children = target.functions.filter((fn) => fn.kind === "game").map((fn) => fnNode(fn, tokens));
+  const children = target.functions.filter((fn) => fn.kind === "game").map((fn) =>
+    fnNode(fn, tokens)
+  );
   return {
     id: `image:${target.id}`,
     name: target.name,
     value: children.reduce((sum, child) => sum + child.value, 0),
     ref: { kind: "image", id: target.id },
-    tip: `<b>${escapeText(target.name)}</b><br>${number(target.code.exact)} of ${number(target.code.functions)} rebuilt in C`,
+    tip: `<b>${escapeText(target.name)}</b><br>${number(target.code.exact)} of ${
+      number(target.code.functions)
+    } rebuilt in C`,
     children,
   };
 }
 
 /** A part's game functions, grouped into images. */
 export function gamePartTree(group: Group, tokens: Tokens): MapNode {
-  const images = group.targets.map((target) => gameImageTree(target, tokens)).filter((image) => image.children?.length);
+  const images = group.targets.map((target) => gameImageTree(target, tokens)).filter((image) =>
+    image.children?.length
+  );
   return {
     id: `part:${group.key}`,
     name: group.label,
@@ -75,10 +81,28 @@ export function gamePartTree(group: Group, tokens: Tokens): MapNode {
  * reading the layout back.
  */
 export function treemapOption(view: MapNode, tokens: Tokens): ChartOption {
-  const upper = { show: true, height: 18, color: tokens.ink, fontSize: 12, fontWeight: "bold" as const };
-  const parent = { itemStyle: { color: "transparent", borderColor: tokens.bg, borderWidth: 2, gapWidth: 1 }, label: { show: false }, upperLabel: upper };
-  const leaf = (named: boolean) => ({ itemStyle: { borderColor: tokens.bg, borderWidth: 1, gapWidth: 1 }, label: { show: named }, upperLabel: { show: false } });
-  const hidden = { itemStyle: { color: "transparent", borderWidth: 0, gapWidth: 0 }, label: { show: false }, upperLabel: { show: false } };
+  const upper = {
+    show: true,
+    height: 18,
+    color: tokens.ink,
+    fontSize: 12,
+    fontWeight: "bold" as const,
+  };
+  const parent = {
+    itemStyle: { color: "transparent", borderColor: tokens.bg, borderWidth: 2, gapWidth: 1 },
+    label: { show: false },
+    upperLabel: upper,
+  };
+  const leaf = (named: boolean) => ({
+    itemStyle: { borderColor: tokens.bg, borderWidth: 1, gapWidth: 1 },
+    label: { show: named },
+    upperLabel: { show: false },
+  });
+  const hidden = {
+    itemStyle: { color: "transparent", borderWidth: 0, gapWidth: 0 },
+    label: { show: false },
+    upperLabel: { show: false },
+  };
   return {
     animation: false,
     tooltip: {
@@ -105,7 +129,13 @@ export function treemapOption(view: MapNode, tokens: Tokens): ChartOption {
         nodeClick: false,
         breadcrumb: { show: false },
         squareRatio: 1,
-        label: { show: true, color: "#ffffff", fontSize: 10, textBorderColor: "rgba(0,0,0,0.7)", textBorderWidth: 2 },
+        label: {
+          show: true,
+          color: "#ffffff",
+          fontSize: 10,
+          textBorderColor: "rgba(0,0,0,0.7)",
+          textBorderWidth: 2,
+        },
         upperLabel: upper,
         // Depth 0 is the hidden root.
         levels: view.ref.kind === "part" ? [hidden, parent, leaf(false)] : [hidden, leaf(true)],

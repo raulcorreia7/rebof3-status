@@ -18,18 +18,30 @@ function unitFields(model: Model, unit: Unit): Field[] {
   const target = model.targetById.get(unit.target)!;
   const { previous, next } = neighbours(model, unit);
   const around = (other: Unit | null): Part[] =>
-    other ? [text(other.name, { to: { fn: other.id } }), text(` ${other.addr}`, { code: true, mute: true })] : [text("-", { mute: true })];
+    other
+      ? [
+        text(other.name, { to: { fn: other.id } }),
+        text(` ${other.addr}`, { code: true, mute: true }),
+      ]
+      : [text("-", { mute: true })];
   const fields: Field[] = [
     field(F.address, unit.addr ? text(unit.addr, { code: true }) : text("-", { mute: true })),
     field(F.size, text(bytes(unit.bytes))),
     field(F.status, text("", { status: unit.status })),
     field(F.functions, text(INSPECT.match(unit.matched, unit.functions.length))),
   ];
-  if (unit.address !== null) fields.splice(1, 0, field(F.ends, text(hex(unit.address + unit.bytes), { code: true })));
+  if (unit.address !== null) {
+    fields.splice(1, 0, field(F.ends, text(hex(unit.address + unit.bytes), { code: true })));
+  }
   if (unit.fuzzyReported) fields.push(field(F.fuzzy, text(`${unit.fuzzy.toFixed(1)}%`)));
   fields.push(field(F.code, text(INSPECT.code[unit.kind])));
   if (unit.kind === "sdk") {
-    fields.push(field(F.library, text(unit.library === ASSEMBLY_LIBRARY ? SDK.assemblyLibrary : (unit.library ?? "-"))));
+    fields.push(
+      field(
+        F.library,
+        text(unit.library === ASSEMBLY_LIBRARY ? SDK.assemblyLibrary : (unit.library ?? "-")),
+      ),
+    );
     if (unit.version) fields.push(field(F.version, text(unit.version)));
   }
   fields.push(
@@ -38,7 +50,15 @@ function unitFields(model: Model, unit: Unit): Field[] {
   );
   if (unit.source?.endsWith(".c")) fields.push(field(F.source, text(unit.source, { code: true })));
   else if (unit.source) fields.push(field(F.source, text(unit.source, { code: true, mute: true })));
-  else fields.push(field(F.source, text(unit.kind === "sdk" ? (unit.tier === "assembly" ? INSPECT.noSourceAssembly : INSPECT.noSourceSdk) : INSPECT.noSource, { mute: true })));
+  else {fields.push(field(
+      F.source,
+      text(
+        unit.kind === "sdk"
+          ? (unit.tier === "assembly" ? INSPECT.noSourceAssembly : INSPECT.noSourceSdk)
+          : INSPECT.noSource,
+        { mute: true },
+      ),
+    ));}
   fields.push(field(F.previous, ...around(previous)), field(F.next, ...around(next)));
   return fields;
 }
@@ -46,5 +66,7 @@ function unitFields(model: Model, unit: Unit): Field[] {
 export function inspector({ model, route }: Ctx): Views["inspector"] {
   if (!route.fn) return null;
   const unit = findUnit(model, route.fn);
-  return unit ? { title: unit.id, fields: unitFields(model, unit) } : { title: route.fn, fields: [], message: INSPECT.notFound };
+  return unit
+    ? { title: unit.id, fields: unitFields(model, unit) }
+    : { title: route.fn, fields: [], message: INSPECT.notFound };
 }
