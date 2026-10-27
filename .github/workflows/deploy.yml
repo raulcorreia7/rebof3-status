@@ -26,13 +26,6 @@ jobs:
           node-version: 22
           cache: npm
           cache-dependency-path: package-lock.json
-      # The runner image usually ships DejaVu Sans; install it only when it is missing.
-      - name: Provide DejaVu Sans for the picture
-        run: |
-          if [ ! -f /usr/share/fonts/truetype/dejavu/DejaVuSans.ttf ]; then
-            sudo apt-get update -qq
-            sudo apt-get install -y --no-install-recommends fonts-dejavu-core
-          fi
       - run: npm ci --prefer-offline --no-audit --no-fund
       - name: Type check
         run: npm run lint

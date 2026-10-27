@@ -25,7 +25,7 @@ page and the picture are built from that one file.
 ```sh
 npm ci && npm run build && npm test   # clean-clone build and test; `make check` adds the type check
 npm run dev      # dev server on data/report.json
-npm run build    # site/ plus the pictures; needs the DejaVu Sans font (fonts-dejavu-core)
+npm run build    # site/ plus the pictures; the font ships in render/fonts/
 node render/snapshot.ts site data/report.json   # render the pictures for another report
 ```
 
