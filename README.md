@@ -27,6 +27,7 @@ npm ci && npm run build && npm test   # clean-clone build and test; `make check`
 npm run dev      # dev server on data/report.json
 npm run build    # site/ plus the pictures; the font ships in render/fonts/
 node render/snapshot.ts site data/report.json   # render the pictures for another report
+npm run licenses # dependency licences must be permissive (MIT, ISC, Apache-2.0, BSD, 0BSD, BlueOak)
 ```
 
 ## Publish
@@ -47,4 +48,10 @@ then publish the built `site/` (pull requests only check). The numbers are the c
 
 ## License
 
-[MIT](LICENSE).
+[MIT](LICENSE). The picture uses DejaVu Sans, shipped with its own licence in
+[render/fonts/](render/fonts/LICENSE).
+
+`npm run licenses` fails on any dependency licence outside the permissive list. Three build-time
+packages are listed by name and version as reviewed exceptions: `@resvg/resvg-js` and
+`lightningcss` (MPL-2.0, used unmodified) and `caniuse-lite` (CC-BY-4.0 data). A version bump of
+one of them fails the check until the entry in `package.json` is updated.

@@ -29,6 +29,8 @@ jobs:
       - run: npm ci --prefer-offline --no-audit --no-fund
       - name: Type check
         run: npm run lint
+      - name: Check dependency licences
+        run: npm run licenses
       # The build copies data/report.json into site/ and renders the pictures from it.
       - name: Build the page and the pictures
         run: npm run build

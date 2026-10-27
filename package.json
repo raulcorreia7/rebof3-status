@@ -11,7 +11,8 @@
     "dev": "vite",
     "build": "vite build && node render/snapshot.ts site",
     "test": "node --test \"test/*.test.ts\"",
-    "lint": "tsc -p ."
+    "lint": "tsc -p .",
+    "licenses": "npx --yes license-checker-rseidelsohn@4.4.2 --onlyAllow \"MIT;ISC;Apache-2.0;BSD-2-Clause;BSD-3-Clause;0BSD;BlueOak-1.0.0\" --excludePackages \"@resvg/resvg-js@2.6.2;@resvg/resvg-js-linux-x64-gnu@2.6.2;lightningcss@1.32.0;lightningcss@1.33.0;lightningcss-linux-x64-gnu@1.32.0;lightningcss-linux-x64-gnu@1.33.0;caniuse-lite@1.0.30001818\" --summary"
   },
   "devDependencies": {
     "@resvg/resvg-js": "2.6.2",
