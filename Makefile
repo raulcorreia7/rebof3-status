@@ -14,7 +14,7 @@ help:
 	@echo "  help       List these targets (default)."
 	@echo "  build      Build the page into site/ and render the picture (npm run build)."
 	@echo "  test       Build, then check the model and the built site (npm test)."
-	@echo "  format     No formatter is configured; nothing to do. CHECK=1 is accepted."
+	@echo "  format     Format the tree with dprint; CHECK=1 only checks (npm run format)."
 	@echo "  lint       Type check (npm run lint)."
 	@echo "  licenses   Check dependency licences against the allow-list (npm run licenses)."
 	@echo "  check      format CHECK=1, lint, licenses and test: the pre-commit gate."
@@ -28,7 +28,11 @@ test: build
 	npm test
 
 format:
-	@echo "format: no formatter is configured for status"
+ifeq ($(CHECK),1)
+	npm run format:check
+else
+	npm run format
+endif
 
 lint:
 	npm run lint

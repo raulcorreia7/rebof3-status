@@ -27,6 +27,7 @@ npm ci && npm run build && npm test   # clean-clone build and test; `make check`
 npm run dev      # dev server on data/report.json
 npm run build    # site/ plus the pictures; the font ships in render/fonts/
 node render/snapshot.ts site data/report.json   # render the pictures for another report
+npm run format   # dprint formats ts, tsx, json and md; `npm run format:check` only checks
 npm run licenses # dependency licences must be permissive (MIT, ISC, Apache-2.0, BSD, 0BSD, BlueOak)
 ```
 

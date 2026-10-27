@@ -1,0 +1,23 @@
+{
+  "lineWidth": 100,
+  "markdown": {
+    "textWrap": "maintain",
+    "emphasisKind": "asterisks",
+    "table.cellPadding": "align"
+  },
+  "includes": [
+    "**/*.{ts,tsx,json,md}"
+  ],
+  "excludes": [
+    "node_modules",
+    "site",
+    ".vite",
+    "package-lock.json",
+    "data/report.json"
+  ],
+  "plugins": [
+    "npm:@dprint/typescript@0.96.1",
+    "npm:@dprint/json@0.25.2",
+    "npm:@dprint/markdown@0.28.2"
+  ]
+}
