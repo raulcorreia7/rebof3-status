@@ -71,8 +71,17 @@ const total = (nodes: MapNode[]): number => nodes.reduce((sum, node) => sum + no
  * the neutral SDK colour and never counts toward the progress figures.
  */
 export function sdkGroupTree(target: Target, tokens: Tokens, named = false): MapNode | null {
+  return sdkTree(
+    target.functions,
+    target.id,
+    named ? `${SDK.group} · ${target.name}` : SDK.group,
+    tokens,
+  );
+}
+
+function sdkTree(functions: Fn[], id: string, title: string, tokens: Tokens): MapNode | null {
   const libraries = new Map<string, Fn[]>();
-  for (const fn of target.functions.filter((item) => item.kind === "sdk")) {
+  for (const fn of functions.filter((item) => item.kind === "sdk")) {
     const name = fn.library ?? ASSEMBLY_LIBRARY;
     const list = libraries.get(name);
     if (list) list.push(fn);
@@ -85,7 +94,7 @@ export function sdkGroupTree(target: Target, tokens: Tokens, named = false): Map
     const cells = members.map((fn) => sdkNode(fn, tokens));
     const size = members.reduce((sum, fn) => sum + fn.bytes, 0);
     return {
-      id: `sdklib:${target.id}:${name}`,
+      id: `sdklib:${id}:${name}`,
       name,
       value: total(cells),
       ref: { kind: "sdk", id: name },
@@ -97,11 +106,11 @@ export function sdkGroupTree(target: Target, tokens: Tokens, named = false): Map
     };
   });
   return {
-    id: `sdk:${target.id}`,
-    name: named ? `${SDK.group} · ${target.name}` : SDK.group,
+    id: `sdk:${id}`,
+    name: title,
     value: total(children),
-    ref: { kind: "sdk", id: target.id },
-    tip: `<b>${escapeText(SDK.group)}</b><br>${escapeText(target.name)}`,
+    ref: { kind: "sdk", id },
+    tip: `<b>${escapeText(title)}</b>`,
     itemStyle: { color: "transparent", borderColor: tokens.bg, borderWidth: 2, gapWidth: 1 },
     label: { show: false },
     upperLabel: { show: true, height: 18, color: tokens.ink, fontSize: 12, fontWeight: "bold" },
@@ -147,21 +156,51 @@ export function gamePartTree(group: Group, tokens: Tokens): MapNode {
   };
 }
 
-/** All parts and their images, with linked SDK groups alongside the game. */
-export function gameTree(groups: Group[], tokens: Tokens): MapNode {
-  const parts = groups.map((group) => gamePartTree(group, tokens));
-  const sdk = parts.flatMap((part) => {
-    const linked = part.children?.filter((child) => child.ref.kind === "sdk") ?? [];
-    part.children = part.children?.filter((child) => child.ref.kind !== "sdk");
-    part.value = total(part.children ?? []);
-    return linked;
-  });
-  const children = [...parts.filter((part) => part.value > 0), ...sdk];
+/** Game parts or images, with one SDK group across all images. */
+export function gameTree(
+  groups: Group[],
+  tokens: Tokens,
+  by: "part" | "image" = "part",
+  width = 0,
+  height = 0,
+): MapNode {
+  const targets = groups.flatMap((group) => group.targets);
+  const parts = groups.map((group) => {
+    const images = group.targets.map((target) => gameImageTree(target, tokens)).filter((image) =>
+      image.value > 0
+    );
+    return {
+      id: `part:${group.key}`,
+      name: group.label,
+      value: total(images),
+      ref: { kind: "part" as const, id: group.key },
+      tip: group.label,
+      children: images,
+    };
+  }).filter((part) => part.value > 0);
+  const sdk = sdkTree(targets.flatMap((target) => target.functions), "all", SDK.group, tokens);
+  const children: MapNode[] = by === "part" ? parts : parts.flatMap((part) => part.children);
+  if (sdk) {
+    for (const library of sdk.children ?? []) library.upperLabel = { show: false };
+    children.push(sdk);
+  }
+  const weight = total(children);
+  for (const image of parts.flatMap((part) => part.children)) {
+    // Reserve ample space for the whole name; small cells have no label.
+    const room = Math.sqrt(width * height * image.value / weight) / 2;
+    image.upperLabel = {
+      show: room >= image.name.length * 8 + 12,
+      height: 18,
+      color: tokens.ink,
+      fontSize: 12,
+      fontWeight: "bold",
+    };
+  }
   return {
-    id: "home",
+    id: `home:${by}`,
     name: "Game",
     value: total(children),
-    ref: { kind: "home", id: "" },
+    ref: { kind: "home", id: by },
     tip: "",
     children,
   };
@@ -173,7 +212,7 @@ export function gameTree(groups: Group[], tokens: Tokens): MapNode {
  * the text and drops lines that do not fit), so labels are right on the first paint without
  * reading the layout back.
  */
-export function treemapOption(view: MapNode, tokens: Tokens, compact = false): ChartOption {
+export function treemapOption(view: MapNode, tokens: Tokens): ChartOption {
   const upper = {
     show: true,
     height: 18,
@@ -184,7 +223,7 @@ export function treemapOption(view: MapNode, tokens: Tokens, compact = false): C
   const parent = {
     itemStyle: { color: "transparent", borderColor: tokens.bg, borderWidth: 2, gapWidth: 1 },
     label: { show: false },
-    upperLabel: upper,
+    upperLabel: { ...upper, overflow: "truncate", ellipsis: "" },
   };
   const leaf = (named: boolean) => ({
     itemStyle: { borderColor: tokens.bg, borderWidth: 1, gapWidth: 1 },
@@ -234,8 +273,8 @@ export function treemapOption(view: MapNode, tokens: Tokens, compact = false): C
         levels: view.ref.kind === "home"
           ? [
             hidden,
-            parent,
-            compact ? { ...parent, upperLabel: { show: false } } : parent,
+            view.ref.id === "image" ? { ...parent, upperLabel: { show: false } } : parent,
+            { ...parent, upperLabel: { show: false } },
             leaf(false),
             leaf(false),
           ]

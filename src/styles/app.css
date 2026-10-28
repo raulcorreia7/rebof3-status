@@ -52,6 +52,9 @@
   .btn {
     @apply inline-block cursor-pointer rounded-md border border-line bg-card px-2.5 py-1 text-sm whitespace-nowrap text-ink hover:border-accent hover:no-underline;
   }
+  .btn[aria-pressed="true"] {
+    @apply border-accent text-accent;
+  }
   .link {
     @apply cursor-pointer text-accent hover:underline;
   }

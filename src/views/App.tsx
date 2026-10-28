@@ -1,6 +1,6 @@
 // The page: the header, then the home page sections or one part or image page.
 
-import { createMemo, For, type JSX, onMount, Show } from "solid-js";
+import { createMemo, createSignal, For, type JSX, onMount, Show } from "solid-js";
 import { gameTree, type MapRef, treemapOption } from "../charts/treemap.ts";
 import { inspector } from "../inspect.ts";
 import { HOME } from "../model/route.ts";
@@ -23,7 +23,7 @@ import { Domains } from "./Domains.tsx";
 import { GamePageView } from "./GamePage.tsx";
 import { Inspector } from "./Inspector.tsx";
 import { scrollToSection } from "./scroll.ts";
-import { Jump } from "./ui.tsx";
+import { Chip, Jump } from "./ui.tsx";
 
 /** The sections of the home page, in order: the anchor (#map) and the title, also the navigation link. */
 const NAV = [
@@ -128,7 +128,7 @@ function Sections() {
       </Section>
       <Section id="overview" title={SUMMARY.overviewHeading}>
         <Cards data={cards} />
-        <Meters data={meters} />
+        <Meters data={meters} hideKey />
       </Section>
       <Section id="find" title={BROWSER.heading}>
         <Filters data={filters} />
@@ -150,23 +150,81 @@ function Sections() {
 
 function HomeMap() {
   const page = usePage();
+  const [by, setBy] = createSignal<"part" | "image">("part");
   const option = createMemo(() =>
-    treemapOption(gameTree(page.model.groups, page.tokens), page.tokens, window.innerWidth < 700)
+    treemapOption(
+      gameTree(
+        page.model.groups,
+        page.tokens,
+        by(),
+        Math.min(window.innerWidth - 32, 992),
+        window.innerWidth < 700 ? 720 : 540,
+      ),
+      page.tokens,
+    )
   );
   const onClick = (params: ChartClick) => {
     const ref = params.data?.ref as MapRef | undefined;
     if (ref?.kind === "part") page.go({ view: { kind: "part", key: ref.id }, fn: null });
     else if (ref?.kind === "image") page.go({ view: { kind: "image", id: ref.id }, fn: null });
-    else if (ref?.kind === "fn") page.go({ fn: ref.id });
+    else if (ref?.kind === "fn") {
+      const unit = page.model.unitById.get(ref.id);
+      const target = unit && page.model.targetById.get(unit.target);
+      if (target && unit?.kind === "game") {
+        page.go({
+          view: by() === "part"
+            ? { kind: "part", key: target.group }
+            : { kind: "image", id: target.id },
+          fn: null,
+        });
+      }
+    }
   };
   return (
-    <Chart
-      option={option()}
-      height={window.innerWidth < 700 ? 420 : 540}
-      label={MAP.homeChartLabel}
-      onClick={onClick}
-      replace
-    />
+    <>
+      <div class="mt-3 flex flex-wrap items-center gap-2" role="group" aria-label="Map view">
+        <button
+          type="button"
+          class="btn"
+          aria-pressed={by() === "part"}
+          onClick={() => setBy("part")}
+        >
+          By game part
+        </button>
+        <button
+          type="button"
+          class="btn"
+          aria-pressed={by() === "image"}
+          onClick={() => setBy("image")}
+        >
+          By image
+        </button>
+      </div>
+      <ul class="my-3 flex flex-wrap gap-x-4 gap-y-1 text-sm">
+        <For
+          each={[
+            ["rebuilt in C", page.tokens.status.pure],
+            ["draft in C", page.tokens.status.nonmatching],
+            ["not started", page.tokens.status.open],
+            ["PsyQ SDK (linked)", page.tokens.sdk],
+          ]}
+        >
+          {(item) => (
+            <li>
+              <Chip color={item[1]} />
+              {item[0]}
+            </li>
+          )}
+        </For>
+      </ul>
+      <Chart
+        option={option()}
+        height={window.innerWidth < 700 ? 720 : 540}
+        label={MAP.homeChartLabel}
+        onClick={onClick}
+        replace
+      />
+    </>
   );
 }
 

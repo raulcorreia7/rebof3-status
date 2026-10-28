@@ -35,10 +35,10 @@ export function Cards(props: Props<"cards">) {
   );
 }
 
-export function Meters(props: Props<"meters">) {
+export function Meters(props: Props<"meters"> & { hideKey?: boolean }) {
   return (
     <>
-      <Show when={props.data().key}>{(key) => <StatusKey items={key()} />}</Show>
+      <Show when={!props.hideKey && props.data().key}>{(key) => <StatusKey items={key()} />}</Show>
       <For each={props.data().rows}>
         {(row) => (
           <>
