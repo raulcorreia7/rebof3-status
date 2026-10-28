@@ -10,9 +10,9 @@ export const STATUS_LABEL: Record<Status, string> = {
   pure: "rebuilt in C",
   nonmatching: "draft in C",
   open: "not started",
-  object: "PsyQ library object",
+  object: "SDK, linked from PsyQ objects",
   asm: "hand-written assembly",
-  assembly: "assembly only",
+  assembly: "SDK, split assembly",
 };
 
 // Group key -> heading and note (model/groups.ts names the groups).
@@ -101,18 +101,33 @@ export const MAP = {
 
 export const SDK = {
   heading: "PsyQ SDK",
-  sdkText: (done: number, total: number, assembly: number) =>
-    `${number(done)} of ${number(total)} SDK functions match the original bytes`
-    + (assembly ? `; ${number(assembly)} are assembly only.` : "."),
+  sdkText: (
+    linked: { units: number; bytes: number },
+    split: { units: number; bytes: number },
+    version: string,
+  ) =>
+    `Linked from PsyQ ${version} objects: ${plural(linked.units, "unit")}, ${
+      bytes(linked.bytes)
+    }. SDK, split assembly: ${plural(split.units, "unit")}, ${bytes(split.bytes)}. `
+    + "This is not game work: it is left out of every game code figure.",
+  totalText: (game: number, sdk: number, hand: number) =>
+    `Image size: ${bytes(game)} of game code, ${bytes(sdk)} of SDK code and ${
+      bytes(hand)
+    } of hand-written assembly make ${bytes(game + sdk + hand)} in all.`,
+  group: "PsyQ SDK (linked)",
+  legend: (version: string) => `SDK: linked from PsyQ ${version} objects, not decompiled`,
+  legendSub: (units: number, size: number) => `${plural(units, "unit")} · ${bytes(size)}`,
+  splitTip: "SDK, split assembly",
+  libraryTip: (units: number, size: number) => `${plural(units, "member")} · ${bytes(size)}`,
   handLabel: "Hand-written assembly:",
   handText: (done: number, total: number) =>
     `${number(done)} of ${
       number(total)
     } functions match exactly. Neither counts in the game code figures.`,
   versions: (text: string) => `from PsyQ ${text}`,
-  assemblyOnly: (count: number) => `${number(count)} assembly only`,
+  assemblyOnly: (count: number) => `${number(count)} split assembly`,
   done: (objects: number, total: number) => `${number(objects)} of ${number(total)}`,
-  assemblyLibrary: "assembly only",
+  assemblyLibrary: "split assembly",
 };
 
 export const BROWSER = {
@@ -151,6 +166,7 @@ export const INSPECT = {
     fuzzy: "Fuzzy match",
     code: "Code",
     library: "Library",
+    member: "Member object",
     version: "PsyQ version",
     image: "Image",
     group: "Part of the game",
@@ -161,7 +177,7 @@ export const INSPECT = {
   code: { game: "Game code", sdk: "PsyQ SDK", hand: "Hand-written assembly" },
   noSource: "None yet: this function is still the original assembly.",
   noSourceSdk: "None: it links from the original PsyQ library.",
-  noSourceAssembly: "None: it is kept as assembly.",
+  noSourceAssembly: "None: it is split assembly of the original PsyQ code.",
   notFound: "This file is not in the data. It may have been renamed since this link was made.",
 };
 
@@ -176,8 +192,8 @@ export const POSTER = {
   statusHeading: "Status of game code",
   libraries: "PsyQ libraries and versions",
   libraryKey: (objects: number, assembly: number) =>
-    `${number(objects)} PsyQ library objects · ${number(assembly)} assembly only`,
-  libraryLinked: "assembly only",
+    `${number(objects)} linked from PsyQ objects · ${number(assembly)} split assembly`,
+  libraryLinked: "linked",
   sdkTitle: (percent: string, done: number, total: number) =>
     `PsyQ SDK: ${percent}% library objects (${number(done)} of ${number(total)})`,
   qualityHeading: "Match quality",

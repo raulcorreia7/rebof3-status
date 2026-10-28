@@ -36,6 +36,8 @@ export interface Fn {
   /** Lower-case text the search matches. */
   key: string;
   library?: string;
+  /** The PsyQ member object (`prim`, `s_gks`) an SDK function belongs to. */
+  member?: string;
   tier?: Tier;
   version?: string | null;
 }
@@ -64,6 +66,8 @@ export interface Unit {
   status: Status;
   functions: Fn[];
   library?: string;
+  /** The PsyQ member object (`prim`, `s_gks`) an SDK function belongs to. */
+  member?: string;
   tier?: Tier;
   version?: string | null;
 }

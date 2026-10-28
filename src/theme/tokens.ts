@@ -12,6 +12,8 @@ export interface Tokens {
   mute: string;
   accent: string;
   track: string;
+  /** The SDK treemap cells: neutral, and no progress colour. */
+  sdk: string;
   status: Record<Status, string>;
 }
 
@@ -23,6 +25,7 @@ export const DARK: Tokens = {
   mute: "#8b949e",
   accent: "#58a6ff",
   track: "#21262d",
+  sdk: "#6a6483",
   status: {
     pure: "#2ea043",
     nonmatching: "#d29922",
@@ -41,6 +44,7 @@ const LIGHT: Tokens = {
   mute: "#59636e",
   accent: "#0969da",
   track: "#e6eaef",
+  sdk: "#9a94b8",
   status: {
     pure: "#1a7f37",
     nonmatching: "#bf8700",

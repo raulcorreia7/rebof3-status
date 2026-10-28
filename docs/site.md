@@ -59,21 +59,21 @@ Links look like `#fn/exe%2Fslus_004_22%2Ffunc_80164028` (a source file, by its U
 
 ## Data file
 
-`report.json` is objdiff-cli's report version 2: `version`, `categories` (`id`, `name`, `measures`) and `units`. A unit is a source file: it has a `name` (`<image>/<source stem>`), a `functions` array and `metadata` (`source_path`, `progress_categories`: `game`, `sdk` or `hand-asm`). Each function has a `name`, a `size`, an `address` offset in the file and, when measured, a `fuzzy_match_percent`.
+`report.json` is objdiff-cli's report version 2: `version`, `categories` (`id`, `name`, `measures`) and `units`. A unit is a source file: it has a `name` (`<image>/<source stem>`), a `functions` array and `metadata` (`source_path`, `progress_categories`: `game`, `sdk` or `hand-asm`, and for SDK units `sdk`: `library`, `member` and `linkage`, one of `object`, `split-assembly` or `assembly`). The treemaps show SDK units as one "PsyQ SDK (linked)" group per executable, by library, in a neutral colour that no progress figure counts. Each function has a `name`, a `size`, an `address` offset in the file and, when measured, a `fuzzy_match_percent`.
 
 The report has no separate target list. The adapter takes the image from the unit name: `exe/<name>` for the main executables and `emi/<family>/<archive>/<slot>` for the overlays. The rest of the unit name is the source stem inside that image, and its functions are the counted entries. Images with no units do not appear.
 
 The adapter maps a function to a status from its fuzzy match:
 
-| Function                                                           | Status                                                                                          |
-| ------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------- |
-| game, fuzzy 100                                                    | `pure` (rebuilt in C)                                                                           |
-| game, fuzzy above 0 but below 100                                  | `nonmatching` (draft in C)                                                                      |
-| game, no fuzzy match                                               | `open` (not started: original assembly, also a C file that only includes it with `INCLUDE_ASM`) |
-| sdk, unit source is `toolchains/psyq/<version>/<library>/<object>` | `object`                                                                                        |
-| sdk, no such source                                                | `assembly` (matched when its fuzzy match is 100)                                                |
-| hand-asm, fuzzy 100                                                | `asm`                                                                                           |
-| hand-asm, otherwise                                                | `assembly`                                                                                      |
+| Function                                         | Status                                                                                          |
+| ------------------------------------------------ | ----------------------------------------------------------------------------------------------- |
+| game, fuzzy 100                                  | `pure` (rebuilt in C)                                                                           |
+| game, fuzzy above 0 but below 100                | `nonmatching` (draft in C)                                                                      |
+| game, no fuzzy match                             | `open` (not started: original assembly, also a C file that only includes it with `INCLUDE_ASM`) |
+| sdk, `linkage` is `object`                       | `object` (linked from a PsyQ object)                                                            |
+| sdk, `linkage` is `split-assembly` or `assembly` | `assembly` (SDK, split assembly; matched when its fuzzy match is 100)                           |
+| hand-asm, fuzzy 100                              | `asm`                                                                                           |
+| hand-asm, otherwise                              | `assembly`                                                                                      |
 
 A function is matched only when its `fuzzy_match_percent` is 100; a complete unit can still hold a function below 100. The adapter counts functions, matched functions and both byte totals from `units[].functions`, so the headline, images, parts and treemap agree with the category measures (`total_functions`, `matched_functions`, `total_code`, `matched_code`). The unit stays the file level: the inspector opens it, and its Functions field counts how many of its functions match.
 

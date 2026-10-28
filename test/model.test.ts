@@ -164,3 +164,28 @@ test("zero-byte functions keep a one-byte treemap weight", () => {
   const tree = gameImageTree({ ...target, functions: [{ ...fn, bytes: 0 }] }, DARK);
   assert.equal(tree.children?.[0]?.value, 1);
 });
+
+test("SDK units keep their library and member, and stay out of the game figures", () => {
+  const sdk = model.functions.filter((fn) => fn.kind === "sdk");
+  assert.ok(sdk.every((fn) => fn.library));
+  assert.ok(sdk.some((fn) => fn.tier === "object" && fn.member));
+  assert.ok(sdk.some((fn) => fn.tier === "assembly" && fn.library !== "assembly"));
+  assert.equal(model.game.count, model.functions.filter((fn) => fn.kind === "game").length);
+});
+
+test("an executable's treemap holds one SDK group by library, in the SDK colour", () => {
+  const target = model.targetById.get("exe/slus_004_22")!;
+  const tree = gameImageTree(target, DARK, true);
+  const group = tree.children!.filter((node) => node.id.startsWith("sdk:"));
+  assert.equal(group.length, 1);
+  assert.ok(group[0].children!.length > 1);
+  const cells = group[0].children!.flatMap((library) => library.children!);
+  assert.ok(cells.every((cell) => cell.itemStyle?.color === DARK.sdk));
+  assert.equal(
+    cells.reduce((total, cell) => total + cell.value, 0),
+    target.functions.filter((fn) => fn.kind === "sdk").reduce(
+      (t, fn) => t + Math.max(fn.bytes, 1),
+      0,
+    ),
+  );
+});

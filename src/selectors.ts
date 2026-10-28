@@ -7,7 +7,7 @@ import { bytes, percent, plural } from "./model/format.ts";
 import { HOME, type Route } from "./model/route.ts";
 import { codeCounts, codeSizes, STATUS } from "./model/status.ts";
 import { BROWSER, MAP, SDK, SUMMARY } from "./strings.ts";
-import type { Code, Fn } from "./types.ts";
+import type { Code, Fn, Target } from "./types.ts";
 import type { Ctx, GamePage, Link, MeterRow, Views } from "./viewtypes.ts";
 
 // Shared pieces ---------------------------------------------------------------------------
@@ -90,10 +90,34 @@ export function overviewMeter({ model }: Ctx): Views["meters"] {
   };
 }
 
+/** The PsyQ version the linked SDK units come from. */
+const sdkVersion = (functions: Fn[]): string =>
+  functions.find((fn) => fn.kind === "sdk" && fn.version)?.version ?? "";
+
+/** The SDK units of some functions, linked from objects or split assembly, as unit and byte counts. */
+const sdkSplit = (functions: Fn[]) => {
+  const linked = { units: 0, bytes: 0 };
+  const split = { units: 0, bytes: 0 };
+  for (const fn of functions) {
+    if (fn.kind !== "sdk") continue;
+    const side = fn.tier === "object" ? linked : split;
+    side.units += 1;
+    side.bytes += fn.bytes;
+  }
+  return { linked, split };
+};
+
 /** The SDK and the hand-written assembly, shown apart from the game totals. */
 export const apart = ({ model }: Ctx): Views["text"] => ({
   paragraphs: [
-    { text: SDK.sdkText(model.sdk.done, model.sdk.count, model.sdk.statuses.assembly.functions) },
+    {
+      text: SDK.sdkText(
+        sdkSplit(model.functions).linked,
+        sdkSplit(model.functions).split,
+        sdkVersion(model.functions),
+      ),
+    },
+    { text: SDK.totalText(model.game.bytes, model.sdk.bytes, model.hand.bytes) },
     { label: SDK.handLabel, text: SDK.handText(model.hand.done, model.hand.count) },
   ],
 });
@@ -166,14 +190,26 @@ export function gamePage({ model, route, tokens }: Ctx): GamePage | null {
     functions: [],
     inPart: false,
   };
-  const page = (code: Code, functions: Fn[], line: string) => ({
-    found: true,
-    percent: `${percent(code.exact, code.functions, 1)}%`,
-    line,
-    meter: codeMeter(code, line),
-    key: statusKey(code),
-    functions,
-  });
+  const page = (code: Code, functions: Fn[], line: string, targets: Target[]) => {
+    const sdk = targets.flatMap((target) => target.functions.filter((fn) => fn.kind === "sdk"));
+    return {
+      found: true,
+      percent: `${percent(code.exact, code.functions, 1)}%`,
+      line,
+      meter: codeMeter(code, line),
+      key: [
+        ...statusKey(code),
+        ...(sdk.length
+          ? [{
+            label: SDK.legend(sdkVersion(sdk)),
+            color: tokens.sdk,
+            sub: SDK.legendSub(sdk.length, sdk.reduce((sum, fn) => sum + fn.bytes, 0)),
+          }]
+          : []),
+      ],
+      functions,
+    };
+  };
   if (route.view.kind === "part") {
     const key = route.view.key;
     const group = model.groups.find((item) => item.key === key);
@@ -191,6 +227,7 @@ export function gamePage({ model, route, tokens }: Ctx): GamePage | null {
         group.code,
         group.targets.flatMap((target) => target.functions.filter((fn) => fn.kind === "game")),
         MAP.group(group.code.exact, group.code.functions, group.code.bytes, images.length),
+        group.targets,
       ),
       title: group.label,
       crumbs: [home, { label: group.label, to: {} }],
@@ -215,6 +252,7 @@ export function gamePage({ model, route, tokens }: Ctx): GamePage | null {
         target.code,
         target.functions.filter((fn) => fn.kind === "game"),
         MAP.imageLine(target.code.exact, target.code.functions, target.code.bytes),
+        [target],
       ),
       title: target.name,
       crumbs: [home, {
@@ -222,7 +260,7 @@ export function gamePage({ model, route, tokens }: Ctx): GamePage | null {
         to: { view: { kind: "part", key: target.group } },
       }, { label: target.name, to: {} }],
       note: "",
-      tree: gameImageTree(target, tokens),
+      tree: gameImageTree(target, tokens, true),
       inPart: false,
     };
   }

@@ -42,6 +42,7 @@ function unitFields(model: Model, unit: Unit): Field[] {
         text(unit.library === ASSEMBLY_LIBRARY ? SDK.assemblyLibrary : (unit.library ?? "-")),
       ),
     );
+    if (unit.member) fields.push(field(F.member, text(unit.member, { code: true })));
     if (unit.version) fields.push(field(F.version, text(unit.version)));
   }
   fields.push(

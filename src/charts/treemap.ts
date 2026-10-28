@@ -2,7 +2,9 @@
 // builders; views/Treemap.tsx draws them.
 
 import { bytes, escapeText, number } from "../model/format.ts";
+import { ASSEMBLY_LIBRARY } from "../model/report.ts";
 import { STATUS } from "../model/status.ts";
+import { SDK } from "../strings.ts";
 import type { Tokens } from "../theme/tokens.ts";
 import type { Fn, Group, Target } from "../types.ts";
 import type { ChartOption } from "./register.ts";
@@ -10,7 +12,7 @@ import type { ChartOption } from "./register.ts";
 /** A zero-byte function keeps one byte of area, so it stays in the map. */
 const MIN_WEIGHT = 1;
 
-export type MapRef = { kind: "part" | "image" | "fn"; id: string };
+export type MapRef = { kind: "part" | "image" | "fn" | "sdk"; id: string };
 
 export interface MapNode {
   id: string;
@@ -18,7 +20,9 @@ export interface MapNode {
   value: number;
   ref: MapRef;
   tip: string;
-  itemStyle?: { color: string };
+  itemStyle?: Record<string, string | number>;
+  label?: { show: boolean };
+  upperLabel?: Record<string, string | number | boolean>;
   children?: MapNode[];
 }
 
@@ -42,11 +46,76 @@ const fnNode = (fn: Fn, tokens: Tokens): MapNode => ({
   itemStyle: { color: tokens.status[fn.status] },
 });
 
-/** One image's game functions. */
-export function gameImageTree(target: Target, tokens: Tokens): MapNode {
+const sdkTip = (fn: Fn): string =>
+  [
+    `<b>${escapeText(fn.library ?? "")}${fn.member ? ` / ${escapeText(fn.member)}` : ""}</b>`,
+    escapeText(fn.name),
+    escapeText(bytes(fn.bytes)),
+    escapeText(fn.tier === "object" ? SDK.legend(fn.version ?? "") : SDK.splitTip),
+  ].join("<br>");
+
+const sdkNode = (fn: Fn, tokens: Tokens): MapNode => ({
+  id: `f:${fn.id}`,
+  name: fn.member || fn.name,
+  value: Math.max(fn.bytes, MIN_WEIGHT),
+  ref: { kind: "fn", id: fn.unit },
+  tip: sdkTip(fn),
+  itemStyle: { color: tokens.sdk },
+  label: { show: true },
+});
+
+const total = (nodes: MapNode[]): number => nodes.reduce((sum, node) => sum + node.value, 0);
+
+/**
+ * One image's SDK code: a group, then a node per library, then a cell per member. It is drawn in
+ * the neutral SDK colour and never counts toward the progress figures.
+ */
+export function sdkGroupTree(target: Target, tokens: Tokens, named = false): MapNode | null {
+  const libraries = new Map<string, Fn[]>();
+  for (const fn of target.functions.filter((item) => item.kind === "sdk")) {
+    const name = fn.library ?? ASSEMBLY_LIBRARY;
+    const list = libraries.get(name);
+    if (list) list.push(fn);
+    else libraries.set(name, [fn]);
+  }
+  if (!libraries.size) return null;
+  const children: MapNode[] = [...libraries.entries()].sort(([a], [b]) => a.localeCompare(b)).map((
+    [name, members],
+  ) => {
+    const cells = members.map((fn) => sdkNode(fn, tokens));
+    const size = members.reduce((sum, fn) => sum + fn.bytes, 0);
+    return {
+      id: `sdklib:${target.id}:${name}`,
+      name,
+      value: total(cells),
+      ref: { kind: "sdk", id: name },
+      tip: `<b>${escapeText(name)}</b><br>${escapeText(SDK.libraryTip(members.length, size))}`,
+      itemStyle: { color: "transparent", borderColor: tokens.bg, borderWidth: 1, gapWidth: 1 },
+      label: { show: false },
+      upperLabel: { show: true, height: 14, color: tokens.ink, fontSize: 10 },
+      children: cells,
+    };
+  });
+  return {
+    id: `sdk:${target.id}`,
+    name: named ? `${SDK.group} · ${target.name}` : SDK.group,
+    value: total(children),
+    ref: { kind: "sdk", id: target.id },
+    tip: `<b>${escapeText(SDK.group)}</b><br>${escapeText(target.name)}`,
+    itemStyle: { color: "transparent", borderColor: tokens.bg, borderWidth: 2, gapWidth: 1 },
+    label: { show: false },
+    upperLabel: { show: true, height: 18, color: tokens.ink, fontSize: 12, fontWeight: "bold" },
+    children,
+  };
+}
+
+/** One image's game functions, then its SDK group. */
+export function gameImageTree(target: Target, tokens: Tokens, withSdk = false): MapNode {
   const children = target.functions.filter((fn) => fn.kind === "game").map((fn) =>
     fnNode(fn, tokens)
   );
+  const sdk = withSdk ? sdkGroupTree(target, tokens) : null;
+  if (sdk) children.push(sdk);
   return {
     id: `image:${target.id}`,
     name: target.name,
@@ -64,6 +133,10 @@ export function gamePartTree(group: Group, tokens: Tokens): MapNode {
   const images = group.targets.map((target) => gameImageTree(target, tokens)).filter((image) =>
     image.children?.length
   );
+  for (const target of group.targets) {
+    const sdk = sdkGroupTree(target, tokens, true);
+    if (sdk) images.push(sdk);
+  }
   return {
     id: `part:${group.key}`,
     name: group.label,
@@ -138,7 +211,9 @@ export function treemapOption(view: MapNode, tokens: Tokens): ChartOption {
         },
         upperLabel: upper,
         // Depth 0 is the hidden root.
-        levels: view.ref.kind === "part" ? [hidden, parent, leaf(false)] : [hidden, leaf(true)],
+        levels: view.ref.kind === "part"
+          ? [hidden, parent, leaf(false), leaf(false)]
+          : [hidden, leaf(true), leaf(false), leaf(false)],
         data: view.children,
       },
     ],

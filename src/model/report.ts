@@ -23,7 +23,8 @@ import { isDone, STATUS, STATUSES } from "./status.ts";
 
 type ReportUnit = Report["units"][number];
 type ReportFunction = ReportUnit["functions"][number];
-type Origin = { library: string; version: string | null; tier: Tier };
+type Origin = { library: string; member: string; version: string | null; tier: Tier };
+type SdkInfo = NonNullable<ReportUnit["metadata"]["sdk"]>;
 
 const CATEGORY = { game: "game", sdk: "sdk", hand: "hand-asm" } as const;
 export const ASSEMBLY_LIBRARY = "assembly";
@@ -112,12 +113,25 @@ function unitStatus(kind: Part, functions: Fn[], matched: number, tier: Tier | n
   return tier === "object" ? "object" : "assembly";
 }
 
-/** The PsyQ library and version an SDK object path names. */
-function sdkOrigin(source: string): Origin {
+/**
+ * The PsyQ library, member and version of an SDK unit. The report's `sdk` metadata says whether
+ * the unit links from its PsyQ object (`object`) or stays split assembly (`tier: assembly`); a
+ * report without it falls back to the object path.
+ */
+function sdkOrigin(source: string, info: SdkInfo | undefined): Origin {
   const found = PSYQ_OBJECT.exec(source);
+  const version = found ? found[1] : null;
+  if (info) {
+    return {
+      library: info.library || ASSEMBLY_LIBRARY,
+      member: info.member,
+      version,
+      tier: info.linkage === "object" ? "object" : "assembly",
+    };
+  }
   return found
-    ? { library: found[2], version: found[1], tier: "object" }
-    : { library: ASSEMBLY_LIBRARY, version: null, tier: "assembly" };
+    ? { library: found[2], member: "", version, tier: "object" }
+    : { library: ASSEMBLY_LIBRARY, member: "", version: null, tier: "assembly" };
 }
 
 const category = (report: Report, id: string): Report["categories"][number] => {
@@ -157,6 +171,7 @@ function buildFunction(
     kind,
     key: "",
     library: origin?.library,
+    member: origin?.member,
     tier: origin?.tier,
     version: origin?.version ?? null,
   };
@@ -181,7 +196,7 @@ function buildUnit(unit: ReportUnit, target: Target): Unit {
   );
   if (!kind) throw new Error(`report unit ${unit.name} has unknown category ${part || "(none)"}`);
   const source = unit.metadata.source_path ?? "";
-  const origin = kind === "sdk" ? sdkOrigin(source) : null;
+  const origin = kind === "sdk" ? sdkOrigin(source, unit.metadata.sdk) : null;
   const stem = unit.name.slice(target.id.length + 1);
   const result: Unit = {
     id: unit.name,
@@ -199,6 +214,7 @@ function buildUnit(unit: ReportUnit, target: Target): Unit {
     status: "open",
     functions: [],
     library: origin?.library,
+    member: origin?.member,
     tier: origin?.tier,
     version: origin?.version ?? null,
   };

@@ -25,6 +25,14 @@ export const ReportSchema = z.object({
       ),
       metadata: z.object({
         source_path: z.optional(z.string()),
+        /** SDK units only: the PsyQ library, the member object and how the unit enters the image. */
+        sdk: z.optional(
+          z.object({
+            library: z.string(),
+            member: z.string(),
+            linkage: z.enum(["object", "split-assembly", "assembly"]),
+          }),
+        ),
         progress_categories: z.optional(z.array(z.string())),
       }),
     }),
