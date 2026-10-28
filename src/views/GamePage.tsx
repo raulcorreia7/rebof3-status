@@ -41,6 +41,7 @@ export function GamePageView(props: { data: Accessor<GamePage> }) {
           {props.data().title}
         </h2>
         <span class="text-2xl font-bold tabular-nums">{props.data().percent}</span>
+        <span class="text-sm text-mute">by code size</span>
         <span class="text-sm text-mute tabular-nums">{props.data().line}</span>
       </div>
       <Show when={props.data().message}>{(message) => <p class="my-2">{message()}</p>}</Show>
@@ -49,7 +50,13 @@ export function GamePageView(props: { data: Accessor<GamePage> }) {
       <Show when={props.data().found}>
         <StatusKey items={props.data().key} />
       </Show>
-      <Show when={props.data().tree}>{(tree) => <Functions data={props.data} tree={tree} />}</Show>
+      <Show when={props.data().tree}>
+        {(tree) => (
+          <Show when={props.data().inPart} fallback={<Functions data={props.data} tree={tree} />}>
+            <Images data={props.data} tree={tree} />
+          </Show>
+        )}
+      </Show>
     </section>
   );
 }
@@ -73,6 +80,37 @@ function Crumbs(props: { data: Accessor<GamePage> }) {
         )}
       </For>
     </nav>
+  );
+}
+
+function Images(props: { data: Accessor<GamePage>; tree: Accessor<MapNode> }) {
+  const page = usePage();
+  const images = () =>
+    page.model.groups.find((group) => group.label === props.data().title)?.targets.filter((
+      target,
+    ) => target.code.functions > 0) ?? [];
+  return (
+    <div class="mt-4 grid min-w-0 gap-4 lg:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)]">
+      <Canvas tree={props.tree} label={`${props.data().title}: images by code size`} />
+      <section class="card min-w-0 p-3" aria-label="Images">
+        <h3 class="font-semibold">Images</h3>
+        <ul class="mt-2 max-h-[32rem] space-y-1 overflow-y-auto">
+          <For each={images()}>
+            {(image) => (
+              <li>
+                <Jump
+                  to={{ view: { kind: "image", id: image.id }, fn: null }}
+                  class="block rounded border border-line px-2 py-1.5 text-ink hover:border-accent hover:no-underline"
+                >
+                  {image.name} ·{" "}
+                  {((100 * image.code.exactBytes) / image.code.bytes || 0).toFixed(1)}%
+                </Jump>
+              </li>
+            )}
+          </For>
+        </ul>
+      </section>
+    </div>
   );
 }
 

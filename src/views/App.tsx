@@ -158,7 +158,7 @@ function HomeMap() {
         page.tokens,
         by(),
         Math.min(window.innerWidth - 32, 992),
-        window.innerWidth < 700 ? 600 : 540,
+        window.innerWidth < 700 ? 800 : 540,
       ),
       page.tokens,
     )
@@ -198,7 +198,7 @@ function HomeMap() {
       </ul>
       <Chart
         option={option()}
-        height={window.innerWidth < 700 ? 600 : 540}
+        height={window.innerWidth < 700 ? 800 : 540}
         label={MAP.homeChartLabel}
         onClick={onClick}
         replace

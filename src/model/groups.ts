@@ -1,7 +1,8 @@
 // Which part of the game a target belongs to, declared as rules. The first rule whose pattern
 // matches the target id gives the group; the groups are drawn in this order.
 //
-//   exe/slus_004_22, exe/logo            -> main        Main program
+//   exe/slus_004_22                     -> main        SLUS_004.22
+//   exe/logo                            -> logo        LOGO.EXE
 //   emi/etc/bate/..                      -> battle      (BATE is a battle overlay in ETC)
 //   emi/etc/..                           -> system      Game system and menus
 //   emi/battle/..                        -> battle      Battle
@@ -25,7 +26,8 @@ interface Rule {
 }
 
 const GROUP_RULES: readonly Rule[] = [
-  { key: "main", pattern: /^exe\/(slus_004_22|logo)$/, tiles: false },
+  { key: "main", pattern: /^exe\/slus_004_22$/, tiles: false },
+  { key: "logo", pattern: /^exe\/logo$/, tiles: false },
   { key: "battle", pattern: /^emi\/etc\/bate\//, tiles: false },
   { key: "system", pattern: /^emi\/etc\//, tiles: false },
   { key: "battle", pattern: /^emi\/battle\//, tiles: false },
@@ -39,6 +41,7 @@ export const OTHER = "other";
 /** The groups in page order; `other` closes it. */
 const PAGE_ORDER = [
   "main",
+  "logo",
   "system",
   "battle",
   "magic",

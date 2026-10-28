@@ -18,6 +18,7 @@ export const STATUS_LABEL: Record<Status, string> = {
 // Group key -> heading and note (model/groups.ts names the groups).
 export const GROUP_LABEL: Record<string, string> = {
   main: "SLUS_004.22",
+  logo: "LOGO.EXE",
   system: "Game system and menus",
   battle: "Battle",
   magic: "Battle magic",
@@ -28,7 +29,8 @@ export const GROUP_LABEL: Record<string, string> = {
   other: "Other",
 };
 export const GROUP_NOTE: Record<string, string> = {
-  main: "SLUS_004.22, the game's main program, and LOGO.EXE, the start-up screen.",
+  main: "The game’s main executable.",
+  logo: "The start-up screen.",
   system: "GAME.EMI and the overlays for the title, menus, shops and saving, from the ETC folder.",
   battle: "BATTLE.EMI and the BATL and BATE overlays that run a fight.",
   magic: "One small program per battle effect, from the BMAGIC folder.",
@@ -74,7 +76,7 @@ export const MAP = {
   heading: "Parts of the game",
   help: "Select a part or image to explore its functions.",
   detailsHeading: "Explore the parts",
-  shading: "Block size: code bytes · Shade: percentage rebuilt in C by size",
+  shading: "Block size: code bytes · Shade: percentage rebuilt in C by code size",
   homeChartLabel: "Treemap of game parts and images, with linked PsyQ SDK code",
   key: (
     functions: number,

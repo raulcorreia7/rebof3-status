@@ -197,7 +197,31 @@ test("overview has one block per game part or image and one SDK block", () => {
     assert.equal(sdk.length, 1);
     assert.equal(sdk[0].value, model.sdk.bytes);
     const game = tree.children!.filter((node) => node.ref.kind !== "sdk");
-    assert.ok(game.every((node) => node.ref.kind === view && !node.children));
+    assert.ok(game.every((node) => node.ref.kind === view));
+    if (view === "part") {
+      assert.ok(
+        game.every((node) =>
+          node.children!.every((image) => image.ref.kind === "image" && !image.children)
+        ),
+      );
+    } else assert.ok(game.every((node) => !node.children));
     assert.equal(sum(game.map((node) => node.value)), model.game.bytes);
   }
+});
+
+test("executables have separate parts and part maps contain image blocks", () => {
+  const main = model.targetById.get("exe/slus_004_22")!;
+  const logo = model.targetById.get("exe/logo")!;
+  assert.notEqual(main.group, logo.group);
+  const tree = overviewTree(model, DARK, "image", 992, 540, "world");
+  const images = tree.children!.filter((node) => node.ref.kind === "image");
+  assert.equal(
+    images.length,
+    model.groups.find((group) => group.key === "world")!.targets.filter((target) =>
+      target.code.bytes > 0
+    ).length,
+  );
+  assert.ok(
+    images.every((node) => !node.children && model.targetById.get(node.ref.id)?.group === "world"),
+  );
 });

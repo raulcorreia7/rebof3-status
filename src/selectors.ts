@@ -1,7 +1,7 @@
 // Selectors: each turns the model and the route into the data one kind of view draws
 // (viewtypes.ts). They are pure, so they run in Node as well as in the page.
 
-import { gameImageTree, gamePartTree } from "./charts/treemap.ts";
+import { gameImageTree, overviewTree } from "./charts/treemap.ts";
 import { browse, PAGE_STEP } from "./model/browse.ts";
 import { bytes, percent, plural } from "./model/format.ts";
 import { HOME, type Route } from "./model/route.ts";
@@ -194,9 +194,9 @@ export function gamePage({ model, route, tokens }: Ctx): GamePage | null {
     const sdk = targets.flatMap((target) => target.functions.filter((fn) => fn.kind === "sdk"));
     return {
       found: true,
-      percent: `${percent(code.exact, code.functions, 1)}%`,
+      percent: `${percent(code.exactBytes, code.bytes, 1)}%`,
       line,
-      meter: codeMeter(code, line),
+      meter: codeMeter(code, line, "bytes"),
       key: [
         ...statusKey(code),
         ...(sdk.length
@@ -232,7 +232,7 @@ export function gamePage({ model, route, tokens }: Ctx): GamePage | null {
       title: group.label,
       crumbs: [home, { label: group.label, to: {} }],
       note: group.note,
-      tree: gamePartTree(group, tokens),
+      tree: overviewTree(model, tokens, "image", 992, 540, key),
       inPart: true,
     };
   }
