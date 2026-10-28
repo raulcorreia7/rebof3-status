@@ -136,8 +136,8 @@ export function Table(props: Props<"table">) {
         </Show>
       </div>
       <Show when={props.data().rows.length}>
-        <div class="mt-2 max-h-[70vh] overflow-auto rounded-md border border-line bg-card">
-          <table class="w-full border-collapse text-sm tabular-nums">
+        <div class="mt-2 max-h-[70vh] overflow-y-auto rounded-md border border-line bg-card">
+          <table class="function-table w-full border-collapse text-sm tabular-nums">
             <thead>
               <tr>
                 <For each={props.data().columns}>
@@ -174,6 +174,7 @@ export function Table(props: Props<"table">) {
                     <For each={row.cells}>
                       {(cell, index) => (
                         <td
+                          data-label={props.data().columns[index()].label}
                           class={`px-3 py-1.5 whitespace-nowrap ${
                             align(props.data().columns[index()])
                           }`}

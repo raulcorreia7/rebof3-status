@@ -12,7 +12,7 @@ import type { ChartOption } from "./register.ts";
 /** A zero-byte function keeps one byte of area, so it stays in the map. */
 const MIN_WEIGHT = 1;
 
-export type MapRef = { kind: "part" | "image" | "fn" | "sdk"; id: string };
+export type MapRef = { kind: "home" | "part" | "image" | "fn" | "sdk"; id: string };
 
 export interface MapNode {
   id: string;
@@ -147,13 +147,33 @@ export function gamePartTree(group: Group, tokens: Tokens): MapNode {
   };
 }
 
+/** All parts and their images, with linked SDK groups alongside the game. */
+export function gameTree(groups: Group[], tokens: Tokens): MapNode {
+  const parts = groups.map((group) => gamePartTree(group, tokens));
+  const sdk = parts.flatMap((part) => {
+    const linked = part.children?.filter((child) => child.ref.kind === "sdk") ?? [];
+    part.children = part.children?.filter((child) => child.ref.kind !== "sdk");
+    part.value = total(part.children ?? []);
+    return linked;
+  });
+  const children = [...parts.filter((part) => part.value > 0), ...sdk];
+  return {
+    id: "home",
+    name: "Game",
+    value: total(children),
+    ref: { kind: "home", id: "" },
+    tip: "",
+    children,
+  };
+}
+
 /**
  * The option for the children of `view`. A part frames its images and leaves the functions
  * unnamed; an image names its functions. ECharts fits every label to its rectangle (it truncates
  * the text and drops lines that do not fit), so labels are right on the first paint without
  * reading the layout back.
  */
-export function treemapOption(view: MapNode, tokens: Tokens): ChartOption {
+export function treemapOption(view: MapNode, tokens: Tokens, compact = false): ChartOption {
   const upper = {
     show: true,
     height: 18,
@@ -211,7 +231,15 @@ export function treemapOption(view: MapNode, tokens: Tokens): ChartOption {
         },
         upperLabel: upper,
         // Depth 0 is the hidden root.
-        levels: view.ref.kind === "part"
+        levels: view.ref.kind === "home"
+          ? [
+            hidden,
+            parent,
+            compact ? { ...parent, upperLabel: { show: false } } : parent,
+            leaf(false),
+            leaf(false),
+          ]
+          : view.ref.kind === "part"
           ? [hidden, parent, leaf(false), leaf(false)]
           : [hidden, leaf(true), leaf(false), leaf(false)],
         data: view.children,

@@ -60,3 +60,30 @@
     @apply flex h-3 overflow-hidden rounded-sm bg-track *:block *:h-full;
   }
 }
+
+@media (max-width: 639px) {
+  .function-table, .function-table tbody, .function-table tr, .function-table td {
+    display: block;
+  }
+  .function-table thead, .function-table thead tr {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .function-table th {
+    position: static;
+    border: 0;
+  }
+  .function-table td {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    text-align: right;
+  }
+  .function-table td::before {
+    content: attr(data-label);
+    color: var(--mute);
+    text-align: left;
+  }
+}

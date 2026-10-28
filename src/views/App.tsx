@@ -1,6 +1,7 @@
 // The page: the header, then the home page sections or one part or image page.
 
 import { createMemo, For, type JSX, onMount, Show } from "solid-js";
+import { gameTree, type MapRef, treemapOption } from "../charts/treemap.ts";
 import { inspector } from "../inspect.ts";
 import { HOME } from "../model/route.ts";
 import {
@@ -17,6 +18,7 @@ import { BROWSER, FOOT, HEAD, MAP, SDK, SUMMARY } from "../strings.ts";
 import type { Mode } from "../theme/apply.ts";
 import type { Model } from "../types.ts";
 import { Cards, Filters, Meters, Table, Text } from "./Basic.tsx";
+import { Chart, type ChartClick } from "./Chart.tsx";
 import { Domains } from "./Domains.tsx";
 import { GamePageView } from "./GamePage.tsx";
 import { Inspector } from "./Inspector.tsx";
@@ -25,10 +27,9 @@ import { Jump } from "./ui.tsx";
 
 /** The sections of the home page, in order: the anchor (#map) and the title, also the navigation link. */
 const NAV = [
+  { id: "map", title: MAP.heading },
   { id: "overview", title: SUMMARY.overviewHeading },
   { id: "find", title: BROWSER.heading },
-  { id: "map", title: MAP.heading },
-  { id: "sdk", title: SDK.heading },
 ];
 
 const NEXT: Record<Mode, Mode> = { auto: "light", light: "dark", dark: "auto" };
@@ -50,7 +51,7 @@ function Layout() {
   // A link to a section (#map, #find) opens the home page at that section.
   onMount(() => {
     const id = window.location.hash.slice(1);
-    if (NAV.some((section) => section.id === id)) {
+    if (NAV.some((section) => section.id === id) || id === "parts" || id === "sdk") {
       requestAnimationFrame(() => scrollToSection(id, false));
     }
   });
@@ -96,10 +97,6 @@ function Header() {
           {HEAD.theme[page.mode]}
         </button>
       </div>
-      <p class="mt-1 text-mute">
-        {HEAD.getThe} <a href="report.json">{HEAD.data}</a> {HEAD.or}{" "}
-        <a href="progress.png">{HEAD.picture}</a>.
-      </p>
       <nav class="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm" aria-label={HEAD.sections}>
         <For each={NAV}>
           {(section) => (
@@ -123,6 +120,12 @@ function Sections() {
   const sdk = createMemo(() => apart(page));
   return (
     <>
+      <Section id="map" title={MAP.heading}>
+        <p class="my-1 text-sm text-mute">
+          {MAP.help} <Jump to={{ view: HOME.view }} scroll="parts">{MAP.detailsHeading}</Jump>.
+        </p>
+        <HomeMap />
+      </Section>
       <Section id="overview" title={SUMMARY.overviewHeading}>
         <Cards data={cards} />
         <Meters data={meters} />
@@ -131,14 +134,39 @@ function Sections() {
         <Filters data={filters} />
         <Table data={table} />
       </Section>
-      <Section id="map" title={MAP.heading}>
-        <p class="my-1 text-sm text-mute">{MAP.help}</p>
+      <Section id="parts" title={MAP.detailsHeading}>
         <Domains data={map} />
       </Section>
       <Section id="sdk" title={SDK.heading}>
         <Text data={sdk} />
+        <p class="mt-2 text-sm text-mute">
+          {HEAD.getThe} <a href="report.json">{HEAD.data}</a> {HEAD.or}{" "}
+          <a href="progress.png">{HEAD.picture}</a>.
+        </p>
       </Section>
     </>
+  );
+}
+
+function HomeMap() {
+  const page = usePage();
+  const option = createMemo(() =>
+    treemapOption(gameTree(page.model.groups, page.tokens), page.tokens, window.innerWidth < 700)
+  );
+  const onClick = (params: ChartClick) => {
+    const ref = params.data?.ref as MapRef | undefined;
+    if (ref?.kind === "part") page.go({ view: { kind: "part", key: ref.id }, fn: null });
+    else if (ref?.kind === "image") page.go({ view: { kind: "image", id: ref.id }, fn: null });
+    else if (ref?.kind === "fn") page.go({ fn: ref.id });
+  };
+  return (
+    <Chart
+      option={option()}
+      height={window.innerWidth < 700 ? 420 : 540}
+      label={MAP.homeChartLabel}
+      onClick={onClick}
+      replace
+    />
   );
 }
 
@@ -146,7 +174,7 @@ function Section(props: { id: string; title: string; children: JSX.Element }) {
   return (
     <section
       id={props.id}
-      class="mt-10 scroll-mt-3 focus:outline-none"
+      class="mt-6 scroll-mt-3 focus:outline-none"
       aria-labelledby={`${props.id}-title`}
       tabindex="-1"
     >

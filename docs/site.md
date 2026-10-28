@@ -8,11 +8,11 @@ in `src/model/report.ts` checks the file, so a changed shape fails with the file
 and then builds the model the views draw (`src/types.ts`). No view reads the JSON. The model holds
 the game code, the PsyQ SDK and the hand-written assembly, each from its report category.
 
-The page has four sections on the home page: the overview (game code rebuilt in C by functions and by size, with the draft and open counts), the function search, the map of parts and images, and the PsyQ SDK line. The search finds a function by name, address or status.
+The home page starts with a treemap of game parts and images, alongside linked PsyQ SDK code. It then shows game-code totals and function search, followed by the detailed parts list and SDK notes. The search finds a function by name, address or status. The parts list provides links for keyboard navigation.
 
 ## How the page is built
 
-`src/views/App.tsx` lists the home page sections in order. Each has an `id` (its anchor, `#map`) and a title, which is also its link in the page navigation, and draws views from a **selector** in `src/selectors.ts`: a pure function that turns the model and the route into the data one view draws. The views are `Cards`, `Meters`, `Text`, `Filters`, `Table` and `Domains`. Adding, removing or reordering a section means editing `NAV` and `Sections` in that file.
+`src/views/App.tsx` lists the home page sections in order. Each has an `id` (its anchor, `#map`) and a title, which is also its link in the page navigation, and draws views from a **selector** in `src/selectors.ts`: a pure function that turns the model and the route into the data one view draws. The views include the treemap, `Cards`, `Meters`, `Text`, `Filters`, `Table` and `Domains`. Adding, removing or reordering a section means editing `NAV` and `Sections` in that file.
 
 Navigation has one model. The route names a page (home, a part of the game, or an image) and, apart from it, the source file open in the side panel (`src/views/Inspector.tsx`, fed by `src/inspect.ts`), so a file opens the same way from the function list, a treemap or the panel's own links. The panel shows the unit (source file), its size, its matched functions and its address; the function list and treemap tiles are functions and open their file. Links are `Jump` (`src/views/ui.tsx`): a real `href`, and a plain click calls `go`, which pushes the route and starts a new page at the top, or scrolls to the home page section the link names. The section links show on every page.
 

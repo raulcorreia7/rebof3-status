@@ -58,7 +58,7 @@ export const HEAD = {
 };
 
 export const SUMMARY = {
-  overviewHeading: "Overview",
+  overviewHeading: "How far along?",
   gameHeading: "Game code",
   gameFunctions: "Game functions",
   gameBytes: "Game code by size",
@@ -72,8 +72,9 @@ export const SUMMARY = {
 
 export const MAP = {
   heading: "Parts of the game",
-  help:
-    "Pick a part of the game or an image to see its functions. The function list on each page is the way to move through them by keyboard.",
+  help: "Select a part or image to explore its functions.",
+  detailsHeading: "Explore the parts",
+  homeChartLabel: "Treemap of game parts and images, with linked PsyQ SDK code",
   key: (
     functions: number,
     size: number | null,
