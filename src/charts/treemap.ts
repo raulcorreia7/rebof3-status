@@ -1,12 +1,12 @@
 // Game function treemaps of one part of the game or one image, sized by code bytes. Pure option
 // builders; views/Treemap.tsx draws them.
 
-import { bytes, escapeText, number } from "../model/format.ts";
+import { bytes, escapeText, number, percent } from "../model/format.ts";
 import { ASSEMBLY_LIBRARY } from "../model/report.ts";
 import { STATUS } from "../model/status.ts";
 import { SDK } from "../strings.ts";
 import type { Tokens } from "../theme/tokens.ts";
-import type { Fn, Group, Target } from "../types.ts";
+import type { Fn, Group, Model, Target } from "../types.ts";
 import type { ChartOption } from "./register.ts";
 
 /** A zero-byte function keeps one byte of area, so it stays in the map. */
@@ -156,48 +156,63 @@ export function gamePartTree(group: Group, tokens: Tokens): MapNode {
   };
 }
 
-/** Game parts or images, with one SDK group across all images. */
-export function gameTree(
-  groups: Group[],
+/** One block per part or image, sized by bytes and shaded by rebuilt byte share. */
+export function overviewTree(
+  model: Model,
   tokens: Tokens,
-  by: "part" | "image" = "part",
-  width = 0,
-  height = 0,
+  by: "part" | "image",
+  width = 992,
+  height = 540,
 ): MapNode {
-  const targets = groups.flatMap((group) => group.targets);
-  const parts = groups.map((group) => {
-    const images = group.targets.map((target) => gameImageTree(target, tokens)).filter((image) =>
-      image.value > 0
-    );
+  const entries = by === "part"
+    ? model.groups.map((group) => ({ id: group.key, name: group.label, code: group.code }))
+    : model.targets.map((target) => ({
+      id: target.id,
+      name: target.name.replace(/\.EMI\b/i, ""),
+      code: target.code,
+    }));
+  const children: MapNode[] = entries.filter((entry) => entry.code.bytes > 0).map((entry) => {
+    const share = entry.code.exactBytes / entry.code.bytes;
+    const amount = 0.15 + 0.45 * share;
+    const blend = (base: string, color: string) => {
+      const a = Number.parseInt(base.slice(1), 16);
+      const b = Number.parseInt(color.slice(1), 16);
+      const channel = (shift: number) =>
+        Math.round(((a >> shift) & 255) * (1 - amount) + ((b >> shift) & 255) * amount);
+      return `#${[16, 8, 0].map((shift) => channel(shift).toString(16).padStart(2, "0")).join("")}`;
+    };
+    const name = `${entry.name}\n${percent(entry.code.exactBytes, entry.code.bytes, 1)}%`;
     return {
-      id: `part:${group.key}`,
-      name: group.label,
-      value: total(images),
-      ref: { kind: "part" as const, id: group.key },
-      tip: group.label,
-      children: images,
+      id: `${by}:${entry.id}`,
+      name,
+      value: entry.code.bytes,
+      ref: { kind: by, id: entry.id },
+      tip: `${escapeText(entry.name)}<br>${
+        percent(entry.code.exactBytes, entry.code.bytes, 1)
+      }% rebuilt in C by size`,
+      itemStyle: { color: blend(tokens.card, tokens.status.pure) },
     };
-  }).filter((part) => part.value > 0);
-  const sdk = sdkTree(targets.flatMap((target) => target.functions), "all", SDK.group, tokens);
-  const children: MapNode[] = by === "part" ? parts : parts.flatMap((part) => part.children);
-  if (sdk) {
-    for (const library of sdk.children ?? []) library.upperLabel = { show: false };
-    children.push(sdk);
+  });
+  if (model.sdk.bytes) {
+    children.push({
+      id: "sdk:all",
+      name: "PsyQ SDK",
+      value: model.sdk.bytes,
+      ref: { kind: "sdk", id: "all" },
+      tip: SDK.group,
+      itemStyle: { color: tokens.sdk },
+    });
   }
-  const weight = total(children);
-  for (const image of parts.flatMap((part) => part.children)) {
-    // Reserve ample space for the whole name; small cells have no label.
-    const room = Math.sqrt(width * height * image.value / weight) / 2;
-    image.upperLabel = {
-      show: room >= image.name.length * 8 + 12,
-      height: 18,
-      color: tokens.ink,
-      fontSize: 12,
-      fontWeight: "bold",
-    };
+  if (by === "image") {
+    const size = total(children);
+    for (const node of children) {
+      if (node.ref.kind !== "image") continue;
+      const room = Math.sqrt(width * height * node.value / size) / 1.3;
+      node.label = { show: room >= Math.max(65, node.name.split("\n")[0].length * 8 + 16) };
+    }
   }
   return {
-    id: `home:${by}`,
+    id: "home",
     name: "Game",
     value: total(children),
     ref: { kind: "home", id: by },
@@ -271,13 +286,17 @@ export function treemapOption(view: MapNode, tokens: Tokens): ChartOption {
         upperLabel: upper,
         // Depth 0 is the hidden root.
         levels: view.ref.kind === "home"
-          ? [
-            hidden,
-            view.ref.id === "image" ? { ...parent, upperLabel: { show: false } } : parent,
-            { ...parent, upperLabel: { show: false } },
-            leaf(false),
-            leaf(false),
-          ]
+          ? [hidden, {
+            ...leaf(true),
+            label: {
+              show: true,
+              color: tokens.ink,
+              fontSize: 12,
+              fontWeight: "bold",
+              textBorderColor: tokens.card,
+              textBorderWidth: 2,
+            },
+          }]
           : view.ref.kind === "part"
           ? [hidden, parent, leaf(false), leaf(false)]
           : [hidden, leaf(true), leaf(false), leaf(false)],

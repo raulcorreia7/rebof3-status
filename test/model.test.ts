@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { test } from "node:test";
-import { gameImageTree, gameTree } from "../src/charts/treemap.ts";
+import { gameImageTree, overviewTree } from "../src/charts/treemap.ts";
 import { compareGroups } from "../src/model/groups.ts";
 import { modelFromReport, unitTarget } from "../src/model/report.ts";
 import { STATUSES } from "../src/model/status.ts";
@@ -190,15 +190,14 @@ test("an executable's treemap holds one SDK group by library, in the SDK colour"
   );
 });
 
-test("overview groups SDK functions once by library in both views", () => {
+test("overview has one block per game part or image and one SDK block", () => {
   for (const view of ["part", "image"] as const) {
-    const tree = gameTree(model.groups, DARK, view);
+    const tree = overviewTree(model, DARK, view);
     const sdk = tree.children!.filter((node) => node.ref.kind === "sdk");
     assert.equal(sdk.length, 1);
-    const libraries = sdk[0].children!;
-    assert.equal(new Set(libraries.map((library) => library.name)).size, libraries.length);
-    assert.equal(sum(libraries.map((library) => library.children!.length)), model.sdk.count);
+    assert.equal(sdk[0].value, model.sdk.bytes);
     const game = tree.children!.filter((node) => node.ref.kind !== "sdk");
-    assert.ok(game.every((node) => node.ref.kind === view));
+    assert.ok(game.every((node) => node.ref.kind === view && !node.children));
+    assert.equal(sum(game.map((node) => node.value)), model.game.bytes);
   }
 });

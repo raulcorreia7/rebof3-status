@@ -17,7 +17,7 @@ export const STATUS_LABEL: Record<Status, string> = {
 
 // Group key -> heading and note (model/groups.ts names the groups).
 export const GROUP_LABEL: Record<string, string> = {
-  main: "Main program",
+  main: "SLUS_004.22",
   system: "Game system and menus",
   battle: "Battle",
   magic: "Battle magic",
@@ -74,6 +74,7 @@ export const MAP = {
   heading: "Parts of the game",
   help: "Select a part or image to explore its functions.",
   detailsHeading: "Explore the parts",
+  shading: "Block size: code bytes · Shade: percentage rebuilt in C by size",
   homeChartLabel: "Treemap of game parts and images, with linked PsyQ SDK code",
   key: (
     functions: number,

@@ -8,7 +8,7 @@ in `src/model/report.ts` checks the file, so a changed shape fails with the file
 and then builds the model the views draw (`src/types.ts`). No view reads the JSON. The model holds
 the game code, the PsyQ SDK and the hand-written assembly, each from its report category.
 
-The home page starts with a treemap, switchable between game parts and images, alongside one linked PsyQ SDK group. Its legend is above the map. It then shows game-code totals and function search, followed by the detailed parts list and SDK notes. The search finds a function by name, address or status. The parts list provides links for keyboard navigation.
+The home page starts with a treemap, switchable between game parts and images, alongside one linked PsyQ SDK group. Each block is sized by code bytes and shaded by the share rebuilt in C. The main executable is labelled `SLUS_004.22`, its disc file name. Selecting a part or image opens its function treemap; its breadcrumb returns to the overview. It then shows game-code totals and function search, followed by the detailed parts list and SDK notes. The search finds a function by name, address or status. The parts list provides links for keyboard navigation.
 
 ## How the page is built
 

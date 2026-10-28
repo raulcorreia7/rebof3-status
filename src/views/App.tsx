@@ -1,7 +1,7 @@
 // The page: the header, then the home page sections or one part or image page.
 
 import { createMemo, createSignal, For, type JSX, onMount, Show } from "solid-js";
-import { gameTree, type MapRef, treemapOption } from "../charts/treemap.ts";
+import { type MapRef, overviewTree, treemapOption } from "../charts/treemap.ts";
 import { inspector } from "../inspect.ts";
 import { HOME } from "../model/route.ts";
 import {
@@ -153,12 +153,12 @@ function HomeMap() {
   const [by, setBy] = createSignal<"part" | "image">("part");
   const option = createMemo(() =>
     treemapOption(
-      gameTree(
-        page.model.groups,
+      overviewTree(
+        page.model,
         page.tokens,
         by(),
         Math.min(window.innerWidth - 32, 992),
-        window.innerWidth < 700 ? 720 : 540,
+        window.innerWidth < 700 ? 600 : 540,
       ),
       page.tokens,
     )
@@ -167,18 +167,7 @@ function HomeMap() {
     const ref = params.data?.ref as MapRef | undefined;
     if (ref?.kind === "part") page.go({ view: { kind: "part", key: ref.id }, fn: null });
     else if (ref?.kind === "image") page.go({ view: { kind: "image", id: ref.id }, fn: null });
-    else if (ref?.kind === "fn") {
-      const unit = page.model.unitById.get(ref.id);
-      const target = unit && page.model.targetById.get(unit.target);
-      if (target && unit?.kind === "game") {
-        page.go({
-          view: by() === "part"
-            ? { kind: "part", key: target.group }
-            : { kind: "image", id: target.id },
-          fn: null,
-        });
-      }
-    }
+    else if (ref?.kind === "sdk") page.go({ view: HOME.view }, false, "sdk");
   };
   return (
     <>
@@ -201,25 +190,15 @@ function HomeMap() {
         </button>
       </div>
       <ul class="my-3 flex flex-wrap gap-x-4 gap-y-1 text-sm">
-        <For
-          each={[
-            ["rebuilt in C", page.tokens.status.pure],
-            ["draft in C", page.tokens.status.nonmatching],
-            ["not started", page.tokens.status.open],
-            ["PsyQ SDK (linked)", page.tokens.sdk],
-          ]}
-        >
-          {(item) => (
-            <li>
-              <Chip color={item[1]} />
-              {item[0]}
-            </li>
-          )}
-        </For>
+        <li>{MAP.shading}</li>
+        <li>
+          <Chip color={page.tokens.sdk} />
+          {SDK.group}
+        </li>
       </ul>
       <Chart
         option={option()}
-        height={window.innerWidth < 700 ? 720 : 540}
+        height={window.innerWidth < 700 ? 600 : 540}
         label={MAP.homeChartLabel}
         onClick={onClick}
         replace
