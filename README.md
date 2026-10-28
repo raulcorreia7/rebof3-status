@@ -36,7 +36,7 @@ npm run licenses # dependency licences must be permissive (MIT, ISC, Apache-2.0,
 From this repository, with rebof3 checked out as a sibling:
 
 ```sh
-cp ../rebof3/build/report.json data/report.json
+node -e 'const fs = require("fs"); fs.writeFileSync("data/report.json", JSON.stringify(JSON.parse(fs.readFileSync("../rebof3/build/report.json", "utf8"))))'
 git commit -am "data: publish report"
 git push
 ```
