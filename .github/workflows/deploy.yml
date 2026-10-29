@@ -39,6 +39,12 @@ jobs:
         run: npm run build
       - name: Test the model and the built site
         run: npm test
+      - name: Check the site names only public projects
+        run: |
+          if grep -rEIl 'rebof3-simple|bof3-monorepo|public-prep' site data/report.json; then
+            echo "::error::The site names a repository that is not public yet; remove it."
+            exit 1
+          fi
       - if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v5
         with:

@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build && node render/snapshot.ts site",
+    "report": "node render/publish.ts",
     "test": "node --test \"test/*.test.ts\"",
     "lint": "tsc -p .",
     "format": "dprint fmt",

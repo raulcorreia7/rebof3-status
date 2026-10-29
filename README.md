@@ -10,7 +10,8 @@ a search for any function. Open a part or an image to list its functions. The Ps
 hand-written assembly are shown apart. This repository holds only the numbers and their renderer:
 no source code, assembly or game data.
 
-Where things live: this repository holds the report and the renderer. The audio player and the disc and archive tools are in [bof3player](https://github.com/raulcorreia7/bof3player).
+Where things live: this repository holds the report and the renderer. The audio player and the disc
+and archive tools are in [bof3player](https://github.com/raulcorreia7/bof3player).
 
 A fan project, not affiliated with or endorsed by Capcom. Breath of Fire is a Capcom trademark. No
 game data is included; bring your own disc.
@@ -39,19 +40,20 @@ npm run licenses # dependency licences must be permissive (MIT, ISC, Apache-2.0,
 
 ## Publish
 
-From this repository, with rebof3 checked out as a sibling:
+With rebof3 checked out as a sibling, publish a fresh objdiff report:
 
 ```sh
-node -e 'const fs = require("fs"); fs.writeFileSync("data/report.json", JSON.stringify(JSON.parse(fs.readFileSync("../rebof3/build/report.json", "utf8"))))'
+npm run report   # copies ../rebof3/build/report.json into data/report.json, compact
 git commit -am "data: publish report"
-git push
+git push         # deploy.yml rebuilds the page and the pictures and deploys
 ```
 
 ## Deploy
 
-`deploy.yml` runs on every push to `main`, pull request and manual dispatch: type check, build, test,
-then publish the built `site/` (pull requests only check). The numbers are the committed
-`data/report.json`, so a new report is a commit. Change the page: [docs/site.md](docs/site.md).
+`deploy.yml` runs on every push to `main`, pull request and manual dispatch: type check, build,
+test, a check that the site names only public projects, then publish the built `site/` (pull
+requests only check). The numbers are the committed `data/report.json`, so a new report is a
+commit. Change the page: [docs/site.md](docs/site.md).
 
 ## License
 
