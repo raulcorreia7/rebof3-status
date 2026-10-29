@@ -22,6 +22,10 @@ page and the picture are built from that one file.
 
 ## Run
 
+Install Node.js 22 or newer for the site. Formatting uses the standalone `dprint`
+executable on `PATH`; download the latest [dprint release](https://github.com/dprint/dprint/releases/latest)
+without npm.
+
 ```sh
 npm ci && npm run build && npm test   # clean-clone build and test; `make check` adds the type check
 npm run dev      # dev server on data/report.json

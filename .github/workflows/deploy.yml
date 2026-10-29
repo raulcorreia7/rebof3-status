@@ -27,8 +27,9 @@ jobs:
           cache: npm
           cache-dependency-path: package-lock.json
       - run: npm ci --prefer-offline --no-audit --no-fund
-      - name: Check formatting
-        run: npm run format:check
+      - uses: dprint/check@v2
+        with:
+          cache: true
       - name: Type check
         run: npm run lint
       - name: Check dependency licences

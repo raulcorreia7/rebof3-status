@@ -14,7 +14,7 @@ help:
 	@echo "  help       List these targets (default)."
 	@echo "  build      Build the page into site/ and render the picture (npm run build)."
 	@echo "  test       Build, then check the model and the built site (npm test)."
-	@echo "  format     Format the tree with dprint; CHECK=1 only checks (npm run format)."
+	@echo "  format     Format the tree with dprint; CHECK=1 only checks (dprint fmt)."
 	@echo "  lint       Type check (npm run lint)."
 	@echo "  licenses   Check dependency licences against the allow-list (npm run licenses)."
 	@echo "  check      format CHECK=1, lint, licenses and test: the pre-commit gate."
@@ -29,9 +29,9 @@ test: build
 
 format:
 ifeq ($(CHECK),1)
-	npm run format:check
+	dprint check
 else
-	npm run format
+	dprint fmt
 endif
 
 lint:
