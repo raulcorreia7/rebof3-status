@@ -75,7 +75,19 @@ function Layout() {
           <Show when={gamePageData()} fallback={<Sections />}>
             {(data) => <GamePageView data={data} />}
           </Show>
-          <p class="mt-10 text-sm text-mute">{FOOT.text}</p>
+          <footer class="mt-10 border-t border-line pt-4 text-sm text-mute">
+            <p>{FOOT.text}</p>
+            <nav class="mt-2 flex flex-wrap gap-x-4 gap-y-1" aria-label={FOOT.linksLabel}>
+              <For each={FOOT.links}>
+                {(l) => (
+                  <a class="text-ink hover:underline" href={l.href}>
+                    {l.label}
+                  </a>
+                )}
+              </For>
+            </nav>
+            <p class="mt-2">{FOOT.notice}</p>
+          </footer>
         </main>
         <Inspector data={inspectorData} />
       </div>

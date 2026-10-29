@@ -10,6 +10,8 @@ a search for any function. Open a part or an image to list its functions. The Ps
 hand-written assembly are shown apart. This repository holds only the numbers and their renderer:
 no source code, assembly or game data.
 
+Where things live: this repository holds the report and the renderer. The audio player and the disc and archive tools are in [bof3player](https://github.com/raulcorreia7/bof3player).
+
 A fan project, not affiliated with or endorsed by Capcom. Breath of Fire is a Capcom trademark. No
 game data is included; bring your own disc.
 
