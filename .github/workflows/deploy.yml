@@ -41,8 +41,12 @@ jobs:
         run: npm test
       - name: Check the site names only public projects
         run: |
-          if grep -rEIl 'rebof3-simple|bof3-monorepo|public-prep' site data/report.json; then
-            echo "::error::The site names a repository that is not public yet; remove it."
+          bad=$(grep -rhoE 'github\.com/raulcorreia7/[A-Za-z0-9._-]+' site data/report.json \
+            | sed -E 's#^github\.com/raulcorreia7/##' | sort -u \
+            | grep -vE '^(rebof3-status|bof3player)$' || true)
+          if [ -n "$bad" ]; then
+            echo "::error::These repositories are not public yet; remove them from the site:"
+            printf '%s\n' "$bad"
             exit 1
           fi
       - if: github.event_name != 'pull_request'
