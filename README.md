@@ -6,8 +6,8 @@
 Progress of the Breath of Fire III decompilation: **<https://raulcorreia7.github.io/rebof3-status/>**
 
 This repository holds the published objdiff report and the page that renders it; the report's shape
-and the page's structure are in [docs/site.md](docs/site.md). The audio player and the disc and
-archive tools are in [bof3player](https://github.com/raulcorreia7/bof3player).
+and the page's structure are in [docs/site.md](docs/site.md). The audio player is maintained in [bof3player](https://github.com/raulcorreia7/bof3player).
+Disc and archive tools are maintained separately in the game workspace.
 
 A fan project, not affiliated with or endorsed by Capcom. Breath of Fire is a Capcom trademark. No
 game data is included; bring your own disc.

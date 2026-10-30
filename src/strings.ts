@@ -190,7 +190,7 @@ export const FOOT = {
   linksLabel: "Project links",
   links: [
     { href: "https://github.com/raulcorreia7/rebof3-status", label: "This site's source" },
-    { href: "https://github.com/raulcorreia7/bof3player", label: "Audio player and disc tools" },
+    { href: "https://github.com/raulcorreia7/bof3player", label: "Audio player" },
   ],
   notice:
     "A fan project, not affiliated with or endorsed by Capcom. Breath of Fire is a Capcom trademark. No game data is included.",
