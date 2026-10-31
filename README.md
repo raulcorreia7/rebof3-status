@@ -19,6 +19,7 @@ fresh objdiff report, with rebof3 checked out as a sibling:
 
 ```sh
 npm run report   # copies ../rebof3/build/report.json into data/report.json
+                 # (rebof3: meson compile -C build/meson report)
 git commit -am "data: publish report"
 git push
 ```

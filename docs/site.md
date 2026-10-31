@@ -2,7 +2,7 @@
 
 How the page is built, where to change it, and the data file it reads.
 
-`data/report.json` is the only input: the objdiff report that rebof3 `make report` writes.
+`data/report.json` is the only input: the objdiff report that rebof3 writes with `meson compile -C build/meson report`.
 `src/model/schema.ts` holds its Zod schema with only the fields the page reads; `modelFromReport`
 in `src/model/report.ts` checks the file, so a changed shape fails with the file and field named,
 and then builds the model the views draw (`src/types.ts`). No view reads the JSON. The model holds
