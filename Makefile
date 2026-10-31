@@ -1,4 +1,4 @@
-# Front door over the npm scripts. Same verbs as the monorepo and rebof3 Makefiles.
+# Front door over the npm scripts. Same verbs as the monorepo Makefile.
 
 .DEFAULT_GOAL := help
 
@@ -6,6 +6,11 @@
 BUILD_OUTPUT := site .vite
 
 .PHONY: help build test format lint licenses check clean distclean
+
+# The dependencies install once from the lock file; `npm ci` again after package-lock.json changes.
+node_modules: package-lock.json
+	npm ci
+	@touch node_modules
 
 help:
 	@echo "rebof3-status: the status page and picture renderer (npm scripts)"
@@ -21,7 +26,7 @@ help:
 	@echo "  clean      Remove build output: $(BUILD_OUTPUT)."
 	@echo "  distclean  clean, then also node_modules; run npm ci after."
 
-build:
+build: node_modules
 	npm run build
 
 test: build
@@ -34,10 +39,10 @@ else
 	dprint fmt
 endif
 
-lint:
+lint: node_modules
 	npm run lint
 
-licenses:
+licenses: node_modules
 	npm run licenses
 
 check:
