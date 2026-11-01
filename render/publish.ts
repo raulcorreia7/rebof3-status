@@ -2,9 +2,9 @@
 // numbers and not the formatting.
 // Usage: node render/publish.ts [report-file]   (--help prints this line)
 //
-// The default is ../rebof3/build/report.json: the file `meson compile -C build/meson report` writes in rebof3
-// when rebof3 is checked out beside this repository. The payload of the page is this file served as-is
-// (vite.config.ts), which is why it is stored compact.
+// The default is ../rebof3/build/report.json: the file `meson compile -C build/meson report` writes in
+// rebof3 when rebof3 is checked out beside this repository. The payload of the page is this file served
+// as-is (vite.config.ts), which is why it is stored compact.
 
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";

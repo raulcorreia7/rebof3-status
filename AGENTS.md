@@ -12,9 +12,7 @@ This repository hosts the rebof3 status site; see [README.md](README.md).
 
 ## Verification
 
-Run `make check` before committing. It checks formatting, types and dependency
-licenses, then builds and tests the site. It installs `node_modules` with `npm ci`
-when they are missing.
+Run `make check` before committing.
 
 ## Commits
 

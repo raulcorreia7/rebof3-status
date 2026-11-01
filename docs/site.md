@@ -2,7 +2,7 @@
 
 How the page is built, where to change it, and the data file it reads.
 
-`data/report.json` is the only input: the objdiff report that rebof3 writes with `meson compile -C build/meson report`.
+`data/report.json` is the only input: the objdiff report that rebof3 writes, copied in as described in [Publish](../README.md#publish).
 `src/model/schema.ts` holds its Zod schema with only the fields the page reads; `modelFromReport`
 in `src/model/report.ts` checks the file, so a changed shape fails with the file and field named,
 and then builds the model the views draw (`src/types.ts`). No view reads the JSON. The model holds
@@ -12,7 +12,7 @@ The home page starts with a treemap, switchable between game parts and images, a
 
 ## How the page is built
 
-`src/views/App.tsx` lists the home page sections in order. Each has an `id` (its anchor, `#map`) and a title, which is also its link in the page navigation, and draws views from a **selector** in `src/selectors.ts`: a pure function that turns the model and the route into the data one view draws. The views include the treemap, `Cards`, `Meters`, `Text`, `Filters`, `Table` and `Domains`. Adding, removing or reordering a section means editing `NAV` and `Sections` in that file.
+`src/views/App.tsx` lists the home page sections in order. Each has an `id` (its anchor, `#map`) and a title, which is also its link in the page navigation, and draws views from a **selector** in `src/selectors.ts`: a pure function that turns the model and the route into the data one view draws. The views include the treemap, `Cards`, `Meters`, `Text`, `Filters`, `Table` and `Domains`.
 
 Navigation has one model. The route names a page (home, a part of the game, or an image) and, apart from it, the source file open in the side panel (`src/views/Inspector.tsx`, fed by `src/inspect.ts`), so a file opens the same way from the function list, a treemap or the panel's own links. The panel shows the unit (source file), its size, its matched functions and its address; the function list and treemap tiles are functions and open their file. Links are `Jump` (`src/views/ui.tsx`): a real `href`, and a plain click calls `go`, which pushes the route and starts a new page at the top, or scrolls to the home page section the link names. The section links show on every page.
 
@@ -21,7 +21,6 @@ Navigation has one model. The route names a page (home, a part of the game, or a
 - A part or image page (`src/views/GamePage.tsx`, selector `gamePage`) shows progress by code size. A part displays its images as blocks and links; an image displays its functions as a treemap and a paged list of links.
 - `src/views/Chart.tsx` keeps one ECharts instance per chart for the life of the page. Option updates merge; a treemap replaces its data and fades the old drawing over the new one for 180 ms (`prefers-reduced-motion` turns the fade off). The chart builders state `animation: false` on the series: the treemap series otherwise defaults to a 900 ms update animation that ignores the top-level flag. ECharts fits treemap labels to their rectangles itself; a label formatter must not read the layout back, or the first paint has no labels. The page loads only the treemap and tooltip parts; bars are plain DOM (`meters`).
 - Styling is Tailwind CSS v4 (`@tailwindcss/vite`), utilities in the views. `src/styles/app.css` maps the theme tokens into Tailwind's colours (`bg-card`, `text-mute`, `border-line`, ...) and holds the few shared classes (`card`, `btn`, `link`, `bar`). Status colours are custom properties set inline (`var(--st-pure)`).
-- Selectors are pure functions in `src/selectors.ts` and `src/inspect.ts`; the data shapes are in `src/viewtypes.ts`.
 - `src/model/`, `src/charts/` and `src/snapshot/` know nothing about the framework, and the picture and the page share them.
 
 ## Add or change things
@@ -47,7 +46,7 @@ Links look like `#fn/exe%2Fslus_004_22%2Ffunc_80164028` (a source file, by its U
 | `src/types.ts`                                           | The input type (from the schema) and the model.                                                      |
 | `src/model/report.ts`                                    | The adapter from report.json to the model.                                                           |
 | `src/model/`                                             | Status table, parts of the game, route, browser filters, links.                                      |
-| `src/selectors.ts`, `src/inspect.ts`, `src/viewtypes.ts` | The selectors and the data shapes they return.                                                       |
+| `src/selectors.ts`, `src/inspect.ts`, `src/viewtypes.ts` | Pure selectors and the data shapes they return.                                                      |
 | `src/state.ts`                                           | Route store, hash router, theme.                                                                     |
 | `src/views/`                                             | Solid views and the app shell.                                                                       |
 | `src/strings.ts`                                         | All copy.                                                                                            |

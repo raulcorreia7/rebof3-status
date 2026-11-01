@@ -7,7 +7,7 @@ BUILD_OUTPUT := site .vite
 
 .PHONY: help build test format lint licenses check clean distclean
 
-# The dependencies install once from the lock file; `npm ci` again after package-lock.json changes.
+# Installs from the lock file when package-lock.json is newer than node_modules.
 node_modules: package-lock.json
 	npm ci
 	@touch node_modules
