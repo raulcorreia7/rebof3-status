@@ -8,7 +8,7 @@ This repository hosts the rebof3 status site; see [README.md](README.md).
 - Keep `data/report.json` as produced by rebof3; never hand-edit it.
 - Do not add game data.
 - Format with dprint.
-- Add only dependencies whose license `make licenses` allows.
+- Add only dependencies whose license `npm run licenses` allows.
 
 ## Verification
 

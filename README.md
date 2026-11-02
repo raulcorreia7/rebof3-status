@@ -38,7 +38,11 @@ npm run format   # dprint: ts, tsx, json and md
 npm run licenses # dependency licence gate; reviewed exceptions live in package.json
 ```
 
+`make check` runs the format check, `npm run lint`, `npm run licenses` and `npm test`; `make help`
+lists the targets.
+
 ## License
 
-[MIT](LICENSE). The picture uses DejaVu Sans, shipped in [render/fonts/](render/fonts/) under its
+See [CONTRIBUTING.md](CONTRIBUTING.md), the [code of conduct](CODE_OF_CONDUCT.md) and the
+[security policy](SECURITY.md). [MIT](LICENSE). The picture uses DejaVu Sans, shipped in [render/fonts/](render/fonts/) under its
 own licence.
