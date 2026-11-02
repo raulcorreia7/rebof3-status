@@ -4,3 +4,12 @@ site/
 *.tsbuildinfo
 *.log
 .DS_Store
+
+# Local work
+*.bin
+*.cue
+*.iso
+*.img
+*.wav
+*.flac
+*.ogg
