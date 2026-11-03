@@ -134,6 +134,17 @@ export const SDK = {
   assemblyLibrary: "split assembly",
 };
 
+export const METHOD = {
+  heading: "How progress is measured",
+  points: [
+    "A function counts as rebuilt in C only when its fuzzy match is exactly 100 percent: the C source compiles to the same bytes as the original game code.",
+    "A draft in C compiles but still differs from the original. It has a match below 100 percent and does not count as rebuilt.",
+    "Percentages come in two forms: by function count and by code bytes. Bytes weigh a large function more than a small one.",
+    "The PsyQ SDK and hand-written assembly are not game work. They stay out of every game code figure.",
+    "objdiff produces the report from the decompilation build; this page only reads it.",
+  ],
+};
+
 export const BROWSER = {
   heading: "Find a function",
   hint: "Searches game functions by name, address or status.",

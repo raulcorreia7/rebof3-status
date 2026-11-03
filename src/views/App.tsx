@@ -14,7 +14,7 @@ import {
   searchTable,
 } from "../selectors.ts";
 import { createPage, PageProvider, usePage } from "../state.ts";
-import { BROWSER, FOOT, HEAD, MAP, SDK, SUMMARY } from "../strings.ts";
+import { BROWSER, FOOT, HEAD, MAP, METHOD, SDK, SUMMARY } from "../strings.ts";
 import type { Mode } from "../theme/apply.ts";
 import type { Model } from "../types.ts";
 import { Cards, Filters, Meters, Table, Text } from "./Basic.tsx";
@@ -30,6 +30,7 @@ const NAV = [
   { id: "map", title: MAP.heading },
   { id: "overview", title: SUMMARY.overviewHeading },
   { id: "find", title: BROWSER.heading },
+  { id: "method", title: METHOD.heading },
 ];
 
 const NEXT: Record<Mode, Mode> = { auto: "light", light: "dark", dark: "auto" };
@@ -145,6 +146,11 @@ function Sections() {
       <Section id="find" title={BROWSER.heading}>
         <Filters data={filters} />
         <Table data={table} />
+      </Section>
+      <Section id="method" title={METHOD.heading}>
+        <ul class="my-2 list-disc space-y-1 pl-5 text-sm">
+          <For each={METHOD.points}>{(point) => <li>{point}</li>}</For>
+        </ul>
       </Section>
       <Section id="parts" title={MAP.detailsHeading}>
         <Domains data={map} />
