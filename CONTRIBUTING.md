@@ -10,8 +10,8 @@ You need Node.js 22 and, for formatting, the standalone
 [dprint](https://github.com/dprint/dprint/releases/latest) executable.
 
 ```sh
-git clone https://github.com/raulcorreia7/rebof3-status.git
-cd rebof3-status
+git clone https://github.com/raulcorreia7/bof3-status.git
+cd bof3-status
 npm ci
 npm run dev    # dev server on the published report
 make check     # format, type check, licenses and tests; CI runs the same checks
@@ -21,7 +21,7 @@ make check     # format, type check, licenses and tests; CI runs the same checks
 
 - The page and the picture: `src/` and `render/`. [docs/site.md](docs/site.md) describes the
   structure.
-- The numbers: `data/report.json` is the objdiff report that rebof3 produces. Do not edit it by hand;
+- The numbers: `data/report.json` is the objdiff report that bof3-decomp produces. Do not edit it by hand;
   a maintainer publishes a fresh report with `npm run report`.
 - Dependencies: `npm run licenses` allows only the licenses listed in `package.json`.
 

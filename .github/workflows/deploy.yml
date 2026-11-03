@@ -43,7 +43,7 @@ jobs:
         run: |
           bad=$(grep -rhoE 'github\.com/raulcorreia7/[A-Za-z0-9._-]+' site data/report.json \
             | sed -E 's#^github\.com/raulcorreia7/##' | sort -u \
-            | grep -vE '^(rebof3-status|bof3player)$' || true)
+            | grep -vE '^(bof3-status|bof3-player)$' || true)
           if [ -n "$bad" ]; then
             echo "::error::These repositories are not public yet; remove them from the site:"
             printf '%s\n' "$bad"

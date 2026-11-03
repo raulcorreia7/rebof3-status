@@ -2,9 +2,9 @@
 // numbers and not the formatting.
 // Usage: node render/publish.ts [report-file]   (--help prints this line)
 //
-// The default is ../rebof3/build/report.json: the file `meson compile -C build/meson report` writes in
-// rebof3 when rebof3 is checked out beside this repository. The payload of the page is this file served
-// as-is (vite.config.ts), which is why it is stored compact.
+// The default is ../decomp/build/report.json: the file `meson compile -C build/meson report` writes in
+// bof3-decomp when it is checked out as decomp/ beside this folder (the monorepo layout). The payload of the page is
+// this file served as-is (vite.config.ts), which is why it is stored compact.
 
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -16,11 +16,11 @@ if (process.argv.includes("--help") || process.argv.includes("-h")) {
   process.exit(0);
 }
 const source = resolve(
-  process.argv[2] ?? fileURLToPath(new URL("../../rebof3/build/report.json", import.meta.url)),
+  process.argv[2] ?? fileURLToPath(new URL("../../decomp/build/report.json", import.meta.url)),
 );
 if (!existsSync(source)) {
   console.error(
-    `No report at ${source}. Run "meson compile -C build/meson report" in rebof3, or pass the report file.`,
+    `No report at ${source}. Run "meson compile -C build/meson report" in decomp/, or pass the report file.`,
   );
   console.error(USAGE);
   process.exit(1);

@@ -1,11 +1,11 @@
 # Agent guide
 
-This repository hosts the rebof3 status site; see [README.md](README.md).
+This repository hosts the bof3 status site; see [README.md](README.md).
 
 ## Changes
 
 - Write only paths granted by the task.
-- Keep `data/report.json` as produced by rebof3; never hand-edit it.
+- Keep `data/report.json` as produced by bof3-decomp; never hand-edit it.
 - Do not add game data.
 - Format with dprint.
 - Add only dependencies whose license `npm run licenses` allows.

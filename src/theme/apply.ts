@@ -4,7 +4,7 @@
 import { cssVars, type Scheme, type Tokens, tokensFor } from "./tokens.ts";
 
 export type Mode = "auto" | "light" | "dark";
-const STORAGE_KEY = "rebof3-status-theme";
+const STORAGE_KEY = "bof3-status-theme";
 const dark = () => window.matchMedia("(prefers-color-scheme: dark)");
 
 export function storedMode(): Mode {

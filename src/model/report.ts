@@ -79,7 +79,7 @@ function addressOf(name: string): number | null {
 }
 
 /**
- * The image a unit belongs to. rebof3 names every unit `<image>/<source stem>`: the main
+ * The image a unit belongs to. bof3-decomp names every unit `<image>/<source stem>`: the main
  * executables are `exe/<name>`, every overlay `emi/<family>/<archive>/<slot>`.
  */
 export function unitTarget(name: string): string {

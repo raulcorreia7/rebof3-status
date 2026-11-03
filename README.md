@@ -1,13 +1,13 @@
-# rebof3-status
+# bof3-status
 
-[![C match](https://raulcorreia7.github.io/rebof3-status/badge.svg)](https://raulcorreia7.github.io/rebof3-status/)
-[![Decompilation status](https://raulcorreia7.github.io/rebof3-status/progress.png)](https://raulcorreia7.github.io/rebof3-status/)
+[![C match](https://raulcorreia7.github.io/bof3-status/badge.svg)](https://raulcorreia7.github.io/bof3-status/)
+[![Decompilation status](https://raulcorreia7.github.io/bof3-status/progress.png)](https://raulcorreia7.github.io/bof3-status/)
 
-Progress of the Breath of Fire III decompilation: **<https://raulcorreia7.github.io/rebof3-status/>**
+Progress of the Breath of Fire III decompilation: **<https://raulcorreia7.github.io/bof3-status/>**
 
 This repository holds the published objdiff report and the page that renders it; the report's shape
-and the page's structure are in [docs/site.md](docs/site.md). The audio player is maintained in [bof3player](https://github.com/raulcorreia7/bof3player).
-Disc and archive tools are maintained separately in the game workspace.
+and the page's structure are in [docs/site.md](docs/site.md). The audio player is maintained in [bof3-player](https://github.com/raulcorreia7/bof3-player).
+Disc and archive tools are maintained in [bof3-tools](https://github.com/raulcorreia7/bof3-tools).
 
 A fan project, not affiliated with or endorsed by Capcom. Breath of Fire is a Capcom trademark. No
 game data is included; bring your own disc.
@@ -15,11 +15,11 @@ game data is included; bring your own disc.
 ## Publish
 
 `data/report.json` is the only input, and `deploy.yml` publishes every push to `main`. To publish a
-fresh objdiff report, with rebof3 checked out as a sibling:
+fresh objdiff report, with bof3-decomp checked out as `decomp/` beside this folder in the [monorepo](https://github.com/raulcorreia7/bof3):
 
 ```sh
-npm run report   # copies ../rebof3/build/report.json into data/report.json
-                 # (rebof3: meson compile -C build/meson report)
+npm run report   # copies ../decomp/build/report.json into data/report.json
+                 # (in decomp: meson compile -C build/meson report)
 git commit -am "data: publish report"
 git push
 ```

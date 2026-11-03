@@ -13,7 +13,7 @@ node_modules: package-lock.json
 	@touch node_modules
 
 help:
-	@echo "rebof3-status: the status page and picture renderer (npm scripts)"
+	@echo "bof3-status: the status page and picture renderer (npm scripts)"
 	@echo ""
 	@echo "Targets:"
 	@echo "  help       List these targets (default)."

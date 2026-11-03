@@ -1,5 +1,5 @@
 blank_issues_enabled: false
 contact_links:
   - name: Report a vulnerability
-    url: https://github.com/raulcorreia7/rebof3-status/security/advisories/new
+    url: https://github.com/raulcorreia7/bof3-status/security/advisories/new
     about: Report a security problem privately. Do not open a public issue.

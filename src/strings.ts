@@ -189,8 +189,8 @@ export const FOOT = {
   text: "Generated from the objdiff report; the page and the picture hold the same numbers.",
   linksLabel: "Project links",
   links: [
-    { href: "https://github.com/raulcorreia7/rebof3-status", label: "This site's source" },
-    { href: "https://github.com/raulcorreia7/bof3player", label: "Audio player" },
+    { href: "https://github.com/raulcorreia7/bof3-status", label: "This site's source" },
+    { href: "https://github.com/raulcorreia7/bof3-player", label: "Audio player" },
   ],
   notice:
     "A fan project, not affiliated with or endorsed by Capcom. Breath of Fire is a Capcom trademark. No game data is included.",
