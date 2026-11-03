@@ -1,34 +1,44 @@
 # bof3-status
 
+[![CI](https://github.com/raulcorreia7/bof3-status/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/raulcorreia7/bof3-status/actions/workflows/deploy.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![C match](https://raulcorreia7.github.io/bof3-status/badge.svg)](https://raulcorreia7.github.io/bof3-status/)
-[![Decompilation status](https://raulcorreia7.github.io/bof3-status/progress.png)](https://raulcorreia7.github.io/bof3-status/)
 
-Progress of the Breath of Fire III decompilation: **<https://raulcorreia7.github.io/bof3-status/>**
+The progress site for the *Breath of Fire III* decompilation:
+**<https://raulcorreia7.github.io/bof3-status/>**
 
-This repository holds the published objdiff report and the page that renders it; the report's shape
-and the page's structure are in [docs/site.md](docs/site.md). The audio player is maintained in [bof3-player](https://github.com/raulcorreia7/bof3-player).
-Disc and archive tools are maintained in [bof3-tools](https://github.com/raulcorreia7/bof3-tools).
+It renders the published objdiff report of [bof3-decomp](https://github.com/raulcorreia7/bof3-decomp)
+as a treemap of the game's parts and images, a function search and a progress picture. This
+repository holds the report and the page that renders it.
 
-A fan project, not affiliated with or endorsed by Capcom. Breath of Fire is a Capcom trademark. No
-game data is included; bring your own disc.
+No game data is included. This is a fan project, not affiliated with or endorsed by Capcom.
+*Breath of Fire* is Capcom's trademark.
 
-## Publish
+## How progress is measured
 
-`data/report.json` is the only input, and `deploy.yml` publishes every push to `main`. To publish a
-fresh objdiff report, with bof3-decomp checked out as `decomp/` beside this folder in the [monorepo](https://github.com/raulcorreia7/bof3):
+- A function counts as rebuilt in C only when its objdiff fuzzy match is exactly 100 percent: the C
+  source compiles to the same bytes as the original code.
+- A draft in C compiles but still differs. It does not count as rebuilt.
+- Figures come by function count and by code bytes. The PsyQ SDK and hand-written assembly stay out
+  of every game code figure.
 
-```sh
-npm run report   # copies ../decomp/build/report.json into data/report.json
-                 # (in decomp: meson compile -C build/meson report)
-git commit -am "data: publish report"
-git push
-```
+The page repeats this under "How progress is measured". The report fields and the status rules are in
+[docs/site.md](docs/site.md#data-file).
+
+## Use
+
+Open the site. It links `report.json` and `progress.png`, and also serves `progress.svg` and
+`badge.svg`. To show the badge elsewhere, link
+`https://raulcorreia7.github.io/bof3-status/badge.svg`.
 
 ## Develop
 
-Needs Node.js 22 and, for formatting, the standalone [dprint](https://github.com/dprint/dprint/releases/latest) executable.
+You need Node.js 22 or later and, for formatting, the standalone
+[dprint](https://github.com/dprint/dprint/releases/latest) executable.
 
 ```sh
+git clone https://github.com/raulcorreia7/bof3-status.git
+cd bof3-status
 npm ci
 npm run dev      # dev server on the published report
 npm run build    # site/ plus the pictures
@@ -41,8 +51,25 @@ npm run licenses # dependency licence gate; reviewed exceptions live in package.
 `make check` runs the format check, `npm run lint`, `npm run licenses` and `npm test`; `make help`
 lists the targets.
 
-## License
+## Publish
+
+`data/report.json` is the only input, and `deploy.yml` publishes every push to `main`. To publish a
+fresh objdiff report, with bof3-decomp checked out as `decomp/` beside this folder in the
+[monorepo](https://github.com/raulcorreia7/bof3):
+
+```sh
+npm run report   # copies ../decomp/build/report.json into data/report.json
+                 # (in decomp: meson compile -C build/meson report)
+git commit -am "data: publish report"
+git push
+```
+
+## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md), the [code of conduct](CODE_OF_CONDUCT.md) and the
-[security policy](SECURITY.md). [MIT](LICENSE). The picture uses DejaVu Sans, shipped in [render/fonts/](render/fonts/) under its
-own licence.
+[security policy](SECURITY.md). Run `make check` before a pull request.
+
+## License
+
+MIT. See [LICENSE](LICENSE). The picture uses DejaVu Sans, shipped in [render/fonts/](render/fonts/)
+under its own licence.

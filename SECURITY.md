@@ -1,12 +1,13 @@
 # Security policy
 
-Report a vulnerability privately. Open the repository's
-[Security tab](https://github.com/raulcorreia7/bof3-status/security) and choose "Report a vulnerability".
-Do not open a public issue for a vulnerability.
+Report a vulnerability privately: open the repository's Security tab and choose
+[Report a vulnerability](https://github.com/raulcorreia7/bof3-status/security/advisories/new).
+Do not open a public issue for it. Include the affected file or command and the steps to reproduce.
+Do not attach game data.
 
 ## Scope
 
-This repository holds the status page, its build and the published report. A problem in the page, its build or its workflow is in scope. A wrong number in the report is not a vulnerability; open an issue for it.
+The site is static and reads one published report. A script injection through the report, or a dependency or workflow weakness that changes the published site, is in scope.
 
 ## Supported versions
 
