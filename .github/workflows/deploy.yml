@@ -9,6 +9,9 @@ on:
     paths-ignore: ["**.md", "docs/**"]
   pull_request:
   workflow_dispatch:
+  # Backstop: redeploy every 30 minutes so the page never lags the progress release.
+  schedule:
+    - cron: "*/30 * * * *"
 permissions:
   contents: read
 concurrency:
