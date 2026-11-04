@@ -1,12 +1,12 @@
 name: deploy
 # Builds the page from the committed data/report.json and publishes it. A push to main rebuilds
-# and deploys; a pull request only runs the checks.
+# and deploys; a pull request only runs the checks. Every pull request runs `build`, because the
+# main ruleset requires it.
 on:
   push:
     branches: [main]
     paths-ignore: ["**.md", "docs/**"]
   pull_request:
-    paths-ignore: ["**.md", "docs/**"]
   workflow_dispatch:
 permissions:
   contents: read
