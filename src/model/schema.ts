@@ -9,6 +9,10 @@ const measure = z.optional(z.coerce.number());
 /** report.json: objdiff-cli report version 2. A unit is a source file holding one or more functions. */
 export const ReportSchema = z.object({
   version: z.optional(z.number()),
+  /** The bof3-decomp commit the report was built from, and when it was published. Absent in older reports. */
+  source: z.optional(
+    z.object({ repository: z.string(), commit: z.string(), published: z.string() }),
+  ),
   categories: z.array(
     z.object({ id: z.string(), measures: z.object({ fuzzy_match_percent: measure }) }),
   ),

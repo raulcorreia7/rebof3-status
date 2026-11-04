@@ -27,3 +27,22 @@ export const escapeText = (text: string | number): string =>
     /"/g,
     "&quot;",
   );
+
+const published = new Intl.DateTimeFormat(undefined, { dateStyle: "medium" });
+
+/** The freshness line: the repository, the short commit with its link, and the publish date. */
+export function sourceLine(
+  source: { repository: string; commit: string; published: string } | null | undefined,
+): { name: string; sha: string; href: string; iso: string; date: string } | null {
+  if (!source || !/^[0-9a-f]{40}$/.test(source.commit)) return null;
+  if (!/^[\w.-]+\/[\w.-]+$/.test(source.repository)) return null;
+  const when = new Date(source.published);
+  if (Number.isNaN(when.getTime())) return null;
+  return {
+    name: source.repository.split("/")[1],
+    sha: source.commit.slice(0, 7),
+    href: `https://github.com/${source.repository}/commit/${source.commit}`,
+    iso: when.toISOString(),
+    date: published.format(when),
+  };
+}

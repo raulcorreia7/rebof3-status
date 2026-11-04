@@ -392,6 +392,7 @@ function buildModel(report: Report): Model {
   const hand = measured(functions.filter((fn) => fn.kind === "hand"), handSource);
   const code = addCode(targets.map((target) => target.code));
   return {
+    source: report.source ?? null,
     code,
     game,
     sdk,
