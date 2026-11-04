@@ -1,7 +1,8 @@
 name: deploy
 # Builds the page from the committed data/report.json and publishes it. A push to main rebuilds
 # and deploys; a pull request only runs the checks. Every pull request runs `build`, because the
-# main ruleset requires it.
+# main ruleset requires it. A pull request that changes only docs runs the format check: the
+# `changes` step gates the install, build and test steps, and `build` still reports.
 on:
   push:
     branches: [main]
@@ -12,7 +13,7 @@ permissions:
   contents: read
 concurrency:
   group: pages-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -20,26 +21,47 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          fetch-depth: 2
           persist-credentials: false
-      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+      # Lists the files of this pull request (the checkout is the merge commit). Only docs: code=false.
+      - id: changes
+        name: Changes
+        shell: bash
+        run: |
+          code=true
+          if [ "$GITHUB_EVENT_NAME" = pull_request ]; then
+            files=$(git diff --name-only HEAD^1 HEAD) || files=unknown
+            code=false
+            if printf '%s\n' "$files" | grep -qvE '^(.*\.md|docs/.*|LICENSE[^/]*|NOTICE|\.github/ISSUE_TEMPLATE/.*)$'; then code=true; fi
+            if printf '%s\n' "$files" | grep -qE '^\.github/workflows/'; then code=true; fi
+          fi
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+      - if: steps.changes.outputs.code == 'true'
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
           cache: npm
           cache-dependency-path: package-lock.json
-      - run: npm ci --prefer-offline --no-audit --no-fund
+      - if: steps.changes.outputs.code == 'true'
+        run: npm ci --prefer-offline --no-audit --no-fund
       - uses: dprint/check@7dc032d8874778fc024f6f9b4a7e6d896782c330 # v2.5
         with:
           cache: true
       - name: Type check
+        if: steps.changes.outputs.code == 'true'
         run: npm run lint
       - name: Check dependency licences
+        if: steps.changes.outputs.code == 'true'
         run: npm run licenses
       # The build copies data/report.json into site/ and renders the pictures from it.
       - name: Build the page and the pictures
+        if: steps.changes.outputs.code == 'true'
         run: npm run build
       - name: Test the model and the built site
+        if: steps.changes.outputs.code == 'true'
         run: npm test
       - name: Check the site names only public projects
+        if: steps.changes.outputs.code == 'true'
         run: |
           bad=$(grep -rhoE 'github\.com/raulcorreia7/[A-Za-z0-9._-]+' site data/report.json \
             | sed -E 's#^github\.com/raulcorreia7/##' | sort -u \

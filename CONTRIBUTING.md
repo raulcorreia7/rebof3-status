@@ -20,7 +20,7 @@ npm run dev    # dev server on the published report
 ## Checks
 
 `make check` runs the format check, the type check, the license gate and the tests. CI runs the same
-checks and builds the site.
+checks and builds the site. A pull request that changes only docs runs the format checks only.
 
 ## What to change
 
