@@ -1,7 +1,8 @@
 name: deploy
-# Builds the page from the committed data/report.json and publishes it. A push to main rebuilds
-# and deploys; a pull request only runs the checks. Every pull request runs `build`, because the
-# main ruleset requires it.
+# Builds the page and publishes it. A deploy uses the newest report: the `report.json` asset of the
+# `progress` release when it exists (bof3-decomp uploads it after each merge and dispatches this
+# workflow), else the committed data/report.json. A pull request only runs the checks on the
+# committed report. Every pull request runs `build`, because the main ruleset requires it.
 on:
   push:
     branches: [main]
@@ -27,6 +28,16 @@ jobs:
           cache: npm
           cache-dependency-path: package-lock.json
       - run: npm ci --prefer-offline --no-audit --no-fund
+      - name: Use the newest published report
+        if: github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release download progress -R "$GITHUB_REPOSITORY" -p report.json -O data/report.json --clobber; then
+            echo "Using the report of the progress release"
+          else
+            echo "No progress release; using the committed data/report.json"
+          fi
       - uses: dprint/check@7dc032d8874778fc024f6f9b4a7e6d896782c330 # v2.5
         with:
           cache: true

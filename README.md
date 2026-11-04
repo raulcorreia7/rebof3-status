@@ -53,16 +53,20 @@ lists the targets.
 
 ## Publish
 
-`data/report.json` is the only input, and `deploy.yml` publishes every push to `main`. To publish a
-fresh objdiff report, with bof3-decomp checked out as `decomp/` beside this folder in the
+`deploy.yml` publishes every push to `main` and every manual or dispatched run. A deploy takes the
+newest report: the `report.json` asset of the [`progress` release](../../releases/tag/progress)
+when it exists, else the committed `data/report.json`.
+
+To publish fresh progress, with bof3-decomp checked out as `decomp/` beside this folder in the
 [bof3 workspace](https://github.com/raulcorreia7/bof3):
 
 ```sh
-npm run report   # copies ../decomp/build/report.json into data/report.json
-                 # (in decomp: meson compile -C build/meson report)
-git commit -am "data: publish report"
-git push
+(cd ../decomp && meson compile -C build/meson report)
+gh release upload progress ../decomp/build/report.json --clobber
+gh workflow run deploy.yml
 ```
+
+Commit `data/report.json` (`npm run report`) when the data shape changes, so pull requests test it.
 
 ## Contributing
 
