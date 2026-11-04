@@ -35,3 +35,4 @@ Docs, comments, commit messages and pull requests follow one standard.
   5. Never use a foreign phrase, a scientific word or a jargon word if you can think of an everyday
      English equivalent.
   6. Break any of these rules sooner than say anything outright barbarous.
+- Comments say what, never how: one line, only where a name cannot say it ([standard](https://github.com/raulcorreia7/bof3/blob/main/docs/standard.md#comments)).
