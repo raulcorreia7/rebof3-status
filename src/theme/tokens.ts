@@ -12,7 +12,7 @@ export interface Tokens {
   mute: string;
   accent: string;
   track: string;
-  /** The SDK treemap cells: neutral, and no progress colour. */
+  /** The SDK treemap cells: neutral, and no progress color. */
   sdk: string;
   status: Record<Status, string>;
 }

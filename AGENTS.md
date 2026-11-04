@@ -1,6 +1,6 @@
 # Agent guide
 
-This repository hosts the bof3 status site; see [README.md](README.md).
+bof3-status is the progress site of the *Breath of Fire III* decompilation. Read [README.md](README.md) first, then [docs/site.md](docs/site.md) for the code you change.
 
 ## Changes
 

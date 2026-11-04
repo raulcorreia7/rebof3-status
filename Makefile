@@ -1,4 +1,4 @@
-# Front door over the npm scripts. Same verbs as the monorepo Makefile.
+# Front door over the npm scripts. Same verbs as the bof3 workspace Makefile.
 
 .DEFAULT_GOAL := help
 

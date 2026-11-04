@@ -49,7 +49,7 @@ export const frame = (x: number, y: number, w: number, h: number, color: string)
     round(h)
   }" fill="none" stroke="${color}" pointer-events="none"/>`;
 
-/** A horizontal bar of parts [value, colour] against a total. */
+/** A horizontal bar of parts [value, color] against a total. */
 export function bar(
   x: number,
   y: number,

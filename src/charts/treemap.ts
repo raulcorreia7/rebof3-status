@@ -68,7 +68,7 @@ const total = (nodes: MapNode[]): number => nodes.reduce((sum, node) => sum + no
 
 /**
  * One image's SDK code: a group, then a node per library, then a cell per member. It is drawn in
- * the neutral SDK colour and never counts toward the progress figures.
+ * the neutral SDK color and never counts toward the progress figures.
  */
 export function sdkGroupTree(target: Target, tokens: Tokens, named = false): MapNode | null {
   return sdkTree(

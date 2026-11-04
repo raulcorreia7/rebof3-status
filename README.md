@@ -22,8 +22,8 @@ No game data is included. This is a fan project, not affiliated with or endorsed
 - Figures come by function count and by code bytes. The PsyQ SDK and hand-written assembly stay out
   of every game code figure.
 
-The page repeats this under "How progress is measured". The report fields and the status rules are in
-[docs/site.md](docs/site.md#data-file).
+The page repeats this under "How progress is measured". The report fields and the status rules are
+in [docs/site.md](docs/site.md#data-file).
 
 ## Use
 
@@ -45,7 +45,7 @@ npm run build    # site/ plus the pictures
 npm test         # model totals, from data/report.json
 npm run lint     # tsc
 npm run format   # dprint: ts, tsx, json and md
-npm run licenses # dependency licence gate; reviewed exceptions live in package.json
+npm run licenses # dependency license gate; reviewed exceptions live in package.json
 ```
 
 `make check` runs the format check, `npm run lint`, `npm run licenses` and `npm test`; `make help`
@@ -55,7 +55,7 @@ lists the targets.
 
 `data/report.json` is the only input, and `deploy.yml` publishes every push to `main`. To publish a
 fresh objdiff report, with bof3-decomp checked out as `decomp/` beside this folder in the
-[monorepo](https://github.com/raulcorreia7/bof3):
+[bof3 workspace](https://github.com/raulcorreia7/bof3):
 
 ```sh
 npm run report   # copies ../decomp/build/report.json into data/report.json
@@ -72,4 +72,4 @@ See [CONTRIBUTING.md](CONTRIBUTING.md), the [code of conduct](CODE_OF_CONDUCT.md
 ## License
 
 MIT. See [LICENSE](LICENSE). The picture uses DejaVu Sans, shipped in [render/fonts/](render/fonts/)
-under its own licence.
+under its own license.

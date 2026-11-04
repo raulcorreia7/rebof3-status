@@ -39,7 +39,7 @@ export const StatusKey = (props: { items: { label: string; color: string; sub: s
   </ul>
 );
 
-/** The coloured parts of a bar. */
+/** The colored parts of a bar. */
 export const BarParts = (props: { parts: MeterRow["parts"] }) => (
   <For each={props.parts}>
     {(part) => <i style={{ width: `${part.width}%`, background: part.color }} />}

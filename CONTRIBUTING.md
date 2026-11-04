@@ -19,7 +19,7 @@ npm run dev    # dev server on the published report
 
 ## Checks
 
-`make check` runs the format check, the type check, the licence gate and the tests. CI runs the same
+`make check` runs the format check, the type check, the license gate and the tests. CI runs the same
 checks and builds the site.
 
 ## What to change

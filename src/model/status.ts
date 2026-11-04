@@ -1,6 +1,6 @@
 // The status table: the one place that says what a function status is. The legend, the filters,
 // the charts, the picture and the totals all read it. To add a status, add a row here, its label
-// in strings.ts (STATUS_LABEL) and its colours in theme/tokens.ts; nothing else changes.
+// in strings.ts (STATUS_LABEL) and its colors in theme/tokens.ts; nothing else changes.
 // A status says what the report proves: a finished game function, a draft, original assembly, a
 // PsyQ object, or an assembly-only unit.
 
@@ -11,7 +11,7 @@ interface StatusRow {
   key: Status;
   /** Legend text, from strings.ts. */
   label: string;
-  /** CSS colour reference, defined per theme by theme/tokens.ts. */
+  /** CSS color reference, defined per theme by theme/tokens.ts. */
   color: string;
   /** The parts of the code where this status can count as done (a function also needs fuzzy 100). */
   doneIn: readonly Fn["kind"][];
