@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { test } from "node:test";
 import { gameImageTree, overviewTree } from "../src/charts/treemap.ts";
+import { sourceLine } from "../src/model/format.ts";
 import { compareGroups } from "../src/model/groups.ts";
 import { modelFromReport, unitTarget } from "../src/model/report.ts";
 import { STATUSES } from "../src/model/status.ts";
@@ -224,4 +225,26 @@ test("executables have separate parts and part maps contain image blocks", () =>
   assert.ok(
     images.every((node) => !node.children && model.targetById.get(node.ref.id)?.group === "world"),
   );
+});
+
+test("source is optional and drives the freshness line", () => {
+  assert.equal(modelFromReport(file).source === null, !("source" in file));
+  const source = {
+    repository: "raulcorreia7/bof3-decomp",
+    commit: "0123456789abcdef0123456789abcdef01234567",
+    published: "2026-11-05T10:00:00Z",
+  };
+  const withSource = modelFromReport({ ...file, source });
+  assert.deepEqual(withSource.source, source);
+  const line = sourceLine(withSource.source)!;
+  assert.equal(line.name, "bof3-decomp");
+  assert.equal(line.sha, "0123456");
+  assert.equal(
+    line.href,
+    "https://github.com/raulcorreia7/bof3-decomp/commit/0123456789abcdef0123456789abcdef01234567",
+  );
+  assert.equal(line.iso, "2026-11-05T10:00:00.000Z");
+  const { source: _drop, ...bare } = file as typeof file & { source?: unknown };
+  assert.equal(modelFromReport(bare).source, null);
+  assert.equal(sourceLine(null), null);
 });

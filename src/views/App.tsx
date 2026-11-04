@@ -3,6 +3,7 @@
 import { createMemo, createSignal, For, type JSX, onMount, Show } from "solid-js";
 import { type MapRef, overviewTree, treemapOption } from "../charts/treemap.ts";
 import { inspector } from "../inspect.ts";
+import { sourceLine } from "../model/format.ts";
 import { HOME } from "../model/route.ts";
 import {
   apart,
@@ -119,6 +120,17 @@ function Header() {
           )}
         </For>
       </nav>
+      <Show when={sourceLine(page.model.source)}>
+        {(line) => (
+          <p class="mt-2 text-sm text-mute">
+            {HEAD.sourceFrom} {line().name}{" "}
+            <a class="text-ink hover:underline" href={line().href}>
+              <code>{line().sha}</code>
+            </a>{" "}
+            · <time datetime={line().iso}>{line().date}</time>
+          </p>
+        )}
+      </Show>
     </header>
   );
 }

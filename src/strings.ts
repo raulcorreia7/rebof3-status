@@ -56,6 +56,7 @@ export const HEAD = {
   data: "report",
   or: "or the",
   picture: "full picture",
+  sourceFrom: "Data from",
   theme: { auto: "Theme: automatic", light: "Theme: light", dark: "Theme: dark" },
 };
 

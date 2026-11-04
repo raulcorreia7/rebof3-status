@@ -145,6 +145,8 @@ export interface Quality {
 }
 
 export interface Model {
+  /** Where the report came from; null when the report does not say. */
+  source: NonNullable<Report["source"]> | null;
   /** Game code from the report, the sum of every target's code: what the map and the groups show. */
   code: Code;
   /** Game functions in the report: the functions the browser lists, and the fuzzy match. */
