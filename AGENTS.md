@@ -33,6 +33,15 @@ Run `make check` before committing.
 Use `type(scope): subject` headers with an imperative, lowercase subject.
 Do not add AI attribution, amend commits or force-push.
 
+## Index
+
+- Skills: none; this guide is the entry point.
+- Tools: `make help`.
+- Docs: [docs/site.md](docs/site.md).
+- CI: [.github/workflows/deploy.yml](.github/workflows/deploy.yml) builds and publishes the site.
+- Wiki (game and format facts): [site](https://raulcorreia7.github.io/bof3-wiki/). For a model: [llms.txt](https://raulcorreia7.github.io/bof3-wiki/llms.txt) (index), [llms-small.txt](https://raulcorreia7.github.io/bof3-wiki/llms-small.txt) (compact, for a small context), [llms-full.txt](https://raulcorreia7.github.io/bof3-wiki/llms-full.txt) (everything).
+- Project standard: [docs/standard.md](https://github.com/raulcorreia7/bof3/blob/main/docs/standard.md).
+
 ## Writing
 
 Docs, comments, commit messages and pull requests follow one standard.
