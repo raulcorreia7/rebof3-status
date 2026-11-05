@@ -1,6 +1,20 @@
 # Agent guide
 
-bof3-status is the progress site of the *Breath of Fire III* decompilation. Read [README.md](README.md) first, then [docs/site.md](docs/site.md) for the code you change.
+bof3-status is the progress site of the *Breath of Fire III* decompilation: a Vite and Solid page
+over the decompilation's objdiff report. Read [README.md](README.md) first, then
+[docs/site.md](docs/site.md).
+
+## Where things are
+
+| Path                       | What it holds                                                 | Doc                                               |
+| -------------------------- | ------------------------------------------------------------- | ------------------------------------------------- |
+| `data/report.json`         | The published objdiff report, the only data input             | [docs/site.md](docs/site.md#data-file)            |
+| `src/model/`               | The report schema, the adapter and the page model             | [docs/site.md](docs/site.md#file-layout)          |
+| `src/views/`               | The Solid views and the app shell                             | [docs/site.md](docs/site.md#file-layout)          |
+| `src/strings.ts`           | All page copy                                                 | [docs/site.md](docs/site.md#add-or-change-things) |
+| `src/snapshot/`, `render/` | The `progress.svg` poster, `badge.svg` and the publish script | [docs/site.md](docs/site.md#file-layout)          |
+| `test/`                    | `node:test` checks of the model totals                        | [docs/site.md](docs/site.md#file-layout)          |
+| `Makefile`                 | `build`, `test`, `format`, `lint`, `licenses`, `check`        | `make help`                                       |
 
 ## Changes
 
@@ -19,10 +33,20 @@ Run `make check` before committing.
 Use `type(scope): subject` headers with an imperative, lowercase subject.
 Do not add AI attribution, amend commits or force-push.
 
+## Index
+
+- Skills: none; this guide is the entry point.
+- Tools: `make help`.
+- Docs: [docs/site.md](docs/site.md).
+- CI: [.github/workflows/deploy.yml](.github/workflows/deploy.yml) builds and publishes the site.
+- Wiki (game and format facts): [site](https://raulcorreia7.github.io/bof3-wiki/). For a model: [llms.txt](https://raulcorreia7.github.io/bof3-wiki/llms.txt) (index), [llms-small.txt](https://raulcorreia7.github.io/bof3-wiki/llms-small.txt) (compact, for a small context), [llms-full.txt](https://raulcorreia7.github.io/bof3-wiki/llms-full.txt) (everything).
+- Project standard: [docs/standard.md](https://github.com/raulcorreia7/bof3/blob/main/docs/standard.md).
+
 ## Writing
 
 Docs, comments, commit messages and pull requests follow one standard.
 
+- **Current.** Present tense, no history.
 - **What, not how.** Say what a thing does and why. The code shows how.
 - **ASD-STE100** is the basis for technical text: short sentences, one instruction per sentence,
   active voice, one term for one concept, numbered steps for a procedure. Exact technical terms
