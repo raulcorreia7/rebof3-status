@@ -54,7 +54,7 @@ lists the targets.
 ## Publish
 
 `deploy.yml` publishes every push to `main` and every manual or dispatched run. A deploy takes the
-newest report: the `report.json` asset of the [`progress` release](../../releases/tag/progress)
+newest report: the `report.json` asset of the [`progress` release](https://github.com/raulcorreia7/bof3-status/releases/tag/progress)
 when it exists, else the committed `data/report.json`.
 
 To publish fresh progress, with bof3-decomp checked out as `decomp/` beside this folder in the
